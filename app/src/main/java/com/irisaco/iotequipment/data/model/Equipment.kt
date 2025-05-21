@@ -3,7 +3,7 @@ package com.example.example
 import com.google.gson.annotations.SerializedName
 
 
-data class ExampleJson2KtKotlin (
+data class Equipment (
 
   @SerializedName("title"              ) var title              : String?            = null,
   @SerializedName("equipmentVersionId" ) var equipmentVersionId : Int?               = null,
