@@ -54,4 +54,9 @@ dependencies {
     implementation("com.google.code.gson:gson:2.13.1")
     //
     implementation("com.google.android.material:material:1.9.0")
+    // Retrofit
+    implementation("com.squareup.retrofit2:retrofit:3.0.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    // Crate Test Api
+    implementation("com.squareup.okhttp3:mockwebserver:4.9.3")
 }

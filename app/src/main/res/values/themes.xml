@@ -6,7 +6,10 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
         <item name="colorPrimary">@color/md_theme_primary</item>
         <item name="android:colorBackground">@color/md_theme_background</item>
+
     </style>
+
+
 
     <style name="Theme.Iotequipment" parent="Base.Theme.Iotequipment" />
 

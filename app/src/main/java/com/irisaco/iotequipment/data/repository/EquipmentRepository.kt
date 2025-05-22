@@ -14,14 +14,16 @@ class EquipmentRepository (private val context: Context) {
 
     fun getEquipment(): List<Equipment> {
         return try {
-            val json = context.assets.open("devices.json")
+            val json = context.assets.open("equipment.json")
                 .bufferedReader()
                 .use { it.readText() }
 
-            val equipment = Gson().fromJson(json, Equipment::class.java)
+            val equipmentList = Gson().fromJson<List<Equipment>>(
+                json,
+                object : TypeToken<List<Equipment>>() {}.type
+            )
 
-            listOf(equipment)
-
+            equipmentList
         } catch (e: Exception) {
             e.printStackTrace()
             emptyList()

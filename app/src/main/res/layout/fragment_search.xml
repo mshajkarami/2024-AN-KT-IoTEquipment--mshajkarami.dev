@@ -7,31 +7,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- NestedScrollingChild goes here (NestedScrollView, RecyclerView, etc.). -->
-
-    <com.google.android.material.search.SearchBar
-        android:id="@+id/searchBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/md_theme_surfaceContainerHigh_mediumContrast"
-        android:hint="@string/searchbar_hint"
-        android:textAppearance="@color/md_theme_background"
+    <include
+        layout="@layout/search_bar"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/md_theme_surfaceContainerHigh_mediumContrast"
-        android:hint="@string/searchbar_hint"
-        >
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/search_bar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </com.google.android.material.textfield.TextInputLayout>
-
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/search_view_pager"
