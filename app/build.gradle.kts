@@ -59,4 +59,8 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     // Crate Test Api
     implementation("com.squareup.okhttp3:mockwebserver:4.9.3")
+
+    // add android core
+    implementation("androidx.core:core:1.12.0")
+
 }

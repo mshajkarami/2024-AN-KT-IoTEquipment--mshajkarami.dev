@@ -1,21 +1,28 @@
 package com.irisaco.iotequipment.ui.search
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.example.example.Equipment
+import androidx.lifecycle.liveData
+import com.irisaco.iotequipment.data.model.Equipments
+import com.irisaco.iotequipment.data.remote.EquipmentApiService
+import com.irisaco.iotequipment.data.remote.RetrofitInstance
 import com.irisaco.iotequipment.data.repository.EquipmentRepository
+import kotlinx.coroutines.Dispatchers
 
-class SearchViewModel (private val equipmentRepository: EquipmentRepository) : ViewModel()  {
-    private val _devices = MutableLiveData<List<Equipment>>()
-    val devices: LiveData<List<Equipment>> = _devices
+class SearchViewModel(
+    application: Application,
+) : AndroidViewModel(application) {
 
-    private val _filteredDevices = MutableLiveData<List<Equipment>>()
-    val filteredDevices: LiveData<List<Equipment>> = _filteredDevices
-
-    fun loadDevices() {
-        val data = equipmentRepository.getEquipment()
-        _devices.value = data
+    private lateinit var repository: EquipmentRepository
+    private val _equipmentList = liveData(Dispatchers.IO) {
+        val result = repository.getEquipments(true)
+        emit(result)
+    }
+    val equipmentList: LiveData<Equipments> get() = _equipmentList
+    init {
+        val retrofitService = RetrofitInstance.getRetrofitInstance().create(EquipmentApiService::class.java)
+        repository = EquipmentRepository(retrofitService,application.applicationContext)
     }
 }
 
