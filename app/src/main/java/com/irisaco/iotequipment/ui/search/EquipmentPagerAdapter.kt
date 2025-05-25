@@ -25,7 +25,7 @@ class EquipmentPagerAdapter(private var equipmentList: List<Equipment>) :
     override fun onBindViewHolder(holder: EquipmentViewHolder, position: Int) {
         val equipment = equipmentList[position]
         holder.title.text = equipment.title ?: "عنوان نامشخص"
-        holder.id.text = equipment.type?.name ?: "IR0054534232322225"
+        holder.id.text = equipment.equipmentUniqueId ?: "IR0054534232322225"
     }
 
     override fun getItemCount(): Int = equipmentList.size
