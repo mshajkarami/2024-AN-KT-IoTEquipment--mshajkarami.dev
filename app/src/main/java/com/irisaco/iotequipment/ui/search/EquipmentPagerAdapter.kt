@@ -12,7 +12,7 @@ import com.irisaco.iotequipment.R
 
 class EquipmentPagerAdapter(
     private var equipmentList: List<Equipment>,
-    private val onItemClick: (Equipment) -> Unit
+    private val onItemClick: (equipmentId: Int) -> Unit
 ) :
     RecyclerView.Adapter<EquipmentPagerAdapter.EquipmentViewHolder>() {
 
@@ -25,7 +25,7 @@ class EquipmentPagerAdapter(
             title.text = equipment.title ?: "عنوان نامشخص"
             id.text = equipment.equipmentUniqueId ?: "IR0054534232322225"
             itemView.setOnClickListener {
-                onItemClick(equipment)
+                onItemClick(equipment.id ?: 0)
             }
         }
     }
