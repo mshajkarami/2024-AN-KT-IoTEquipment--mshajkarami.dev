@@ -14,13 +14,12 @@ import retrofit2.Response
 // Use this to retrieve and manage the core equipment entity.
 
 class EquipmentRepository(
-    private val apiService: EquipmentApiService
-    ,private val context: Context
+    private val apiService: EquipmentApiService, private val context: Context
 
-){
+) {
 
     suspend fun getEquipments(useLocal: Boolean = false): Equipments {
-        return  if (useLocal) {
+        return if (useLocal) {
             getEquipmentsFromLocal()
         } else {
             apiService.getEquipment().body() ?: Equipments()
@@ -32,6 +31,19 @@ class EquipmentRepository(
             .bufferedReader()
             .use { it.readText() }
         return Gson().fromJson(jsonString, Equipments::class.java)
+    }
+
+    suspend fun getEquipmentById(id: Int): Equipment? {
+        return try {
+            val response = apiService.getEquipmentById(id)
+            if (response.isSuccessful) {
+                response.body()
+            } else {
+                null
+            }
+        } catch (e: Exception) {
+            null
+        }
     }
 
 }
