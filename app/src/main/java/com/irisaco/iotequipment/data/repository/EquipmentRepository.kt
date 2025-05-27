@@ -13,7 +13,11 @@ import retrofit2.Response
 // Includes general info like title, description, production date, unique ID, and main photo.
 // Use this to retrieve and manage the core equipment entity.
 
-class EquipmentRepository(private val apiService: EquipmentApiService ,private val context: Context){
+class EquipmentRepository(
+    private val apiService: EquipmentApiService
+    ,private val context: Context
+
+){
 
     suspend fun getEquipments(useLocal: Boolean = false): Equipments {
         return  if (useLocal) {
@@ -29,6 +33,5 @@ class EquipmentRepository(private val apiService: EquipmentApiService ,private v
             .use { it.readText() }
         return Gson().fromJson(jsonString, Equipments::class.java)
     }
-
 
 }

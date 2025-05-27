@@ -7,10 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.example.Equipment
 import com.irisaco.iotequipment.R
+import okhttp3.internal.userAgent
 
 
 class SearchFragment : Fragment() {
@@ -26,7 +28,10 @@ class SearchFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_search, container, false)
         val recyclerView = view.findViewById<RecyclerView>(R.id.search_recyclerView)
-        adapter = EquipmentPagerAdapter(emptyList())
+        adapter = EquipmentPagerAdapter(emptyList()) {
+            equipment ->
+            bindDetailFragment()
+        }
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
         observeViewModel()
@@ -46,5 +51,10 @@ class SearchFragment : Fragment() {
             }
         }
     }
+}
+
+private fun SearchFragment.bindDetailFragment() {
+    val action = SearchFragmentDirections.ActionSearchFragmentToEquipmentDetailFragment(equipmentId = 1)
+    findNavController().navigate(R.id.action_searchFragment_to_equipmentDetailFragment)
 }
 

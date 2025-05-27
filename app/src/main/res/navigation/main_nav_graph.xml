@@ -18,5 +18,23 @@
         android:id="@+id/searchFragment"
         android:name="com.irisaco.iotequipment.ui.search.SearchFragment"
         tools:layout="@layout/fragment_search"
-        android:label="SearchFragment" />
+        android:label="SearchFragment" >
+        <action
+            android:id="@+id/action_searchFragment_to_equipmentDetailFragment"
+            app:destination="@id/equipmentDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/equipmentDetailFragment"
+        android:name="com.irisaco.iotequipment.ui.detail.EquipmentDetailFragment"
+        android:label="fragment_equipment_detail"
+        tools:layout="@layout/fragment_equipment_detail">
+
+        <argument
+            android:name="equipmentId"
+            app:argType="integer" />
+
+    </fragment>
+
+
 </navigation>

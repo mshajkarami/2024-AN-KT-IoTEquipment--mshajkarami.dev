@@ -13,13 +13,14 @@ import kotlinx.coroutines.Dispatchers
 class SearchViewModel(
     application: Application,
 ) : AndroidViewModel(application) {
-
     private lateinit var repository: EquipmentRepository
+
     private val _equipmentList = liveData(Dispatchers.IO) {
         val result = repository.getEquipments(true)
         emit(result)
     }
     val equipmentList: LiveData<Equipments> get() = _equipmentList
+
     init {
         val retrofitService = RetrofitInstance.getRetrofitInstance().create(EquipmentApiService::class.java)
         repository = EquipmentRepository(retrofitService,application.applicationContext)
