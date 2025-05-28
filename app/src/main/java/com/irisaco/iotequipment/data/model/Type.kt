@@ -1,5 +1,4 @@
-package com.example.example
-
+package com.irisaco.iotequipment.data.model
 import com.google.gson.annotations.SerializedName
 
 

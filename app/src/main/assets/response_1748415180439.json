@@ -1,0 +1,134 @@
+{
+  "data": {
+    "currentPage": 1,
+    "totalPages": 1,
+    "totalCount": 3,
+    "items": [
+      {
+        "title": "f",
+        "equipmentVersionId": 1,
+        "productionDateTime": "2025-05-28T04:52:15.357Z",
+        "guid": "EDLFE",
+        "description": "f",
+        "equipmentUniqueId": "SNSR01010120250528EDLFE",
+        "creationTime": "2025-05-28T04:52:31.258958Z",
+        "lastModifyTime": null,
+        "version": {
+          "equipmentTypeId": 1,
+          "version": "1.0.0",
+          "description": "Initial version",
+          "types": null,
+          "documents": [],
+          "id": 1
+        },
+        "type": {
+          "name": "Sensor",
+          "description": "Temperature sensor",
+          "abberation": "SNSR",
+          "documents": [],
+          "id": 1
+        },
+        "documents": [],
+        "mainPhoto": null,
+        "records": [],
+        "equipmentLOM": [
+          {
+            "isDeleted": false,
+            "name": "رله",
+            "quantity": 0,
+            "supplier": "d",
+            "equipmentId": 1,
+            "equipment": null,
+            "id": 1
+          }
+        ],
+        "equipmentConfigurations": "[{\"key\":\"f\",\"value\":\"f\"}]",
+        "id": 1
+      },
+      {
+        "title": "trt",
+        "equipmentVersionId": 1,
+        "productionDateTime": "2025-05-28T05:32:08.883Z",
+        "guid": "TZRXC",
+        "description": "trt",
+        "equipmentUniqueId": "SNSR01010120250528TZRXC",
+        "creationTime": "2025-05-28T05:32:44.156914Z",
+        "lastModifyTime": null,
+        "version": {
+          "equipmentTypeId": 1,
+          "version": "1.0.0",
+          "description": "Initial version",
+          "types": null,
+          "documents": [],
+          "id": 1
+        },
+        "type": {
+          "name": "Sensor",
+          "description": "Temperature sensor",
+          "abberation": "SNSR",
+          "documents": [],
+          "id": 1
+        },
+        "documents": [],
+        "mainPhoto": null,
+        "records": [],
+        "equipmentLOM": [
+          {
+            "isDeleted": false,
+            "name": "",
+            "quantity": 0,
+            "supplier": "",
+            "equipmentId": 2,
+            "equipment": null,
+            "id": 2
+          }
+        ],
+        "equipmentConfigurations": "[{\"key\":\"gg\",\"value\":\"fg\"}]",
+        "id": 2
+      },
+      {
+        "title": "fs",
+        "equipmentVersionId": 1,
+        "productionDateTime": "2025-05-28T05:33:00.079Z",
+        "guid": "KVPVO",
+        "description": "f",
+        "equipmentUniqueId": "SNSR01010120250528KVPVO",
+        "creationTime": "2025-05-28T05:33:08.714094Z",
+        "lastModifyTime": null,
+        "version": {
+          "equipmentTypeId": 1,
+          "version": "1.0.0",
+          "description": "Initial version",
+          "types": null,
+          "documents": [],
+          "id": 1
+        },
+        "type": {
+          "name": "Sensor",
+          "description": "Temperature sensor",
+          "abberation": "SNSR",
+          "documents": [],
+          "id": 1
+        },
+        "documents": [],
+        "mainPhoto": null,
+        "records": [],
+        "equipmentLOM": [
+          {
+            "isDeleted": false,
+            "name": "",
+            "quantity": 0,
+            "supplier": "",
+            "equipmentId": 3,
+            "equipment": null,
+            "id": 3
+          }
+        ],
+        "equipmentConfigurations": "[{\"key\":\"\",\"value\":\"\"}]",
+        "id": 3
+      }
+    ]
+  },
+  "status": 200,
+  "message": "عملیات موفقیت آمیز بود"
+}

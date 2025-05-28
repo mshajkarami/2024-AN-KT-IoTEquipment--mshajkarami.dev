@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
-import com.example.example.Equipment
 import com.irisaco.iotequipment.data.model.Equipments
 import com.irisaco.iotequipment.data.remote.EquipmentApiService
 import com.irisaco.iotequipment.data.remote.RetrofitInstance

@@ -1,880 +1,125 @@
 [
   {
-    "title": "ماژول اندازه‌گیری فشار",
-    "equipmentVersionId": 2,
-    "productionDateTime": "2025-05-20T09:22:35.000Z",
-    "guid": "PrsMdl",
-    "description": "ماژول دیجیتال اندازه‌گیری فشار برای پایش شرایط محیطی در تأسیسات صنعتی.",
-    "equipmentUniqueId": "SNSR02020220250520PrsMdl",
-    "creationTime": "2025-05-20T09:25:00.000Z",
-    "lastModifyTime": "2025-05-20T10:15:30.000Z",
+    "title": "f",
+    "equipmentVersionId": 1,
+    "productionDateTime": "2025-05-28T04:52:15.357Z",
+    "guid": "EDLFE",
+    "description": "f",
+    "equipmentUniqueId": "SNSR01010120250528EDLFE",
+    "creationTime": "2025-05-28T04:52:31.258958Z",
+    "lastModifyTime": null,
     "version": {
-      "equipmentTypeId": 2,
-      "version": "2.1.3",
-      "description": "Stable release with enhanced accuracy and noise filtering.",
+      "equipmentTypeId": 1,
+      "version": "1.0.0",
+      "description": "Initial version",
       "types": null,
       "documents": [],
-      "id": 2
+      "id": 1
     },
     "type": {
       "name": "Sensor",
-      "description": "Pressure sensor",
+      "description": "Temperature sensor",
       "abberation": "SNSR",
       "documents": [],
-      "id": 2
-    },
-    "equipmentDetail": {
-      "os": "RTOS",
-      "osVersion": "3.2.0",
-      "firmware": "2.5.1",
-      "lom": [
-        "کالیبراسیون اتوماتیک",
-        "پشتیبانی از Modbus"
-      ],
-      "softwares": [
-        {
-          "name": "PressureMonitor",
-          "version": "3.4"
-        }
-      ],
-      "id": 2
+      "id": 1
     },
     "documents": [],
-    "mainPhoto": {
-      "fileName": "a4d5c3e2-1234-4fa7-bc99-7f1e8c5ee192_pressure_main.jpg",
-      "fileUrl": "https://stagestr.lucidfirm.ir/iem/a4d5c3e2-1234-4fa7-bc99-7f1e8c5ee192_pressure_main.jpg",
-      "id": 2
-    },
-    "records": [
+    "mainPhoto": null,
+    "records": [],
+    "equipmentLOM": [
       {
-        "equipmentId": 2,
-        "description": "نصب اولیه و راه‌اندازی در ایستگاه کنترل شماره ۳.",
-        "creationTime": "2025-05-21T08:10:00.000Z",
-        "lastModifyTime": "2025-05-21T08:45:00.000Z",
-        "documents": [
-          {
-            "fileName": "install_doc_20250521.pdf",
-            "fileUrl": "https://stagestr.lucidfirm.ir/iem/install_doc_20250521.pdf",
-            "id": 21
-          }
-        ],
-        "id": 10
-      },
-      {
-        "equipmentId": 2,
-        "description": "به‌روزرسانی نرم‌افزار داخلی برای بهبود عملکرد در دمای بالا.",
-        "creationTime": "2025-05-24T11:00:00.000Z",
-        "lastModifyTime": null,
-        "documents": [],
-        "id": 11
+        "isDeleted": false,
+        "name": "رله",
+        "quantity": 0,
+        "supplier": "d",
+        "equipmentId": 1,
+        "equipment": null,
+        "id": 1
       }
     ],
+    "equipmentConfigurations": "[{\"key\":\"f\",\"value\":\"f\"}]",
     "id": 1
-  }
-,
+  },
   {
-    "title": "Controller",
-    "equipmentVersionId": 2,
-    "productionDateTime": "2025-05-12T05:32:00Z",
-    "guid": "c3ce1",
-    "description": "Deserunt veniam modi.",
-    "equipmentUniqueId": "CTRL01010120250512c3ce1",
-    "creationTime": "2025-05-12T05:32:00Z",
-    "lastModifyTime": "2025-05-12T05:46:00Z",
+    "title": "trt",
+    "equipmentVersionId": 1,
+    "productionDateTime": "2025-05-28T05:32:08.883Z",
+    "guid": "TZRXC",
+    "description": "trt",
+    "equipmentUniqueId": "SNSR01010120250528TZRXC",
+    "creationTime": "2025-05-28T05:32:44.156914Z",
+    "lastModifyTime": null,
     "version": {
-      "equipmentTypeId": 2,
+      "equipmentTypeId": 1,
       "version": "1.0.0",
       "description": "Initial version",
       "types": null,
       "documents": [],
-      "id": 2
+      "id": 1
     },
     "type": {
-      "name": "Controller",
-      "description": "Device controller",
-      "abberation": "CTRL",
+      "name": "Sensor",
+      "description": "Temperature sensor",
+      "abberation": "SNSR",
       "documents": [],
-      "id": 2
-    },
-    "equipmentDetail": {
-      "os": "Linux",
-      "osVersion": "1",
-      "firmware": "1",
-      "lom": [
-        "unde"
-      ],
-      "softwares": [
-        {
-          "name": "MjtmApp",
-          "version": "10"
-        }
-      ],
-      "id": 2
+      "id": 1
     },
     "documents": [],
-    "mainPhoto": {
-      "fileName": "c75a77e1-7757-4116-864e-d73d82ab003d_photo.jpg",
-      "fileUrl": "https://stagestr.lucidfirm.ir/iem/sample_photo.jpg",
-      "id": 2
-    },
-    "records": [
+    "mainPhoto": null,
+    "records": [],
+    "equipmentLOM": [
       {
+        "isDeleted": false,
+        "name": "",
+        "quantity": 0,
+        "supplier": "",
         "equipmentId": 2,
-        "description": "Quos vel optio architecto.",
-        "creationTime": "2025-05-12T05:33:00Z",
-        "lastModifyTime": "2025-05-12T05:34:00Z",
-        "documents": [
-          {
-            "fileName": "5e4a2e1d-83a6-45e4-ac18-ad8ebd620f6d_doc.jpg",
-            "fileUrl": "https://stagestr.lucidfirm.ir/iem/sample_doc.jpg",
-            "id": 1
-          }
-        ],
-        "id": 1
-      },
-      {
-        "equipmentId": 2,
-        "description": "Quidem et praesentium.",
-        "creationTime": "2025-05-12T05:34:00Z",
-        "lastModifyTime": "2025-05-12T05:35:00Z",
-        "documents": [
-          {
-            "fileName": "a3e03a55-d5c4-427b-bc3e-07248fcc801e_doc.jpg",
-            "fileUrl": "https://stagestr.lucidfirm.ir/iem/sample_doc.jpg",
-            "id": 2
-          }
-        ],
+        "equipment": null,
         "id": 2
-      },
-      {
-        "equipmentId": 2,
-        "description": "Odio pariatur fugiat.",
-        "creationTime": "2025-05-12T05:35:00Z",
-        "lastModifyTime": "2025-05-12T05:36:00Z",
-        "documents": [
-          {
-            "fileName": "d141e116-87d6-4426-aea0-faa8681d498a_doc.jpg",
-            "fileUrl": "https://stagestr.lucidfirm.ir/iem/sample_doc.jpg",
-            "id": 3
-          }
-        ],
-        "id": 3
-      },
-      {
-        "equipmentId": 2,
-        "description": "Velit dicta minima aperiam iure.",
-        "creationTime": "2025-05-12T05:36:00Z",
-        "lastModifyTime": "2025-05-12T05:37:00Z",
-        "documents": [
-          {
-            "fileName": "6a56cc65-971e-4314-b639-fbda0ee56c7e_doc.jpg",
-            "fileUrl": "https://stagestr.lucidfirm.ir/iem/sample_doc.jpg",
-            "id": 4
-          }
-        ],
-        "id": 4
       }
     ],
+    "equipmentConfigurations": "[{\"key\":\"gg\",\"value\":\"fg\"}]",
     "id": 2
   },
   {
-    "title": "Gateway",
-    "equipmentVersionId": 3,
-    "productionDateTime": "2025-05-12T05:33:00Z",
-    "guid": "44e0c",
-    "description": "Similique illum ad laudantium.",
-    "equipmentUniqueId": "GTWY0101012025051244e0c",
-    "creationTime": "2025-05-12T05:33:00Z",
-    "lastModifyTime": "2025-05-12T05:44:00Z",
+    "title": "fs",
+    "equipmentVersionId": 1,
+    "productionDateTime": "2025-05-28T05:33:00.079Z",
+    "guid": "KVPVO",
+    "description": "f",
+    "equipmentUniqueId": "SNSR01010120250528KVPVO",
+    "creationTime": "2025-05-28T05:33:08.714094Z",
+    "lastModifyTime": null,
     "version": {
-      "equipmentTypeId": 3,
+      "equipmentTypeId": 1,
       "version": "1.0.0",
       "description": "Initial version",
       "types": null,
       "documents": [],
-      "id": 3
+      "id": 1
     },
     "type": {
-      "name": "Gateway",
-      "description": "Communication gateway",
-      "abberation": "GTWY",
+      "name": "Sensor",
+      "description": "Temperature sensor",
+      "abberation": "SNSR",
       "documents": [],
-      "id": 3
-    },
-    "equipmentDetail": {
-      "os": "Linux",
-      "osVersion": "1",
-      "firmware": "1",
-      "lom": [
-        "distinctio"
-      ],
-      "softwares": [
-        {
-          "name": "MjtmApp",
-          "version": "2"
-        }
-      ],
-      "id": 3
+      "id": 1
     },
     "documents": [],
-    "mainPhoto": {
-      "fileName": "6556169b-ba11-4a1f-87dc-0962b4903005_photo.jpg",
-      "fileUrl": "https://stagestr.lucidfirm.ir/iem/sample_photo.jpg",
-      "id": 3
-    },
-    "records": [
+    "mainPhoto": null,
+    "records": [],
+    "equipmentLOM": [
       {
+        "isDeleted": false,
+        "name": "",
+        "quantity": 0,
+        "supplier": "",
         "equipmentId": 3,
-        "description": "Nihil laborum.",
-        "creationTime": "2025-05-12T05:34:00Z",
-        "lastModifyTime": "2025-05-12T05:35:00Z",
-        "documents": [
-          {
-            "fileName": "84f18974-9187-4cfc-be52-ed9d4fd5ecf6_doc.jpg",
-            "fileUrl": "https://stagestr.lucidfirm.ir/iem/sample_doc.jpg",
-            "id": 1
-          }
-        ],
-        "id": 1
-      },
-      {
-        "equipmentId": 3,
-        "description": "Adipisci quasi.",
-        "creationTime": "2025-05-12T05:35:00Z",
-        "lastModifyTime": "2025-05-12T05:36:00Z",
-        "documents": [
-          {
-            "fileName": "a613d44e-271f-4de9-83e3-76df88a81615_doc.jpg",
-            "fileUrl": "https://stagestr.lucidfirm.ir/iem/sample_doc.jpg",
-            "id": 2
-          }
-        ],
-        "id": 2
-      },
-      {
-        "equipmentId": 3,
-        "description": "Quaerat corrupti dolor.",
-        "creationTime": "2025-05-12T05:36:00Z",
-        "lastModifyTime": "2025-05-12T05:37:00Z",
-        "documents": [
-          {
-            "fileName": "2b733859-9d0c-4e3a-a2e0-9d7d9ca4ec0e_doc.jpg",
-            "fileUrl": "https://stagestr.lucidfirm.ir/iem/sample_doc.jpg",
-            "id": 3
-          }
-        ],
+        "equipment": null,
         "id": 3
-      },
-      {
-        "equipmentId": 3,
-        "description": "Repellat officiis.",
-        "creationTime": "2025-05-12T05:37:00Z",
-        "lastModifyTime": "2025-05-12T05:38:00Z",
-        "documents": [
-          {
-            "fileName": "45817ed2-90bf-4109-975b-ac51bea0f2d0_doc.jpg",
-            "fileUrl": "https://stagestr.lucidfirm.ir/iem/sample_doc.jpg",
-            "id": 4
-          }
-        ],
-        "id": 4
       }
     ],
+    "equipmentConfigurations": "[{\"key\":\"\",\"value\":\"\"}]",
     "id": 3
-  },
-  {
-    "title": "Router",
-    "equipmentVersionId": 4,
-    "productionDateTime": "2025-05-12T05:34:00Z",
-    "guid": "5d84e",
-    "description": "Unde magnam facilis eum eius laudantium sint.",
-    "equipmentUniqueId": "RTR010101202505125d84e",
-    "creationTime": "2025-05-12T05:34:00Z",
-    "lastModifyTime": "2025-05-12T05:41:00Z",
-    "version": {
-      "equipmentTypeId": 4,
-      "version": "1.0.0",
-      "description": "Initial version",
-      "types": null,
-      "documents": [],
-      "id": 4
-    },
-    "type": {
-      "name": "Router",
-      "description": "Network router",
-      "abberation": "RTR",
-      "documents": [],
-      "id": 4
-    },
-    "equipmentDetail": {
-      "os": "Linux",
-      "osVersion": "1",
-      "firmware": "1",
-      "lom": [
-        "fuga"
-      ],
-      "softwares": [
-        {
-          "name": "JhdApp",
-          "version": "7"
-        }
-      ],
-      "id": 4
-    },
-    "documents": [],
-    "mainPhoto": {
-      "fileName": "15f46e9b-9223-4d14-a2c5-415e50be307b_photo.jpg",
-      "fileUrl": "https://stagestr.lucidfirm.ir/iem/sample_photo.jpg",
-      "id": 4
-    },
-    "records": [
-      {
-        "equipmentId": 4,
-        "description": "Velit ut repellendus assumenda.",
-        "creationTime": "2025-05-12T05:35:00Z",
-        "lastModifyTime": "2025-05-12T05:36:00Z",
-        "documents": [
-          {
-            "fileName": "4140d462-6b52-4f3c-88d2-92db95774ba4_doc.jpg",
-            "fileUrl": "https://stagestr.lucidfirm.ir/iem/sample_doc.jpg",
-            "id": 1
-          }
-        ],
-        "id": 1
-      },
-      {
-        "equipmentId": 4,
-        "description": "Laborum distinctio.",
-        "creationTime": "2025-05-12T05:36:00Z",
-        "lastModifyTime": "2025-05-12T05:37:00Z",
-        "documents": [
-          {
-            "fileName": "4003c76a-f1ea-4ec5-a0b4-68c05a97acf5_doc.jpg",
-            "fileUrl": "https://stagestr.lucidfirm.ir/iem/sample_doc.jpg",
-            "id": 2
-          }
-        ],
-        "id": 2
-      }
-    ],
-    "id": 4
-  },
-  {
-    "title": "Switch",
-    "equipmentVersionId": 5,
-    "productionDateTime": "2025-05-12T05:35:00Z",
-    "guid": "30c43",
-    "description": "Voluptatibus ipsum pariatur saepe excepturi debitis consequatur.",
-    "equipmentUniqueId": "SWCH0101012025051230c43",
-    "creationTime": "2025-05-12T05:35:00Z",
-    "lastModifyTime": "2025-05-12T05:45:00Z",
-    "version": {
-      "equipmentTypeId": 5,
-      "version": "1.0.0",
-      "description": "Initial version",
-      "types": null,
-      "documents": [],
-      "id": 5
-    },
-    "type": {
-      "name": "Switch",
-      "description": "Network switch",
-      "abberation": "SWCH",
-      "documents": [],
-      "id": 5
-    },
-    "equipmentDetail": {
-      "os": "Linux",
-      "osVersion": "1",
-      "firmware": "1",
-      "lom": [
-        "distinctio"
-      ],
-      "softwares": [
-        {
-          "name": "GrwhApp",
-          "version": "4"
-        }
-      ],
-      "id": 5
-    },
-    "documents": [],
-    "mainPhoto": {
-      "fileName": "351ba668-3ffe-47b9-9e1d-c8973a8f00c7_photo.jpg",
-      "fileUrl": "https://stagestr.lucidfirm.ir/iem/sample_photo.jpg",
-      "id": 5
-    },
-    "records": [
-      {
-        "equipmentId": 5,
-        "description": "Id odio soluta.",
-        "creationTime": "2025-05-12T05:36:00Z",
-        "lastModifyTime": "2025-05-12T05:37:00Z",
-        "documents": [
-          {
-            "fileName": "be518d64-4bc6-4ce0-b613-61d2e4f88d49_doc.jpg",
-            "fileUrl": "https://stagestr.lucidfirm.ir/iem/sample_doc.jpg",
-            "id": 1
-          }
-        ],
-        "id": 1
-      },
-      {
-        "equipmentId": 5,
-        "description": "Illum aliquam tempore quaerat.",
-        "creationTime": "2025-05-12T05:37:00Z",
-        "lastModifyTime": "2025-05-12T05:38:00Z",
-        "documents": [
-          {
-            "fileName": "1b6fa3fd-3afc-40ce-bb8a-3d7ac8b0767c_doc.jpg",
-            "fileUrl": "https://stagestr.lucidfirm.ir/iem/sample_doc.jpg",
-            "id": 2
-          }
-        ],
-        "id": 2
-      },
-      {
-        "equipmentId": 5,
-        "description": "Est illum tenetur adipisci.",
-        "creationTime": "2025-05-12T05:38:00Z",
-        "lastModifyTime": "2025-05-12T05:39:00Z",
-        "documents": [
-          {
-            "fileName": "9d5dce2d-1761-4498-bf0b-2bccade5f50a_doc.jpg",
-            "fileUrl": "https://stagestr.lucidfirm.ir/iem/sample_doc.jpg",
-            "id": 3
-          }
-        ],
-        "id": 3
-      }
-    ],
-    "id": 5
-  },
-  {
-    "title": "Repeater",
-    "equipmentVersionId": 6,
-    "productionDateTime": "2025-05-12T05:36:00Z",
-    "guid": "fa7e8",
-    "description": "Consequatur quod illum nam.",
-    "equipmentUniqueId": "RPTR01010120250512fa7e8",
-    "creationTime": "2025-05-12T05:36:00Z",
-    "lastModifyTime": "2025-05-12T05:48:00Z",
-    "version": {
-      "equipmentTypeId": 6,
-      "version": "1.0.0",
-      "description": "Initial version",
-      "types": null,
-      "documents": [],
-      "id": 6
-    },
-    "type": {
-      "name": "Repeater",
-      "description": "Signal repeater",
-      "abberation": "RPTR",
-      "documents": [],
-      "id": 6
-    },
-    "equipmentDetail": {
-      "os": "Linux",
-      "osVersion": "1",
-      "firmware": "1",
-      "lom": [
-        "repudiandae"
-      ],
-      "softwares": [
-        {
-          "name": "MhndsyApp",
-          "version": "4"
-        }
-      ],
-      "id": 6
-    },
-    "documents": [],
-    "mainPhoto": {
-      "fileName": "c858afc9-773e-40b1-9226-ab267db88e3f_photo.jpg",
-      "fileUrl": "https://stagestr.lucidfirm.ir/iem/sample_photo.jpg",
-      "id": 6
-    },
-    "records": [
-      {
-        "equipmentId": 6,
-        "description": "Alias dicta autem.",
-        "creationTime": "2025-05-12T05:37:00Z",
-        "lastModifyTime": "2025-05-12T05:38:00Z",
-        "documents": [
-          {
-            "fileName": "8e95847f-cf93-4223-985d-ca099ba707de_doc.jpg",
-            "fileUrl": "https://stagestr.lucidfirm.ir/iem/sample_doc.jpg",
-            "id": 1
-          }
-        ],
-        "id": 1
-      },
-      {
-        "equipmentId": 6,
-        "description": "Alias numquam labore.",
-        "creationTime": "2025-05-12T05:38:00Z",
-        "lastModifyTime": "2025-05-12T05:39:00Z",
-        "documents": [
-          {
-            "fileName": "1732a854-d9e9-4a44-a0b8-9fcd3f0a2765_doc.jpg",
-            "fileUrl": "https://stagestr.lucidfirm.ir/iem/sample_doc.jpg",
-            "id": 2
-          }
-        ],
-        "id": 2
-      },
-      {
-        "equipmentId": 6,
-        "description": "Ea ipsa.",
-        "creationTime": "2025-05-12T05:39:00Z",
-        "lastModifyTime": "2025-05-12T05:40:00Z",
-        "documents": [
-          {
-            "fileName": "698e57e8-0849-4891-abf7-f468b43e2f1b_doc.jpg",
-            "fileUrl": "https://stagestr.lucidfirm.ir/iem/sample_doc.jpg",
-            "id": 3
-          }
-        ],
-        "id": 3
-      }
-    ],
-    "id": 6
-  },
-  {
-    "title": "Modem",
-    "equipmentVersionId": 7,
-    "productionDateTime": "2025-05-12T05:37:00Z",
-    "guid": "9535b",
-    "description": "Nesciunt amet alias tempore eligendi voluptatum error voluptatibus.",
-    "equipmentUniqueId": "MDM010101202505129535b",
-    "creationTime": "2025-05-12T05:37:00Z",
-    "lastModifyTime": "2025-05-12T05:44:00Z",
-    "version": {
-      "equipmentTypeId": 7,
-      "version": "1.0.0",
-      "description": "Initial version",
-      "types": null,
-      "documents": [],
-      "id": 7
-    },
-    "type": {
-      "name": "Modem",
-      "description": "Modulation device",
-      "abberation": "MDM",
-      "documents": [],
-      "id": 7
-    },
-    "equipmentDetail": {
-      "os": "Linux",
-      "osVersion": "1",
-      "firmware": "1",
-      "lom": [
-        "fuga"
-      ],
-      "softwares": [
-        {
-          "name": "MhndsyApp",
-          "version": "1"
-        }
-      ],
-      "id": 7
-    },
-    "documents": [],
-    "mainPhoto": {
-      "fileName": "b4e1cf08-ab2b-4459-a0e2-37c2706491f6_photo.jpg",
-      "fileUrl": "https://stagestr.lucidfirm.ir/iem/sample_photo.jpg",
-      "id": 7
-    },
-    "records": [
-      {
-        "equipmentId": 7,
-        "description": "Accusamus corrupti aperiam placeat sed.",
-        "creationTime": "2025-05-12T05:38:00Z",
-        "lastModifyTime": "2025-05-12T05:39:00Z",
-        "documents": [
-          {
-            "fileName": "79d2bbbb-bdf3-4ec0-8e90-817c8c5db507_doc.jpg",
-            "fileUrl": "https://stagestr.lucidfirm.ir/iem/sample_doc.jpg",
-            "id": 1
-          }
-        ],
-        "id": 1
-      },
-      {
-        "equipmentId": 7,
-        "description": "Repellendus maxime aperiam vero fuga.",
-        "creationTime": "2025-05-12T05:39:00Z",
-        "lastModifyTime": "2025-05-12T05:40:00Z",
-        "documents": [
-          {
-            "fileName": "bf405a8e-1e47-4833-abb4-e5a275e0ac61_doc.jpg",
-            "fileUrl": "https://stagestr.lucidfirm.ir/iem/sample_doc.jpg",
-            "id": 2
-          }
-        ],
-        "id": 2
-      },
-      {
-        "equipmentId": 7,
-        "description": "Doloremque ea quae error.",
-        "creationTime": "2025-05-12T05:40:00Z",
-        "lastModifyTime": "2025-05-12T05:41:00Z",
-        "documents": [
-          {
-            "fileName": "8a567f10-219b-46e5-924c-ea898fa4bbb9_doc.jpg",
-            "fileUrl": "https://stagestr.lucidfirm.ir/iem/sample_doc.jpg",
-            "id": 3
-          }
-        ],
-        "id": 3
-      }
-    ],
-    "id": 7
-  },
-  {
-    "title": "Transceiver",
-    "equipmentVersionId": 8,
-    "productionDateTime": "2025-05-12T05:38:00Z",
-    "guid": "c2033",
-    "description": "Quidem fuga at temporibus.",
-    "equipmentUniqueId": "TRCV01010120250512c2033",
-    "creationTime": "2025-05-12T05:38:00Z",
-    "lastModifyTime": "2025-05-12T05:51:00Z",
-    "version": {
-      "equipmentTypeId": 8,
-      "version": "1.0.0",
-      "description": "Initial version",
-      "types": null,
-      "documents": [],
-      "id": 8
-    },
-    "type": {
-      "name": "Transceiver",
-      "description": "Signal transceiver",
-      "abberation": "TRCV",
-      "documents": [],
-      "id": 8
-    },
-    "equipmentDetail": {
-      "os": "Linux",
-      "osVersion": "1",
-      "firmware": "1",
-      "lom": [
-        "unde"
-      ],
-      "softwares": [
-        {
-          "name": "SrmyhApp",
-          "version": "9"
-        }
-      ],
-      "id": 8
-    },
-    "documents": [],
-    "mainPhoto": {
-      "fileName": "c8539836-5a0d-48bc-875d-8773de322b2e_photo.jpg",
-      "fileUrl": "https://stagestr.lucidfirm.ir/iem/sample_photo.jpg",
-      "id": 8
-    },
-    "records": [
-      {
-        "equipmentId": 8,
-        "description": "Sint aspernatur molestiae.",
-        "creationTime": "2025-05-12T05:39:00Z",
-        "lastModifyTime": "2025-05-12T05:40:00Z",
-        "documents": [
-          {
-            "fileName": "1b8abebe-a271-4bfe-ae01-63eddcc84565_doc.jpg",
-            "fileUrl": "https://stagestr.lucidfirm.ir/iem/sample_doc.jpg",
-            "id": 1
-          }
-        ],
-        "id": 1
-      },
-      {
-        "equipmentId": 8,
-        "description": "Itaque sapiente iste saepe corporis.",
-        "creationTime": "2025-05-12T05:40:00Z",
-        "lastModifyTime": "2025-05-12T05:41:00Z",
-        "documents": [
-          {
-            "fileName": "d6f8079c-974f-4711-9e1b-8fc27231c6a6_doc.jpg",
-            "fileUrl": "https://stagestr.lucidfirm.ir/iem/sample_doc.jpg",
-            "id": 2
-          }
-        ],
-        "id": 2
-      }
-    ],
-    "id": 8
-  },
-  {
-    "title": "Analyzer",
-    "equipmentVersionId": 9,
-    "productionDateTime": "2025-05-12T05:39:00Z",
-    "guid": "7cc85",
-    "description": "Quam alias tempore dolorem.",
-    "equipmentUniqueId": "ANLZ010101202505127cc85",
-    "creationTime": "2025-05-12T05:39:00Z",
-    "lastModifyTime": "2025-05-12T05:50:00Z",
-    "version": {
-      "equipmentTypeId": 9,
-      "version": "1.0.0",
-      "description": "Initial version",
-      "types": null,
-      "documents": [],
-      "id": 9
-    },
-    "type": {
-      "name": "Analyzer",
-      "description": "Signal analyzer",
-      "abberation": "ANLZ",
-      "documents": [],
-      "id": 9
-    },
-    "equipmentDetail": {
-      "os": "Linux",
-      "osVersion": "1",
-      "firmware": "1",
-      "lom": [
-        "quae"
-      ],
-      "softwares": [
-        {
-          "name": "NgynApp",
-          "version": "4"
-        }
-      ],
-      "id": 9
-    },
-    "documents": [],
-    "mainPhoto": {
-      "fileName": "e9e076bb-53db-4616-b23c-b3c1cea5ac8a_photo.jpg",
-      "fileUrl": "https://stagestr.lucidfirm.ir/iem/sample_photo.jpg",
-      "id": 9
-    },
-    "records": [
-      {
-        "equipmentId": 9,
-        "description": "Natus veritatis debitis optio.",
-        "creationTime": "2025-05-12T05:40:00Z",
-        "lastModifyTime": "2025-05-12T05:41:00Z",
-        "documents": [
-          {
-            "fileName": "f92d2549-6bd2-4476-ba5e-fe030069f60e_doc.jpg",
-            "fileUrl": "https://stagestr.lucidfirm.ir/iem/sample_doc.jpg",
-            "id": 1
-          }
-        ],
-        "id": 1
-      },
-      {
-        "equipmentId": 9,
-        "description": "Pariatur vel architecto.",
-        "creationTime": "2025-05-12T05:41:00Z",
-        "lastModifyTime": "2025-05-12T05:42:00Z",
-        "documents": [
-          {
-            "fileName": "118b6f6b-94c7-4a92-94c2-2ca253c07208_doc.jpg",
-            "fileUrl": "https://stagestr.lucidfirm.ir/iem/sample_doc.jpg",
-            "id": 2
-          }
-        ],
-        "id": 2
-      },
-      {
-        "equipmentId": 9,
-        "description": "Aliquid libero.",
-        "creationTime": "2025-05-12T05:42:00Z",
-        "lastModifyTime": "2025-05-12T05:43:00Z",
-        "documents": [
-          {
-            "fileName": "cd3b9a66-9795-4338-82f5-2536b87e6bd4_doc.jpg",
-            "fileUrl": "https://stagestr.lucidfirm.ir/iem/sample_doc.jpg",
-            "id": 3
-          }
-        ],
-        "id": 3
-      }
-    ],
-    "id": 9
-  },
-  {
-    "title": "Hub",
-    "equipmentVersionId": 10,
-    "productionDateTime": "2025-05-12T05:40:00Z",
-    "guid": "e42b6",
-    "description": "Molestias aliquid amet alias aliquid dolorum a.",
-    "equipmentUniqueId": "HUB01010120250512e42b6",
-    "creationTime": "2025-05-12T05:40:00Z",
-    "lastModifyTime": "2025-05-12T05:44:00Z",
-    "version": {
-      "equipmentTypeId": 10,
-      "version": "1.0.0",
-      "description": "Initial version",
-      "types": null,
-      "documents": [],
-      "id": 10
-    },
-    "type": {
-      "name": "Hub",
-      "description": "Connection hub",
-      "abberation": "HUB",
-      "documents": [],
-      "id": 10
-    },
-    "equipmentDetail": {
-      "os": "Linux",
-      "osVersion": "1",
-      "firmware": "1",
-      "lom": [
-        "exercitationem"
-      ],
-      "softwares": [
-        {
-          "name": "HbbApp",
-          "version": "8"
-        }
-      ],
-      "id": 10
-    },
-    "documents": [],
-    "mainPhoto": {
-      "fileName": "935a4b92-57ed-4b96-abe7-53b480fabc66_photo.jpg",
-      "fileUrl": "https://stagestr.lucidfirm.ir/iem/sample_photo.jpg",
-      "id": 10
-    },
-    "records": [
-      {
-        "equipmentId": 10,
-        "description": "Quam eligendi itaque expedita.",
-        "creationTime": "2025-05-12T05:41:00Z",
-        "lastModifyTime": "2025-05-12T05:42:00Z",
-        "documents": [
-          {
-            "fileName": "161e6c79-f733-4c41-a6e7-480e6994399b_doc.jpg",
-            "fileUrl": "https://stagestr.lucidfirm.ir/iem/sample_doc.jpg",
-            "id": 1
-          }
-        ],
-        "id": 1
-      },
-      {
-        "equipmentId": 10,
-        "description": "Nobis asperiores aliquid dolorum.",
-        "creationTime": "2025-05-12T05:42:00Z",
-        "lastModifyTime": "2025-05-12T05:43:00Z",
-        "documents": [
-          {
-            "fileName": "dfb9bc74-c5ae-4105-bb34-f5c7b7853213_doc.jpg",
-            "fileUrl": "https://stagestr.lucidfirm.ir/iem/sample_doc.jpg",
-            "id": 2
-          }
-        ],
-        "id": 2
-      }
-    ],
-    "id": 10
   }
 ]

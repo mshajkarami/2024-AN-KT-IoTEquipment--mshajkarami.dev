@@ -7,8 +7,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.example.Equipment
 import com.irisaco.iotequipment.R
+import com.irisaco.iotequipment.data.model.Equipment
 
 class EquipmentPagerAdapter(
     private var equipmentList: List<Equipment>,

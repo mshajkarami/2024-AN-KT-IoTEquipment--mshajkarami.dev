@@ -10,8 +10,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.example.Equipment
 import com.irisaco.iotequipment.R
+import com.irisaco.iotequipment.data.model.Equipment
 
 class SearchFragment : Fragment() {
 

@@ -1,6 +1,6 @@
 package com.irisaco.iotequipment.data.remote
 
-import com.example.example.Equipment
+import com.irisaco.iotequipment.data.model.Equipment
 import com.irisaco.iotequipment.data.model.Equipments
 import retrofit2.Response
 import retrofit2.http.GET

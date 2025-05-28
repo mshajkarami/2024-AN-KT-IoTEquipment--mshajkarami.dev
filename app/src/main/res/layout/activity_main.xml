@@ -22,20 +22,19 @@
             app:layout_constraintTop_toTopOf="parent"
             app:menu="@menu/toolbar_menu"
             app:navigationIcon="@drawable/ic_menu"
-            tools:layout_editor_absoluteX="0dp"
-            >
+            tools:layout_editor_absoluteX="0dp">
+
             <TextView
                 android:id="@+id/textView"
-                android:textColor="@color/md_theme_onBackground"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="سامانه مدیریت تجهیزات اینترنت اشیا"
+                android:textColor="@color/md_theme_onBackground"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_gravity="center"
-                />
+                android:textStyle="bold" />
 
         </com.google.android.material.appbar.MaterialToolbar>
 

@@ -6,3 +6,4 @@ package com.irisaco.iotequipment.data.repository
 
 class VersionRepository {
 }
+
