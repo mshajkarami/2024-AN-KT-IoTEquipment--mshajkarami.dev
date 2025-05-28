@@ -23,5 +23,17 @@
         app:layout_constraintTop_toBottomOf="@+id/searchBox"
         tools:layout_editor_absoluteX="0dp" />
 
+    <ImageButton
+        android:id="@+id/btn_fab_scan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/rec_btn_fab"
+        app:srcCompat="@drawable/ic_fab" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
