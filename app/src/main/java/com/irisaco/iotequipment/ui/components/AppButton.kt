@@ -19,7 +19,7 @@
 //
 //    private fun initialize(attr: AttributeSet) {
 //        val typedArray = context.obtainStyledAttributes(attr, R.styleable.AppButton)
-//        val text = typedArray.getString(R.styleable.AppButton_android_text)
+//        val text = typedArray.getString(R.styleable.AppButton_customText)
 //
 //        val style = typedArray.getInt(R.styleable.AppButton_buttonStyle, 0)
 //

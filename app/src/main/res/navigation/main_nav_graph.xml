@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_searchFragment_to_equipmentDetailFragment"
             app:destination="@id/equipmentDetailFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
 
     <fragment
@@ -33,7 +36,25 @@
         <argument
             android:name="equipmentId"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_equipmentDetailFragment_to_attachmentsFragment"
+            app:destination="@id/attachmentsFragment" />
+        <action
+            android:id="@+id/action_equipmentDetailFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
 
+    </fragment>
+    <fragment
+        android:id="@+id/attachmentsFragment"
+        android:name="com.irisaco.iotequipment.ui.AttachmentsFragment"
+        android:label="fragment_attachments"
+        tools:layout="@layout/fragment_attachments" >
+        <argument
+            android:name="equipmentId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_attachmentsFragment_to_equipmentDetailFragment"
+            app:destination="@id/equipmentDetailFragment" />
     </fragment>
 
 

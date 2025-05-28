@@ -23,7 +23,10 @@ class SearchViewModel(
         val retrofitService = RetrofitInstance.getRetrofitInstance().create(EquipmentApiService::class.java)
         repository = EquipmentRepository(retrofitService,application.applicationContext)
     }
+
+
 }
+
 
 
 

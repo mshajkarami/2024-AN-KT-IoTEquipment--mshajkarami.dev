@@ -1,25 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/top_nav"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/md_theme_background"
+        android:textAlignment="center"
+        app:itemTextAppearanceActive="@color/md_theme_primary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:menu="@menu/app_menu" />
+
     <TextView
         android:id="@+id/txt_equipment_name"
         android:layout_width="0dp"
-        android:layout_height="105dp"
+        android:layout_height="55dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
         android:text="@string/txt_dev_name"
         android:textColor="@color/md_theme_scrim"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/img_equipment"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/top_nav" />
 
     <TextView
         android:id="@+id/txt_equipment_detail"
@@ -28,6 +38,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/txt_dev_detail"
         android:textColor="@color/md_theme_scrim"
         android:textSize="20sp"
@@ -40,11 +51,11 @@
     <TextView
         android:id="@+id/txt_equipment_version"
         android:layout_width="0dp"
-        android:maxLines="1"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
+        android:maxLines="1"
         android:text="@string/txt_dev_version"
         android:textColor="@color/md_theme_scrim"
         android:textSize="20sp"
@@ -72,36 +83,37 @@
         android:id="@+id/img_equipment"
         android:layout_width="170dp"
         android:layout_height="120dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginStart="16dp"
         android:background="@color/md_theme_inversePrimary"
         android:src="@drawable/ic_launcher_foreground"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/top_nav" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_attachment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="80dp"
         android:background="@color/md_theme_inversePrimary"
+        android:backgroundTint="@color/md_theme_inversePrimary"
         android:contentDescription="فایل های پیوست"
         android:text="فایل های پیوست"
         app:icon="@drawable/ic_attachment"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/top_button_nav"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="TextContrastCheck" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/nav_btn_device"
+        android:id="@+id/top_button_nav"
         android:layout_width="match_parent"
-        app:menu="@menu/detail_menu"
-        android:padding="20dp"
         android:layout_height="80dp"
+        android:textAlignment="center"
+        app:itemTextAppearanceActive="@drawable/rec_btn_primary"
+        android:background="@color/md_theme_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_attachment" />
+        app:menu="@menu/detail_menu" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

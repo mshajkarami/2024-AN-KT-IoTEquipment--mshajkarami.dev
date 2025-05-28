@@ -4,12 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.irisaco.iotequipment.R
+import com.irisaco.iotequipment.ui.search.SearchFragment
+import com.irisaco.iotequipment.ui.search.SearchFragmentDirections
 import kotlinx.coroutines.launch
 
 class EquipmentDetailFragment : Fragment() {
@@ -45,6 +49,7 @@ class EquipmentDetailFragment : Fragment() {
         val versionTextView = view.findViewById<TextView>(R.id.txt_equipment_version)
         val typeTextView = view.findViewById<TextView>(R.id.txt_equipment_type)
         val descTextView = view.findViewById<TextView>(R.id.txt_equipment_detail)
+        val btnAttachment = view.findViewById<Button>(R.id.btn_attachment)
 
         lifecycleScope.launch {
             val equipment = viewModel.getEquipmentById(equipmentId)
@@ -57,6 +62,12 @@ class EquipmentDetailFragment : Fragment() {
                 titleTextView.text = "موردی یافت نشد"
             }
         }
+        btnAttachment.setOnClickListener {
+            findNavController().navigate(R.id.action_equipmentDetailFragment_to_attachmentsFragment)
+        }
     }
-
+//    private fun EquipmentDetailFragment.bindAttachmentFragment(equipmentId: Int) {
+//        val action = EquipmentDetailFragment.action_equipmentDetailFragment_to_attachmentsFragment(equipmentId)
+//        findNavController().navigate(action)
+//    }
 }
