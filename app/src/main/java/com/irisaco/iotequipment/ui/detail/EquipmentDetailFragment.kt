@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.irisaco.iotequipment.R
 import com.irisaco.iotequipment.ui.search.SearchFragment
 import com.irisaco.iotequipment.ui.search.SearchFragmentDirections
@@ -50,6 +51,13 @@ class EquipmentDetailFragment : Fragment() {
         val typeTextView = view.findViewById<TextView>(R.id.txt_equipment_type)
         val descTextView = view.findViewById<TextView>(R.id.txt_equipment_detail)
         val btnAttachment = view.findViewById<Button>(R.id.btn_attachment)
+        // Add Top Nav
+//        val bottomNavigationView = view.findViewById<BottomNavigationView>(R.id.btn_top_nav)
+//        val menu = bottomNavigationView.menu
+//        val homeItem = menu.findItem(R.id.homeFragment)
+//        homeItem.isEnabled = false
+
+        // open the Attachment Fragment
 
         lifecycleScope.launch {
             val equipment = viewModel.getEquipmentById(equipmentId)
@@ -65,9 +73,6 @@ class EquipmentDetailFragment : Fragment() {
         btnAttachment.setOnClickListener {
             findNavController().navigate(R.id.action_equipmentDetailFragment_to_attachmentsFragment)
         }
+
     }
-//    private fun EquipmentDetailFragment.bindAttachmentFragment(equipmentId: Int) {
-//        val action = EquipmentDetailFragment.action_equipmentDetailFragment_to_attachmentsFragment(equipmentId)
-//        findNavController().navigate(action)
-//    }
 }

@@ -19,25 +19,37 @@
 //
 //    private fun initialize(attr: AttributeSet) {
 //        val typedArray = context.obtainStyledAttributes(attr, R.styleable.AppButton)
-//        val text = typedArray.getString(R.styleable.AppButton_customText)
+////        val text = typedArray.getString(R.styleable.AppButton_customText)
 //
-//        val style = typedArray.getInt(R.styleable.AppButton_buttonStyle, 0)
+////        val style = typedArray.getInt(R.styleable.AppButton_buttonStyle, 0)
 //
-//        binding.btnText.text = text
+////        binding.btnText.text = text
 //
 //        when (style) {
 //            0 -> { // Primary
 //                binding.btnText.setBackgroundResource(R.drawable.rec_btn_primary)
-//                binding.btnText.setTextColor(ContextCompat.getColor(context, R.color.md_theme_onPrimary))
+//                binding.btnText.setTextColor(
+//                    ContextCompat.getColor(
+//                        context,
+//                        R.color.md_theme_onPrimary
+//                    )
+//                )
 //            }
+//
 //            1 -> { // Secondary
 //                binding.btnText.setBackgroundResource(R.drawable.rec_btn_secondary)
-//                binding.btnText.setTextColor(ContextCompat.getColor(context, R.color.md_theme_onSecondary))
+//                binding.btnText.setTextColor(
+//                    ContextCompat.getColor(
+//                        context,
+//                        R.color.md_theme_onSecondary
+//                    )
+//                )
 //            }
 //        }
 //        typedArray.recycle()
 //
 //    }
+//
 //    fun setText(text: String) {
 //        binding.btnText.text = text
 //    }
