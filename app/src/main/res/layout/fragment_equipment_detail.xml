@@ -5,115 +5,75 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/btn_top_nav"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/md_theme_background"
-        android:textAlignment="center"
-        app:itemTextAppearanceActive="@color/md_theme_primary"
+        android:layout_height="65dp"
+        android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:menu="@menu/app_menu" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/txt_equipment_name"
-        android:layout_width="0dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/txt_dev_name"
-        android:textColor="@color/md_theme_scrim"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/img_equipment"
-        app:layout_constraintTop_toBottomOf="@+id/btn_top_nav" />
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_state_description"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/txt_equipment_detail"
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="توضیحات" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="لاگ ها" />
+
+
+        </com.google.android.material.tabs.TabLayout>
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="8dp"
-        android:text="@string/txt_dev_detail"
-        android:textColor="@color/md_theme_scrim"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_attachment"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_equipment_type" />
-
-    <TextView
-        android:id="@+id/txt_equipment_version"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:maxLines="1"
-        android:text="@string/txt_dev_version"
-        android:textColor="@color/md_theme_scrim"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/img_equipment"
-        app:layout_constraintTop_toBottomOf="@+id/txt_equipment_name" />
-
-    <TextView
-        android:id="@+id/txt_equipment_type"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/txt_dev_type"
-        android:textColor="@color/md_theme_scrim"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/img_equipment"
-        app:layout_constraintTop_toBottomOf="@+id/txt_equipment_version" />
-
-    <ImageView
-        android:id="@+id/img_equipment"
-        android:layout_width="170dp"
-        android:layout_height="120dp"
-        android:layout_marginStart="16dp"
-        android:background="@color/md_theme_inversePrimary"
-        android:src="@drawable/ic_launcher_foreground"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_top_nav" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_attachment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/md_theme_inversePrimary"
-        android:backgroundTint="@color/md_theme_inversePrimary"
-        android:contentDescription="فایل های پیوست"
-        android:text="فایل های پیوست"
-        app:icon="@drawable/ic_attachment"
         app:layout_constraintBottom_toTopOf="@+id/top_button_nav"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="TextContrastCheck" />
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
+
+    <LinearLayout
         android:id="@+id/top_button_nav"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:textAlignment="center"
-        app:itemTextAppearanceActive="@drawable/rec_btn_primary"
-        android:background="@color/md_theme_background"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/detail_menu" />
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="اطلاعات اولیه تجهیزات" />
+
+        <Space
+            android:layout_width="8dp"
+            android:layout_height="wrap_content" />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:backgroundTint="@color/md_theme_background"
+            app:strokeColor="@color/md_theme_outline"
+            app:strokeWidth="1dp"
+            android:textColor="@color/black"
+            android:text="سخت افزار و نرم افزار" />
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

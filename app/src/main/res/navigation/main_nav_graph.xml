@@ -36,9 +36,12 @@
         <argument
             android:name="equipmentId"
             app:argType="integer" />
+
         <action
-            android:id="@+id/action_equipmentDetailFragment_to_attachmentsFragment"
+            android:id="@+id/action_global_attachmentsFragment"
+            app:launchSingleTop="true"
             app:destination="@id/attachmentsFragment" />
+
         <action
             android:id="@+id/action_equipmentDetailFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
