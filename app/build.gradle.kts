@@ -60,8 +60,21 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     // Crate Test Api
     implementation("com.squareup.okhttp3:mockwebserver:4.9.3")
-
-    // add android core
+    // Android core
     implementation("androidx.core:core:1.12.0")
+    // BarCode Scanning -with Google Play Service
+    implementation ("com.google.mlkit:barcode-scanning:17.3.0")
+    // Camerax
+    val camerax_version = "1.2.2"
+    implementation ("androidx.camera:camera-core:${camerax_version}")
+    implementation ("androidx.camera:camera-camera2:${camerax_version}")
+    implementation ("androidx.camera:camera-lifecycle:${camerax_version}")
+    implementation ("androidx.camera:camera-video:${camerax_version}")
+
+    implementation ("androidx.camera:camera-view:${camerax_version}")
+    implementation ("androidx.camera:camera-extensions:${camerax_version}")
+
+    //
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-guava:1.7.3")
 
 }

@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
         toolbar = findViewById(R.id.materialToolbar)
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.fragmentContainerView) as androidx.navigation.fragment.NavHostFragment
