@@ -11,7 +11,7 @@
     <string name="device_version_label">نسخه: %1$s</string>
 
     <string name="txt_dev_detail">توضیحات:</string>
-    <string name="device_detail_label">توضیحات: %1$s</string>
+    <string name="device_detail_label">توضیحات: %1$s\n</string>
 
     <string name="txt_dev_type">نوع: </string>
     <string name="device_type_label">نوع: %1$s</string>

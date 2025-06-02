@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -47,8 +48,10 @@ class DescriptionFragment : Fragment() {
         val versionTextView = view.findViewById<TextView>(R.id.txt_equipment_version)
         val typeTextView = view.findViewById<TextView>(R.id.txt_equipment_type)
         val descTextView = view.findViewById<TextView>(R.id.txt_equipment_detail)
+//        val buttonNav = view.findViewById<LinearLayout>(R.id.top_button_nav)
 
         val btnAttachment = view.findViewById<Button>(R.id.btn_attachment)
+
 
         lifecycleScope.launch {
             val equipment = viewModel.getEquipmentById(equipmentId)
@@ -64,7 +67,7 @@ class DescriptionFragment : Fragment() {
                 typeTextView.text = getString(R.string.device_type_label, equipmentType)
 
                 val equipmentDesc = equipment.description
-                typeTextView.text = getString(R.string.device_detail_label, equipmentDesc)
+                descTextView.text = equipmentDesc
 
             } else {
                 titleTextView.text = "موردی یافت نشد"

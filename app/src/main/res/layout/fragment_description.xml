@@ -8,36 +8,20 @@
     <TextView
         android:id="@+id/txt_equipment_name"
         android:layout_width="0dp"
-        android:layout_height="60dp"
+        android:layout_height="30dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="16dp"
         android:maxLines="2"
-        tools:text="@string/txt_dev_name"
         android:textColor="@color/md_theme_scrim"
         android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/img_equipment"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/txt_dev_name" />
 
-    <TextView
-        android:id="@+id/txt_equipment_detail"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="8dp"
-        tools:text="@string/txt_dev_detail"
-        android:textColor="@color/md_theme_scrim"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_attachment"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_equipment_type"
-        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/txt_equipment_version"
@@ -46,6 +30,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
+        android:textStyle="bold"
         android:maxLines="1"
         tools:text="@string/txt_dev_version"
         android:textColor="@color/md_theme_scrim"
@@ -62,6 +47,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
+        android:textStyle="bold"
         tools:text="@string/txt_dev_type"
         android:textColor="@color/md_theme_scrim"
         android:textSize="16sp"
@@ -72,7 +58,7 @@
 
     <ImageView
         android:id="@+id/img_equipment"
-        android:layout_width="150dp"
+        android:layout_width="120dp"
         android:layout_height="100dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
@@ -85,16 +71,93 @@
         android:id="@+id/btn_attachment"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        app:cornerRadius="0dp"
         android:backgroundTint="@color/md_theme_inversePrimary"
         android:contentDescription="فایل های پیوست"
         android:text="فایل های پیوست"
         android:textColor="@color/black"
+        app:cornerRadius="0dp"
         app:icon="@drawable/ic_attachment"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/top_button_nav"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="TextContrastCheck" />
+
+
+    <LinearLayout
+        android:id="@+id/top_button_nav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="اطلاعات اولیه تجهیزات" />
+
+        <Space
+            android:layout_width="8dp"
+            android:layout_height="wrap_content" />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:backgroundTint="@color/md_theme_background"
+            app:strokeColor="@color/md_theme_outline"
+            app:strokeWidth="1dp"
+            android:textColor="@color/black"
+            android:text="سخت افزار و نرم افزار" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:text="@string/txt_dev_detail"
+        android:textColor="@color/md_theme_scrim"
+        android:layout_height="30dp"
+        android:textStyle="bold"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_equipment_type" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_attachment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/txt_equipment_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
+                android:lineSpacingExtra="4dp"
+                android:textColor="@color/md_theme_scrim"
+                android:textSize="16sp"
+                tools:text="@string/txt_dev_detail" />
+        </LinearLayout>
+    </ScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
