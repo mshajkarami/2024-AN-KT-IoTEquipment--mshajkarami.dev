@@ -1,17 +1,27 @@
 package com.irisaco.iotequipment
 
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.navigation.findNavController
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.appbar.MaterialToolbar
+import com.irisaco.iotequipment.auth.AuthViewModel
+import com.irisaco.iotequipment.auth.AuthViewModelFactory
+import com.irisaco.iotequipment.data.remote.ApiClient
+import com.irisaco.iotequipment.data.repository.AuthRepository
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private lateinit var toolbar: MaterialToolbar
+    private lateinit var authViewModel: AuthViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +32,28 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        val authDao = MyApp.database.authTokenDao()
+        val authRepository = AuthRepository(ApiClient.authService,authDao)
+
+        val factory = AuthViewModelFactory(authRepository)
+        authViewModel = ViewModelProvider(this, factory)[AuthViewModel::class.java]
+
+        authViewModel.token.observe(this) { token ->
+            if (token != null) {
+                Log.d("Auth", "Access Token: ${token.accessToken}")
+                lifecycleScope.launch {
+                    authRepository.saveToken(token)
+                }
+            }
+        }
+        authViewModel.error.observe(this) { error ->
+            if (error != null) {
+                Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
+                Log.e("Auth","Error is : $error")
+            }
+        }
+        // Login
+        authViewModel.login("saleh", "123456")
 
         toolbar = findViewById(R.id.materialToolbar)
         val navHostFragment = supportFragmentManager
@@ -46,5 +78,6 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
+
     }
 }

@@ -7,11 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.irisaco.iotequipment.MyApp
 import com.irisaco.iotequipment.R
 import com.irisaco.iotequipment.data.model.Equipment
+import com.irisaco.iotequipment.data.remote.ApiClient
+import com.irisaco.iotequipment.data.repository.AuthRepository
+import kotlinx.coroutines.launch
 
 class SearchFragment : Fragment() {
 
@@ -33,6 +38,16 @@ class SearchFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
         observeViewModel()
+
+        val authDao = MyApp.database.authTokenDao()
+        val authRepository = AuthRepository(ApiClient.authService,authDao)
+
+        lifecycleScope.launch {
+            val getToken = authRepository.getSavedToken()
+            Log.d("Auth","AccessToken : ${getToken!!.accessToken}")
+            Log.d("Auth","RefreshToken : ${getToken!!.refreshToken}")
+        }
+
 
         return view
     }

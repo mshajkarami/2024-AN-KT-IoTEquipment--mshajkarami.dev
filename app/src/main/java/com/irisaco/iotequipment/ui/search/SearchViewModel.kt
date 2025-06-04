@@ -5,8 +5,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.irisaco.iotequipment.data.model.Equipments
+import com.irisaco.iotequipment.data.remote.ApiClient
 import com.irisaco.iotequipment.data.remote.EquipmentApiService
-import com.irisaco.iotequipment.data.remote.RetrofitInstance
 import com.irisaco.iotequipment.data.repository.EquipmentRepository
 import kotlinx.coroutines.Dispatchers
 class SearchViewModel(
@@ -20,7 +20,7 @@ class SearchViewModel(
     val equipmentList: LiveData<Equipments> get() = _equipmentList
 
     init {
-        val retrofitService = RetrofitInstance.getRetrofitInstance().create(EquipmentApiService::class.java)
+        val retrofitService = ApiClient.apiService
         repository = EquipmentRepository(retrofitService,application.applicationContext)
     }
 

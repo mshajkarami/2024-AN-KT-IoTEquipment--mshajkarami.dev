@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("androidx.navigation.safeargs")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -58,6 +59,8 @@ dependencies {
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:3.0.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.retrofit2:converter-scalars:2.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
     // Crate Test Api
     implementation("com.squareup.okhttp3:mockwebserver:4.9.3")
     // Android core
@@ -70,11 +73,14 @@ dependencies {
     implementation ("androidx.camera:camera-camera2:${camerax_version}")
     implementation ("androidx.camera:camera-lifecycle:${camerax_version}")
     implementation ("androidx.camera:camera-video:${camerax_version}")
-
     implementation ("androidx.camera:camera-view:${camerax_version}")
     implementation ("androidx.camera:camera-extensions:${camerax_version}")
-
     //
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-guava:1.7.3")
-
+    // Room Database
+    val room_version = "2.7.1"
+    implementation("androidx.room:room-runtime:$room_version")
+    ksp("androidx.room:room-compiler:$room_version")
+    // AppAuth
+    implementation("net.openid:appauth:0.11.1")
 }
