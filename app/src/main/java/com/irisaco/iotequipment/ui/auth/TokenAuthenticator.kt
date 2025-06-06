@@ -1,4 +1,4 @@
-package com.irisaco.iotequipment.auth
+package com.irisaco.iotequipment.ui.auth
 import com.irisaco.iotequipment.data.repository.AuthRepository
 import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator

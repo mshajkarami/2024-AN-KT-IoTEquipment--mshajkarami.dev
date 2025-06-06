@@ -1,4 +1,4 @@
-package com.irisaco.iotequipment
+package com.irisaco.iotequipment.utils
 
 import android.media.Image
 import android.util.Log
@@ -14,7 +14,6 @@ import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
 import com.irisaco.iotequipment.ui.components.BottomDialog
-
 
 class QRImageAnalyzer(private val fragmentManager: FragmentManager) : ImageAnalysis.Analyzer {
 

@@ -1,4 +1,4 @@
-package com.irisaco.iotequipment.ui.detail.loglist
+package com.irisaco.iotequipment.ui.detail.log.loglist
 
 import android.os.Bundle
 import android.view.LayoutInflater

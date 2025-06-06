@@ -1,5 +1,6 @@
-package com.irisaco.iotequipment
+package com.irisaco.iotequipment.ui.scanner
 
+import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Size
@@ -15,15 +16,16 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.irisaco.iotequipment.R
+import com.irisaco.iotequipment.utils.QRImageAnalyzer
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.guava.await
 import kotlinx.coroutines.launch
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
-import android.Manifest
-import kotlinx.coroutines.guava.await
 
 class QrScannerActivity : AppCompatActivity() {
 

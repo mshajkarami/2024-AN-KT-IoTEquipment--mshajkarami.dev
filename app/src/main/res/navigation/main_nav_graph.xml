@@ -49,7 +49,7 @@
     </fragment>
     <fragment
         android:id="@+id/attachmentsFragment"
-        android:name="com.irisaco.iotequipment.ui.AttachmentsFragment"
+        android:name="com.irisaco.iotequipment.ui.attachments.AttachmentsFragment"
         android:label="fragment_attachments"
         tools:layout="@layout/fragment_attachments" >
         <argument

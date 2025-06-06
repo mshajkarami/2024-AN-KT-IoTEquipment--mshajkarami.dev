@@ -82,5 +82,5 @@ dependencies {
     implementation("androidx.room:room-runtime:$room_version")
     ksp("androidx.room:room-compiler:$room_version")
     // AppAuth
-    implementation("net.openid:appauth:0.11.1")
+//    implementation("net.openid:appauth:0.11.1")
 }

@@ -1,4 +1,4 @@
-package com.irisaco.iotequipment.auth
+package com.irisaco.iotequipment.ui.auth
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

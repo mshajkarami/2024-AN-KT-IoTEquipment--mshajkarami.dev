@@ -15,14 +15,14 @@ class AuthRepository(
             clientId = "iem",
             username = username,
             password = password,
-            clientSecret = "rBiELasE2WO06blyoVTSTCraWzcmTDKX"
+            clientSecret = "4VrcHu9lW4misnkCjdEuSknNCyZ4QTbx"
         )
     }
     suspend fun refreshToken(oldRefreshToken: String): KeycloakTokenResponse? {
         val response = authService.refreshToken(
             refreshToken = oldRefreshToken,
             clientId = "iem",
-            clientSecret = "rBiELasE2WO06blyoVTSTCraWzcmTDKX"
+            clientSecret = "4VrcHu9lW4misnkCjdEuSknNCyZ4QTbx"
         )
 
         return if (response.isSuccessful) {

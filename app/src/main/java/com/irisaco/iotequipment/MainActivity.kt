@@ -12,10 +12,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.appbar.MaterialToolbar
-import com.irisaco.iotequipment.auth.AuthViewModel
-import com.irisaco.iotequipment.auth.AuthViewModelFactory
+import com.irisaco.iotequipment.ui.auth.AuthViewModel
+import com.irisaco.iotequipment.ui.auth.AuthViewModelFactory
 import com.irisaco.iotequipment.data.remote.ApiClient
 import com.irisaco.iotequipment.data.repository.AuthRepository
+import com.irisaco.iotequipment.di.MyApplication
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -32,7 +33,7 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        val authDao = MyApp.database.authTokenDao()
+        val authDao = MyApplication.database.authTokenDao()
         val authRepository = AuthRepository(ApiClient.authService,authDao)
 
         val factory = AuthViewModelFactory(authRepository)

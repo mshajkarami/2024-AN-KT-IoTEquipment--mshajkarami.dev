@@ -1,14 +1,13 @@
-package com.irisaco.iotequipment
+package com.irisaco.iotequipment.di
 
 import android.app.Application
 import androidx.room.Room
 import com.irisaco.iotequipment.data.local.AppDatabase
 
-
-class MyApp : Application() {
+class MyApplication : Application() {
 
     companion object {
-        lateinit var instance: MyApp
+        lateinit var instance: MyApplication
             private set
 
         lateinit var database: AppDatabase
