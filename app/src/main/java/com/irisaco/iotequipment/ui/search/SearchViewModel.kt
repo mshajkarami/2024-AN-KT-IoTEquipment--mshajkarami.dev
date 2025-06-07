@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
+import com.irisaco.iotequipment.data.model.Equipment
 import com.irisaco.iotequipment.data.model.Equipments
 import com.irisaco.iotequipment.data.remote.ApiClient
 import com.irisaco.iotequipment.data.remote.EquipmentApiService
@@ -17,7 +18,7 @@ class SearchViewModel(
         val result = repository.getEquipments(true)
         emit(result)
     }
-    val equipmentList: LiveData<Equipments> get() = _equipmentList
+    val equipmentList: LiveData<List<Equipment>> get() = _equipmentList
 
     init {
         val retrofitService = ApiClient.apiService

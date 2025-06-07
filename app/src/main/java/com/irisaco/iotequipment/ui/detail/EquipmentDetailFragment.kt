@@ -21,7 +21,8 @@ class EquipmentDetailFragment : Fragment() {
         super.onCreate(savedInstanceState)
         arguments?.let {
             val args = EquipmentDetailFragmentArgs.fromBundle(it)
-            equipmentId = args.equipmentId        }
+            equipmentId = args.equipmentId
+        }
     }
 
     override fun onCreateView(
@@ -38,6 +39,7 @@ class EquipmentDetailFragment : Fragment() {
         val args = EquipmentDetailFragmentArgs.fromBundle(requireArguments())
         val adapter = DeviceDetailPagerAdapter (this,args.equipmentId)
         viewPager.adapter = adapter
+        viewPager.offscreenPageLimit = 2
 
         TabLayoutMediator(tabLayout,viewPager){
             tab,position -> tab.text = when (position) {

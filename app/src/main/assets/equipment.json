@@ -1,125 +1,205 @@
-[
-  {
-    "title": "f",
-    "equipmentVersionId": 1,
-    "productionDateTime": "2025-05-28T04:52:15.357Z",
-    "guid": "EDLFE",
-    "description": "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.\nلورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.\nلورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.\nلورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.\n",
-    "equipmentUniqueId": "SNSR01010120250528EDLFE",
-    "creationTime": "2025-05-28T04:52:31.258958Z",
-    "lastModifyTime": null,
-    "version": {
-      "equipmentTypeId": 1,
-      "version": "1.0.0",
-      "description": "Initial version",
-      "types": null,
-      "documents": [],
-      "id": 1
-    },
-    "type": {
-      "name": "Sensor",
-      "description": "Temperature sensor",
-      "abberation": "SNSR",
-      "documents": [],
-      "id": 1
-    },
-    "documents": [],
-    "mainPhoto": null,
-    "records": [],
-    "equipmentLOM": [
+{
+  "data": {
+    "currentPage": 1,
+    "totalPages": 1,
+    "totalCount": 3,
+    "items": [
       {
-        "isDeleted": false,
-        "name": "رله",
-        "quantity": 0,
-        "supplier": "d",
-        "equipmentId": 1,
-        "equipment": null,
+        "title": "f",
+        "equipmentVersionId": 1,
+        "productionDateTime": "2025-05-28T04:52:15.357Z",
+        "guid": "EDLFE",
+        "description": "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.\nلورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.\nلورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.\nلورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.\n",
+        "equipmentUniqueId": "SNSR01010120250528EDLFE",
+        "creationTime": "2025-05-28T04:52:31.258958Z",
+        "lastModifyTime": null,
+        "version": {
+          "equipmentTypeId": 1,
+          "version": "1.0.0",
+          "description": "Initial version",
+          "types": null,
+          "documents": [],
+          "id": 1
+        },
+        "type": {
+          "name": "Sensor",
+          "description": "Temperature sensor",
+          "abberation": "SNSR",
+          "documents": [],
+          "id": 1
+        },
+        "documents": [],
+        "mainPhoto": null,
+        "records": [
+          {
+            "description": "Temperature Sensor - Zone A",
+            "creationTime": "2025-06-01T08:00:00Z",
+            "lastModifyTime": "2025-06-06T10:15:00Z",
+            "documents": [],
+            "id": 101
+          },
+          {
+            "description": "Pressure Gauge - Line B",
+            "creationTime": "2025-06-02T09:10:00Z",
+            "lastModifyTime": "2025-06-06T10:20:00Z",
+            "documents": [],
+            "id": 102
+          },
+          {
+            "description": "Flow Meter - Tank 3",
+            "creationTime": "2025-06-03T07:45:00Z",
+            "lastModifyTime": "2025-06-06T10:25:00Z",
+            "documents": [],
+            "id": 103
+          },
+          {
+            "description": "Gas Analyzer - Section 1",
+            "creationTime": "2025-06-01T13:00:00Z",
+            "lastModifyTime": "2025-06-06T10:30:00Z",
+            "documents": [],
+            "id": 104
+          },
+          {
+            "description": "Level Transmitter - Storage Tank",
+            "creationTime": "2025-06-02T15:20:00Z",
+            "lastModifyTime": "2025-06-06T10:35:00Z",
+            "documents": [],
+            "id": 105
+          },
+          {
+            "description": "Motor Vibration Sensor - Unit 5",
+            "creationTime": "2025-06-03T06:40:00Z",
+            "lastModifyTime": "2025-06-06T10:40:00Z",
+            "documents": [],
+            "id": 106
+          },
+          {
+            "description": "Smart Valve Controller - Loop 2",
+            "creationTime": "2025-06-01T11:30:00Z",
+            "lastModifyTime": "2025-06-06T10:45:00Z",
+            "documents": [],
+            "id": 107
+          },
+          {
+            "description": "Ultrasonic Sensor - Conveyor 1",
+            "creationTime": "2025-06-02T10:50:00Z",
+            "lastModifyTime": "2025-06-06T10:50:00Z",
+            "documents": [],
+            "id": 108
+          },
+          {
+            "description": "pH Meter - Wastewater",
+            "creationTime": "2025-06-03T12:00:00Z",
+            "lastModifyTime": "2025-06-06T10:55:00Z",
+            "documents": [],
+            "id": 109
+          },
+          {
+            "description": "Thermal Camera - Furnace Zone",
+            "creationTime": "2025-06-01T14:10:00Z",
+            "lastModifyTime": "2025-06-06T11:00:00Z",
+            "documents": [],
+            "id": 110
+          }
+        ],
+        "equipmentLOM": [
+          {
+            "isDeleted": false,
+            "name": "رله",
+            "quantity": 0,
+            "supplier": "d",
+            "equipmentId": 1,
+            "equipment": null,
+            "id": 1
+          }
+        ],
+        "equipmentConfigurations": "[{\"key\":\"f\",\"value\":\"f\"}]",
         "id": 1
-      }
-    ],
-    "equipmentConfigurations": "[{\"key\":\"f\",\"value\":\"f\"}]",
-    "id": 1
-  },
-  {
-    "title": "trt",
-    "equipmentVersionId": 1,
-    "productionDateTime": "2025-05-28T05:32:08.883Z",
-    "guid": "TZRXC",
-    "description": "trt",
-    "equipmentUniqueId": "SNSR01010120250528TZRXC",
-    "creationTime": "2025-05-28T05:32:44.156914Z",
-    "lastModifyTime": null,
-    "version": {
-      "equipmentTypeId": 1,
-      "version": "1.0.0",
-      "description": "Initial version",
-      "types": null,
-      "documents": [],
-      "id": 1
-    },
-    "type": {
-      "name": "Sensor",
-      "description": "Temperature sensor",
-      "abberation": "SNSR",
-      "documents": [],
-      "id": 1
-    },
-    "documents": [],
-    "mainPhoto": null,
-    "records": [],
-    "equipmentLOM": [
+      },
       {
-        "isDeleted": false,
-        "name": "",
-        "quantity": 0,
-        "supplier": "",
-        "equipmentId": 2,
-        "equipment": null,
+        "title": "trt",
+        "equipmentVersionId": 1,
+        "productionDateTime": "2025-05-28T05:32:08.883Z",
+        "guid": "TZRXC",
+        "description": "trt",
+        "equipmentUniqueId": "SNSR01010120250528TZRXC",
+        "creationTime": "2025-05-28T05:32:44.156914Z",
+        "lastModifyTime": null,
+        "version": {
+          "equipmentTypeId": 1,
+          "version": "1.0.0",
+          "description": "Initial version",
+          "types": null,
+          "documents": [],
+          "id": 1
+        },
+        "type": {
+          "name": "Sensor",
+          "description": "Temperature sensor",
+          "abberation": "SNSR",
+          "documents": [],
+          "id": 1
+        },
+        "documents": [],
+        "mainPhoto": null,
+        "records": [],
+        "equipmentLOM": [
+          {
+            "isDeleted": false,
+            "name": "",
+            "quantity": 0,
+            "supplier": "",
+            "equipmentId": 2,
+            "equipment": null,
+            "id": 2
+          }
+        ],
+        "equipmentConfigurations": "[{\"key\":\"gg\",\"value\":\"fg\"}]",
         "id": 2
-      }
-    ],
-    "equipmentConfigurations": "[{\"key\":\"gg\",\"value\":\"fg\"}]",
-    "id": 2
-  },
-  {
-    "title": "fs",
-    "equipmentVersionId": 1,
-    "productionDateTime": "2025-05-28T05:33:00.079Z",
-    "guid": "KVPVO",
-    "description": "f",
-    "equipmentUniqueId": "SNSR01010120250528KVPVO",
-    "creationTime": "2025-05-28T05:33:08.714094Z",
-    "lastModifyTime": null,
-    "version": {
-      "equipmentTypeId": 1,
-      "version": "1.0.0",
-      "description": "Initial version",
-      "types": null,
-      "documents": [],
-      "id": 1
-    },
-    "type": {
-      "name": "Sensor",
-      "description": "Temperature sensor",
-      "abberation": "SNSR",
-      "documents": [],
-      "id": 1
-    },
-    "documents": [],
-    "mainPhoto": null,
-    "records": [],
-    "equipmentLOM": [
+      },
       {
-        "isDeleted": false,
-        "name": "",
-        "quantity": 0,
-        "supplier": "",
-        "equipmentId": 3,
-        "equipment": null,
+        "title": "fs",
+        "equipmentVersionId": 1,
+        "productionDateTime": "2025-05-28T05:33:00.079Z",
+        "guid": "KVPVO",
+        "description": "f",
+        "equipmentUniqueId": "SNSR01010120250528KVPVO",
+        "creationTime": "2025-05-28T05:33:08.714094Z",
+        "lastModifyTime": null,
+        "version": {
+          "equipmentTypeId": 1,
+          "version": "1.0.0",
+          "description": "Initial version",
+          "types": null,
+          "documents": [],
+          "id": 1
+        },
+        "type": {
+          "name": "Sensor",
+          "description": "Temperature sensor",
+          "abberation": "SNSR",
+          "documents": [],
+          "id": 1
+        },
+        "documents": [],
+        "mainPhoto": null,
+        "records": [],
+        "equipmentLOM": [
+          {
+            "isDeleted": false,
+            "name": "",
+            "quantity": 0,
+            "supplier": "",
+            "equipmentId": 3,
+            "equipment": null,
+            "id": 3
+          }
+        ],
+        "equipmentConfigurations": "[{\"key\":\"\",\"value\":\"\"}]",
         "id": 3
       }
-    ],
-    "equipmentConfigurations": "[{\"key\":\"\",\"value\":\"\"}]",
-    "id": 3
-  }
-]
+    ]
+  },
+  "status": 200,
+  "message": "عملیات موفقیت آمیز بود"
+}

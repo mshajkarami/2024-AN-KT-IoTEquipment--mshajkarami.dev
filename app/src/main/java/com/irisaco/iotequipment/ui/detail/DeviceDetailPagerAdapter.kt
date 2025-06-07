@@ -3,7 +3,7 @@ package com.irisaco.iotequipment.ui.detail
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.irisaco.iotequipment.ui.detail.descriptin.DescriptionFragment
+import com.irisaco.iotequipment.ui.detail.description.DescriptionFragment
 import com.irisaco.iotequipment.ui.detail.log.loglist.LogListFragment
 
 

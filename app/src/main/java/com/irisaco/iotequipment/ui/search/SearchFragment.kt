@@ -9,13 +9,16 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.textfield.TextInputEditText
 import com.irisaco.iotequipment.di.MyApplication
 import com.irisaco.iotequipment.R
 import com.irisaco.iotequipment.data.model.Equipment
 import com.irisaco.iotequipment.data.remote.ApiClient
 import com.irisaco.iotequipment.data.repository.AuthRepository
+import com.irisaco.iotequipment.ui.detail.EquipmentDetailFragmentArgs
 import kotlinx.coroutines.launch
 
 class SearchFragment : Fragment() {
@@ -23,7 +26,16 @@ class SearchFragment : Fragment() {
     private lateinit var equipmentList: List<Equipment>
     private val viewModel: SearchViewModel by viewModels()
     private lateinit var adapter: EquipmentPagerAdapter
+    private lateinit var searchBar: TextInputEditText
 
+    private val args: SearchFragmentArgs by navArgs()
+
+    private var equipmentIdUnique: String? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        equipmentIdUnique = args.equipmentIdUnique
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,8 +43,10 @@ class SearchFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_search, container, false)
         val recyclerView = view.findViewById<RecyclerView>(R.id.search_recyclerView)
-        adapter = EquipmentPagerAdapter(emptyList()) {
-            equipmentId ->
+
+        searchBar = view.findViewById(R.id.search_bar)
+
+        adapter = EquipmentPagerAdapter(emptyList()) { equipmentId ->
             bindDetailFragment(equipmentId)
         }
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -40,13 +54,15 @@ class SearchFragment : Fragment() {
         observeViewModel()
 
         val authDao = MyApplication.database.authTokenDao()
-        val authRepository = AuthRepository(ApiClient.authService,authDao)
+        val authRepository = AuthRepository(ApiClient.authService, authDao)
 
         lifecycleScope.launch {
             val getToken = authRepository.getSavedToken()
-            Log.d("Auth","AccessToken : ${getToken!!.accessToken}")
-            Log.d("Auth","RefreshToken : ${getToken!!.refreshToken}")
+            Log.d("Auth", "AccessToken : ${getToken!!.accessToken}")
+            Log.d("Auth", "RefreshToken : ${getToken!!.refreshToken}")
         }
+
+        searchBar.setText(equipmentIdUnique)
 
 
         return view

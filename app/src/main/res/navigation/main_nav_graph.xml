@@ -19,6 +19,11 @@
         android:name="com.irisaco.iotequipment.ui.search.SearchFragment"
         tools:layout="@layout/fragment_search"
         android:label="SearchFragment" >
+        <argument
+            android:name="equipmentIdUnique"
+            app:argType="string"
+            android:defaultValue=""
+            />
         <action
             android:id="@+id/action_searchFragment_to_equipmentDetailFragment"
             app:destination="@id/equipmentDetailFragment" />

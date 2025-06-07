@@ -9,7 +9,7 @@
         "equipmentVersionId": 1,
         "productionDateTime": "2025-05-28T04:52:15.357Z",
         "guid": "EDLFE",
-        "description": "f",
+        "description": "fdfasfsdas",
         "equipmentUniqueId": "SNSR01010120250528EDLFE",
         "creationTime": "2025-05-28T04:52:31.258958Z",
         "lastModifyTime": null,
@@ -30,7 +30,29 @@
         },
         "documents": [],
         "mainPhoto": null,
-        "records": [],
+        "records": [
+          {
+            "description": "Temperature Sensor - Zone A",
+            "creationTime": "2025-06-01T08:00:00Z",
+            "lastModifyTime": "2025-06-06T10:15:00Z",
+            "documents": [],
+            "id": 101
+          },
+          {
+            "description": "Pressure Gauge - Line B",
+            "creationTime": "2025-06-02T09:10:00Z",
+            "lastModifyTime": "2025-06-06T10:20:00Z",
+            "documents": [],
+            "id": 102
+          },
+          {
+            "description": "Flow Meter - Tank 3",
+            "creationTime": "2025-06-03T07:45:00Z",
+            "lastModifyTime": "2025-06-06T10:25:00Z",
+            "documents": [],
+            "id": 103
+          }
+        ],
         "equipmentLOM": [
           {
             "isDeleted": false,
@@ -71,7 +93,29 @@
         },
         "documents": [],
         "mainPhoto": null,
-        "records": [],
+        "records": [
+          {
+            "description": "Temperature Sensor - Zone A",
+            "creationTime": "2025-06-01T08:00:00Z",
+            "lastModifyTime": "2025-06-06T10:15:00Z",
+            "documents": [],
+            "id": 101
+          },
+          {
+            "description": "Pressure Gauge - Line B",
+            "creationTime": "2025-06-02T09:10:00Z",
+            "lastModifyTime": "2025-06-06T10:20:00Z",
+            "documents": [],
+            "id": 102
+          },
+          {
+            "description": "Flow Meter - Tank 3",
+            "creationTime": "2025-06-03T07:45:00Z",
+            "lastModifyTime": "2025-06-06T10:25:00Z",
+            "documents": [],
+            "id": 103
+          }
+        ],
         "equipmentLOM": [
           {
             "isDeleted": false,
@@ -112,7 +156,29 @@
         },
         "documents": [],
         "mainPhoto": null,
-        "records": [],
+        "records": [
+          {
+            "description": "Flow Meter - Tank 3",
+            "creationTime": "2025-06-03T07:45:00Z",
+            "lastModifyTime": "2025-06-06T10:25:00Z",
+            "documents": [],
+            "id": 103
+          },
+          {
+            "description": "Gas Analyzer - Section 1",
+            "creationTime": "2025-06-01T13:00:00Z",
+            "lastModifyTime": "2025-06-06T10:30:00Z",
+            "documents": [],
+            "id": 104
+          },
+          {
+            "description": "Level Transmitter - Storage Tank",
+            "creationTime": "2025-06-02T15:20:00Z",
+            "lastModifyTime": "2025-06-06T10:35:00Z",
+            "documents": [],
+            "id": 105
+          }
+        ],
         "equipmentLOM": [
           {
             "isDeleted": false,

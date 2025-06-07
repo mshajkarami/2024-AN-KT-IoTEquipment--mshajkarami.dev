@@ -22,12 +22,12 @@
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="توضیحات" />
+                 />
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="لاگ ها" />
+                />
 
 
         </com.google.android.material.tabs.TabLayout>

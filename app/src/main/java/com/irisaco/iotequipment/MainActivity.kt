@@ -10,6 +10,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.appbar.MaterialToolbar
 import com.irisaco.iotequipment.ui.auth.AuthViewModel
@@ -17,11 +18,14 @@ import com.irisaco.iotequipment.ui.auth.AuthViewModelFactory
 import com.irisaco.iotequipment.data.remote.ApiClient
 import com.irisaco.iotequipment.data.repository.AuthRepository
 import com.irisaco.iotequipment.di.MyApplication
+import com.irisaco.iotequipment.ui.home.HomeFragmentDirections
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private lateinit var toolbar: MaterialToolbar
     private lateinit var authViewModel: AuthViewModel
+
+    var equipmentIdUnique: String = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,10 +38,15 @@ class MainActivity : AppCompatActivity() {
             insets
         }
         val authDao = MyApplication.database.authTokenDao()
-        val authRepository = AuthRepository(ApiClient.authService,authDao)
+        val authRepository = AuthRepository(ApiClient.authService, authDao)
 
         val factory = AuthViewModelFactory(authRepository)
         authViewModel = ViewModelProvider(this, factory)[AuthViewModel::class.java]
+
+
+        // Login
+
+        authViewModel.login("saleh", "123456")
 
         authViewModel.token.observe(this) { token ->
             if (token != null) {
@@ -50,15 +59,26 @@ class MainActivity : AppCompatActivity() {
         authViewModel.error.observe(this) { error ->
             if (error != null) {
                 Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
-                Log.e("Auth","Error is : $error")
+                Log.e("Auth", "Error is : $error")
             }
         }
-        // Login
-        authViewModel.login("saleh", "123456")
 
+        setEquipmentId()
+
+        setFragmentManagerAndToolbar()
+
+
+    }
+
+    private fun setEquipmentId() {
+        equipmentIdUnique = intent.getStringExtra("EQUIPMENT_ID") ?: ""
+    }
+
+
+    private fun setFragmentManagerAndToolbar() {
         toolbar = findViewById(R.id.materialToolbar)
         val navHostFragment = supportFragmentManager
-            .findFragmentById(R.id.fragmentContainerView) as androidx.navigation.fragment.NavHostFragment
+            .findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         val navController = navHostFragment.navController
 
         NavigationUI.setupWithNavController(toolbar, navController)
@@ -70,6 +90,7 @@ class MainActivity : AppCompatActivity() {
                     toolbar.setNavigationOnClickListener {
                     }
                 }
+
                 else -> {
                     toolbar.navigationIcon = ContextCompat.getDrawable(this, R.drawable.ic_back)
                     toolbar.setNavigationOnClickListener {
@@ -79,6 +100,5 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
-
     }
 }

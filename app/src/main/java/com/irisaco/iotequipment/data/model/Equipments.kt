@@ -1,3 +1,8 @@
 package com.irisaco.iotequipment.data.model
 
-class Equipments : ArrayList<Equipment> ()
+data class Equipments (
+    val currentPage: Int,
+    val totalPages: Int,
+    val totalCount: Int,
+    val items: ArrayList<Equipment>
+)

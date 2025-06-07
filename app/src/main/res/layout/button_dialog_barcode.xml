@@ -45,6 +45,9 @@
             android:id="@+id/btn_visit"
             android:layout_width="180dp"
             android:layout_height="50dp"
+            android:backgroundTint="@color/md_theme_primary"
+            app:strokeColor="@color/ic_launcher_background"
+            android:textColor="@color/white"
             android:layout_weight="0"
             android:text="جستجو در محصولات" />
 

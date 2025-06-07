@@ -20,15 +20,14 @@ interface KeycloakAuthService {
         @Field("client_secret") clientSecret: String
     ): Response<KeycloakTokenResponse>
 
-    // need to fix !!!!!!!!
     @FormUrlEncoded
     @POST("realms/{realm}/protocol/openid-connect/token")
     suspend fun refreshToken(
         @Path("realm") realm: String = "dev",
         @Field("grant_type") grantType: String = "refresh_token",
         @Field("refresh_token") refreshToken: String,
-        @Field("client_id") clientId: String = "your_client_id",
-        @Field("client_secret") clientSecret: String = "your_client_secret"
+        @Field("client_id") clientId: String = "client_id",
+        @Field("client_secret") clientSecret: String = "client_secret"
     ): Response<KeycloakTokenResponse>
 
 

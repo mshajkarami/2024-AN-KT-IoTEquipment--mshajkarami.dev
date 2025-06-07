@@ -12,6 +12,7 @@ class TokenAuthenticator(
 ) : Authenticator {
 
     override fun authenticate(route: Route?, response: Response): Request? = runBlocking {
+
         val token = repository.getSavedToken() ?: return@runBlocking null
 
         if (token.expiresAt > System.currentTimeMillis()) return@runBlocking null

@@ -1,9 +1,12 @@
 package com.irisaco.iotequipment.ui.scanner
 
 import android.Manifest
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Size
+import android.widget.ImageButton
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
@@ -16,6 +19,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.irisaco.iotequipment.MainActivity
 import com.irisaco.iotequipment.R
 import com.irisaco.iotequipment.utils.QRImageAnalyzer
 import kotlinx.coroutines.CoroutineScope
@@ -32,8 +36,10 @@ class QrScannerActivity : AppCompatActivity() {
     private lateinit var previewView: PreviewView
     private lateinit var cameraExecutor: ExecutorService
     private lateinit var imageAnalyzer: QRImageAnalyzer
+    private lateinit var btnScan : ImageButton
     private val mainScope = CoroutineScope(Dispatchers.Main + Job())
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -45,12 +51,17 @@ class QrScannerActivity : AppCompatActivity() {
         }
 
         previewView = findViewById(R.id.previewView)
+        btnScan = findViewById(R.id.btn_scanBarcode)
+
         window.setFlags(1024, 1024)
         cameraExecutor = Executors.newSingleThreadExecutor()
         imageAnalyzer = QRImageAnalyzer(supportFragmentManager)
 
         checkCameraPermission()
 
+        btnScan.setOnClickListener {
+//            imageAnalyzer.scanLatestFrameManually()
+        }
 
     }
 
@@ -60,13 +71,13 @@ class QrScannerActivity : AppCompatActivity() {
                 Manifest.permission.CAMERA
             ) == PackageManager.PERMISSION_GRANTED
         ) {
-            setupCameraWithCoroutine()
+            setupCamera()
         } else {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), 101)
         }
     }
 
-    private fun setupCameraWithCoroutine() {
+    private fun setupCamera() {
         mainScope.launch {
             val cameraProvider = ProcessCameraProvider.getInstance(this@QrScannerActivity).await()
             bindCamera(cameraProvider)
@@ -96,7 +107,7 @@ class QrScannerActivity : AppCompatActivity() {
         requestCode: Int, permissions: Array<out String>, grantResults: IntArray
     ) {
         if (requestCode == 101 && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            setupCameraWithCoroutine()
+            setupCamera()
         } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         }

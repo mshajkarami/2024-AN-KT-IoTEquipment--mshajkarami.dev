@@ -3,9 +3,9 @@ package com.irisaco.iotequipment.data.model
 import com.google.gson.annotations.SerializedName
 
 
-data class Records (
+data class Record (
 
-  @SerializedName("equipmentId"    ) var equipmentId    : Int?                 = null,
+//  @SerializedName("equipmentId"    ) var equipmentId    : Int?                 = null,
   @SerializedName("description"    ) var description    : String?              = null,
   @SerializedName("creationTime"   ) var creationTime   : String?              = null,
   @SerializedName("lastModifyTime" ) var lastModifyTime : String?              = null,

@@ -17,7 +17,7 @@ data class Equipment (
   @SerializedName("type"                    ) var type                    : Type?                   = Type(),
   @SerializedName("documents"               ) var documents               : ArrayList<String>       = arrayListOf(),
   @SerializedName("mainPhoto"               ) var mainPhoto               : String?                 = null,
-  @SerializedName("records"                 ) var records                 : ArrayList<String>       = arrayListOf(),
+  @SerializedName("records"                 ) var records                 : ArrayList<Record>       = arrayListOf(),
   @SerializedName("equipmentLOM"            ) var equipmentLOM            : ArrayList<EquipmentLOM> = arrayListOf(),
   @SerializedName("equipmentConfigurations" ) var equipmentConfigurations : String?                 = null,
   @SerializedName("id"                      ) var id                      : Int?                    = null

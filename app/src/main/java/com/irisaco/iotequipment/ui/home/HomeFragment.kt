@@ -29,15 +29,20 @@ class HomeFragment : Fragment() {
         val searchBar = view.findViewById<TextInputEditText>(R.id.search_bar)
         val btnScan: ImageButton = view.findViewById(R.id.btn_scan)
 
+//        val searchCard : MaterialCardView = view.findViewById(R.id.searchCard)
+
         searchBox.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
         }
-        btnScan.setOnClickListener {
-            startActivity(Intent(requireContext(), QrScannerActivity::class.java))
-        }
+
         searchBar.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
         }
+
+        btnScan.setOnClickListener {
+            startActivity(Intent(requireContext(), QrScannerActivity::class.java))
+        }
+
         return view
     }
 

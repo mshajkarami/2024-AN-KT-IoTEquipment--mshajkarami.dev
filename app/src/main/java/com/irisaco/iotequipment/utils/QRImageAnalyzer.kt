@@ -15,17 +15,36 @@ import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
 import com.irisaco.iotequipment.ui.components.BottomDialog
 
-class QRImageAnalyzer(private val fragmentManager: FragmentManager) : ImageAnalysis.Analyzer {
+class QRImageAnalyzer(
+    private val fragmentManager: FragmentManager
+) : ImageAnalysis.Analyzer {
 
     private var isScanned = false
+    private var manualScanRequested = false
+    private var latestImage: ImageProxy? = null
     private val dialog = BottomDialog()
 
+
     override fun analyze(image: ImageProxy) {
-        if (!isScanned) {
+        latestImage = image
+
+        if (isScanned && !manualScanRequested ) {
+            image.close()
+            return
+        }
+        val shouldProcess = manualScanRequested || !isScanned
+        manualScanRequested = false
+
+        if (shouldProcess) {
             scanBarcode(image)
         } else {
             image.close()
         }
+    }
+
+    fun scanLatestFrameManually() {
+        manualScanRequested = true
+        latestImage?.let { analyze(it) }
     }
 
     @OptIn(ExperimentalGetImage::class)
@@ -35,7 +54,9 @@ class QRImageAnalyzer(private val fragmentManager: FragmentManager) : ImageAnaly
             return
         }
 
-        val inputImage = InputImage.fromMediaImage(mediaImage, image.imageInfo.rotationDegrees)
+        val inputImage = InputImage.fromMediaImage(
+            mediaImage,
+            image.imageInfo.rotationDegrees)
 
         val options = BarcodeScannerOptions.Builder()
             .setBarcodeFormats(Barcode.FORMAT_QR_CODE, Barcode.FORMAT_AZTEC)
@@ -47,7 +68,7 @@ class QRImageAnalyzer(private val fragmentManager: FragmentManager) : ImageAnaly
             .addOnSuccessListener { barcodes ->
                 if (barcodes.isNotEmpty()) {
                     isScanned = true
-                    readBarcode(barcodes)
+                    showResult(barcodes)
                 }
             }
             .addOnFailureListener {
@@ -55,21 +76,20 @@ class QRImageAnalyzer(private val fragmentManager: FragmentManager) : ImageAnaly
             }
             .addOnCompleteListener {
                 image.close()
+                scanner.close()
             }
     }
 
-    private fun readBarcode(barcodes: List<Barcode>) {
+
+
+    private fun showResult(barcodes: List<Barcode>) {
         for (barcode in barcodes) {
             val rawValue = barcode.rawValue ?: continue
             Log.d("QRScanner", "Read value: $rawValue")
 
-            if (rawValue.matches(Regex("\\d+"))) {
-                if (!dialog.isAdded) {
-                    dialog.setEquipmentId(rawValue)
-                    dialog.show(fragmentManager, "EQUIPMENT_ID")
-                }
-            } else {
-                Log.d("QRScanner", "Not an ID: $rawValue")
+            if (!dialog.isAdded) {
+                dialog.setEquipmentId(rawValue)
+                dialog.show(fragmentManager, "EQUIPMENT_ID")
             }
 
             break

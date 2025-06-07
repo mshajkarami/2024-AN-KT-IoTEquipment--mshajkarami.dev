@@ -36,6 +36,7 @@ class BottomDialog : BottomSheetDialogFragment() {
             val intent = Intent(requireContext(), MainActivity::class.java)
             intent.putExtra("EQUIPMENT_ID",equipmentId)
             startActivity(intent)
+            activity?.finish()
         }
         btnCancel.setOnClickListener {
             dismiss()

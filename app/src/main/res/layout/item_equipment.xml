@@ -45,7 +45,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginTop="8dp"
-            android:src="@mipmap/ic_launcher"
+            android:src="@drawable/der_img_equipment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
