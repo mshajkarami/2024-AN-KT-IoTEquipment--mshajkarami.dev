@@ -4,8 +4,10 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
+import com.irisaco.iotequipment.data.model.Document
 import com.irisaco.iotequipment.data.model.Equipment
-import com.irisaco.iotequipment.data.model.Record
+import com.irisaco.iotequipment.data.model.Items
+import com.irisaco.iotequipment.data.model.Records
 import com.irisaco.iotequipment.data.remote.ApiClient
 import com.irisaco.iotequipment.data.repository.EquipmentRepository
 import kotlinx.coroutines.Dispatchers
@@ -15,7 +17,7 @@ class DetailViewModel(
     private val equipmentId: Int
 ) : AndroidViewModel(application) {
 
-    suspend fun getEquipmentById(equipmentId: Int): Equipment? {
+    suspend fun getEquipmentById(equipmentId: Int): Items? {
 
         return repository.getEquipmentByIdFromList(equipmentId)
 
@@ -28,11 +30,16 @@ class DetailViewModel(
         emit(result)
     }
 
-    val equipmentDetail: LiveData<Equipment?> get() = _equipmentDetail
+    val equipmentDetail: LiveData<Items?> get() = _equipmentDetail
 
-    val equipmentRecord: LiveData<List<Record>> = liveData(Dispatchers.IO) {
+    val equipmentRecords: LiveData<List<Records>> = liveData(Dispatchers.IO) {
         val records = repository.getRecordsForEquipment(equipmentId, true)
         emit(records)
+    }
+
+    val equipmentDocument: LiveData<List<Document>> = liveData(Dispatchers.IO) {
+        val document = repository.getDocumentForEquipment(equipmentId, true)
+        emit(document)
     }
 
 

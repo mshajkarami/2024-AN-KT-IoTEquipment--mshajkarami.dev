@@ -8,17 +8,20 @@
     android:layout_height="wrap_content"
     android:elevation="4dp"
     app:cardCornerRadius="5dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginEnd="5dp"
+    android:layout_marginStart="5dp"
     android:layout_marginBottom="8dp"
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:padding="5dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="5dp">
 
         <TextView
-            android:id="@+id/tv_log_date"
+            android:id="@+id/tv_log_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -38,27 +41,27 @@
             android:text="Replaced sensor module"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/tv_log_date"
-            app:layout_constraintTop_toBottomOf="@+id/tv_log_date"
+            app:layout_constraintEnd_toEndOf="@+id/tv_log_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_log_name"
             app:layout_constraintVertical_bias="0.0" />
 
         <ImageButton
             android:id="@+id/btn_log_trash"
-            android:contentDescription="حذف"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
+            android:contentDescription="حذف"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:srcCompat="@drawable/ic_trash" />
 
         <ImageButton
             android:id="@+id/btn_log_edit"
-            android:contentDescription="ادیت"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:background="@null"
+            android:contentDescription="ادیت"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/btn_log_trash"
             app:srcCompat="@drawable/ic_edit" />

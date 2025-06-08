@@ -4,14 +4,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.irisaco.iotequipment.R
-import com.irisaco.iotequipment.data.model.Record
+import com.irisaco.iotequipment.data.model.Items
+import com.irisaco.iotequipment.data.model.Records
 
-class EquipmentLogListAdapter :
-    ListAdapter<Record, EquipmentLogListAdapter.LogViewHolder>(DiffCallback()) {
+class EquipmentLogListAdapter (
+//    private val onItemClick: (logId: Int) -> Unit,
+//    private var logList: List<Records>
+    ) :
+    ListAdapter<Records, EquipmentLogListAdapter.LogViewHolder>(DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LogViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -20,28 +25,35 @@ class EquipmentLogListAdapter :
     }
 
     override fun onBindViewHolder(holder: LogViewHolder, position: Int) {
+//        val logId = logList[position]
         holder.bind(getItem(position))
     }
 
-    class LogViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val tvDate: TextView = itemView.findViewById(R.id.tv_log_date)
+    inner class LogViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val tvDate: TextView = itemView.findViewById(R.id.tv_log_name)
         private val tvDescription: TextView = itemView.findViewById(R.id.tv_log_description)
 
-        fun bind(record: Record) {
+        fun bind(records: Records) {
             val context = itemView.context
-            val recordDate = record.creationTime
+            val recordDate = records.creationTime
             tvDate.text = context.getString(R.string.device_log_date_label,recordDate)
-            val recordDis = record.description
+            val recordDis = records.description
             tvDescription.text = context.getString(R.string.device_detail_label,recordDis)
+            itemView.setOnClickListener {
+                Toast.makeText(context,"Log Item Clicked",Toast.LENGTH_LONG).show()
+//                onItemClick(logList.size ?: 0)
+            }
         }
     }
+//    override fun getItemCount(): Int = logList.size
 
-    class DiffCallback : DiffUtil.ItemCallback<Record>() {
-        override fun areItemsTheSame(oldItem: Record, newItem: Record): Boolean {
+
+    class DiffCallback : DiffUtil.ItemCallback<Records>() {
+        override fun areItemsTheSame(oldItem: Records, newItem: Records): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: Record, newItem: Record): Boolean {
+        override fun areContentsTheSame(oldItem: Records, newItem: Records): Boolean {
             return oldItem == newItem
         }
     }

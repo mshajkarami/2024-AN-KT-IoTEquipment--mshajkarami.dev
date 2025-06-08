@@ -18,7 +18,6 @@ import com.irisaco.iotequipment.R
 import com.irisaco.iotequipment.data.model.Equipment
 import com.irisaco.iotequipment.data.remote.ApiClient
 import com.irisaco.iotequipment.data.repository.AuthRepository
-import com.irisaco.iotequipment.ui.detail.EquipmentDetailFragmentArgs
 import kotlinx.coroutines.launch
 
 class SearchFragment : Fragment() {

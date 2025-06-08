@@ -1,16 +1,15 @@
 package com.irisaco.iotequipment.ui.detail.log.loglist
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.irisaco.iotequipment.R
+import com.irisaco.iotequipment.data.model.Records
 import com.irisaco.iotequipment.ui.detail.DetailViewModel
 import com.irisaco.iotequipment.ui.detail.DetailViewModelFactory
 
@@ -44,7 +43,7 @@ class LogListFragment : Fragment() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        viewModel.equipmentRecord.observe(viewLifecycleOwner) { recordList ->
+        viewModel.equipmentRecords.observe(viewLifecycleOwner) { recordList ->
             adapter.submitList(recordList)
         }
 

@@ -5,13 +5,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.irisaco.iotequipment.R
 import com.irisaco.iotequipment.data.model.Equipment
+import com.irisaco.iotequipment.data.model.Items
 
 class EquipmentPagerAdapter(
-    private var equipmentList: List<Equipment>,
+    private var equipmentList: List<Items>,
     private val onItemClick: (equipmentId: Int) -> Unit
 ) :
     RecyclerView.Adapter<EquipmentPagerAdapter.EquipmentViewHolder>() {
@@ -21,7 +21,7 @@ class EquipmentPagerAdapter(
         val id = itemView.findViewById<TextView>(R.id.txt_id)
         val img = itemView.findViewById<ImageView>(R.id.img)
 
-        fun bind(equipment : Equipment) {
+        fun bind(equipment : Items) {
             title.text = equipment.title ?: "عنوان نامشخص"
             id.text = equipment.equipmentUniqueId ?: "IR0054534232322225"
             itemView.setOnClickListener {
@@ -46,7 +46,7 @@ class EquipmentPagerAdapter(
 
     override fun getItemCount(): Int = equipmentList.size
 
-    fun updateData(newList: List<Equipment>) {
+    fun updateData(newList: List<Items>) {
         equipmentList = newList
         notifyDataSetChanged()
     }
