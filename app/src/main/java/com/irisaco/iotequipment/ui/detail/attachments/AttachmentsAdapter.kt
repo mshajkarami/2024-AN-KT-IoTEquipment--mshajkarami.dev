@@ -28,7 +28,7 @@ class AttachmentsAdapter :
 
         fun bind(document: Document) {
             val context = itemView.context
-            val recordDate = document.fileName
+            val recordDate = document.creationTime
             tvName.text = context.getString(R.string.device_attachment_label,recordDate)
         }
     }

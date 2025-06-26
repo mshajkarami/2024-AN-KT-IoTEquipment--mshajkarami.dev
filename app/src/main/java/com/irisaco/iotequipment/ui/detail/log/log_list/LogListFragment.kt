@@ -1,4 +1,4 @@
-package com.irisaco.iotequipment.ui.detail.log.loglist
+package com.irisaco.iotequipment.ui.detail.log.log_list
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.irisaco.iotequipment.R
-import com.irisaco.iotequipment.data.model.Records
 import com.irisaco.iotequipment.ui.detail.DetailViewModel
 import com.irisaco.iotequipment.ui.detail.DetailViewModelFactory
 

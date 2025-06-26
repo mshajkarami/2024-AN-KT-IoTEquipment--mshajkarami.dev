@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.detail.log.loglist.LogListFragment">
+    tools:context=".ui.detail.log.log_list.LogListFragment">
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/logRecyclerView"
         android:layout_width="match_parent"

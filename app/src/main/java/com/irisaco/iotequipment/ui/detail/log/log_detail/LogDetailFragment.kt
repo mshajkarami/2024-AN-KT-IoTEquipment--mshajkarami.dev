@@ -1,4 +1,4 @@
-package com.irisaco.iotequipment.ui.detail.log.add_log
+package com.irisaco.iotequipment.ui.detail.log.log_detail
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.irisaco.iotequipment.R
 
-class AddLogFragment : Fragment() {
+class LogDetailFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

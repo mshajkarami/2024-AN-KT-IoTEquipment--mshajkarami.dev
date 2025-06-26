@@ -34,9 +34,9 @@
 
     <fragment
         android:id="@+id/equipmentDetailFragment"
-        android:name="com.irisaco.iotequipment.ui.detail.EquipmentDetailFragment"
+        android:name="com.irisaco.iotequipment.ui.detail.DetailFragment"
         android:label="fragment_equipment_detail"
-        tools:layout="@layout/fragment_equipment_detail">
+        tools:layout="@layout/fragment_detail">
 
         <argument
             android:name="equipmentId"
@@ -52,14 +52,17 @@
             app:destination="@id/searchFragment" />
 
     </fragment>
+
     <fragment
         android:id="@+id/attachmentsFragment"
         android:name="com.irisaco.iotequipment.ui.detail.attachments.AttachmentsFragment"
         android:label="fragment_attachments"
         tools:layout="@layout/fragment_attachments" >
+
         <argument
             android:name="equipmentId"
             app:argType="integer" />
+
         <action
             android:id="@+id/action_attachmentsFragment_to_equipmentDetailFragment"
             app:destination="@id/equipmentDetailFragment" />

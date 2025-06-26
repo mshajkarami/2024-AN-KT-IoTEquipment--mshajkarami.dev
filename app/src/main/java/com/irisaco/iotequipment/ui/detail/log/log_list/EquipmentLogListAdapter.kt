@@ -1,4 +1,4 @@
-package com.irisaco.iotequipment.ui.detail.log.loglist
+package com.irisaco.iotequipment.ui.detail.log.log_list
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.irisaco.iotequipment.R
-import com.irisaco.iotequipment.data.model.Items
 import com.irisaco.iotequipment.data.model.Records
 
 class EquipmentLogListAdapter (

@@ -3,6 +3,7 @@ package com.irisaco.iotequipment.ui.detail
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
 import com.irisaco.iotequipment.data.model.Document
 import com.irisaco.iotequipment.data.model.Equipment
@@ -16,6 +17,7 @@ class DetailViewModel(
     application: Application,
     private val equipmentId: Int
 ) : AndroidViewModel(application) {
+
 
     suspend fun getEquipmentById(equipmentId: Int): Items? {
 

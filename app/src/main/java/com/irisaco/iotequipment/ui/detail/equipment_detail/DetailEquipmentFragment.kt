@@ -1,4 +1,4 @@
-package com.irisaco.iotequipment.ui.detail.description
+package com.irisaco.iotequipment.ui.detail.equipment_detail
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,7 +15,7 @@ import com.irisaco.iotequipment.ui.detail.DetailViewModel
 import com.irisaco.iotequipment.ui.detail.DetailViewModelFactory
 import kotlinx.coroutines.launch
 
-class DescriptionFragment : Fragment() {
+class DetailEquipmentFragment : Fragment() {
     private lateinit var viewModel: DetailViewModel
 
     private var equipmentId: Int = -1
@@ -32,7 +32,7 @@ class DescriptionFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_description, container, false)
+        return inflater.inflate(R.layout.fragment_equipment_detail, container, false)
 
     }
 
