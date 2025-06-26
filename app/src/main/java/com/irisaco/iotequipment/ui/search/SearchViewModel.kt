@@ -13,7 +13,7 @@ class SearchViewModel(
 ) : AndroidViewModel(application) {
     private lateinit var repository: EquipmentRepository
     private val _equipmentList = liveData(Dispatchers.IO) {
-        val result = repository.getEquipments(true)
+        val result = repository.getEquipments()
         emit(result)
     }
     val equipmentList: LiveData<List<Items>> get() = _equipmentList

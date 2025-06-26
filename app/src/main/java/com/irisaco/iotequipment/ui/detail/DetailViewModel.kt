@@ -19,7 +19,7 @@ class DetailViewModel(
 
     suspend fun getEquipmentById(equipmentId: Int): Items? {
 
-        return repository.getEquipmentByIdFromList(equipmentId)
+        return repository.getEquipmentById(equipmentId)
 
     }
 
@@ -33,15 +33,14 @@ class DetailViewModel(
     val equipmentDetail: LiveData<Items?> get() = _equipmentDetail
 
     val equipmentRecords: LiveData<List<Records>> = liveData(Dispatchers.IO) {
-        val records = repository.getRecordsForEquipment(equipmentId, true)
+        val records = repository.getRecordsForEquipment(equipmentId)
         emit(records)
     }
 
     val equipmentDocument: LiveData<List<Document>> = liveData(Dispatchers.IO) {
-        val document = repository.getDocumentForEquipment(equipmentId, true)
+        val document = repository.getDocumentForEquipment(equipmentId)
         emit(document)
     }
-
 
     init {
         val retrofitService = ApiClient.apiService

@@ -54,7 +54,7 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     // Gson Factory
     implementation("com.google.code.gson:gson:2.13.1")
-    //
+    // Material
     implementation("com.google.android.material:material:1.9.0")
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:3.0.0")
@@ -75,7 +75,7 @@ dependencies {
     implementation ("androidx.camera:camera-video:${camerax_version}")
     implementation ("androidx.camera:camera-view:${camerax_version}")
     implementation ("androidx.camera:camera-extensions:${camerax_version}")
-    //
+    // Kotlinx Core
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-guava:1.7.3")
     // Room Database
     val room_version = "2.7.1"

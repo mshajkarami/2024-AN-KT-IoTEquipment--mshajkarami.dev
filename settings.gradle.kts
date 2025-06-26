@@ -1,9 +1,9 @@
 pluginManagement {
     repositories {
-        maven {
-            url = uri("https://maven.myket.ir")
-        }
         google {
+            maven {
+                url = uri("https://maven.myket.ir")
+            }
             content {
                 includeGroupByRegex("com\\.android.*")
                 includeGroupByRegex("com\\.google.*")

@@ -1,6 +1,7 @@
 package com.irisaco.iotequipment.data.repository
 
 import android.content.Context
+import android.util.Log
 import com.google.gson.Gson
 import com.irisaco.iotequipment.data.model.Document
 import com.irisaco.iotequipment.data.model.Equipment
@@ -20,12 +21,8 @@ class EquipmentRepository(
     private val context: Context
 ) {
 
-    suspend fun getEquipments(useLocal: Boolean = false): List<Items> {
-        return if (useLocal) {
-            getEquipmentsFromLocal()
-        } else {
-            getEquipmentsFromRemote()
-        }
+    suspend fun getEquipments(): List<Items> {
+        return getEquipmentsFromRemote()
     }
 
     private suspend fun getEquipmentsFromRemote(): List<Items> = withContext(Dispatchers.IO) {
@@ -42,48 +39,36 @@ class EquipmentRepository(
     }
 
 
-    private fun getEquipmentsFromLocal(): List<Items> {
-        return try {
-            val jsonString = context.assets.open("equipment.json")
-                .bufferedReader()
-                .use { it.readText() }
-
-            val root = Gson().fromJson(jsonString, RootResponse::class.java)
-
-            root.data?.value?.items ?: emptyList()
-        } catch (e: Exception) {
-            emptyList()
-        }
-    }
-
-
     suspend fun getEquipmentById(id: Int): Items? = withContext(Dispatchers.IO) {
         try {
             val response = apiService.getEquipmentById(id)
             if (response.isSuccessful) {
-                response.body()?.data?.value?.items?.firstOrNull()
+//                response.body()?.data?.value?.items?.firstOrNull()
+                // TODO: if use server with complex Response need to fix
+                response.body()
             } else {
+                Log.e("API_ERROR", "Code: ${response.code()}, Message: ${response.message()}")
                 null
             }
         } catch (e: Exception) {
+            Log.e("EXCEPTION", "Error getting equipment by ID", e)
+
             null
         }
     }
 
 
-    suspend fun getEquipmentByIdFromList(id: Int): Items? = withContext(Dispatchers.IO) {
-        getEquipments(useLocal = true).find { it.id == id }
-    }
+    suspend fun getRecordsForEquipment(id: Int): List<Records> =
+        withContext(Dispatchers.IO) {
+            val equipment = getEquipmentById(id)
+            equipment?.records ?: emptyList()
+        }
 
-    suspend fun getRecordsForEquipment(id: Int, useLocal: Boolean): List<Records> = withContext(Dispatchers.IO) {
-        val equipment = if (useLocal) getEquipmentByIdFromList(id) else getEquipmentById(id)
-        equipment?.records ?: emptyList()
-    }
-
-    suspend fun getDocumentForEquipment(id: Int, useLocal: Boolean): List<Document> = withContext(Dispatchers.IO) {
-        val equipment = if (useLocal) getEquipmentByIdFromList(id) else getEquipmentById(id)
-        equipment?.documents?.mapNotNull { it.document } ?: emptyList()
-    }
+    suspend fun getDocumentForEquipment(id: Int): List<Document> =
+        withContext(Dispatchers.IO) {
+            val equipment = getEquipmentById(id)
+            equipment?.documents?.mapNotNull { it.document } ?: emptyList()
+        }
 
 }
 
