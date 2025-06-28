@@ -6,6 +6,7 @@ import com.irisaco.iotequipment.data.model.RootResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface EquipmentApiService {
     @GET("equipment")
@@ -15,6 +16,13 @@ interface EquipmentApiService {
     @GET("equipment/{id}")
     suspend fun getEquipmentById(@Path("id") id: Int): Response<Items>
 
-//    @GET("equipments/{id}")
+    //    @GET("equipments/{id}")
 //    suspend fun getEquipmentById(@Path("id") id: Int): Response<RootResponse>
+
+    @GET("equipment/search")
+    suspend fun searchEquipment(
+        @Query("q") query: String,
+        @Query("equipmentIdOnly") equipmentIdOnly: Boolean = false
+    ): Response<List<Items>>
+
 }

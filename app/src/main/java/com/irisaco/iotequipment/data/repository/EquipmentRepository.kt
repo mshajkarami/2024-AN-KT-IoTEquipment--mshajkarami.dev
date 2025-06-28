@@ -18,7 +18,6 @@ import kotlinx.coroutines.withContext
 
 class EquipmentRepository(
     private val apiService: EquipmentApiService,
-    private val context: Context
 ) {
 
     suspend fun getEquipments(): List<Items> {
@@ -38,12 +37,10 @@ class EquipmentRepository(
         }
     }
 
-
     suspend fun getEquipmentById(id: Int): Items? = withContext(Dispatchers.IO) {
         try {
             val response = apiService.getEquipmentById(id)
             if (response.isSuccessful) {
-//                response.body()?.data?.value?.items?.firstOrNull()
                 // TODO: if use server with complex Response need to fix
                 response.body()
             } else {
@@ -67,8 +64,25 @@ class EquipmentRepository(
     suspend fun getDocumentForEquipment(id: Int): List<Document> =
         withContext(Dispatchers.IO) {
             val equipment = getEquipmentById(id)
-            equipment?.documents?.mapNotNull { it.document } ?: emptyList()
+            equipment?.documents?.forEach { doc ->
+                Log.d("Repo", "Document from API: $doc")
+            }
+
+            equipment?.documents ?: emptyList()
+
         }
 
+    suspend fun search(query: String, onlyById: Boolean): List<Items> {
+        return try {
+            val response = apiService.searchEquipment(query, onlyById)
+            if (response.isSuccessful) {
+                response.body() ?: emptyList()
+            } else {
+                emptyList()
+            }
+        } catch (e: Exception) {
+            emptyList()
+        }
+    }
 }
 

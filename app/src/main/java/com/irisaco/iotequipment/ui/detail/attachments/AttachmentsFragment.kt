@@ -49,6 +49,8 @@ class AttachmentsFragment : Fragment() {
         vm.equipmentId.value?.let{ id ->
             equipmentId = id
 
+
+
             val factory = DetailViewModelFactory(requireActivity().application, equipmentId)
             viewModel = ViewModelProvider(this, factory)[DetailViewModel::class.java]
 

@@ -12,6 +12,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.irisaco.iotequipment.ui.scanner.QrScannerActivity
 import com.irisaco.iotequipment.R
+import com.irisaco.iotequipment.ui.search.SearchFragment
 
 class HomeFragment : Fragment() {
 
@@ -29,15 +30,16 @@ class HomeFragment : Fragment() {
         val searchBar = view.findViewById<TextInputEditText>(R.id.search_bar)
         val btnScan: ImageButton = view.findViewById(R.id.btn_scan)
 
-//        val searchCard : MaterialCardView = view.findViewById(R.id.searchCard)
-
+        searchBar.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                searchBar.clearFocus()
+                findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
+            }
+        }
         searchBox.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
         }
 
-        searchBar.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
-        }
 
         btnScan.setOnClickListener {
             startActivity(Intent(requireContext(), QrScannerActivity::class.java))

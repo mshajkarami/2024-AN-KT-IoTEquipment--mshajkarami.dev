@@ -14,7 +14,7 @@ data class EquipmentType (
   @SerializedName("isDeleted"      ) var isDeleted      : Boolean?             = null,
   @SerializedName("creationTime"   ) var creationTime   : String?              = null,
   @SerializedName("lastModifyTime" ) var lastModifyTime : String?              = null,
-  @SerializedName("documents"      ) var documents      : ArrayList<Documents> = arrayListOf(),
+  @SerializedName("documents"      ) var documents      : ArrayList<Document> = arrayListOf(),
   @SerializedName("mainPhoto"      ) var mainPhoto      : MainPhoto?           = MainPhoto(),
   @SerializedName("user"           ) var user           : User?                = User()
 

@@ -11,7 +11,7 @@ data class Records (
   @SerializedName("description"    ) var description    : String?              = null,
   @SerializedName("creationTime"   ) var creationTime   : String?              = null,
   @SerializedName("lastModifyTime" ) var lastModifyTime : String?              = null,
-  @SerializedName("documents"      ) var documents      : ArrayList<Documents> = arrayListOf(),
+  @SerializedName("documents"      ) var documents      : ArrayList<Document> = arrayListOf(),
   @SerializedName("user"           ) var user           : User?                = User()
 
 )

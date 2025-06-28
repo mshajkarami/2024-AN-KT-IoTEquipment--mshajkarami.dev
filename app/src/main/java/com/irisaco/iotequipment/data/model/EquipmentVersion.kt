@@ -11,7 +11,7 @@ data class EquipmentVersion (
   @SerializedName("version"         ) var version         : String?              = null,
   @SerializedName("description"     ) var description     : String?              = null,
   @SerializedName("isDeleted"       ) var isDeleted       : Boolean?             = null,
-  @SerializedName("documents"       ) var documents       : ArrayList<Documents> = arrayListOf(),
+  @SerializedName("documents"       ) var documents       : ArrayList<Document> = arrayListOf(),
   @SerializedName("equipmentType"   ) var equipmentType   : EquipmentType?       = EquipmentType(),
   @SerializedName("user"            ) var user            : User?                = User(),
   @SerializedName("versionModel"    ) var versionModel    : String?              = null

@@ -10,6 +10,6 @@ data class Type (
   @SerializedName("description" ) var description : String?              = null,
   @SerializedName("abberation"  ) var abberation  : String?              = null,
   @SerializedName("mainPhoto"   ) var mainPhoto   : MainPhoto?           = MainPhoto(),
-  @SerializedName("documents"   ) var documents   : ArrayList<Documents> = arrayListOf()
+  @SerializedName("documents"   ) var documents   : ArrayList<Document> = arrayListOf()
 
 )

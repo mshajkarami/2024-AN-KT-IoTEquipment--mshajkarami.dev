@@ -10,6 +10,6 @@ data class Version (
   @SerializedName("version"         ) var version         : String?              = null,
   @SerializedName("description"     ) var description     : String?              = null,
   @SerializedName("types"           ) var types           : ArrayList<Types>     = arrayListOf(),
-  @SerializedName("documents"       ) var documents       : ArrayList<Documents> = arrayListOf()
+  @SerializedName("documents"       ) var documents       : ArrayList<Document> = arrayListOf()
 
 )

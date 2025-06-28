@@ -16,7 +16,7 @@ data class Items (
   @SerializedName("lastModifyTime"          ) var lastModifyTime          : String?                 = null,
   @SerializedName("version"                 ) var version                 : Version?                = Version(),
   @SerializedName("type"                    ) var type                    : Type?                   = Type(),
-  @SerializedName("documents"               ) var documents               : ArrayList<Documents>    = arrayListOf(),
+  @SerializedName("documents"               ) var documents               : ArrayList<Document>    = arrayListOf(),
   @SerializedName("records"                 ) var records                 : ArrayList<Records>      = arrayListOf(),
   @SerializedName("equipmentLOM"            ) var equipmentLOM            : ArrayList<EquipmentLOM> = arrayListOf(),
   @SerializedName("equipmentConfigurations" ) var equipmentConfigurations : String?                 = null

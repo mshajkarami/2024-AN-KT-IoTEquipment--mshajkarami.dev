@@ -46,6 +46,6 @@ class DetailViewModel(
 
     init {
         val retrofitService = ApiClient.apiService
-        repository = EquipmentRepository(retrofitService, application.applicationContext)
+        repository = EquipmentRepository(retrofitService)
     }
 }

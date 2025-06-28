@@ -12,8 +12,6 @@ import com.irisaco.iotequipment.R
 import com.irisaco.iotequipment.data.model.Records
 
 class EquipmentLogListAdapter (
-//    private val onItemClick: (logId: Int) -> Unit,
-//    private var logList: List<Records>
     ) :
     ListAdapter<Records, EquipmentLogListAdapter.LogViewHolder>(DiffCallback()) {
 
@@ -24,7 +22,6 @@ class EquipmentLogListAdapter (
     }
 
     override fun onBindViewHolder(holder: LogViewHolder, position: Int) {
-//        val logId = logList[position]
         holder.bind(getItem(position))
     }
 
@@ -40,12 +37,9 @@ class EquipmentLogListAdapter (
             tvDescription.text = context.getString(R.string.device_detail_label,recordDis)
             itemView.setOnClickListener {
                 Toast.makeText(context,"Log Item Clicked",Toast.LENGTH_LONG).show()
-//                onItemClick(logList.size ?: 0)
             }
         }
     }
-//    override fun getItemCount(): Int = logList.size
-
 
     class DiffCallback : DiffUtil.ItemCallback<Records>() {
         override fun areItemsTheSame(oldItem: Records, newItem: Records): Boolean {
