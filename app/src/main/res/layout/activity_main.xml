@@ -26,13 +26,13 @@
             tools:layout_editor_absoluteX="0dp">
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/txt_toolbar_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="سامانه مدیریت تجهیزات اینترنت اشیا"
+                android:text="@string/toolbar_base_text"
                 android:textColor="@color/md_theme_onBackground"
                 android:textSize="16sp"
                 android:textStyle="bold" />

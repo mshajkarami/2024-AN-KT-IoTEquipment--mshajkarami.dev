@@ -2,6 +2,7 @@ package com.irisaco.iotequipment
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -89,9 +90,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.homeFragment -> {
                     toolbar.navigationIcon = ContextCompat.getDrawable(this, R.drawable.ic_menu)
                     toolbar.setNavigationOnClickListener {
+
                     }
                 }
-
                 else -> {
                     toolbar.navigationIcon = ContextCompat.getDrawable(this, R.drawable.ic_back)
                     toolbar.setNavigationOnClickListener {
@@ -101,6 +102,10 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
+
+    }
+    fun setToolbarTitle(title: String) {
+        findViewById<TextView>(R.id.txt_toolbar_name).text = title
     }
 
 }

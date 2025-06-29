@@ -11,7 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="30dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:maxLines="2"
         android:textColor="@color/md_theme_scrim"
@@ -21,7 +21,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/img_equipment"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="@string/txt_dev_name" />
+        tools:text="@string/label_device_name" />
 
 
     <TextView
@@ -33,7 +33,7 @@
         android:layout_marginEnd="16dp"
         android:textStyle="bold"
         android:maxLines="1"
-        tools:text="@string/txt_dev_version"
+        tools:text="@string/label_device_version"
         android:textColor="@color/md_theme_scrim"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -49,7 +49,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:textStyle="bold"
-        tools:text="@string/txt_dev_type"
+        tools:text="@string/label_device_type"
         android:textColor="@color/md_theme_scrim"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -75,8 +75,8 @@
         android:layout_height="50dp"
         android:backgroundTint="@color/md_theme_inversePrimary"
         android:textAlignment="textStart"
-        android:contentDescription="فایل های پیوست"
-        android:text="فایل های پیوست"
+        android:contentDescription="@string/btn_attachment"
+        android:text="@string/btn_attachment"
         android:textColor="@color/black"
         app:cornerRadius="0dp"
         app:icon="@drawable/ic_attachment"
@@ -102,7 +102,7 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
-            android:text="اطلاعات اولیه تجهیزات" />
+            android:text="@string/menu_device_info" />
 
         <Space
             android:layout_width="8dp"
@@ -116,31 +116,16 @@
             app:strokeColor="@color/md_theme_outline"
             app:strokeWidth="1dp"
             android:textColor="@color/black"
-            android:text="سخت افزار و نرم افزار" />
+            android:text="@string/menu_software_info" />
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:text="@string/txt_dev_detail"
-        android:textColor="@color/md_theme_scrim"
-        android:layout_height="30dp"
-        android:textStyle="bold"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_equipment_type" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toTopOf="@+id/btn_attachment"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2">
+        app:layout_constraintTop_toBottomOf="@+id/img_equipment">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -158,7 +143,7 @@
                 android:lineSpacingExtra="4dp"
                 android:textColor="@color/md_theme_scrim"
                 android:textSize="16sp"
-                tools:text="@string/txt_dev_detail" />
+                tools:text="@string/label_device_description" />
         </LinearLayout>
     </ScrollView>
 

@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -33,9 +32,9 @@ class EquipmentLogListAdapter (
         fun bind(records: Records) {
             val context = itemView.context
             val recordDate = records.creationTime
-            tvDate.text = context.getString(R.string.device_log_date_label,recordDate)
+            tvDate.text = context.getString(R.string.label_device_date,recordDate)
             val recordDis = records.description
-            tvDescription.text = context.getString(R.string.device_detail_label,recordDis)
+            tvDescription.text = context.getString(R.string.label_device_description,recordDis)
             itemView.setOnClickListener {
                 onItemClick(records)
             }

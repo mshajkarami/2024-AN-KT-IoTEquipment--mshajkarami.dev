@@ -1,6 +1,5 @@
 package com.irisaco.iotequipment.ui.detail.log.log_detail
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import cn.iwgang.countdownview.CountdownView
+import com.irisaco.iotequipment.MainActivity
 import com.irisaco.iotequipment.R
 import com.irisaco.iotequipment.ui.detail.DetailViewModel
 import com.irisaco.iotequipment.ui.detail.EquipmentDetailSharedViewModel
@@ -52,13 +52,15 @@ class LogDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        (requireActivity() as MainActivity).setToolbarTitle(getString(R.string.toolbar_edit_log_text))
         vm.recordEquipmentId.value?.let { id ->
             recordId = id
             viewModel.getRecordById(recordId).observe(viewLifecycleOwner) { record ->
                 record?.let {
-                    tvDate.text = it.creationTime ?: "زمان نامشخص"
-                    tvDetail.text = it.description ?: "بدون توضیحات"
+                    val createTime = it.creationTime
+                    tvDate.text = this.getString(R.string.label_device_date,createTime)
+                    val description = it.description
+                    tvDetail.text = this.getString(R.string.label_device_description,description)
                     countdownView.start(5 * 60 * 1000)
                 }
             }

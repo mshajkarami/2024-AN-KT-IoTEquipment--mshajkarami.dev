@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.irisaco.iotequipment.MainActivity
 import com.irisaco.iotequipment.R
 import com.irisaco.iotequipment.ui.detail.DetailViewModel
 import com.irisaco.iotequipment.ui.detail.DetailViewModelFactory
@@ -39,7 +40,7 @@ class AttachmentsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        (requireActivity() as MainActivity).setToolbarTitle(getString(R.string.toolbar_attachment_text))
         val recyclerView: RecyclerView = view.findViewById(R.id.attachmentRecyclerView)
         adapter = AttachmentsAdapter()
         recyclerView.adapter = adapter
@@ -61,4 +62,5 @@ class AttachmentsFragment : Fragment() {
         }
 
     }
+
 }

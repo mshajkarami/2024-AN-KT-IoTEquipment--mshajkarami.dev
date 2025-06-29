@@ -52,6 +52,7 @@ class HomeFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        (requireActivity() as MainActivity).setToolbarTitle(getString(R.string.toolbar_base_text))
         val activity = requireActivity() as MainActivity
         val scannedId = activity.equipmentIdUnique
         if (!scannedId.isNullOrEmpty()) {
@@ -61,5 +62,6 @@ class HomeFragment : Fragment() {
             findNavController().navigate(action)
         }
     }
+
 
 }

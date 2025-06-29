@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.airbnb.lottie.animation.content.Content
 import com.irisaco.iotequipment.R
 import com.irisaco.iotequipment.data.model.Equipment
 import com.irisaco.iotequipment.data.model.Items
@@ -22,8 +23,11 @@ class EquipmentPagerAdapter(
         val img = itemView.findViewById<ImageView>(R.id.img)
 
         fun bind(equipment : Items) {
-            title.text = equipment.title ?: "عنوان نامشخص"
-            id.text = equipment.equipmentUniqueId ?: "IR0054534232322225"
+            val context = itemView.context
+            val equipmentName = equipment.title
+            title.text = context.getString(R.string.label_device_name,equipmentName)
+            val equipmentUniqueId = equipment.equipmentUniqueId
+            id.text = context.getString(R.string.label_device_unique_id,equipmentUniqueId)
             itemView.setOnClickListener {
                 onItemClick(equipment.id ?: 0)
             }

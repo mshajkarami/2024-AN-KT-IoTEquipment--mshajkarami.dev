@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.irisaco.iotequipment.MainActivity
 import com.irisaco.iotequipment.R
 import com.irisaco.iotequipment.data.model.Records
 import com.irisaco.iotequipment.ui.detail.DetailViewModel
@@ -58,5 +59,10 @@ class LogListFragment : Fragment() {
     private fun openLogDetailDialog(records: Records) {
         vm.recordEquipmentId.value = records.id
         findNavController().navigate(R.id.action_equipmentDetailFragment_to_logDetailFragment)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (requireActivity() as MainActivity).setToolbarTitle(getString(R.string.toolbar_base_text))
     }
 }

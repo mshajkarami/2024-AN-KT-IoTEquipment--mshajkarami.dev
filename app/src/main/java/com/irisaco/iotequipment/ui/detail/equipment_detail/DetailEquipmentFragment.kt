@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.irisaco.iotequipment.MainActivity
 import com.irisaco.iotequipment.R
 import com.irisaco.iotequipment.ui.detail.DetailViewModel
 import com.irisaco.iotequipment.ui.detail.DetailViewModelFactory
@@ -55,17 +56,17 @@ class DetailEquipmentFragment : Fragment() {
             val equipment = viewModel.getEquipmentById(equipmentId)
             if (equipment != null) {
                 val equipmentName = equipment.title
-                titleTextView.text =  getString(R.string.device_name_label, equipmentName)
+                titleTextView.text =  getString(R.string.label_device_name, equipmentName)
 
                 val equipmentVersion = equipment.version?.version
-                versionTextView.text = getString(R.string.device_version_label, equipmentVersion)
+                versionTextView.text = getString(R.string.label_device_version, equipmentVersion)
 
 
                 val equipmentType = equipment.type?.name.toString()
-                typeTextView.text = getString(R.string.device_type_label, equipmentType)
+                typeTextView.text = getString(R.string.label_device_type, equipmentType)
 
                 val equipmentDesc = equipment.description
-                descTextView.text = equipmentDesc
+                descTextView.text =  getString(R.string.label_device_description, equipmentDesc)
 
             } else {
                 titleTextView.text = "موردی یافت نشد"
@@ -77,5 +78,10 @@ class DetailEquipmentFragment : Fragment() {
             findNavController().navigate(R.id.action_global_attachmentsFragment)
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (requireActivity() as MainActivity).setToolbarTitle(getString(R.string.toolbar_base_text))
     }
 }

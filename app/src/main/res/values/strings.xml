@@ -1,25 +1,27 @@
 <resources>
     <string name="app_name">Iotequipment</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="searchbar_hint">جستجو میان تجهیزات</string>
-
-    <string name="txt_dev_name">نام دستگاه:</string>
-    <string name="device_name_label">نام دستگاه: %1$s</string>
-
-    <string name="txt_dev_version">نسخه:</string>
-    <string name="device_version_label">نسخه: %1$s</string>
-
-    <string name="txt_dev_detail">توضیحات:</string>
-    <string name="device_detail_label">توضیحات: %1$s\n</string>
-
-    <string name="txt_dev_type">نوع: </string>
-    <string name="device_type_label">نوع: %1$s</string>
-
-    <string name="txt_menu_information">اطلاعات اولیه تجهیزات </string>
-    <string name="txt_menu_information2">سخت افزار و نرم افزار </string>
-
-    <string name="device_log_date_label">تاریخ ایجاد: %1$s</string>
-    <string name="device_log_detail_label">تاریخ ایجاد: %1$s</string>
-    <string name="device_attachment_label">نام فایل: %1$s</string>
+    <!-- 🔍 Search -->
+    <string name="hint_searchbar">جستجو میان تجهیزات</string>
+    <!-- 📋 Device Info Labels -->
+    <string name="label_device_name">نام تجهیز: %1$s</string>
+    <string name="label_device_version">نسخه: %1$s</string>
+    <string name="label_device_description">توضیحات: %1$s\n</string>
+    <string name="label_device_type">نوع: %1$s</string>
+    <string name="label_device_date">تاریخ ایجاد: %1$s</string>
+    <string name="label_device_attachment">نام فایل: %1$s</string>
+    <string name="label_device_unique_id">شناسه ‌تجهیز: %1$s</string>
+    <!-- 📑 Menu Titles -->
+    <string name="menu_device_info">اطلاعات اولیه تجهیزات </string>
+    <string name="menu_software_info">سخت افزار و نرم افزار </string>
+    <!-- ⏳ Countdown -->
+    <string name="txt_countdown_description">زمان باقیمانده تا پایان فرصت تغیرات :</string>
+    <!-- 🔘 Buttons -->
+    <string name="btn_save">ذخیره</string>
+    <string name="btn_cancel">لغو</string>
+    <string name="btn_attachment">فایل های پیوست</string>
+    <!-- 🔘 Toolbar -->
+    <string name="toolbar_base_text">سامانه مدیریت تجهیزات اینترنت اشیا</string>
+    <string name="toolbar_edit_log_text">ویرایش لاگ</string>
+    <string name="toolbar_attachment_text">فایل های پیوست</string>
 </resources>

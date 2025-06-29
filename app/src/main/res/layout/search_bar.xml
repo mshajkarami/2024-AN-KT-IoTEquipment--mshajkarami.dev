@@ -15,7 +15,7 @@
         app:boxBackgroundMode="filled"
         app:startIconDrawable="@drawable/ic_search"
         app:boxBackgroundColor="@color/md_theme_inversePrimary_mediumContrast"
-        android:hint="@string/searchbar_hint"
+        android:hint="@string/hint_searchbar"
         app:boxCornerRadiusTopStart="15dp"
         app:boxCornerRadiusTopEnd="15dp"
         app:boxCornerRadiusBottomStart="15dp"

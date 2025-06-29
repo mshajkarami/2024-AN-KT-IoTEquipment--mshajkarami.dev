@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="12dp"
             android:textColor="@color/md_theme_background"
-            android:text="@string/device_attachment_label"
+            android:text="@string/label_device_attachment"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"

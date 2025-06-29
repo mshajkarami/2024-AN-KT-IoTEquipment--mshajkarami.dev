@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable
 import com.google.android.material.textfield.TextInputEditText
+import com.irisaco.iotequipment.MainActivity
 import com.irisaco.iotequipment.di.MyApplication
 import com.irisaco.iotequipment.R
 import com.irisaco.iotequipment.data.model.Equipment
@@ -123,7 +124,6 @@ class SearchFragment : Fragment() {
 
     private fun setupSearchBarListener() {
         var searchJob: Job? = null
-
         searchBar.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -175,6 +175,11 @@ class SearchFragment : Fragment() {
         super.onDestroyView()
         searchBar.setOnEditorActionListener(null)
         searchBar.addTextChangedListener(null)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (requireActivity() as MainActivity).setToolbarTitle(getString(R.string.toolbar_base_text))
     }
 }
 

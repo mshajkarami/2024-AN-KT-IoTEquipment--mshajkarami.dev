@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text="تاریخ ایجاد"
+        android:text="@string/label_device_date"
         android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,7 +45,7 @@
                 android:lineSpacingExtra="4dp"
                 android:textColor="@color/md_theme_scrim"
                 android:textSize="16sp"
-                tools:text="توضیحات : " />
+                tools:text="@string/label_device_description" />
         </LinearLayout>
     </ScrollView>
 
@@ -57,7 +57,7 @@
         android:layout_marginBottom="32dp"
         android:layout_weight="0"
         android:backgroundTint="@color/md_theme_primary"
-        android:text="ذخیره"
+        android:text="@string/btn_save"
         android:textColor="@color/white"
         android:textSize="14sp"
         app:cornerRadius="10dp"
@@ -73,7 +73,7 @@
         android:layout_marginBottom="32dp"
         android:layout_weight="0"
         android:backgroundTint="@color/md_theme_onSurfaceVariant_mediumContrast"
-        android:text="لغو"
+        android:text="@string/btn_cancel"
         android:textColor="@color/white"
         android:textSize="14sp"
         app:cornerRadius="10dp"
@@ -94,7 +94,7 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginEnd="15dp"
-            android:text="زمان باقیمانده تا پایان فرصت تغیرات :  "
+            android:text="@string/txt_countdown_description"
             android:textAlignment="textStart"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -134,8 +134,8 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:backgroundTint="@color/md_theme_inversePrimary"
-            android:contentDescription="فایل های پیوست"
-            android:text="فایل های پیوست"
+            android:contentDescription="@string/btn_attachment"
+            android:text="@string/btn_attachment"
             android:textAlignment="textStart"
             android:textColor="@color/black"
             app:cornerRadius="0dp"
