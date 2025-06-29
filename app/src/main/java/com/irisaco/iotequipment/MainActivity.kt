@@ -18,14 +18,13 @@ import com.irisaco.iotequipment.ui.auth.AuthViewModelFactory
 import com.irisaco.iotequipment.data.remote.ApiClient
 import com.irisaco.iotequipment.data.repository.AuthRepository
 import com.irisaco.iotequipment.di.MyApplication
-import com.irisaco.iotequipment.ui.home.HomeFragmentDirections
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private lateinit var toolbar: MaterialToolbar
     private lateinit var authViewModel: AuthViewModel
 
-    var equipmentIdUnique: String = ""
+    var equipmentIdUnique: String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,8 +70,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setEquipmentId() {
-        equipmentIdUnique = intent.getStringExtra("EQUIPMENT_ID") ?: ""
+        equipmentIdUnique = intent.getStringExtra("EQUIPMENT_ID")
+        Log.d("EQUIPMENT_ID",equipmentIdUnique.toString())
     }
+
 
 
     private fun setFragmentManagerAndToolbar() {
@@ -101,4 +102,5 @@ class MainActivity : AppCompatActivity() {
 
         }
     }
+
 }

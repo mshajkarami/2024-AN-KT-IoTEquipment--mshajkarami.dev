@@ -47,7 +47,6 @@ class DetailEquipmentFragment : Fragment() {
         val versionTextView = view.findViewById<TextView>(R.id.txt_equipment_version)
         val typeTextView = view.findViewById<TextView>(R.id.txt_equipment_type)
         val descTextView = view.findViewById<TextView>(R.id.txt_equipment_detail)
-//        val buttonNav = view.findViewById<LinearLayout>(R.id.top_button_nav)
 
         val btnAttachment = view.findViewById<Button>(R.id.btn_attachment)
 
@@ -74,7 +73,6 @@ class DetailEquipmentFragment : Fragment() {
         }
 
         // open the Attachment Fragment
-
         btnAttachment.setOnClickListener {
             findNavController().navigate(R.id.action_global_attachmentsFragment)
         }

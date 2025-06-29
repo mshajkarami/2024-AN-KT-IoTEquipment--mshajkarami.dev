@@ -10,9 +10,11 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.irisaco.iotequipment.MainActivity
 import com.irisaco.iotequipment.ui.scanner.QrScannerActivity
 import com.irisaco.iotequipment.R
 import com.irisaco.iotequipment.ui.search.SearchFragment
+import com.irisaco.iotequipment.ui.search.SearchFragmentDirections
 
 class HomeFragment : Fragment() {
 
@@ -46,6 +48,18 @@ class HomeFragment : Fragment() {
         }
 
         return view
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val activity = requireActivity() as MainActivity
+        val scannedId = activity.equipmentIdUnique
+        if (!scannedId.isNullOrEmpty()) {
+            activity.equipmentIdUnique = null
+            val action = HomeFragmentDirections
+                .actionHomeFragmentToSearchFragment(scannedId)
+            findNavController().navigate(action)
+        }
     }
 
 }

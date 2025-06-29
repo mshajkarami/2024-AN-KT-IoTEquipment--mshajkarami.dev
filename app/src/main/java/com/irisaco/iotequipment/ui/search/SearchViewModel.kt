@@ -30,26 +30,29 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
     private var isSearching = false
 
     fun startAutoRefresh(intervalMillis: Long = 5000L) {
-        if (autoRefreshJob != null || isSearching) return
+        if (autoRefreshJob != null) return
 
         autoRefreshJob = viewModelScope.launch {
             var isFirstLoad = true
             while (isActive) {
-                if (isFirstLoad) {
-                    _isLoading.postValue(true)
-                }
-                try {
-                    val result = repository.getEquipments()
-                    if (_equipmentList.value != result) {
-                        _equipmentList.postValue(result)
+                if (!isSearching) {
+                    if (isFirstLoad) {
+                        _isLoading.postValue(true)
                     }
 
-                } catch (e: Exception) {
-                    _equipmentList.postValue(emptyList())
-                } finally {
-                    if (isFirstLoad) {
-                        _isLoading.postValue(false)
-                        isFirstLoad = false
+                    try {
+                        val result = repository.getEquipments()
+                        if (_equipmentList.value != result) {
+                            _equipmentList.postValue(result)
+                        }
+
+                    } catch (e: Exception) {
+                        _equipmentList.postValue(emptyList())
+                    } finally {
+                        if (isFirstLoad) {
+                            _isLoading.postValue(false)
+                            isFirstLoad = false
+                        }
                     }
                 }
 
@@ -59,6 +62,7 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
     }
 
 
+
     fun stopAutoRefresh() {
         autoRefreshJob?.cancel()
         autoRefreshJob = null
@@ -66,11 +70,27 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
 
     fun clearSearchAndResumeAutoRefresh() {
         isSearching = false
+        stopAutoRefresh()
+        loadAllEquipments()
         startAutoRefresh()
     }
 
+    private fun loadAllEquipments() {
+        viewModelScope.launch {
+            _isLoading.value = true
+            try {
+                val result = repository.getEquipments()
+                _equipmentList.value = result
+            } catch (e: Exception) {
+                _equipmentList.value = emptyList()
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
+
     fun onSearch(query: String, onlyById: Boolean = false) {
-        _equipmentList.postValue(emptyList())
+        isSearching = true
         _isLoading.value = true
         viewModelScope.launch {
             try {

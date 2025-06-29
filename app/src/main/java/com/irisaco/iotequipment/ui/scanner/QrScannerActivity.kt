@@ -39,7 +39,6 @@ class QrScannerActivity : AppCompatActivity() {
     private lateinit var btnScan : ImageButton
     private val mainScope = CoroutineScope(Dispatchers.Main + Job())
 
-    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -60,7 +59,7 @@ class QrScannerActivity : AppCompatActivity() {
         checkCameraPermission()
 
         btnScan.setOnClickListener {
-//            imageAnalyzer.scanLatestFrameManually()
+            imageAnalyzer.scanLatestFrameManually()
         }
 
     }

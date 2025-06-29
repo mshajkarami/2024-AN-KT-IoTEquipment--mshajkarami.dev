@@ -12,6 +12,7 @@ import com.irisaco.iotequipment.R
 import com.irisaco.iotequipment.data.model.Records
 
 class EquipmentLogListAdapter (
+    private val onItemClick: (Records) -> Unit
     ) :
     ListAdapter<Records, EquipmentLogListAdapter.LogViewHolder>(DiffCallback()) {
 
@@ -36,7 +37,7 @@ class EquipmentLogListAdapter (
             val recordDis = records.description
             tvDescription.text = context.getString(R.string.device_detail_label,recordDis)
             itemView.setOnClickListener {
-                Toast.makeText(context,"Log Item Clicked",Toast.LENGTH_LONG).show()
+                onItemClick(records)
             }
         }
     }

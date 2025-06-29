@@ -5,4 +5,5 @@ import androidx.lifecycle.ViewModel
 
 class EquipmentDetailSharedViewModel : ViewModel() {
     val equipmentId = MutableLiveData<Int>()
+    val recordEquipmentId = MutableLiveData<Int>()
 }

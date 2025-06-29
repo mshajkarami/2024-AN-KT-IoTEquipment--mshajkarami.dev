@@ -74,6 +74,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:backgroundTint="@color/md_theme_inversePrimary"
+        android:textAlignment="textStart"
         android:contentDescription="فایل های پیوست"
         android:text="فایل های پیوست"
         android:textColor="@color/black"

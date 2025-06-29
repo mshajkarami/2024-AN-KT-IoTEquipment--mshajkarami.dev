@@ -83,4 +83,8 @@ dependencies {
     ksp("androidx.room:room-compiler:$room_version")
     // AppAuth
 //    implementation("net.openid:appauth:0.11.1")
+    // CountdownView
+    implementation("com.github.iwgang:countdownview:2.1.6")
+    // Lotte
+    implementation("com.airbnb.android:lottie:6.4.0")
 }

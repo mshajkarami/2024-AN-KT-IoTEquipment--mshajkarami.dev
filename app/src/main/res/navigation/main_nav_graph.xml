@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/homeFragment"
+    >
 
     <fragment
         android:id="@+id/homeFragment"
@@ -16,8 +17,12 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
-            />
+            app:popExitAnim="@anim/slide_out_right">
+            <argument
+                android:name="equipmentIdUnique"
+                app:argType="string" />
+        </action>
+
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -27,8 +32,8 @@
         <argument
             android:name="equipmentIdUnique"
             app:argType="string"
-            android:defaultValue=""
-            />
+            android:defaultValue="" />
+
         <action
             android:id="@+id/action_searchFragment_to_equipmentDetailFragment"
             app:destination="@id/equipmentDetailFragment" />
@@ -55,6 +60,9 @@
         <action
             android:id="@+id/action_equipmentDetailFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_equipmentDetailFragment_to_logDetailFragment"
+            app:destination="@id/logDetailFragment" />
 
     </fragment>
 
@@ -70,6 +78,15 @@
 
         <action
             android:id="@+id/action_attachmentsFragment_to_equipmentDetailFragment"
+            app:destination="@id/equipmentDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/logDetailFragment"
+        tools:layout="@layout/fragment_detail_log"
+        android:name="com.irisaco.iotequipment.ui.detail.log.log_detail.LogDetailFragment"
+        android:label="LogDetailFragment" >
+        <action
+            android:id="@+id/action_logDetailFragment_to_equipmentDetailFragment"
             app:destination="@id/equipmentDetailFragment" />
     </fragment>
 
