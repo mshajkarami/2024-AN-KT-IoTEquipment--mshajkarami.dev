@@ -6,26 +6,29 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import cn.iwgang.countdownview.CountdownView
+import com.google.android.material.appbar.MaterialToolbar
 import com.irisaco.iotequipment.MainActivity
 import com.irisaco.iotequipment.R
 import com.irisaco.iotequipment.ui.detail.DetailViewModel
 import com.irisaco.iotequipment.ui.detail.EquipmentDetailSharedViewModel
 
+@Suppress("UNCHECKED_CAST")
 class LogDetailFragment : Fragment() {
 
-    private val vm: EquipmentDetailSharedViewModel by activityViewModels()
+    private val sharedViewModel: EquipmentDetailSharedViewModel by activityViewModels()
 
-    private val viewModel: DetailViewModel by viewModels {
+    private val viewModel: LogDetailViewModel by viewModels {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 val app = requireActivity().application
-                return DetailViewModel(app, equipmentId = vm.equipmentId.value ?: -1) as T
+                return LogDetailViewModel(app, equipmentId = sharedViewModel.equipmentId.value ?: -1) as T
             }
         }
     }
@@ -52,8 +55,13 @@ class LogDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (requireActivity() as MainActivity).setToolbarTitle(getString(R.string.toolbar_edit_log_text))
-        vm.recordEquipmentId.value?.let { id ->
+        val activity =requireActivity() as MainActivity
+        activity.setToolbarTitle(getString(R.string.toolbar_edit_log_text))
+
+        activity.setToolbarMenu(R.drawable.ic_kebab) {
+            Toast.makeText(activity, "کلیک شد!", Toast.LENGTH_SHORT).show()
+        }
+        sharedViewModel.recordEquipmentId.value?.let { id ->
             recordId = id
             viewModel.getRecordById(recordId).observe(viewLifecycleOwner) { record ->
                 record?.let {
@@ -65,5 +73,12 @@ class LogDetailFragment : Fragment() {
                 }
             }
         }
+
     }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        val activity = requireActivity() as MainActivity
+        activity.setDefaultToolbarIcon()
+    }
+
 }

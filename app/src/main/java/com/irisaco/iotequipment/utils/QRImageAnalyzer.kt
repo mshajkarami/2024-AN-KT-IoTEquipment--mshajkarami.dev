@@ -1,5 +1,6 @@
 package com.irisaco.iotequipment.utils
 
+import android.graphics.Bitmap
 import android.media.Image
 import android.util.Log
 import android.widget.Toast
@@ -13,7 +14,7 @@ import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
-import com.irisaco.iotequipment.ui.components.BottomDialog
+import com.irisaco.iotequipment.ui.components.QRCodeBottomDialog
 
 class QRImageAnalyzer(
     private val fragmentManager: FragmentManager
@@ -21,12 +22,10 @@ class QRImageAnalyzer(
 
     private var isScanned = false
     private var manualScanRequested = false
-    private var latestImage: ImageProxy? = null
-    private val dialog = BottomDialog()
+    private val dialog = QRCodeBottomDialog()
 
 
     override fun analyze(image: ImageProxy) {
-        latestImage = image
 
         if (isScanned && !manualScanRequested ) {
             image.close()
@@ -44,7 +43,6 @@ class QRImageAnalyzer(
 
     fun scanLatestFrameManually() {
         manualScanRequested = true
-        latestImage?.let { analyze(it) }
     }
 
     @OptIn(ExperimentalGetImage::class)
@@ -79,20 +77,46 @@ class QRImageAnalyzer(
                 scanner.close()
             }
     }
+    fun scanBitmap(bitmap: Bitmap) {
+        val inputImage = InputImage.fromBitmap(bitmap, 0)
 
+        val options = BarcodeScannerOptions.Builder()
+            .setBarcodeFormats(Barcode.FORMAT_QR_CODE, Barcode.FORMAT_AZTEC)
+            .build()
+
+        val scanner: BarcodeScanner = BarcodeScanning.getClient(options)
+
+        scanner.process(inputImage)
+            .addOnSuccessListener { barcodes ->
+                if (barcodes.isNotEmpty()) {
+                    isScanned = true
+                    showResult(barcodes)
+                }
+            }
+            .addOnFailureListener {
+                Toast.makeText(dialog.activity, "Failed to read code", Toast.LENGTH_SHORT).show()
+            }
+            .addOnCompleteListener {
+                scanner.close()
+            }
+    }
 
 
     private fun showResult(barcodes: List<Barcode>) {
         for (barcode in barcodes) {
             val rawValue = barcode.rawValue ?: continue
             Log.d("QRScanner", "Read value: $rawValue")
-
             if (!dialog.isAdded) {
                 dialog.setEquipmentId(rawValue)
+                dialog.setOnDismissListener {
+                    isScanned = false
+                }
                 dialog.show(fragmentManager, "EQUIPMENT_ID")
             }
-
             break
         }
     }
+
+
+
 }

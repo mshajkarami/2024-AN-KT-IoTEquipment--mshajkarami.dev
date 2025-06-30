@@ -5,9 +5,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,7 +24,7 @@ class AttachmentsFragment : Fragment() {
 
     private var equipmentId: Int = 1
 
-    private val vm: EquipmentDetailSharedViewModel by activityViewModels()
+    private val sharedViewModel: EquipmentDetailSharedViewModel by activityViewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,17 +40,21 @@ class AttachmentsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (requireActivity() as MainActivity).setToolbarTitle(getString(R.string.toolbar_attachment_text))
+        val activity =requireActivity() as MainActivity
+
+        activity.setToolbarMenu(R.drawable.ic_kebab) {
+            Toast.makeText(activity, "کلیک شد!", Toast.LENGTH_SHORT).show()
+        }
+        activity.setToolbarTitle(getString(R.string.toolbar_attachment_text))
+
         val recyclerView: RecyclerView = view.findViewById(R.id.attachmentRecyclerView)
         adapter = AttachmentsAdapter()
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
 
-        vm.equipmentId.value?.let{ id ->
+        sharedViewModel.equipmentId.value?.let{ id ->
             equipmentId = id
-
-
             val factory = DetailViewModelFactory(requireActivity().application, equipmentId)
             viewModel = ViewModelProvider(this, factory)[DetailViewModel::class.java]
 
@@ -61,6 +65,11 @@ class AttachmentsFragment : Fragment() {
             Log.e("AttachmentsFragment", "equipmentId was null")
         }
 
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        val activity = requireActivity() as MainActivity
+        activity.setDefaultToolbarIcon()
     }
 
 }

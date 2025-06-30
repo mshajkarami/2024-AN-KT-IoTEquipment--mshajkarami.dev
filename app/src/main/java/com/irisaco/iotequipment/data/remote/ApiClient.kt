@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object ApiClient {
 
     private const val BASE_URL_LOCAL = "http://192.168.1.16:8081/"
-    private const val BASE_URL_REMOTE = "http://10.0.2.2:8080/"
+    private const val BASE_URL_LOCAL2 = "http://192.168.1.16:8080/"
 
     private val loggingInterceptor = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY
@@ -19,7 +19,7 @@ object ApiClient {
 
     private val authApi: KeycloakAuthService by lazy {
         Retrofit.Builder()
-            .baseUrl(BASE_URL_LOCAL)
+            .baseUrl(BASE_URL_LOCAL2)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(KeycloakAuthService::class.java)

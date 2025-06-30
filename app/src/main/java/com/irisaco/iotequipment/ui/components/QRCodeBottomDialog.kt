@@ -1,5 +1,6 @@
 package com.irisaco.iotequipment.ui.components
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,10 +12,12 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.irisaco.iotequipment.R
 import com.irisaco.iotequipment.MainActivity
 
-class BottomDialog : BottomSheetDialogFragment() {
+class QRCodeBottomDialog : BottomSheetDialogFragment() {
     private lateinit var barcodeId : TextView
     private lateinit var btnVisit : Button
     private lateinit var btnCancel : Button
+    private var dismissListener: (() -> Unit)? = null
+
 
     private var equipmentId: String = ""
 
@@ -43,7 +46,17 @@ class BottomDialog : BottomSheetDialogFragment() {
         }
         return view
     }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        dismissListener?.invoke()
+    }
+
     fun setEquipmentId(id: String) {
         equipmentId = id
+    }
+
+    fun setOnDismissListener(onDismiss: () -> Unit) {
+        dismissListener = onDismiss
     }
 }

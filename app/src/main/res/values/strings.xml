@@ -20,8 +20,15 @@
     <string name="btn_save">ذخیره</string>
     <string name="btn_cancel">لغو</string>
     <string name="btn_attachment">فایل های پیوست</string>
+    <string name="btn_scan">اسکن</string>
+    <string name="btn_scan_gallery">تصاویر</string>
     <!-- 🔘 Toolbar -->
     <string name="toolbar_base_text">سامانه مدیریت تجهیزات اینترنت اشیا</string>
     <string name="toolbar_edit_log_text">ویرایش لاگ</string>
     <string name="toolbar_attachment_text">فایل های پیوست</string>
+    <string name="toolbar_icon_profile">پروفایل</string>
+
+    <string name="navigation_drawer_close">باز کردن منو</string>
+    <string name="navigation_drawer_open">بستن منو</string>
+    <!-- 🔘 QRCodeBottomDialog -->
 </resources>

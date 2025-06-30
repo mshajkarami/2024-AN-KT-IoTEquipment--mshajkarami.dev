@@ -39,13 +39,6 @@ class DetailViewModel(
         emit(records)
     }
 
-    fun getRecordById(recordId: Int): LiveData<Records?> = liveData(Dispatchers.IO) {
-        val allRecords = repository.getRecordsForEquipment(equipmentId)
-        val record = allRecords.find { it.id == recordId }
-        emit(record)
-    }
-
-
     val equipmentDocument: LiveData<List<Document>> = liveData(Dispatchers.IO) {
         val document = repository.getDocumentForEquipment(equipmentId)
         emit(document)

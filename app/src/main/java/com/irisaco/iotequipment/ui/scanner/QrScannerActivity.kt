@@ -1,58 +1,54 @@
 package com.irisaco.iotequipment.ui.scanner
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Size
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.ImageAnalysis
-import androidx.camera.core.ImageCapture
-import androidx.camera.core.Preview
+import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.irisaco.iotequipment.MainActivity
 import com.irisaco.iotequipment.R
 import com.irisaco.iotequipment.utils.QRImageAnalyzer
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.cancel
+import kotlinx.coroutines.*
 import kotlinx.coroutines.guava.await
-import kotlinx.coroutines.launch
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 class QrScannerActivity : AppCompatActivity() {
 
     private lateinit var previewView: PreviewView
+    private lateinit var btnScan: ImageButton
+    private lateinit var btnScanLocal: ImageButton
     private lateinit var cameraExecutor: ExecutorService
     private lateinit var imageAnalyzer: QRImageAnalyzer
-    private lateinit var btnScan : ImageButton
+
     private val mainScope = CoroutineScope(Dispatchers.Main + Job())
+
+    private lateinit var galleryLauncher: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_qr_scanner)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
 
-        previewView = findViewById(R.id.previewView)
-        btnScan = findViewById(R.id.btn_scanBarcode)
+        setupInsets()
+        initViews()
+        setupGalleryPicker()
 
-        window.setFlags(1024, 1024)
         cameraExecutor = Executors.newSingleThreadExecutor()
         imageAnalyzer = QRImageAnalyzer(supportFragmentManager)
 
@@ -62,17 +58,71 @@ class QrScannerActivity : AppCompatActivity() {
             imageAnalyzer.scanLatestFrameManually()
         }
 
+        btnScanLocal.setOnClickListener {
+            val permission = getReadStoragePermission()
+
+            if (ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED) {
+                openGallery()
+            } else {
+                ActivityCompat.requestPermissions(this, arrayOf(permission), REQUEST_IMAGE_PERMISSION)
+            }
+        }
+
+
+
+
+    }
+
+    private fun setupInsets() {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { view, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+    }
+
+    private fun initViews() {
+        previewView = findViewById(R.id.previewView)
+        btnScan = findViewById(R.id.btn_scanBarcode)
+        btnScanLocal = findViewById(R.id.btn_scanLocal)
+        window.setFlags(1024, 1024)
+    }
+
+    private fun setupGalleryPicker() {
+        galleryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            val data = result.data
+            if (result.resultCode == RESULT_OK && data != null) {
+                val imageUri: Uri? = data.data
+                try {
+                    val bitmap: Bitmap = MediaStore.Images.Media.getBitmap(contentResolver, imageUri)
+                    imageAnalyzer.scanBitmap(bitmap)
+                } catch (e: Exception) {
+                    Toast.makeText(this, "Unable to read image", Toast.LENGTH_SHORT).show()
+                    e.printStackTrace()
+                }
+            }
+        }
+    }
+    private fun getReadStoragePermission(): String {
+        return if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            Manifest.permission.READ_MEDIA_IMAGES
+        } else {
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        }
+    }
+
+
+    private fun openGallery() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        intent.type = "image/*"
+        galleryLauncher.launch(intent)
     }
 
     private fun checkCameraPermission() {
-        if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.CAMERA
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
             setupCamera()
         } else {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), 101)
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), REQUEST_CAMERA_PERMISSION)
         }
     }
 
@@ -82,6 +132,8 @@ class QrScannerActivity : AppCompatActivity() {
             bindCamera(cameraProvider)
         }
     }
+
+
 
     private fun bindCamera(cameraProvider: ProcessCameraProvider) {
         val preview = Preview.Builder().build()
@@ -105,16 +157,26 @@ class QrScannerActivity : AppCompatActivity() {
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<out String>, grantResults: IntArray
     ) {
-        if (requestCode == 101 && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if (requestCode == REQUEST_CAMERA_PERMISSION && grantResults.firstOrNull() == PackageManager.PERMISSION_GRANTED) {
             setupCamera()
-        } else {
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        } else if (requestCode == REQUEST_IMAGE_PERMISSION && grantResults.firstOrNull() == PackageManager.PERMISSION_GRANTED) {
+            openGallery()
+        } else if (requestCode == REQUEST_IMAGE_PERMISSION) {
+            Toast.makeText(this, "Permission denied to access images", Toast.LENGTH_SHORT).show()
         }
     }
+
 
     override fun onDestroy() {
         super.onDestroy()
         cameraExecutor.shutdown()
         mainScope.cancel()
+    }
+
+    companion object {
+        private const val REQUEST_CAMERA_PERMISSION = 101
+        private const val REQUEST_IMAGE_PERMISSION = 102
     }
 }

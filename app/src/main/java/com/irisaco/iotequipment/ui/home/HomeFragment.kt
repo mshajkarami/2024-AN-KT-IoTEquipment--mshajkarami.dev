@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -56,11 +57,18 @@ class HomeFragment : Fragment() {
         val activity = requireActivity() as MainActivity
         val scannedId = activity.equipmentIdUnique
         if (!scannedId.isNullOrEmpty()) {
+
             activity.equipmentIdUnique = null
+            val navOptions = NavOptions.Builder()
+                .setPopUpTo(R.id.homeFragment, true)
+                .build()
+
             val action = HomeFragmentDirections
                 .actionHomeFragmentToSearchFragment(scannedId)
-            findNavController().navigate(action)
+            findNavController().navigate(action,navOptions)
+
         }
+
     }
 
 

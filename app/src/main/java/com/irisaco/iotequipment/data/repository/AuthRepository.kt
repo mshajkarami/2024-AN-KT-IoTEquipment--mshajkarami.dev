@@ -15,7 +15,7 @@ class AuthRepository(
             clientId = "iem",
             username = username,
             password = password,
-            clientSecret = "y2ga3RPSP1RU5zgmt6F1iIeBYbwOKEIs"
+            clientSecret = "4VrcHu9lW4misnkCjdEuSknNCyZ4QTbx"
         )
     }
     suspend fun refreshToken(oldRefreshToken: String): KeycloakTokenResponse? {
