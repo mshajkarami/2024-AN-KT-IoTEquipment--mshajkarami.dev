@@ -87,4 +87,6 @@ dependencies {
     implementation("com.github.iwgang:countdownview:2.1.6")
     // Lotte
     implementation("com.airbnb.android:lottie:6.4.0")
+    // MaterialDatePicker
+    implementation("com.google.android.material:material:1.11.0")
 }

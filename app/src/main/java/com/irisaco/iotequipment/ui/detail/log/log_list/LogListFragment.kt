@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
@@ -23,6 +24,8 @@ class LogListFragment : Fragment() {
     private val vm: EquipmentDetailSharedViewModel by activityViewModels()
     private lateinit var adapter: EquipmentLogListAdapter
 
+    private lateinit var btnAddLog: ImageButton
+
     private var equipmentId: Int = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,6 +43,7 @@ class LogListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         vm.equipmentId.value = equipmentId
+        btnAddLog = view.findViewById(R.id.btn_add_log)
 
         val factory = DetailViewModelFactory(requireActivity().application, equipmentId)
         viewModel = ViewModelProvider(this, factory)[DetailViewModel::class.java]
@@ -53,6 +57,9 @@ class LogListFragment : Fragment() {
 
         viewModel.equipmentRecords.observe(viewLifecycleOwner) { recordList ->
             adapter.submitList(recordList)
+        }
+        btnAddLog.setOnClickListener {
+            findNavController().navigate(R.id.action_equipmentDetailFragment_to_addLogFragment)
         }
 
     }

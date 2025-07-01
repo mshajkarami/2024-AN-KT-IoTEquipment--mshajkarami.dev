@@ -22,6 +22,7 @@
     <string name="btn_attachment">فایل های پیوست</string>
     <string name="btn_scan">اسکن</string>
     <string name="btn_scan_gallery">تصاویر</string>
+    <string name="btn_auth">وورد امن از طریق مرورگر</string>
     <!-- 🔘 Toolbar -->
     <string name="toolbar_base_text">سامانه مدیریت تجهیزات اینترنت اشیا</string>
     <string name="toolbar_edit_log_text">ویرایش لاگ</string>
@@ -31,4 +32,7 @@
     <string name="navigation_drawer_close">باز کردن منو</string>
     <string name="navigation_drawer_open">بستن منو</string>
     <!-- 🔘 QRCodeBottomDialog -->
+    <string name="msg_barcode_help">لطفا بارکد را در این محل قرار دهید</string>
+    <string name="auth_dec">این اپلیکیشن به شما کمک می‌کند دستگاه‌های IoT را به‌صورت متمرکز کنترل، مانیتور و پشتیبانی کنید. با ورود امن از طریق مرورگر، بدون نگرانی از امنیت، عملیات صنعتی خود را مدیریت نمایید.</string>
+    <string name="app_name_fa">سامانه مدیریت تجهیزات اینترنت اشیا</string>
 </resources>

@@ -63,6 +63,9 @@
         <action
             android:id="@+id/action_equipmentDetailFragment_to_logDetailFragment"
             app:destination="@id/logDetailFragment" />
+        <action
+            android:id="@+id/action_equipmentDetailFragment_to_addLogFragment"
+            app:destination="@id/addLogFragment" />
 
     </fragment>
 
@@ -88,6 +91,15 @@
         <action
             android:id="@+id/action_logDetailFragment_to_equipmentDetailFragment"
             app:destination="@id/equipmentDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addLogFragment"
+        android:name="com.irisaco.iotequipment.ui.detail.log.log_add.AddLogFragment"
+        tools:layout="@layout/fragment_add_log"
+        android:label="HomeFragment" >
+
+
     </fragment>
 
 

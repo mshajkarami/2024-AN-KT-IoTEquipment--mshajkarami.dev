@@ -48,7 +48,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="لطفا بارکد را در این محل قرار دهید "
+        android:text="@string/msg_barcode_help"
         android:textColor="@color/md_theme_onPrimary"
         app:layout_constraintEnd_toEndOf="@+id/image"
         app:layout_constraintStart_toStartOf="@+id/image"
