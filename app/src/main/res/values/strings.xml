@@ -1,38 +1,81 @@
 <resources>
+    <!-- 🌐 App -->
     <string name="app_name">Iotequipment</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="toolbar_base_text">سامانه مدیریت تجهیزات اینترنت اشیا</string>
+    <string name="auth_dec">
+        این اپلیکیشن به شما کمک می‌کند دستگاه‌های IoT
+        را به‌صورت متمرکز کنترل، مانیتور و پشتیبانی کنید.
+        با ورود امن از طریق مرورگر، بدون نگرانی از امنیت، عملیات صنعتی خود را مدیریت نمایید.
+    </string>
     <!-- 🔍 Search -->
     <string name="hint_searchbar">جستجو میان تجهیزات</string>
+
     <!-- 📋 Device Info Labels -->
     <string name="label_device_name">نام تجهیز: %1$s</string>
     <string name="label_device_version">نسخه: %1$s</string>
-    <string name="label_device_description">توضیحات: %1$s\n</string>
+    <string name="label_device_description">توضیحات: %1$s</string>
     <string name="label_device_type">نوع: %1$s</string>
     <string name="label_device_date">تاریخ ایجاد: %1$s</string>
     <string name="label_device_attachment">نام فایل: %1$s</string>
     <string name="label_device_unique_id">شناسه ‌تجهیز: %1$s</string>
-    <!-- 📑 Menu Titles -->
-    <string name="menu_device_info">اطلاعات اولیه تجهیزات </string>
-    <string name="menu_software_info">سخت افزار و نرم افزار </string>
+
     <!-- ⏳ Countdown -->
     <string name="txt_countdown_description">زمان باقیمانده تا پایان فرصت تغیرات :</string>
-    <!-- 🔘 Buttons -->
-    <string name="btn_save">ذخیره</string>
-    <string name="btn_cancel">لغو</string>
-    <string name="btn_attachment">فایل های پیوست</string>
+
+    <!-- 📝 Log Form -->
+    <string name="hint_text_add_new_log">افزودن لاگ جدید</string>
+    <string name="hint_text_add_new_date">تاریخ</string>
+    <string name="hint_text_add_new_des">توضیحات</string>
+
+    <!-- 📁 Attachments -->
+    <string name="btn_attachment">فایل‌های پیوست</string>
+    <string name="btn_add_attachment">افزودن فایل پیوست</string>
+    <string name="toolbar_attachment_text">فایل‌های پیوست</string>
+
+    <!-- 📷 QR / Scan -->
     <string name="btn_scan">اسکن</string>
-    <string name="btn_scan_gallery">تصاویر</string>
-    <string name="btn_auth">وورد امن از طریق مرورگر</string>
+    <string name="btn_select_from_pictures">تصاویر</string>
+    <string name="msg_scan_barcode_help">لطفا بارکد را در این محل قرار دهید</string>
+
     <!-- 🔘 Toolbar -->
-    <string name="toolbar_base_text">سامانه مدیریت تجهیزات اینترنت اشیا</string>
     <string name="toolbar_edit_log_text">ویرایش لاگ</string>
-    <string name="toolbar_attachment_text">فایل های پیوست</string>
     <string name="toolbar_icon_profile">پروفایل</string>
 
-    <string name="navigation_drawer_close">باز کردن منو</string>
-    <string name="navigation_drawer_open">بستن منو</string>
-    <!-- 🔘 QRCodeBottomDialog -->
-    <string name="msg_barcode_help">لطفا بارکد را در این محل قرار دهید</string>
-    <string name="auth_dec">این اپلیکیشن به شما کمک می‌کند دستگاه‌های IoT را به‌صورت متمرکز کنترل، مانیتور و پشتیبانی کنید. با ورود امن از طریق مرورگر، بدون نگرانی از امنیت، عملیات صنعتی خود را مدیریت نمایید.</string>
-    <string name="app_name_fa">سامانه مدیریت تجهیزات اینترنت اشیا</string>
+    <!-- 📂 Menu -->
+    <string name="menu_device_info">اطلاعات اولیه تجهیزات</string>
+    <string name="menu_software_info">سخت‌افزار و نرم‌افزار</string>
+    <string name="menu_item_home">داشبورد</string>
+    <string name="menu_item_search">جستجو</string>
+    <string name="menu_item_help">پشتیبانی</string>
+    <string name="menu_item_web_view">مشاهده نسخه وب</string>
+    <string name="menu_item_setting">تنظیمات</string>
+    <string name="menu_item_info">درباره ما</string>
+    <string name="menu_item_exit">خروج</string>
+
+    <!-- ⚙️ Settings -->
+    <string name="btn_language">زبان</string>
+    <string name="label_language">فارسی</string>
+    <string name="btn_theme">تم</string>
+    <string name="label_theme_light">روشن</string>
+    <string name="label_theme_dark">تاریک</string>
+    <string name="label_preferences">ترجیحات</string>
+    <string name="label_account">حساب کاربری</string>
+    <string name="btn_notifications">اعلان‌ها و صداها</string>
+
+    <!-- 🔐 Auth -->
+    <string name="btn_login_secure">ورود امن از طریق مرورگر</string>
+    <string name="btn_password">رمز عبور</string>
+    <string name="btn_logout">خروج از حساب کاربری</string>
+
+    <!-- 📌 Other -->
+    <string name="btn_create">ایجاد</string>
+    <string name="btn_save">ذخیره</string>
+    <string name="btn_cancel">لغو</string>
+    <string name="btn_support">پشتیبانی</string>
+    <string name="btn_terms">سیاست‌های حفظ حریم خصوصی</string>
+
+    <!-- ☰ Navigation Drawer -->
+    <string name="navigation_drawer_open">باز کردن منو</string>
+    <string name="navigation_drawer_close">بستن منو</string>
+
 </resources>

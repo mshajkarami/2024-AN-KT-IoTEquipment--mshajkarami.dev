@@ -1,14 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.setting.SettingsFragment">
+    android:background="?android:attr/windowBackground"
+    android:padding="16dp">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content">
 
-</FrameLayout>
+        <include layout="@layout/item_profile" />
+
+        <View android:layout_width="match_parent"
+            android:layout_height="16dp" />
+
+        <include layout="@layout/item_preferences" />
+
+        <View android:layout_width="match_parent"
+            android:layout_height="16dp" />
+
+        <include layout="@layout/item_account" />
+
+    </LinearLayout>
+</ScrollView>

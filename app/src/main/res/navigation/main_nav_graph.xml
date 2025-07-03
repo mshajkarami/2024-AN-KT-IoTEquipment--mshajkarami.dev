@@ -99,7 +99,6 @@
         tools:layout="@layout/fragment_add_log"
         android:label="HomeFragment" >
 
-
     </fragment>
 
 

@@ -6,19 +6,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.irisaco.iotequipment.MainActivity
 import com.irisaco.iotequipment.R
+import com.irisaco.iotequipment.databinding.FragmentEquipmentDetailBinding
 import com.irisaco.iotequipment.ui.detail.DetailViewModel
 import com.irisaco.iotequipment.ui.detail.DetailViewModelFactory
 import kotlinx.coroutines.launch
 
 class DetailEquipmentFragment : Fragment() {
+    private lateinit var binding: FragmentEquipmentDetailBinding
     private lateinit var viewModel: DetailViewModel
-
     private var equipmentId: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,49 +34,35 @@ class DetailEquipmentFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_equipment_detail, container, false)
+        val factory = DetailViewModelFactory(requireActivity().application, equipmentId)
+        viewModel = ViewModelProvider(this, factory)[DetailViewModel::class.java]
 
+        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_equipment_detail, container, false)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val factory = DetailViewModelFactory(requireActivity().application, equipmentId)
-        viewModel = ViewModelProvider(this, factory)[DetailViewModel::class.java]
-
-
-        val titleTextView = view.findViewById<TextView>(R.id.txt_equipment_name)
-        val versionTextView = view.findViewById<TextView>(R.id.txt_equipment_version)
-        val typeTextView = view.findViewById<TextView>(R.id.txt_equipment_type)
-        val descTextView = view.findViewById<TextView>(R.id.txt_equipment_detail)
-
-        val btnAttachment = view.findViewById<Button>(R.id.btn_attachment)
-
 
         lifecycleScope.launch {
             val equipment = viewModel.getEquipmentById(equipmentId)
             if (equipment != null) {
-                val equipmentName = equipment.title
-                titleTextView.text =  getString(R.string.label_device_name, equipmentName)
-
-                val equipmentVersion = equipment.version?.version
-                versionTextView.text = getString(R.string.label_device_version, equipmentVersion)
-
-
-                val equipmentType = equipment.type?.name.toString()
-                typeTextView.text = getString(R.string.label_device_type, equipmentType)
-
-                val equipmentDesc = equipment.description
-                descTextView.text =  getString(R.string.label_device_description, equipmentDesc)
+                viewModel.title.value = equipment.title
+                viewModel.version.value = equipment.version?.version
+                viewModel.type.value = equipment.type?.name ?: ""
+                viewModel.description.value = equipment.description
 
             } else {
-                titleTextView.text = "موردی یافت نشد"
+                viewModel.title.value = "موردی یافت نشد"
             }
         }
 
         // open the Attachment Fragment
-        btnAttachment.setOnClickListener {
+        binding.btnAttachment.setOnClickListener {
             findNavController().navigate(R.id.action_global_attachmentsFragment)
         }
 

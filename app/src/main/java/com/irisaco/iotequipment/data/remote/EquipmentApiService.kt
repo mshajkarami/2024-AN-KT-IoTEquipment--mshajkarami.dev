@@ -1,10 +1,19 @@
 package com.irisaco.iotequipment.data.remote
 
+import androidx.room.Delete
 import com.irisaco.iotequipment.data.model.Equipment
 import com.irisaco.iotequipment.data.model.Items
+import com.irisaco.iotequipment.data.model.Records
 import com.irisaco.iotequipment.data.model.RootResponse
+import okhttp3.MultipartBody
 import retrofit2.Response
+import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.Multipart
+import retrofit2.http.POST
+import retrofit2.http.PUT
+import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -12,17 +21,37 @@ interface EquipmentApiService {
     @GET("equipment")
     suspend fun getEquipment(): Response<RootResponse>
 
-    // TODO: if use server with complex Response need to fix
     @GET("equipment/{id}")
     suspend fun getEquipmentById(@Path("id") id: Int): Response<Items>
-
-    //    @GET("equipments/{id}")
-//    suspend fun getEquipmentById(@Path("id") id: Int): Response<RootResponse>
 
     @GET("equipment/search")
     suspend fun searchEquipment(
         @Query("q") query: String,
         @Query("equipmentIdOnly") equipmentIdOnly: Boolean = false
     ): Response<List<Items>>
+
+    @POST("equipment/{id}/records")
+    suspend fun addRecorde(@Path("id") id: Int,@Body record: Records): Response<Records>
+
+    @DELETE("equipment/{equipmentId}/records/{recordId}")
+    suspend fun deleteRecord(
+        @Path("equipmentId") equipmentId: Int,
+        @Path("recordId") recordId: Int
+    ): Response<Unit>
+
+    @PUT("equipment/{equipmentId}/records/{recordId}")
+    suspend fun updateRecord(
+        @Path("equipmentId") equipmentId: Int,
+        @Path("recordId") recordId: Int,
+        @Body updatedRecord: Records
+    ): Response<Records>
+
+    @Multipart
+    @POST("equipment/{equipmentId}/records/{recordId}/upload")
+    suspend fun uploadRecordDocument(
+        @Path("equipmentId") equipmentId: Int,
+        @Path("recordId") recordId: Int,
+        @Part file: MultipartBody.Part
+    ): Response<String>
 
 }

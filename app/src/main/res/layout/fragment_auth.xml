@@ -20,14 +20,14 @@
         android:textStyle="bold"
         android:padding="10dp"
         android:textSize="26sp"
-        android:text="@string/app_name_fa" />
+        android:text="@string/toolbar_base_text" />
 
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="320dp"
         android:layout_height="320sp"
         android:layout_gravity="center"
-        android:contentDescription="@string/btn_auth"
+        android:contentDescription="@string/btn_login_secure"
         android:src="@drawable/img_auth" />
 
     <TextView
@@ -51,6 +51,6 @@
         android:layout_marginEnd="20dp"
         android:textSize="14sp"
         app:cornerRadius="5dp"
-        android:text="@string/btn_auth" />
+        android:text="@string/btn_login_secure" />
 
 </LinearLayout>

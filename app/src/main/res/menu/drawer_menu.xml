@@ -3,25 +3,29 @@
     <item
         android:id="@+id/nav_dashboard"
         android:icon="@drawable/ic_home"
-        android:title="داشبورد" />
+        android:title="@string/menu_item_home" />
     <item
         android:id="@+id/nav_search"
         android:icon="@drawable/ic_search"
-        android:title="جستجو" />
+        android:title="@string/menu_item_search" />
     <item
         android:id="@+id/nav_help"
         android:icon="@drawable/ic_help"
-        android:title="پشتیبانی" />
+        android:title="@string/menu_item_help" />
     <item
         android:id="@+id/nav_web_view"
         android:icon="@drawable/ic_web"
-        android:title="مشاهده نسخه وب" />
+        android:title="@string/menu_item_web_view" />
+    <item
+        android:id="@+id/nav_setting"
+        android:icon="@drawable/ic_setting"
+        android:title="@string/menu_item_setting" />
     <item
         android:id="@+id/nav_about"
         android:icon="@drawable/ic_info"
-        android:title="درباره ما" />
+        android:title="@string/menu_item_info" />
     <item
         android:id="@+id/nav_logout"
-        android:icon="@drawable/ic_logout"
-        android:title="خروج" />
+        android:icon="@drawable/ic_exit"
+        android:title="@string/menu_item_exit" />
 </menu>

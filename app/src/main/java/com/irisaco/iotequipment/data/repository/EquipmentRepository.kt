@@ -61,6 +61,21 @@ class EquipmentRepository(
             equipment?.records ?: emptyList()
         }
 
+    suspend fun addRecord(equipmentId: Int, record: Records): Records = withContext(Dispatchers.IO) {
+        try {
+            val response = apiService.addRecorde(equipmentId, record)
+            if (response.isSuccessful) {
+                return@withContext response.body() ?: throw Exception("Empty response")
+            } else {
+                throw Exception("API Error: ${response.code()} ${response.errorBody()?.string()}")
+            }
+        } catch (e: Exception) {
+            Log.e("API", "Add record failed", e)
+            throw e
+        }
+    }
+
+
     suspend fun getDocumentForEquipment(id: Int): List<Document> =
         withContext(Dispatchers.IO) {
             val equipment = getEquipmentById(id)
