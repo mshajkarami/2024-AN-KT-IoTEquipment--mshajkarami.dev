@@ -73,7 +73,9 @@ class LogListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        (requireActivity() as MainActivity).setToolbarTitle(getString(R.string.toolbar_base_text))
+        val activity = (requireActivity() as MainActivity)
+       activity.setToolbarTitle(getString(R.string.toolbar_base_text))
+       activity.setDefaultToolbarIcon()
         viewModel.loadEquipmentRecords()
     }
 }

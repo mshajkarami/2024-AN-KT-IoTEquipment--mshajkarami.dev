@@ -61,19 +61,24 @@ class EquipmentRepository(
             equipment?.records ?: emptyList()
         }
 
-    suspend fun addRecord(equipmentId: Int, record: Records): Records = withContext(Dispatchers.IO) {
-        try {
-            val response = apiService.addRecorde(equipmentId, record)
-            if (response.isSuccessful) {
-                return@withContext response.body() ?: throw Exception("Empty response")
-            } else {
-                throw Exception("API Error: ${response.code()} ${response.errorBody()?.string()}")
+    suspend fun addRecord(equipmentId: Int, record: Records): Records =
+        withContext(Dispatchers.IO) {
+            try {
+                val response = apiService.addRecorde(equipmentId, record)
+                if (response.isSuccessful) {
+                    return@withContext response.body() ?: throw Exception("Empty response")
+                } else {
+                    throw Exception(
+                        "API Error: ${response.code()} ${
+                            response.errorBody()?.string()
+                        }"
+                    )
+                }
+            } catch (e: Exception) {
+                Log.e("API", "Add record failed", e)
+                throw e
             }
-        } catch (e: Exception) {
-            Log.e("API", "Add record failed", e)
-            throw e
         }
-    }
 
 
     suspend fun getDocumentForEquipment(id: Int): List<Document> =
@@ -99,5 +104,14 @@ class EquipmentRepository(
             emptyList()
         }
     }
+
+    suspend fun updateRecord(equipmentId: Int, recordId: Int, record: Records) {
+        apiService.updateRecord(equipmentId, recordId, record)
+    }
+    suspend fun deleteRecord(equipmentId: Int, recordId: Int) {
+        apiService.deleteRecord(equipmentId, recordId)
+    }
+
+
 }
 

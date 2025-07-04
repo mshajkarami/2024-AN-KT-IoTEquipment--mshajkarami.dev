@@ -9,6 +9,7 @@ import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.irisaco.iotequipment.MainActivity
@@ -31,7 +32,7 @@ class HomeFragment : Fragment() {
         val view = LayoutInflater.from(context).inflate(R.layout.fragment_home, container, false)
         val searchBox = view.findViewById<TextInputLayout>(R.id.searchBox)
         val searchBar = view.findViewById<TextInputEditText>(R.id.search_bar)
-        val btnScan: ImageButton = view.findViewById(R.id.btn_scan)
+        val btnScan: FloatingActionButton = view.findViewById(R.id.btn_scan)
 
         searchBar.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {

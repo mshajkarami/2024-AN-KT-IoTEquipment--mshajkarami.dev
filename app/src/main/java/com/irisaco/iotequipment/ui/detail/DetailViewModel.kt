@@ -63,6 +63,8 @@ class DetailViewModel(
     }
 
 
+
+
     val equipmentDocument: LiveData<List<Document>> = liveData(Dispatchers.IO) {
         val document = repository.getDocumentForEquipment(equipmentId)
         emit(document)

@@ -12,12 +12,15 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import cn.iwgang.countdownview.CountdownView
-import com.google.android.material.appbar.MaterialToolbar
+import androidx.navigation.fragment.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import com.irisaco.iotequipment.MainActivity
 import com.irisaco.iotequipment.R
-import com.irisaco.iotequipment.ui.detail.DetailViewModel
 import com.irisaco.iotequipment.ui.detail.EquipmentDetailSharedViewModel
+import java.text.SimpleDateFormat
+import java.util.Locale
+import java.util.TimeZone
 
 @Suppress("UNCHECKED_CAST")
 class LogDetailFragment : Fragment() {
@@ -28,7 +31,10 @@ class LogDetailFragment : Fragment() {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 val app = requireActivity().application
-                return LogDetailViewModel(app, equipmentId = sharedViewModel.equipmentId.value ?: -1) as T
+                return LogDetailViewModel(
+                    app,
+                    equipmentId = sharedViewModel.equipmentId.value ?: -1
+                ) as T
             }
         }
     }
@@ -36,7 +42,6 @@ class LogDetailFragment : Fragment() {
     private lateinit var tvDate: TextView
     private lateinit var tvDetail: TextView
     private lateinit var btnAttachment: Button
-    private lateinit var countdownView: CountdownView
 
     private var recordId: Int = -1
 
@@ -48,33 +53,105 @@ class LogDetailFragment : Fragment() {
         tvDate = view.findViewById(R.id.logDate)
         tvDetail = view.findViewById(R.id.logDetail)
         btnAttachment = view.findViewById(R.id.btn_logAttachment)
-        countdownView = view.findViewById(R.id.countdownLogView)
 
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val activity =requireActivity() as MainActivity
-        activity.setToolbarTitle(getString(R.string.toolbar_edit_log_text))
+        val activity = requireActivity() as MainActivity
+        activity.setToolbarTitle(getString(R.string.toolbar_detail_log_text))
 
-        activity.setToolbarMenu(R.drawable.ic_kebab) {
-            Toast.makeText(activity, "کلیک شد!", Toast.LENGTH_SHORT).show()
+        observeDeleteResult()
+
+        activity.setToolbarMenu(
+            iconRes = R.drawable.ic_kebab,
+            menuRes = R.menu.menu_toolbar_popup_add_log
+        ) { item ->
+            when (item.itemId) {
+
+                R.id.item_edit -> {
+                    viewModel.getRecordById(recordId).observe(viewLifecycleOwner) { record ->
+                        record?.let {
+                            sharedViewModel.recordToEdit.value = it
+                            findNavController().navigate(LogDetailFragmentDirections.actionLogDetailFragmentToAddLogFragment())
+                        }
+                    }
+                }
+
+                R.id.item_print -> {
+
+                }
+
+                R.id.item_share -> {
+
+                }
+
+                R.id.item_delete -> {
+                    showDeleteConfirmationDialog()
+
+                }
+            }
+            true
         }
         sharedViewModel.recordEquipmentId.value?.let { id ->
             recordId = id
             viewModel.getRecordById(recordId).observe(viewLifecycleOwner) { record ->
                 record?.let {
-                    val createTime = it.creationTime
-                    tvDate.text = this.getString(R.string.label_device_date,createTime)
+                    val formattedDate = formatIsoDateToReadable(it.creationTime.toString())
+                    tvDate.text = getString(R.string.label_device_date, formattedDate)
                     val description = it.description
-                    tvDetail.text = this.getString(R.string.label_device_description,description)
-                    countdownView.start(5 * 60 * 1000)
+                    tvDetail.text = this.getString(R.string.label_device_description, description)
                 }
             }
         }
 
     }
+
+    private fun observeDeleteResult() {
+        viewModel.deleteResult.observe(viewLifecycleOwner) { result ->
+            result.onSuccess {
+                Toast.makeText(requireContext(), "لاگ با موفقیت حذف شد", Toast.LENGTH_SHORT).show()
+                findNavController().navigateUp()
+            }.onFailure {
+                Toast.makeText(requireContext(), "خطا در حذف: ${it.message}", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    fun formatIsoDateToReadable(isoDate: String): String {
+        return try {
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
+            inputFormat.timeZone = TimeZone.getTimeZone("UTC")
+            val date = inputFormat.parse(isoDate)
+
+            val outputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            outputFormat.format(date!!)
+        } catch (e: Exception) {
+            isoDate
+        }
+    }
+
+    private fun showDeleteConfirmationDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("حذف لاگ")
+            .setMessage("آیا از حذف این لاگ مطمئن هستید؟ این عملیات غیرقابل بازگشت است.")
+            .setPositiveButton("حذف") { _, _ ->
+                performDelete()
+            }
+            .setNegativeButton("انصراف", null)
+            .show()
+    }
+
+    private fun performDelete() {
+        val equipmentId = sharedViewModel.equipmentId.value
+        if (equipmentId != null && recordId != -1) {
+            viewModel.deleteRecord(equipmentId, recordId)
+        } else {
+            Toast.makeText(requireContext(), "شناسه‌ها نامعتبر هستند", Toast.LENGTH_SHORT).show()
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         val activity = requireActivity() as MainActivity
@@ -82,3 +159,7 @@ class LogDetailFragment : Fragment() {
     }
 
 }
+
+
+
+

@@ -44,6 +44,7 @@ class AttachmentsFragment : Fragment() {
 
         activity.setToolbarMenu(R.drawable.ic_kebab) {
             Toast.makeText(activity, "کلیک شد!", Toast.LENGTH_SHORT).show()
+            true
         }
         activity.setToolbarTitle(getString(R.string.toolbar_attachment_text))
 

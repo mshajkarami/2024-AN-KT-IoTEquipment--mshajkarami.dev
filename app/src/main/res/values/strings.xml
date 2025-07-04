@@ -23,7 +23,7 @@
     <string name="txt_countdown_description">زمان باقیمانده تا پایان فرصت تغیرات :</string>
 
     <!-- 📝 Log Form -->
-    <string name="hint_text_add_new_log">افزودن لاگ جدید</string>
+    <string name="hint_text_add_new_log">نام لاگ</string>
     <string name="hint_text_add_new_date">تاریخ</string>
     <string name="hint_text_add_new_des">توضیحات</string>
 
@@ -39,6 +39,8 @@
 
     <!-- 🔘 Toolbar -->
     <string name="toolbar_edit_log_text">ویرایش لاگ</string>
+    <string name="toolbar_add_log_text">افزودن لاگ</string>
+    <string name="toolbar_detail_log_text">توضیحات لاگ</string>
     <string name="toolbar_icon_profile">پروفایل</string>
 
     <!-- 📂 Menu -->
@@ -77,5 +79,9 @@
     <!-- ☰ Navigation Drawer -->
     <string name="navigation_drawer_open">باز کردن منو</string>
     <string name="navigation_drawer_close">بستن منو</string>
+    <string name="toolbar_popup_menu_print">پرینت</string>
+    <string name="toolbar_popup_menu_edit">ویرایش</string>
+    <string name="toolbar_popup_menu_share">اشتراک گذاری</string>
+    <string name="toolbar_popup_menu_delete">حذف</string>
 
 </resources>

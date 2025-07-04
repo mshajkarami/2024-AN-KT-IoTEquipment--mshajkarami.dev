@@ -62,4 +62,21 @@
         <item name="colorSurfaceContainerHigh">@color/md_theme_surfaceContainerHigh</item>
         <item name="colorSurfaceContainerHighest">@color/md_theme_surfaceContainerHighest</item>
     </style>
+
+    <style name="FabShape_Circle" parent="">
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="CustomToolbarMenuStyle" parent="Widget.Material3.Toolbar">
+        <item name="backgroundTint">@color/md_theme_background</item>
+        <item name="titleTextColor">@color/black</item>
+    </style>
+    <style name="CustomPopupMenuStyle" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="android:background">@color/md_theme_background</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+
+
+
 </resources>

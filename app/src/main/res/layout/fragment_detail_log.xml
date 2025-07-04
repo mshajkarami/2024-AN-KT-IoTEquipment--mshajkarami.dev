@@ -20,10 +20,11 @@
 
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
+        app:layout_constraintBottom_toTopOf="@+id/btn_logAttachment"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,101 +50,24 @@
         </LinearLayout>
     </ScrollView>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_visit"
-        android:layout_width="160dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="32dp"
-        android:layout_weight="0"
-        android:backgroundTint="@color/md_theme_primary"
-        android:text="@string/btn_save"
-        android:textColor="@color/white"
-        android:textSize="14sp"
-        app:cornerRadius="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:strokeColor="@color/ic_launcher_background" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_visit2"
-        android:layout_width="160dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="32dp"
-        android:layout_weight="0"
-        android:backgroundTint="@color/md_theme_onSurfaceVariant_mediumContrast"
-        android:text="@string/btn_cancel"
-        android:textColor="@color/white"
-        android:textSize="14sp"
-        app:cornerRadius="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:strokeColor="@color/ic_launcher_background" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout4"
+        android:id="@+id/btn_logAttachment"
         android:layout_width="match_parent"
-        android:layout_height="140dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/btn_visit"
+        android:layout_height="50dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/md_theme_inversePrimary"
+        android:contentDescription="@string/btn_attachment"
+        android:text="@string/btn_attachment"
+        android:textAlignment="textStart"
+        android:textColor="@color/black"
+        app:cornerRadius="0dp"
+        app:icon="@drawable/ic_attachment"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginEnd="15dp"
-            android:text="@string/txt_countdown_description"
-            android:textAlignment="textStart"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal">
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="TextContrastCheck" />
 
 
-            <cn.iwgang.countdownview.CountdownView
-                android:id="@+id/countdownLogView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                app:isHideTimeBackground="false"
-                app:isShowDay="true"
-                app:isShowHour="true"
-                app:isShowMillisecond="false"
-                app:isShowMinute="true"
-                app:isShowSecond="true"
-                app:isTimeTextBold="true"
-                app:suffixGravity="center"
-                app:suffixTextSize="12sp"
-                app:timeBgBorderColor="#000000"
-                app:timeBgBorderSize="3dp"
-                app:timeBgColor="#D7D7D7"
-                app:timeBgDivisionLineColor="#646464"
-                app:timeBgRadius="5dp"
-                app:timeTextColor="#000000"
-                app:timeTextSize="22sp" />
-
-        </LinearLayout>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_logAttachment"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:backgroundTint="@color/md_theme_inversePrimary"
-            android:contentDescription="@string/btn_attachment"
-            android:text="@string/btn_attachment"
-            android:textAlignment="textStart"
-            android:textColor="@color/black"
-            app:cornerRadius="0dp"
-            app:icon="@drawable/ic_attachment"
-            app:layout_constraintBottom_toTopOf="@+id/top_button_nav"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:ignore="TextContrastCheck" />
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

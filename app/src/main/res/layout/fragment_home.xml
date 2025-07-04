@@ -6,18 +6,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <ImageButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btn_scan"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="40dp"
-        android:background="@drawable/rec_btn_fab"
         android:contentDescription="@string/btn_scan"
+        app:srcCompat="@drawable/ic_fab"
+        app:tint="@android:color/white"
+        android:backgroundTint="@color/md_theme_primary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_fab" />
+        app:shapeAppearanceOverlay="@style/FabShape_Circle"
+         />
 
     <LinearLayout
         android:id="@+id/linearLayout2"

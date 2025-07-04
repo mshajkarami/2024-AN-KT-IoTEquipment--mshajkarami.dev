@@ -1,14 +1,19 @@
 package com.irisaco.iotequipment.ui.detail.log.log_list
 
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.irisaco.iotequipment.R
 import com.irisaco.iotequipment.data.model.Records
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 class EquipmentLogListAdapter (
     private val onItemClick: (Records) -> Unit
@@ -21,6 +26,7 @@ class EquipmentLogListAdapter (
         return LogViewHolder(view)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: LogViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
@@ -29,10 +35,12 @@ class EquipmentLogListAdapter (
         private val tvDate: TextView = itemView.findViewById(R.id.tv_log_name)
         private val tvDescription: TextView = itemView.findViewById(R.id.tv_log_description)
 
+        @RequiresApi(Build.VERSION_CODES.O)
         fun bind(records: Records) {
             val context = itemView.context
             val recordDate = records.creationTime
-            tvDate.text = context.getString(R.string.label_device_date,recordDate)
+            val formattedDate = formatIsoDate(recordDate.toString())
+            tvDate.text = context.getString(R.string.label_device_date, formattedDate)
             val recordDis = records.description
             tvDescription.text = context.getString(R.string.label_device_description,recordDis)
             itemView.setOnClickListener {
@@ -50,4 +58,16 @@ class EquipmentLogListAdapter (
             return oldItem == newItem
         }
     }
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun formatIsoDate(isoDate: String): String {
+        return try {
+            val instant = Instant.parse(isoDate)
+            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+                .withZone(ZoneId.systemDefault())
+            formatter.format(instant)
+        } catch (e: Exception) {
+            "تاریخ نامعتبر"
+        }
+    }
+
 }

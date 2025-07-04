@@ -1,8 +1,13 @@
 package com.irisaco.iotequipment
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.view.ContextThemeWrapper
+import android.view.MenuItem
+import android.view.View
 import android.widget.ImageView
+import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -144,28 +149,49 @@ class MainActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.txt_toolbar_name).text = title
     }
 
-    fun setToolbarMenu(iconRes: Int, onClick: () -> Unit) {
+    fun setToolbarMenu(
+        iconRes: Int,
+        menuRes: Int? = null,
+        onMenuItemClick: ((MenuItem) -> Boolean)? = null
+    ) {
         val toolbar = findViewById<MaterialToolbar>(R.id.materialToolbar)
         toolbar.menu.clear()
 
-        toolbar.inflateMenu(R.menu.toolbar_menu)
+        toolbar.inflateMenu(R.menu.toolbar_menu) // منویی فقط با یک آیکون
 
-        val item = toolbar.menu.findItem(R.id.toolbar_icon_right)
-        item.setIcon(iconRes)
+        val iconItem = toolbar.menu.findItem(R.id.toolbar_icon_right)
+        iconItem?.setIcon(iconRes)
 
-        toolbar.setOnMenuItemClickListener {
-            if (it.itemId == R.id.toolbar_icon_right) {
-                onClick()
+        toolbar.setOnMenuItemClickListener { item ->
+            if (item.itemId == R.id.toolbar_icon_right && menuRes != null) {
+                val view = toolbar.findViewById<View>(item.itemId)
+                showPopupMenu(toolbar.context, view, menuRes) { clickedItem ->
+                    onMenuItemClick?.invoke(clickedItem)
+                }
                 true
             } else false
         }
     }
 
+
+
     fun setDefaultToolbarIcon() {
-        setToolbarMenu(R.drawable.ic_profile) {
+        setToolbarMenu(R.drawable.ic_profile){ item ->
             Toast.makeText(this, "پروفایل کلیک شد", Toast.LENGTH_SHORT).show()
+            true
         }
     }
+    fun showPopupMenu(context: Context, anchor: View, menuRes: Int, onItemClick: (MenuItem) -> Unit) {
+        val themedContext = ContextThemeWrapper(context, R.style.CustomPopupMenuStyle)
+        val popup = PopupMenu(themedContext, anchor)
+        popup.menuInflater.inflate(menuRes, popup.menu)
 
+        popup.setOnMenuItemClickListener {
+            onItemClick(it)
+            true
+        }
+
+        popup.show()
+    }
 
 }

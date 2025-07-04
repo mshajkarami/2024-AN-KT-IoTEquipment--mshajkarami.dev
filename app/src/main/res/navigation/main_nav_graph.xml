@@ -88,9 +88,10 @@
         tools:layout="@layout/fragment_detail_log"
         android:name="com.irisaco.iotequipment.ui.detail.log.log_detail.LogDetailFragment"
         android:label="LogDetailFragment" >
+
         <action
-            android:id="@+id/action_logDetailFragment_to_equipmentDetailFragment"
-            app:destination="@id/equipmentDetailFragment" />
+            android:id="@+id/action_logDetailFragment_to_addLogFragment"
+            app:destination="@id/addLogFragment" />
     </fragment>
 
     <fragment
