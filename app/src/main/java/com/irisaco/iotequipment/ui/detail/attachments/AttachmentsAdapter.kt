@@ -1,5 +1,6 @@
 package com.irisaco.iotequipment.ui.detail.attachments
 
+import android.annotation.SuppressLint
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -19,9 +21,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-
-class AttachmentsAdapter :
-    ListAdapter<Document, AttachmentsAdapter.AttachmentViewHolder>(DiffCallback()) {
+import java.io.File
+class AttachmentsAdapter(
+    private val onDownloadClicked: suspend (Document) -> File?
+) : ListAdapter<Document, AttachmentsAdapter.AttachmentViewHolder>(DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AttachmentViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -33,48 +36,66 @@ class AttachmentsAdapter :
         holder.bind(getItem(position))
     }
 
-    class AttachmentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    fun updateItem(document: Document) {
+        val index = currentList.indexOfFirst { it.id == document.id }
+        if (index != -1) {
+            val newList = currentList.toMutableList()
+            newList[index] = document
+            submitList(newList)
+        }
+    }
+
+    inner class AttachmentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val txtName: TextView = itemView.findViewById(R.id.txt_attachment)
         private val icAttachment: ImageView = itemView.findViewById(R.id.ic_attachment)
+        private val downloadIcon: ImageView = itemView.findViewById(R.id.downloadIcon)
         private val progressBar: ProgressBar = itemView.findViewById(R.id.download_progressBar)
 
+        @SuppressLint("UseKtx")
         fun bind(document: Document) {
-            Log.d("AttachmentsAdapter", "Document full object: $document")
             val context = itemView.context
-            val attachmentName = document.fileName
-            val attachmentType = document.type.toString()
-            txtName.text = context.getString(R.string.label_device_attachment, attachmentName)
+            txtName.text = context.getString(R.string.label_device_attachment, document.fileName)
 
-            when (attachmentType) {
+            when (document.type?.lowercase()) {
                 ".pdf" -> icAttachment.setImageResource(R.drawable.ic_pdf)
-                ".docx", ".doc" -> icAttachment.setImageResource(R.drawable.ic_word)
+                ".doc", ".docx" -> icAttachment.setImageResource(R.drawable.ic_word)
                 ".xls", ".xlsx" -> icAttachment.setImageResource(R.drawable.ic_exel)
                 else -> icAttachment.setImageResource(R.drawable.ic_file)
             }
-            itemView.setOnClickListener {
-                itemView.alpha = 0.5f
-                progressBar.visibility = View.VISIBLE
 
-                val fileUrl = document.fileUrl ?: return@setOnClickListener
-                val fileName = document.fileName ?: "attachment"
+            val file = File(context.getExternalFilesDir(null), document.fileName)
+
+            if (file.exists()) {
+                downloadIcon.setColorFilter(ContextCompat.getColor(context, R.color.icon_downloaded))
+                progressBar.visibility = View.GONE
+                itemView.alpha = 1f
+            } else {
+                downloadIcon.setColorFilter(ContextCompat.getColor(context, R.color.md_theme_background))
+                progressBar.visibility = View.GONE
+                itemView.alpha = 1f
+            }
+
+            itemView.setOnClickListener {
+                if (progressBar.visibility == View.VISIBLE) return@setOnClickListener
+
+                progressBar.visibility = View.VISIBLE
+                itemView.alpha = 0.5f
 
                 CoroutineScope(Dispatchers.IO).launch {
-                    val file = FileDownloader.downloadFile(context, fileUrl, fileName)
+                    val downloadedFile = onDownloadClicked(document)
 
                     withContext(Dispatchers.Main) {
-                        itemView.alpha = 1.0f
                         progressBar.visibility = View.GONE
+                        itemView.alpha = 1.0f
 
-                        if (file != null) {
-                            Toast.makeText(context, "فایل دانلود شد ✅", Toast.LENGTH_SHORT).show()
-                            FileDownloader.openFile(context, file)
+                        if (downloadedFile != null) {
+                            updateItem(document)
                         } else {
                             Toast.makeText(context, "دانلود ناموفق بود ❌", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
             }
-
         }
     }
 

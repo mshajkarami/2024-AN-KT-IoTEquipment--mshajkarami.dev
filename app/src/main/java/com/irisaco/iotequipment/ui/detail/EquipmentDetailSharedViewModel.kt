@@ -8,8 +8,19 @@ class EquipmentDetailSharedViewModel : ViewModel() {
 
     val equipmentId = MutableLiveData<Int>()
 
-    val recordEquipmentId = MutableLiveData<Int>()
+    val recordEquipmentId = MutableLiveData<Int?>()
 
-    val recordToEdit = MutableLiveData<Records?>()
+    val recordToEdit = MutableLiveData<Records>()
 
+
+
+    fun setEquipmentId(id: Int) {
+        if (equipmentId.value != id) {
+            equipmentId.value = id
+        }
+    }
+
+    fun setRecordEquipmentId(id: Int?) {
+        recordEquipmentId.value = id
+    }
 }

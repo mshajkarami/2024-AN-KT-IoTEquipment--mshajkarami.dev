@@ -10,6 +10,7 @@
     <color name="md_theme_onSecondary">#FFFFFF</color>
     <color name="md_theme_secondaryContainer">#DEE1F9</color>
     <color name="md_theme_onSecondaryContainer">#414659</color>
+    <color name="icon_downloaded">#43FF6D</color>
     <color name="md_theme_tertiary">#745470</color>
     <color name="md_theme_onTertiary">#FFFFFF</color>
     <color name="md_theme_tertiaryContainer">#FFD7F6</color>

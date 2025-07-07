@@ -4,9 +4,13 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Looper
 import android.widget.Toast
 import androidx.core.content.FileProvider
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import okhttp3.ResponseBody
+import okhttp3.internal.http2.Http2Reader.Handler
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
@@ -30,6 +34,9 @@ object FileDownloader {
         fileUrl: String,
         fileName: String
     ): File? {
+        val file = File(context.getExternalFilesDir(null), fileName)
+        if (file.exists()) return file
+
         return try {
             val response = api.downloadFile(fileUrl)
             if (response.isSuccessful) {
@@ -52,7 +59,7 @@ object FileDownloader {
         }
     }
 
-    fun openFile(context: Context, file: File) {
+    suspend fun openFile(context: Context, file: File) {
         val uri: Uri = FileProvider.getUriForFile(
             context,
             "${context.packageName}.provider",
@@ -67,9 +74,12 @@ object FileDownloader {
         try {
             context.startActivity(intent)
         } catch (e: ActivityNotFoundException) {
-            Toast.makeText(context, "اپلیکیشنی برای باز کردن این فایل نصب نیست", Toast.LENGTH_SHORT).show()
+            withContext(Dispatchers.Main) {
+                Toast.makeText(context, "اپلیکیشنی برای باز کردن این فایل نصب نیست", Toast.LENGTH_SHORT).show()
+            }
         }
     }
+
 
     fun getMimeType(fileName: String): String {
         return when {
@@ -80,7 +90,6 @@ object FileDownloader {
             else -> "*/*"
         }
     }
-
 
 
     interface FileDownloadApi {

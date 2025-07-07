@@ -13,31 +13,33 @@
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
         android:id="@+id/base_attachment"
+        android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_margin="3dp"
         android:background="@color/md_theme_onSecondaryContainer"
-        android:padding="15dp"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/txt_attachment"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="12dp"
-            android:textColor="@color/md_theme_background"
+            android:layout_marginEnd="4dp"
             android:text="@string/label_device_attachment"
+            android:textColor="@color/md_theme_background"
             android:textSize="14sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/ic_attachment"
+            app:layout_constraintStart_toEndOf="@+id/downloadIcon"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.523" />
+
         <ImageView
             android:id="@+id/ic_attachment"
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:layout_marginEnd="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -45,15 +47,25 @@
 
         <ProgressBar
             android:id="@+id/download_progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:visibility="gone"
-            style="?android:attr/progressBarStyleLarge"
             android:indeterminateTint="@color/ic_launcher_background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/downloadIcon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_download" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

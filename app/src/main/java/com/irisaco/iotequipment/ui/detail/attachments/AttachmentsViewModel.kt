@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.irisaco.iotequipment.data.model.Document
-import com.irisaco.iotequipment.data.model.Records
-import com.irisaco.iotequipment.data.remote.ApiClient
 import com.irisaco.iotequipment.data.repository.EquipmentRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.NonCancellable.isActive
+import kotlinx.coroutines.delay
 
 class AttachmentsViewModel(
     private val equipmentId: Int?,
@@ -16,20 +16,29 @@ class AttachmentsViewModel(
 ) : ViewModel() {
 
     val documents: LiveData<List<Document>> = liveData(Dispatchers.IO) {
-        val result = when {
-            equipmentId != null && recordId == null -> {
-                repository.getDocumentForEquipment(equipmentId)
+        var previousList: List<Document>? = null
+
+        while (isActive) {
+            val currentList = when {
+                equipmentId != null && recordId == null -> {
+                    repository.getDocumentForEquipment(equipmentId)
+                }
+
+                equipmentId != null && recordId != null -> {
+                    val allRecords = repository.getRecordsForEquipment(equipmentId)
+                    val record = allRecords.find { it.id == recordId }
+                    record?.documents ?: emptyList()
+                }
+
+                else -> emptyList()
             }
 
-            recordId != null && equipmentId != null -> {
-                val allRecords = repository.getRecordsForEquipment(equipmentId)
-                val record = allRecords.find { it.id == recordId }
-                record?.documents ?: emptyList()
+            if (currentList != previousList) {
+                emit(currentList)
+                previousList = currentList
             }
 
-            else -> emptyList()
+            delay(5000)
         }
-
-        emit(result)
     }
 }

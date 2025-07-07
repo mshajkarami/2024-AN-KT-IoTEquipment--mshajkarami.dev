@@ -20,6 +20,9 @@ import com.irisaco.iotequipment.data.repository.EquipmentRepository
 import com.irisaco.iotequipment.ui.detail.DetailViewModel
 import com.irisaco.iotequipment.ui.detail.DetailViewModelFactory
 import com.irisaco.iotequipment.ui.detail.EquipmentDetailSharedViewModel
+import com.irisaco.iotequipment.utils.FileDownloader
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class AttachmentsFragment : Fragment() {
 
@@ -48,7 +51,22 @@ class AttachmentsFragment : Fragment() {
         setToolbarMenu()
 
         recyclerView = view.findViewById(R.id.attachmentRecyclerView)
-        adapter = AttachmentsAdapter()
+        adapter = AttachmentsAdapter { document ->
+            val file = FileDownloader.downloadFile(requireContext(), document.fileUrl!!, document.fileName.toString())
+            file?.let {
+                FileDownloader.openFile(requireContext(), it)
+
+                val updatedList = adapter.currentList.map { doc ->
+                    if (doc.id == document.id) doc.copy()
+                    else doc
+                }
+                withContext(Dispatchers.Main) {
+                    adapter.submitList(updatedList)
+                }
+            }
+            file
+        }
+
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
 
@@ -99,7 +117,6 @@ class AttachmentsFragment : Fragment() {
         super.onDestroyView()
         val activity = requireActivity() as MainActivity
         activity.setDefaultToolbarIcon()
-
         sharedViewModel.equipmentId.value = null
         sharedViewModel.recordEquipmentId.value = null
     }
