@@ -65,6 +65,10 @@ class AddLogFragment : Fragment() {
         setupCountdown()
         setupFormMode()
         setupObservers()
+
+        binding.btnCansel.setOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -194,6 +198,7 @@ class AddLogFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        sharedViewModel.recordToEdit.value = null
         _binding = null
     }
 

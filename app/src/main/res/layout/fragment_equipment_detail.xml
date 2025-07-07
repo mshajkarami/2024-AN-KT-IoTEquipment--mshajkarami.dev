@@ -13,86 +13,90 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/txt_equipment_name"
-        android:layout_width="0dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="12dp"
-        android:maxLines="2"
-        android:text='@{String.format(@string/label_device_name, viewModel.title)}'
-        android:textColor="@color/md_theme_scrim"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/img_equipment"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <TextView
-        android:id="@+id/txt_equipment_version"
-        android:layout_width="0dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="12dp"
-        android:maxLines="1"
-        android:text='@{String.format(@string/label_device_version, viewModel.version)}'
-        android:textColor="@color/md_theme_scrim"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/img_equipment"
-        app:layout_constraintTop_toBottomOf="@+id/txt_equipment_name" />
-
-    <TextView
-        android:id="@+id/txt_equipment_type"
-        android:layout_width="0dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="12dp"
-        android:text='@{String.format(@string/label_device_type, viewModel.type)}'
-        android:textColor="@color/md_theme_scrim"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/img_equipment"
-        app:layout_constraintTop_toBottomOf="@+id/txt_equipment_version" />
-
-    <ImageView
-        android:id="@+id/img_equipment"
-        android:layout_width="150dp"
-        android:layout_height="120dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/img_eq"
-        android:scaleType="centerInside"
-        android:src="@drawable/der_img_equipment"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_attachment"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:backgroundTint="@color/md_theme_inversePrimary"
-        android:textAlignment="textStart"
-        android:contentDescription="@string/btn_attachment"
-        android:text="@string/btn_attachment"
-        android:textColor="@color/black"
-        app:cornerRadius="0dp"
-        app:icon="@drawable/ic_attachment"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/top_button_nav"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="TextContrastCheck" />
+        app:layout_constraintTop_toTopOf="parent">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txt_equipment_name"
+                android:layout_width="233dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="12dp"
+                android:maxLines="2"
+                android:text='@{String.format(@string/label_device_name, viewModel.title)}'
+                android:textColor="@color/md_theme_scrim"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txt_equipment_version"
+                android:layout_width="233dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="12dp"
+                android:maxLines="1"
+                android:text='@{String.format(@string/label_device_version, viewModel.version)}'
+                android:textColor="@color/md_theme_scrim"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_equipment_name" />
+
+            <TextView
+                android:id="@+id/txt_equipment_type"
+                android:layout_width="233dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="12dp"
+                android:text='@{String.format(@string/label_device_type, viewModel.type)}'
+                android:textColor="@color/md_theme_scrim"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_equipment_version" />
+
+            <ImageView
+                android:id="@+id/img_equipment"
+                android:layout_width="150dp"
+                android:layout_height="120dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/img_eq"
+                android:scaleType="centerInside"
+                android:src="@drawable/der_img_equipment"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txt_equipment_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="12dp"
+                android:lineSpacingExtra="4dp"
+                android:text='@{String.format(@string/label_device_description, viewModel.description)}'
+                android:textColor="@color/md_theme_scrim"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/img_equipment" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 
     <LinearLayout
         android:id="@+id/top_button_nav"
@@ -106,54 +110,23 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <com.google.android.material.button.MaterialButton
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:text="@string/menu_device_info" />
-
-        <Space
-            android:layout_width="8dp"
-            android:layout_height="wrap_content" />
-
-        <com.google.android.material.button.MaterialButton
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:backgroundTint="@color/md_theme_background"
-            app:strokeColor="@color/md_theme_outline"
-            app:strokeWidth="1dp"
-            android:textColor="@color/black"
-            android:text="@string/menu_software_info" />
-    </LinearLayout>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_attachment"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/img_equipment">
-
-        <LinearLayout
+            android:id="@+id/btn_attachment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="50dp"
+            android:backgroundTint="@color/md_theme_inversePrimary"
+            android:textAlignment="textStart"
+            android:contentDescription="@string/btn_attachment"
+            android:text="@string/btn_attachment"
+            android:textColor="@color/black"
+            app:cornerRadius="0dp"
+            app:icon="@drawable/ic_attachment"
+            app:layout_constraintBottom_toTopOf="@+id/top_button_nav"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="TextContrastCheck" />
 
-
-            <TextView
-                android:id="@+id/txt_equipment_detail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="8dp"
-                android:lineSpacingExtra="4dp"
-                android:textColor="@color/md_theme_scrim"
-                android:textSize="16sp"
-                android:text='@{String.format(@string/label_device_description, viewModel.description)}'                />
-        </LinearLayout>
-    </ScrollView>
-
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

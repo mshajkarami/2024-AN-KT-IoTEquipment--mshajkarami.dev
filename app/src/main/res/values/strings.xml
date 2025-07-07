@@ -83,5 +83,7 @@
     <string name="toolbar_popup_menu_edit">ویرایش</string>
     <string name="toolbar_popup_menu_share">اشتراک گذاری</string>
     <string name="toolbar_popup_menu_delete">حذف</string>
+    <string name="btn_search_equipment">جستجو در محصولات</string>
+    <string name="msg_barcode">بارکد با موفقیت شناسایی شد:</string>
 
 </resources>

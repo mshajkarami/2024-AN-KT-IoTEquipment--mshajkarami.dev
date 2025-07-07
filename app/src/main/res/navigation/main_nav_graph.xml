@@ -74,11 +74,6 @@
         android:name="com.irisaco.iotequipment.ui.detail.attachments.AttachmentsFragment"
         android:label="fragment_attachments"
         tools:layout="@layout/fragment_attachments" >
-
-        <argument
-            android:name="equipmentId"
-            app:argType="integer" />
-
         <action
             android:id="@+id/action_attachmentsFragment_to_equipmentDetailFragment"
             app:destination="@id/equipmentDetailFragment" />
@@ -92,6 +87,9 @@
         <action
             android:id="@+id/action_logDetailFragment_to_addLogFragment"
             app:destination="@id/addLogFragment" />
+        <action
+            android:id="@+id/action_logDetailFragment_to_attachmentsFragment"
+            app:destination="@id/attachmentsFragment" />
     </fragment>
 
     <fragment

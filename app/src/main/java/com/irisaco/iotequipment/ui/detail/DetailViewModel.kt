@@ -38,7 +38,7 @@ class DetailViewModel(
 
     }
 
-    private lateinit var repository: EquipmentRepository
+    private var repository: EquipmentRepository
 
     private val _equipmentDetail = liveData(Dispatchers.IO) {
         val result = repository.getEquipmentById(equipmentId)
@@ -50,7 +50,6 @@ class DetailViewModel(
     private val _equipmentRecords = MutableLiveData<List<Records>>()
     val equipmentRecords: LiveData<List<Records>> get() = _equipmentRecords
 
-
     fun loadEquipmentRecords() {
         viewModelScope.launch {
             try {
@@ -60,14 +59,6 @@ class DetailViewModel(
 
             }
         }
-    }
-
-
-
-
-    val equipmentDocument: LiveData<List<Document>> = liveData(Dispatchers.IO) {
-        val document = repository.getDocumentForEquipment(equipmentId)
-        emit(document)
     }
 
     init {

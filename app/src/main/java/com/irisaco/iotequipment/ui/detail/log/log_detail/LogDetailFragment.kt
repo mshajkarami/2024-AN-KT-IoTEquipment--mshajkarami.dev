@@ -94,6 +94,7 @@ class LogDetailFragment : Fragment() {
             }
             true
         }
+
         sharedViewModel.recordEquipmentId.value?.let { id ->
             recordId = id
             viewModel.getRecordById(recordId).observe(viewLifecycleOwner) { record ->
@@ -106,6 +107,9 @@ class LogDetailFragment : Fragment() {
             }
         }
 
+        btnAttachment.setOnClickListener {
+            findNavController().navigate(LogDetailFragmentDirections.actionLogDetailFragmentToAttachmentsFragment())
+        }
     }
 
     private fun observeDeleteResult() {

@@ -6,12 +6,10 @@ import android.util.Log
 import android.view.ContextThemeWrapper
 import android.view.MenuItem
 import android.view.View
-import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
-import androidx.annotation.DrawableRes
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -35,80 +33,32 @@ import com.irisaco.iotequipment.utils.NetworkConnectionLiveData
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
+
     private lateinit var drawerLayout: DrawerLayout
-    private lateinit var navView: NavigationView
     private lateinit var toolbar: MaterialToolbar
+    private lateinit var navView: NavigationView
+    private var noInternetDialog: NoInternetBottomSheet? = null
+
     private lateinit var authViewModel: AuthViewModel
     private lateinit var networkConnection: NetworkConnectionLiveData
-    private var noInternetDialog: NoInternetBottomSheet? = null
 
     var equipmentIdUnique: String? = null
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
-        networkConnection = NetworkConnectionLiveData(this)
-
-        networkConnection.observe(this) { isConnected ->
-            if (!isConnected && noInternetDialog == null) {
-                noInternetDialog = NoInternetBottomSheet()
-                noInternetDialog?.show(supportFragmentManager, "NoInternet")
-            } else if (isConnected) {
-                noInternetDialog?.dismiss()
-                noInternetDialog = null
-            }
-        }
-
-        drawerLayout = findViewById(R.id.drawer_layout)
-        navView = findViewById(R.id.nav_view)
-
-        val authDao = MyApplication.database.authTokenDao()
-        val authRepository = AuthRepository(ApiClient.authService, authDao)
-
-        val factory = AuthViewModelFactory(authRepository)
-        authViewModel = ViewModelProvider(this, factory)[AuthViewModel::class.java]
-
-
-        // Login
-
-        authViewModel.login("saleh", "123456")
-
-        authViewModel.token.observe(this) { token ->
-            if (token != null) {
-                Log.d("Auth", "Access Token: ${token.accessToken}")
-                lifecycleScope.launch {
-                    authRepository.saveToken(token)
-                }
-            }
-        }
-        authViewModel.error.observe(this) { error ->
-            if (error != null) {
-                Log.e("Auth", "Error is : $error")
-            }
-        }
-
-        setEquipmentId()
-
-        setFragmentManagerAndToolbar()
-
-
-    }
-
-    private fun setEquipmentId() {
-        equipmentIdUnique = intent.getStringExtra("EQUIPMENT_ID")
-        Log.d("EQUIPMENT_ID", equipmentIdUnique.toString())
+        setupInsets()
+        setupViews()
+        observeNetwork()
+        setupObservers()
+        setupNavigation()
+        readIntentExtras()
     }
 
 
-    private fun setFragmentManagerAndToolbar() {
-        toolbar = findViewById(R.id.materialToolbar)
+    private fun setupNavigation(){
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         val navController = navHostFragment.navController
@@ -132,7 +82,6 @@ class MainActivity : AppCompatActivity() {
                         drawerLayout.openDrawer(GravityCompat.START)
                     }
                 }
-
                 else -> {
                     toolbar.navigationIcon = ContextCompat.getDrawable(this, R.drawable.ic_back)
                     toolbar.setNavigationOnClickListener {
@@ -142,7 +91,62 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
+    }
 
+    private fun setupObservers() {
+        val authDao = MyApplication.database.authTokenDao()
+        val authRepository = AuthRepository(ApiClient.authService, authDao)
+
+        val factory = AuthViewModelFactory(authRepository)
+        authViewModel = ViewModelProvider(this, factory)[AuthViewModel::class.java]
+
+        authViewModel.login("saleh", "123456")
+
+        authViewModel.token.observe(this) { token ->
+            if (token != null) {
+                Log.d("Auth", "Access Token: ${token.accessToken}")
+                lifecycleScope.launch {
+                    authRepository.saveToken(token)
+                }
+            }
+        }
+        authViewModel.error.observe(this) { error ->
+            if (error != null) {
+                Log.e("Auth", "Error is : $error")
+            }
+        }
+    }
+
+    private fun observeNetwork() {
+        networkConnection = NetworkConnectionLiveData(this)
+
+        networkConnection.observe(this) { isConnected ->
+            if (!isConnected && noInternetDialog == null) {
+                noInternetDialog = NoInternetBottomSheet()
+                noInternetDialog?.show(supportFragmentManager, "NoInternet")
+            } else if (isConnected) {
+                noInternetDialog?.dismiss()
+                noInternetDialog = null
+            }
+        }
+    }
+
+    private fun setupViews() {
+        drawerLayout = findViewById(R.id.drawer_layout)
+        navView = findViewById(R.id.nav_view)
+        toolbar = findViewById(R.id.materialToolbar)
+    }
+
+    private fun setupInsets() {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+    }
+
+    private fun readIntentExtras() {
+        equipmentIdUnique = intent.getStringExtra("EQUIPMENT_ID")
     }
 
     fun setToolbarTitle(title: String) {
@@ -157,7 +161,7 @@ class MainActivity : AppCompatActivity() {
         val toolbar = findViewById<MaterialToolbar>(R.id.materialToolbar)
         toolbar.menu.clear()
 
-        toolbar.inflateMenu(R.menu.toolbar_menu) // منویی فقط با یک آیکون
+        toolbar.inflateMenu(R.menu.toolbar_menu)
 
         val iconItem = toolbar.menu.findItem(R.id.toolbar_icon_right)
         iconItem?.setIcon(iconRes)
@@ -173,15 +177,19 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
-
     fun setDefaultToolbarIcon() {
-        setToolbarMenu(R.drawable.ic_profile){ item ->
+        setToolbarMenu(R.drawable.ic_profile) { item ->
             Toast.makeText(this, "پروفایل کلیک شد", Toast.LENGTH_SHORT).show()
             true
         }
     }
-    fun showPopupMenu(context: Context, anchor: View, menuRes: Int, onItemClick: (MenuItem) -> Unit) {
+
+    fun showPopupMenu(
+        context: Context,
+        anchor: View,
+        menuRes: Int,
+        onItemClick: (MenuItem) -> Unit
+    ) {
         val themedContext = ContextThemeWrapper(context, R.style.CustomPopupMenuStyle)
         val popup = PopupMenu(themedContext, anchor)
         popup.menuInflater.inflate(menuRes, popup.menu)

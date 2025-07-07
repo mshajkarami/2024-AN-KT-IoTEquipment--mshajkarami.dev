@@ -92,6 +92,9 @@ class EquipmentRepository(
 
         }
 
+
+
+
     suspend fun search(query: String, onlyById: Boolean): List<Items> {
         return try {
             val response = apiService.searchEquipment(query, onlyById)
