@@ -7,13 +7,11 @@ import android.net.Uri
 import android.os.Looper
 import android.widget.Toast
 import androidx.core.content.FileProvider
+import com.irisaco.iotequipment.data.remote.ApiClient
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.ResponseBody
-import okhttp3.internal.http2.Http2Reader.Handler
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Streaming
 import retrofit2.http.Url
@@ -21,13 +19,7 @@ import java.io.File
 import java.io.FileOutputStream
 
 object FileDownloader {
-
-    private val retrofit = Retrofit.Builder()
-        .baseUrl("http://192.168.1.16:8081/")
-        .addConverterFactory(ScalarsConverterFactory.create())
-        .build()
-
-    private val api = retrofit.create(FileDownloadApi::class.java)
+    private val api = ApiClient.createService<FileDownloadApi>()
 
     suspend fun downloadFile(
         context: Context,

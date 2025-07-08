@@ -1,7 +1,5 @@
 package com.irisaco.iotequipment.data.remote
 
-import androidx.room.Delete
-import com.irisaco.iotequipment.data.model.Equipment
 import com.irisaco.iotequipment.data.model.Items
 import com.irisaco.iotequipment.data.model.Records
 import com.irisaco.iotequipment.data.model.RootResponse
@@ -50,7 +48,7 @@ interface EquipmentApiService {
     @POST("equipment/{equipmentId}/records/{recordId}/upload")
     suspend fun uploadRecordDocument(
         @Path("equipmentId") equipmentId: Int,
-        @Path("recordId") recordId: Int,
+        @Path("recordId") recordId: Int?,
         @Part file: MultipartBody.Part
     ): Response<String>
 

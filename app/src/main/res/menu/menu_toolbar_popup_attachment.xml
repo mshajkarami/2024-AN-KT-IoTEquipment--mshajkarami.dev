@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/item_download_all"
+        android:title="@string/toolbar_popup_menu_download_all_file"
+        />
+
+    <item
+        android:id="@+id/item_refresh"
+        android:title="@string/toolbar_popup_menu_refresh"
+        />
+
+    <item
+        android:id="@+id/item_share_all"
+        android:title="@string/toolbar_popup_menu_share_all"
+        />
+
+</menu>

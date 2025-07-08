@@ -19,6 +19,8 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.appbar.MaterialToolbar
@@ -44,6 +46,9 @@ class MainActivity : AppCompatActivity() {
 
     var equipmentIdUnique: String? = null
 
+    private lateinit var navController: NavController
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -59,9 +64,8 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun setupNavigation(){
-        val navHostFragment = supportFragmentManager
-            .findFragmentById(R.id.fragmentContainerView) as NavHostFragment
-        val navController = navHostFragment.navController
+        navController = (supportFragmentManager
+            .findFragmentById(R.id.fragmentContainerView) as NavHostFragment).navController
 
         val toggle = ActionBarDrawerToggle(
             this,
@@ -167,19 +171,24 @@ class MainActivity : AppCompatActivity() {
         iconItem?.setIcon(iconRes)
 
         toolbar.setOnMenuItemClickListener { item ->
-            if (item.itemId == R.id.toolbar_icon_right && menuRes != null) {
+            if (item.itemId == R.id.toolbar_icon_right) {
                 val view = toolbar.findViewById<View>(item.itemId)
-                showPopupMenu(toolbar.context, view, menuRes) { clickedItem ->
-                    onMenuItemClick?.invoke(clickedItem)
+                if (menuRes != null) {
+                    showPopupMenu(toolbar.context, view, menuRes) { clickedItem ->
+                        onMenuItemClick?.invoke(clickedItem)
+                    }
+                } else {
+                    onMenuItemClick?.invoke(item)
                 }
                 true
             } else false
         }
+
     }
 
     fun setDefaultToolbarIcon() {
         setToolbarMenu(R.drawable.ic_profile) { item ->
-            Toast.makeText(this, "پروفایل کلیک شد", Toast.LENGTH_SHORT).show()
+            navController.navigate(R.id.action_global_settingsFragment)
             true
         }
     }

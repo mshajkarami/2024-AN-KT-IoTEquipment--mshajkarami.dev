@@ -34,6 +34,9 @@ class HomeFragment : Fragment() {
         val searchBar = view.findViewById<TextInputEditText>(R.id.search_bar)
         val btnScan: FloatingActionButton = view.findViewById(R.id.btn_scan)
 
+        (requireActivity() as MainActivity).setDefaultToolbarIcon()
+
+
         searchBar.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
                 searchBar.clearFocus()

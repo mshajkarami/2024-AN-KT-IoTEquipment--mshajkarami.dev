@@ -9,6 +9,7 @@ import com.irisaco.iotequipment.data.model.Records
 import com.irisaco.iotequipment.data.remote.ApiClient
 import com.irisaco.iotequipment.data.repository.EquipmentRepository
 import kotlinx.coroutines.launch
+import java.io.File
 
 class AddLogViewModel(
 ) : ViewModel() {
@@ -20,6 +21,9 @@ class AddLogViewModel(
 
     private val _updateResult = MutableLiveData<Result<Boolean>>()
     val updateResult: LiveData<Result<Boolean>> = _updateResult
+
+    private val _uploadState = MutableLiveData<Result<Boolean>>()
+    val uploadState: LiveData<Result<Boolean>> = _uploadState
 
     init {
         val retrofitService = ApiClient.apiService
@@ -48,5 +52,22 @@ class AddLogViewModel(
             }
         }
     }
+
+    fun uploadDocument(equipmentId: Int, recordId: Int?, file: File) {
+        viewModelScope.launch {
+            try {
+                val success = repository.uploadRecordDocument(equipmentId, recordId, file)
+                if (success) {
+                    _uploadState.postValue(Result.success(true))
+                } else {
+                    _uploadState.postValue(Result.failure(Exception("آپلود ناموفق بود")))
+                }
+            } catch (e: Exception) {
+                _uploadState.postValue(Result.failure(e))
+            }
+        }
+    }
+
+
 
 }

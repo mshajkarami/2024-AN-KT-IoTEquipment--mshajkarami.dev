@@ -1,16 +1,16 @@
 package com.irisaco.iotequipment.data.repository
 
-import android.content.Context
 import android.util.Log
-import com.google.gson.Gson
 import com.irisaco.iotequipment.data.model.Document
-import com.irisaco.iotequipment.data.model.Equipment
 import com.irisaco.iotequipment.data.model.Items
 import com.irisaco.iotequipment.data.model.Records
-import com.irisaco.iotequipment.data.model.RootResponse
 import com.irisaco.iotequipment.data.remote.EquipmentApiService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.File
 
 // Responsible for fetching the main equipment data.
 // Includes general info like title, description, production date, unique ID, and main photo.
@@ -54,7 +54,6 @@ class EquipmentRepository(
         }
     }
 
-
     suspend fun getRecordsForEquipment(id: Int): List<Records> =
         withContext(Dispatchers.IO) {
             val equipment = getEquipmentById(id)
@@ -80,7 +79,6 @@ class EquipmentRepository(
             }
         }
 
-
     suspend fun getDocumentForEquipment(id: Int): List<Document> =
         withContext(Dispatchers.IO) {
             val equipment = getEquipmentById(id)
@@ -91,9 +89,6 @@ class EquipmentRepository(
             equipment?.documents ?: emptyList()
 
         }
-
-
-
 
     suspend fun search(query: String, onlyById: Boolean): List<Items> {
         return try {
@@ -111,8 +106,34 @@ class EquipmentRepository(
     suspend fun updateRecord(equipmentId: Int, recordId: Int, record: Records) {
         apiService.updateRecord(equipmentId, recordId, record)
     }
+
     suspend fun deleteRecord(equipmentId: Int, recordId: Int) {
         apiService.deleteRecord(equipmentId, recordId)
+    }
+
+    suspend fun uploadRecordDocument(
+        equipmentId: Int,
+        recordId: Int?,
+        file: File
+    ): Boolean = withContext(Dispatchers.IO) {
+        try {
+            val requestFile = file.asRequestBody("application/octet-stream".toMediaTypeOrNull())
+            val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
+
+            val finalRecordId = recordId ?: -1
+
+            val response = apiService.uploadRecordDocument(equipmentId, finalRecordId, body)
+            if (response.isSuccessful) {
+                Log.d("UPLOAD", "File uploaded successfully: ${response.body()}")
+                true
+            } else {
+                Log.e("UPLOAD", "Failed to upload file: ${response.code()} ${response.message()}")
+                false
+            }
+        } catch (e: Exception) {
+            Log.e("UPLOAD", "Exception during file upload", e)
+            false
+        }
     }
 
 

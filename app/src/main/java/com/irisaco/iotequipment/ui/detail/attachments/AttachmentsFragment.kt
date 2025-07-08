@@ -52,7 +52,11 @@ class AttachmentsFragment : Fragment() {
 
         recyclerView = view.findViewById(R.id.attachmentRecyclerView)
         adapter = AttachmentsAdapter { document ->
-            val file = FileDownloader.downloadFile(requireContext(), document.fileUrl!!, document.fileName.toString())
+            val file = FileDownloader.downloadFile(
+                requireContext(),
+                document.fileUrl!!,
+                document.fileName.toString()
+            )
             file?.let {
                 FileDownloader.openFile(requireContext(), it)
 
@@ -107,8 +111,21 @@ class AttachmentsFragment : Fragment() {
     private fun setToolbarMenu() {
         val activity = requireActivity() as MainActivity
         activity.setToolbarTitle(getString(R.string.toolbar_attachment_text))
-        activity.setToolbarMenu(R.drawable.ic_kebab) {
-            Toast.makeText(activity, "کلیک شد!", Toast.LENGTH_SHORT).show()
+        activity.setToolbarMenu(
+            R.drawable.ic_kebab,
+            menuRes = R.menu.menu_toolbar_popup_attachment
+        ) { item ->
+            when(item.itemId){
+                R.id.item_download_all -> {
+                    Toast.makeText(activity,"دانلود همه داده ها ", Toast.LENGTH_SHORT).show()
+                }
+                R.id.item_refresh -> {
+                    Toast.makeText(activity,"بار گذاری مجدد ", Toast.LENGTH_SHORT).show()
+                }
+                R.id.item_share_all -> {
+                    Toast.makeText(activity,"اشتراک گذاری همه داده ها ", Toast.LENGTH_SHORT).show()
+                }
+            }
             true
         }
     }

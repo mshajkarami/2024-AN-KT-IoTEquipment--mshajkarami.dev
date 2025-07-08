@@ -100,5 +100,15 @@
 
     </fragment>
 
+    <action
+        android:id="@+id/action_global_settingsFragment"
+        app:destination="@id/settingsFragment"
+        app:launchSingleTop="true" />
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        tools:layout="@layout/fragment_settings"
+        android:name="com.irisaco.iotequipment.ui.setting.SettingsFragment"
+        android:label="SettingsFragment" />
 
 </navigation>

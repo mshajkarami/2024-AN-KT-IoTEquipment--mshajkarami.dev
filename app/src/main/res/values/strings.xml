@@ -42,6 +42,7 @@
     <string name="toolbar_add_log_text">افزودن لاگ</string>
     <string name="toolbar_detail_log_text">توضیحات لاگ</string>
     <string name="toolbar_icon_profile">پروفایل</string>
+    <string name="toolbar_setting_text">تنظیمات</string>
 
     <!-- 📂 Menu -->
     <string name="menu_device_info">اطلاعات اولیه تجهیزات</string>
@@ -85,5 +86,8 @@
     <string name="toolbar_popup_menu_delete">حذف</string>
     <string name="btn_search_equipment">جستجو در محصولات</string>
     <string name="msg_barcode">بارکد با موفقیت شناسایی شد:</string>
+    <string name="toolbar_popup_menu_share_all">اشتراک‌گذاری همه فایل‌ها</string>
+    <string name="toolbar_popup_menu_refresh">بارگذاری مجدد</string>
+    <string name="toolbar_popup_menu_download_all_file">دانلود همه فایل ها</string>
 
 </resources>
