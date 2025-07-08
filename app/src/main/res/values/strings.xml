@@ -1,7 +1,7 @@
 <resources>
     <!-- 🌐 App -->
     <string name="app_name">Iotequipment</string>
-    <string name="toolbar_base_text">سامانه مدیریت تجهیزات اینترنت اشیا</string>
+    <string name="toolbar_default_text">سامانه مدیریت تجهیزات اینترنت اشیا</string>
     <string name="auth_dec">
         این اپلیکیشن به شما کمک می‌کند دستگاه‌های IoT
         را به‌صورت متمرکز کنترل، مانیتور و پشتیبانی کنید.
@@ -89,5 +89,7 @@
     <string name="toolbar_popup_menu_share_all">اشتراک‌گذاری همه فایل‌ها</string>
     <string name="toolbar_popup_menu_refresh">بارگذاری مجدد</string>
     <string name="toolbar_popup_menu_download_all_file">دانلود همه فایل ها</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

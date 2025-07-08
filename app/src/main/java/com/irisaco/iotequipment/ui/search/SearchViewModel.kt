@@ -20,8 +20,11 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
 
     private val repository: EquipmentRepository = EquipmentRepository(ApiClient.apiService)
 
-    private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading: LiveData<Boolean> get() = _isLoading
+    private val _initialLoading = MutableLiveData<Boolean>()
+    val initialLoading: LiveData<Boolean> get() = _initialLoading
+
+    private val _isRefreshing = MutableLiveData<Boolean>()
+    val isRefreshing: LiveData<Boolean> get() = _isRefreshing
 
     private val _equipmentList = MutableLiveData<List<Items>>()
     val equipmentList: LiveData<List<Items>> get() = _equipmentList
@@ -36,22 +39,21 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
             var isFirstLoad = true
             while (isActive) {
                 if (!isSearching) {
-                    if (isFirstLoad) {
-                        _isLoading.postValue(true)
-                    }
+                    if (isFirstLoad) _initialLoading.postValue(true)
+                    else _isRefreshing.postValue(true)
 
                     try {
                         val result = repository.getEquipments()
-                        if (_equipmentList.value != result) {
-                            _equipmentList.postValue(result)
-                        }
-
+                        _equipmentList.postValue(result)
                     } catch (e: Exception) {
                         _equipmentList.postValue(emptyList())
                     } finally {
+                        delay(500)
                         if (isFirstLoad) {
-                            _isLoading.postValue(false)
+                            _initialLoading.postValue(false)
                             isFirstLoad = false
+                        } else {
+                            _isRefreshing.postValue(false)
                         }
                     }
                 }
@@ -61,6 +63,22 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
+    fun manualRefresh() {
+        if (!isSearching) {
+            viewModelScope.launch {
+                _isRefreshing.value = true
+                try {
+                    val result = repository.getEquipments()
+                    _equipmentList.value = result
+                } catch (e: Exception) {
+                    _equipmentList.value = emptyList()
+                } finally {
+                    delay(500)
+                    _isRefreshing.value = false
+                }
+            }
+        }
+    }
 
 
     fun stopAutoRefresh() {
@@ -77,32 +95,40 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
 
     private fun loadAllEquipments() {
         viewModelScope.launch {
-            _isLoading.value = true
+            _initialLoading.value = true
+            val startTime = System.currentTimeMillis()
             try {
                 val result = repository.getEquipments()
                 _equipmentList.value = result
             } catch (e: Exception) {
                 _equipmentList.value = emptyList()
             } finally {
-                _isLoading.value = false
+                val elapsed = System.currentTimeMillis() - startTime
+                if (elapsed < 1000) delay(1000 - elapsed)
+                _initialLoading.value = false
             }
         }
     }
 
+
     fun onSearch(query: String, onlyById: Boolean = false) {
         isSearching = true
-        _isLoading.value = true
+        _initialLoading.value = true
         viewModelScope.launch {
+            val startTime = System.currentTimeMillis()
             try {
                 val result = repository.search(query, onlyById)
                 _equipmentList.value = result
             } catch (e: Exception) {
                 _equipmentList.value = emptyList()
             } finally {
-                _isLoading.value = false
+                val elapsed = System.currentTimeMillis() - startTime
+                if (elapsed < 1000) delay(1000 - elapsed)
+                _initialLoading.value = false
             }
         }
     }
+
 }
 
 

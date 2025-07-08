@@ -20,7 +20,7 @@
         android:textStyle="bold"
         android:padding="10dp"
         android:textSize="26sp"
-        android:text="@string/toolbar_base_text" />
+        android:text="@string/toolbar_default_text" />
 
     <ImageView
         android:id="@+id/imageView2"

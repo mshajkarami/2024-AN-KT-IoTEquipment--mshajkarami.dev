@@ -66,7 +66,7 @@ class LogDetailFragment : Fragment() {
 
         activity.setToolbarMenu(
             iconRes = R.drawable.ic_kebab,
-            menuRes = R.menu.menu_toolbar_popup_add_log
+            menuRes = R.menu.menu_toolbar_popup_detail_log
         ) { item ->
             when (item.itemId) {
 

@@ -26,15 +26,9 @@ class SettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val activity = (requireActivity() as MainActivity)
-
-        activity.setToolbarTitle("")
-        activity.setToolbarMenu(R.drawable.ic_help_question)
-
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        (requireActivity() as MainActivity).setDefaultToolbarIcon()
     }
 }

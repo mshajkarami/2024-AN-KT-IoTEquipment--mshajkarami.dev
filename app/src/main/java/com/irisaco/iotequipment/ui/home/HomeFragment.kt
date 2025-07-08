@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
@@ -15,8 +14,6 @@ import com.google.android.material.textfield.TextInputLayout
 import com.irisaco.iotequipment.MainActivity
 import com.irisaco.iotequipment.ui.scanner.QrScannerActivity
 import com.irisaco.iotequipment.R
-import com.irisaco.iotequipment.ui.search.SearchFragment
-import com.irisaco.iotequipment.ui.search.SearchFragmentDirections
 
 class HomeFragment : Fragment() {
 
@@ -34,19 +31,16 @@ class HomeFragment : Fragment() {
         val searchBar = view.findViewById<TextInputEditText>(R.id.search_bar)
         val btnScan: FloatingActionButton = view.findViewById(R.id.btn_scan)
 
-        (requireActivity() as MainActivity).setDefaultToolbarIcon()
-
-
         searchBar.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
                 searchBar.clearFocus()
                 findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
             }
         }
+
         searchBox.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
         }
-
 
         btnScan.setOnClickListener {
             startActivity(Intent(requireContext(), QrScannerActivity::class.java))
@@ -57,7 +51,6 @@ class HomeFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        (requireActivity() as MainActivity).setToolbarTitle(getString(R.string.toolbar_base_text))
         val activity = requireActivity() as MainActivity
         val scannedId = activity.equipmentIdUnique
         if (!scannedId.isNullOrEmpty()) {
@@ -74,6 +67,4 @@ class HomeFragment : Fragment() {
         }
 
     }
-
-
 }

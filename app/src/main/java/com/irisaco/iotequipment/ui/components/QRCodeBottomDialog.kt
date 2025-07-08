@@ -31,7 +31,7 @@ class QRCodeBottomDialog : BottomSheetDialogFragment() {
 
         barcodeId = view.findViewById(R.id.txt_barcode)
         btnVisit = view.findViewById(R.id.btn_visit)
-        btnCancel = view.findViewById(R.id.btn_cansel)
+        btnCancel = view.findViewById(R.id.btn_cancel)
 
         barcodeId.text = equipmentId
 

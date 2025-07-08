@@ -17,7 +17,6 @@ import com.irisaco.iotequipment.data.model.Records
 import com.irisaco.iotequipment.ui.detail.DetailViewModel
 import com.irisaco.iotequipment.ui.detail.DetailViewModelFactory
 import com.irisaco.iotequipment.ui.detail.EquipmentDetailSharedViewModel
-import com.irisaco.iotequipment.ui.detail.log.log_detail.LogDetailFragmentDirections
 
 class LogListFragment : Fragment() {
 
@@ -74,7 +73,7 @@ class LogListFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         val activity = (requireActivity() as MainActivity)
-       activity.setToolbarTitle(getString(R.string.toolbar_base_text))
+       activity.setToolbarTitle(getString(R.string.toolbar_default_text))
        activity.setDefaultToolbarIcon()
         viewModel.loadEquipmentRecords()
     }

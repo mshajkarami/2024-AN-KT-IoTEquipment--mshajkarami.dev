@@ -96,7 +96,7 @@
             app:strokeColor="@color/ic_launcher_background" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_cansel"
+            android:id="@+id/btn_cancel"
             android:layout_width="160dp"
             android:layout_height="50dp"
             android:layout_marginEnd="16dp"

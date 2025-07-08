@@ -48,7 +48,6 @@ class AttachmentsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setToolbarMenu()
 
         recyclerView = view.findViewById(R.id.attachmentRecyclerView)
         adapter = AttachmentsAdapter { document ->
@@ -104,36 +103,9 @@ class AttachmentsFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        setToolbarMenu()
-
     }
-
-    private fun setToolbarMenu() {
-        val activity = requireActivity() as MainActivity
-        activity.setToolbarTitle(getString(R.string.toolbar_attachment_text))
-        activity.setToolbarMenu(
-            R.drawable.ic_kebab,
-            menuRes = R.menu.menu_toolbar_popup_attachment
-        ) { item ->
-            when(item.itemId){
-                R.id.item_download_all -> {
-                    Toast.makeText(activity,"دانلود همه داده ها ", Toast.LENGTH_SHORT).show()
-                }
-                R.id.item_refresh -> {
-                    Toast.makeText(activity,"بار گذاری مجدد ", Toast.LENGTH_SHORT).show()
-                }
-                R.id.item_share_all -> {
-                    Toast.makeText(activity,"اشتراک گذاری همه داده ها ", Toast.LENGTH_SHORT).show()
-                }
-            }
-            true
-        }
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
-        val activity = requireActivity() as MainActivity
-        activity.setDefaultToolbarIcon()
         sharedViewModel.equipmentId.value = null
         sharedViewModel.recordEquipmentId.value = null
     }

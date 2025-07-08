@@ -78,6 +78,7 @@
             android:id="@+id/action_attachmentsFragment_to_equipmentDetailFragment"
             app:destination="@id/equipmentDetailFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/logDetailFragment"
         tools:layout="@layout/fragment_detail_log"

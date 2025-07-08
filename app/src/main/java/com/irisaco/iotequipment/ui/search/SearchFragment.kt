@@ -1,7 +1,5 @@
 package com.irisaco.iotequipment.ui.search
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
 import android.content.Context
 import android.os.Bundle
 import android.text.Editable
@@ -12,8 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.ProgressBar
-import androidx.fragment.app.Fragment
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -21,48 +18,48 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
-import com.airbnb.lottie.LottieDrawable
 import com.google.android.material.textfield.TextInputEditText
-import com.irisaco.iotequipment.MainActivity
-import com.irisaco.iotequipment.di.MyApplication
+import com.irisaco.iotequipment.BaseFragment
 import com.irisaco.iotequipment.R
-import com.irisaco.iotequipment.data.model.Equipment
-import com.irisaco.iotequipment.data.remote.ApiClient
-import com.irisaco.iotequipment.data.repository.AuthRepository
+import com.irisaco.iotequipment.ui.components.SkeletonAdapter
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class SearchFragment : Fragment() {
+class SearchFragment : BaseFragment() {
 
     private val viewModel: SearchViewModel by viewModels()
     private lateinit var adapter: EquipmentPagerAdapter
     private lateinit var searchBar: TextInputEditText
-    private val args: SearchFragmentArgs by navArgs() // Safe Args
+    private val args: SearchFragmentArgs by navArgs()
+    private val skeletonAdapter by lazy { SkeletonAdapter(6) }
+    private lateinit var recyclerView: RecyclerView
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        return inflater.inflate(R.layout.fragment_search, container, false)
-    }
+    override fun getLayoutId(): Int = R.layout.fragment_search
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val recyclerView = view.findViewById<RecyclerView>(R.id.search_recyclerView)
+        swipeRefreshLayout.setOnRefreshListener {
+            viewModel.manualRefresh()
+        }
+
+        viewModel.isRefreshing.observe(viewLifecycleOwner) {
+            swipeRefreshLayout.isRefreshing = it
+        }
+
+        recyclerView = view.findViewById(R.id.search_recyclerView)
         searchBar = view.findViewById(R.id.search_bar)
         val progressBar = view.findViewById<LottieAnimationView>(R.id.progressBar)
-
-
 
         adapter = EquipmentPagerAdapter(emptyList()) { equipmentId ->
             bindDetailFragment(equipmentId)
         }
+
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
 
-        observeViewModel()
+        observeViewModel(adapter, progressBar)
         setupSearchBarListener()
 
         val equipmentIdUnique = args.equipmentIdUnique
@@ -70,54 +67,34 @@ class SearchFragment : Fragment() {
             searchBar.setText(equipmentIdUnique)
             viewModel.onSearch(equipmentIdUnique, true)
         } else {
-            viewModel.startAutoRefresh(3000L)
+            viewModel.startAutoRefresh(5000L)
         }
 
         searchBar.requestFocus()
         searchBar.postDelayed({
-            val imm =
-                requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.showSoftInput(searchBar, InputMethodManager.SHOW_IMPLICIT)
         }, 100)
-
-        val authDao = MyApplication.database.authTokenDao()
-        val authRepository = AuthRepository(ApiClient.authService, authDao)
-        lifecycleScope.launch {
-            val getToken = authRepository.getSavedToken()
-            Log.d("Auth", "AccessToken : ${getToken?.accessToken}")
-            Log.d("Auth", "RefreshToken : ${getToken?.refreshToken}")
-        }
-
-        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            if (isLoading) {
-                progressBar.visibility = View.VISIBLE
-                progressBar.setMinAndMaxFrame(0, 30)
-                progressBar.repeatCount = LottieDrawable.INFINITE
-                progressBar.repeatMode = LottieDrawable.RESTART
-                progressBar.playAnimation()
-            } else {
-                progressBar.cancelAnimation()
-                progressBar.setMinAndMaxFrame(31, 90)
-                progressBar.repeatCount = 0
-                progressBar.playAnimation()
-                progressBar.postDelayed({
-                    progressBar.visibility = View.GONE
-                }, 1000)
-                progressBar.addAnimatorListener(object : AnimatorListenerAdapter() {
-                    override fun onAnimationEnd(animation: Animator, isReverse: Boolean) {
-                        progressBar.visibility = View.GONE
-                    }
-                })
-            }
-        }
-
     }
 
-    private fun observeViewModel() {
+    private fun observeViewModel(adapter: EquipmentPagerAdapter, progressBar: LottieAnimationView) {
         viewModel.equipmentList.observe(viewLifecycleOwner) { equipmentList ->
             adapter.updateData(equipmentList)
-            if (equipmentList.isEmpty()) {
-                Log.w("TAGY", "No equipment found for this query")
+        }
+
+        viewModel.initialLoading.observe(viewLifecycleOwner) { isLoading ->
+            if (isLoading) {
+                progressBar.isVisible = true
+                recyclerView.adapter = skeletonAdapter
+            } else {
+                if (progressBar.isVisible) {
+                    progressBar.postDelayed({
+                        progressBar.isVisible = false
+                        recyclerView.adapter = adapter
+                    }, 300)
+                } else {
+                    recyclerView.adapter = adapter
+                }
             }
         }
     }
@@ -138,7 +115,6 @@ class SearchFragment : Fragment() {
                     }
                 }
             }
-
             override fun afterTextChanged(s: Editable?) {}
         })
 
@@ -150,19 +126,15 @@ class SearchFragment : Fragment() {
                 } else {
                     viewModel.onSearch(query, true)
                 }
-                val imm =
-                    requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(searchBar.windowToken, 0)
                 true
-            } else {
-                false
-            }
+            } else false
         }
     }
 
     private fun bindDetailFragment(equipmentId: Int) {
-        val action =
-            SearchFragmentDirections.actionSearchFragmentToEquipmentDetailFragment(equipmentId)
+        val action = SearchFragmentDirections.actionSearchFragmentToEquipmentDetailFragment(equipmentId)
         findNavController().navigate(action)
     }
 
@@ -176,12 +148,8 @@ class SearchFragment : Fragment() {
         searchBar.setOnEditorActionListener(null)
         searchBar.addTextChangedListener(null)
     }
-
-    override fun onResume() {
-        super.onResume()
-        (requireActivity() as MainActivity).setToolbarTitle(getString(R.string.toolbar_base_text))
-    }
 }
+
 
 
 

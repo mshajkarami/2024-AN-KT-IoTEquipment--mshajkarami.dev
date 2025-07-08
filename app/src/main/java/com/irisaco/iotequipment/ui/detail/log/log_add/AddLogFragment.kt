@@ -25,6 +25,7 @@ import com.irisaco.iotequipment.data.model.Records
 
 import com.irisaco.iotequipment.databinding.FragmentAddLogBinding
 import com.irisaco.iotequipment.ui.detail.EquipmentDetailSharedViewModel
+import com.irisaco.iotequipment.ui.detail.log.log_detail.LogDetailFragmentDirections
 import java.io.File
 import java.time.LocalDate
 import java.time.ZoneOffset
@@ -35,38 +36,17 @@ import kotlin.getValue
 class AddLogFragment : Fragment() {
 
     private var _binding: FragmentAddLogBinding? = null
-    private val binding get() = _binding!!
+    private val binding get() = _binding ?: throw IllegalStateException("Binding is null")
 
     private val viewModel: AddLogViewModel by viewModels()
     private val sharedViewModel: EquipmentDetailSharedViewModel by activityViewModels()
 
     private lateinit var pickFileLauncher: ActivityResultLauncher<String>
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        pickFileLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-            uri?.let {
-                val file = uriToFile(requireContext(), it)
-                val equipmentId = sharedViewModel.equipmentId.value
-                val recordId = sharedViewModel.recordEquipmentId.value
-                if (equipmentId != null && file != null) {
-                    viewModel.uploadDocument(equipmentId, recordId, file)
-                } else {
-                    Toast.makeText(
-                        requireContext(),
-                        "شناسه تجهیز معتبر نیست",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentAddLogBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -75,52 +55,69 @@ class AddLogFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val activity = (requireActivity() as MainActivity)
-
-        activity.setToolbarTitle(getString(R.string.toolbar_add_log_text))
-
-        setupToolbarMenu()
+        registerFilePicker()
+        setupToolbar()
         setupDatePicker()
         setupCountdown()
         setupFormMode()
         setupObservers()
 
-        binding.btnCansel.setOnClickListener {
+        binding.btnCancel.setOnClickListener {
             findNavController().navigateUp()
         }
     }
+
+    private fun registerFilePicker() {
+        pickFileLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+            val file = uri?.let { uriToFile(requireContext(), it) }
+            if (file == null) {
+                showToast("هیچ فایلی انتخاب نکردین!")
+                return@registerForActivityResult
+            }
+
+            val equipmentId = sharedViewModel.equipmentId.value
+            val recordId = sharedViewModel.recordEquipmentId.value
+
+            if (equipmentId != null) {
+                viewModel.uploadDocument(equipmentId, recordId, file)
+            } else {
+                showToast("شناسه تجهیز یافت نشد")
+            }
+        }
+    }
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setupFormMode() {
         val recordToEdit = sharedViewModel.recordToEdit.value
         val equipmentId = sharedViewModel.equipmentId.value
 
-        if (recordToEdit != null && equipmentId != null) {
-            binding.etNewLogDes.setText(recordToEdit.description)
-            binding.etNewLogDate.setText(recordToEdit.creationTime?.substring(0, 10))
-            binding.btnAddRecorde.text = "ویرایش لاگ"
+        if (equipmentId == null) {
+            showToast("شناسه تجهیز نامعتبر است")
+            findNavController().navigateUp()
+            return
+        }
 
+        recordToEdit?.let {
+            binding.etNewLogDes.setText(it.description)
+            binding.etNewLogDate.setText(it.creationTime?.substring(0, 10))
+            binding.btnAddRecorde.text = "ویرایش لاگ"
             binding.btnAddRecorde.setOnClickListener {
-                val updatedRecord = createRecord().copy(id = recordToEdit.id)
+                val updatedRecord = createRecord().copy(id = recordToEdit.id ?: return@setOnClickListener)
                 viewModel.updateRecord(equipmentId, recordToEdit.id!!, updatedRecord)
             }
-
-        } else if (equipmentId != null) {
+        } ?: run {
             binding.btnAddRecorde.setOnClickListener {
-                val record = createRecord()
-                viewModel.addRecord(equipmentId, record)
+                viewModel.addRecord(equipmentId, createRecord())
             }
-        } else {
-            Toast.makeText(requireContext(), "شناسه تجهیز نامعتبر است", Toast.LENGTH_SHORT).show()
-            findNavController().navigateUp()
         }
+
         binding.btnAddAttachment.setOnClickListener {
             pickFileLauncher.launch("*/*")
         }
-
     }
 
-    fun uriToFile(context: Context, uri: Uri): File? {
+    private fun uriToFile(context: Context, uri: Uri): File? {
         return try {
             val inputStream = context.contentResolver.openInputStream(uri)
             val file = File.createTempFile("upload_", null, context.cacheDir)
@@ -134,19 +131,13 @@ class AddLogFragment : Fragment() {
         }
     }
 
-
     private fun setupObservers() {
         viewModel.addRecordResult.observe(viewLifecycleOwner) { result ->
             result.onSuccess {
-                Toast.makeText(requireContext(), "لاگ با موفقیت افزوده شد", Toast.LENGTH_SHORT)
-                    .show()
+                showToast("لاگ با موفقیت افزوده شد")
                 findNavController().navigateUp()
             }.onFailure {
-                Toast.makeText(
-                    requireContext(),
-                    "خطا در افزودن لاگ: ${it.message}",
-                    Toast.LENGTH_SHORT
-                ).show()
+                showToast("خطا در افزودن لاگ: ${it.message}")
             }
         }
 
@@ -155,32 +146,35 @@ class AddLogFragment : Fragment() {
                 sharedViewModel.recordToEdit.value = null
                 binding.etNewLogDes.text?.clear()
                 binding.etNewLogDate.text?.clear()
-                Toast.makeText(requireContext(), "ویرایش با موفقیت انجام شد", Toast.LENGTH_SHORT)
-                    .show()
+                showToast("ویرایش با موفقیت انجام شد")
                 findNavController().navigateUp()
             }.onFailure {
-                Toast.makeText(requireContext(), "خطا در ویرایش: ${it.message}", Toast.LENGTH_SHORT)
-                    .show()
+                showToast("خطا در ویرایش: ${it.message}")
             }
         }
 
         viewModel.uploadState.observe(viewLifecycleOwner) { result ->
             result.onSuccess {
-                Toast.makeText(requireContext(), "فایل با موفقیت آپلود شد", Toast.LENGTH_SHORT)
-                    .show()
+                showToast("فایل با موفقیت آپلود شد")
             }.onFailure {
-                Toast.makeText(
-                    requireContext(),
-                    "آپلود فایل ناموفق بود: ${it.message}",
-                    Toast.LENGTH_SHORT
-                ).show()
+                showToast("آپلود فایل ناموفق بود: ${it.message}")
             }
         }
     }
 
+    private fun setupToolbar() {
+        (requireActivity() as? MainActivity)?.setToolbarTitle(getString(R.string.toolbar_add_log_text))
+        setupToolbarMenu()
+    }
+
     private fun setupToolbarMenu() {
-        (requireActivity() as MainActivity).setToolbarMenu(R.drawable.ic_kebab) {
-            Toast.makeText(requireContext(), "کلیک شد!", Toast.LENGTH_SHORT).show()
+        (requireActivity() as? MainActivity)?.setToolbarMenu(
+            iconRes = R.drawable.ic_kebab,
+            menuRes = R.menu.menu_toolbar_popup_add_log
+        ) { item ->
+            when (item.itemId) {
+                R.id.item_add_attachment -> pickFileLauncher.launch("*/*")
+            }
             true
         }
     }
@@ -221,32 +215,21 @@ class AddLogFragment : Fragment() {
         )
     }
 
-
-    fun getCurrentIsoDateTime(): String {
+    private fun getCurrentIsoDateTime(): String {
         val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US)
         sdf.timeZone = TimeZone.getTimeZone("UTC")
         return sdf.format(Date())
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun convertToIso8601(date: String): String {
+    private fun convertToIso8601(date: String): String {
         val localDate = LocalDate.parse(date)
         val startOfDay = localDate.atStartOfDay(ZoneOffset.UTC)
         return startOfDay.toInstant().toString()
     }
 
-
-    override fun onResume() {
-        super.onResume()
-        val activity = (requireActivity() as MainActivity)
-
-        activity.setToolbarMenu(
-            R.drawable.ic_kebab
-        ) {
-            Toast.makeText(activity, "کلیک شد!", Toast.LENGTH_SHORT).show()
-            true
-        }
-
+    private fun showToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroyView() {
@@ -254,5 +237,4 @@ class AddLogFragment : Fragment() {
         sharedViewModel.recordToEdit.value = null
         _binding = null
     }
-
 }

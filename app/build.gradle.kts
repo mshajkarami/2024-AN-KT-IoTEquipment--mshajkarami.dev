@@ -49,6 +49,7 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.androidx.swiperefreshlayout)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -89,4 +90,6 @@ dependencies {
     implementation("com.airbnb.android:lottie:6.4.0")
     // MaterialDatePicker
     implementation("com.google.android.material:material:1.11.0")
+    // Skeleton
+    implementation("com.facebook.shimmer:shimmer:0.5.0")
 }

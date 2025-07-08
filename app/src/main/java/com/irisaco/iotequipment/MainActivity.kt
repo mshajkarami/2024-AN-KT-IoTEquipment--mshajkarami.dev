@@ -10,7 +10,9 @@ import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
@@ -20,7 +22,6 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.appbar.MaterialToolbar
@@ -39,6 +40,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var toolbar: MaterialToolbar
     private lateinit var navView: NavigationView
+    private lateinit var toolbarTitleTextView: TextView
     private var noInternetDialog: NoInternetBottomSheet? = null
 
     private lateinit var authViewModel: AuthViewModel
@@ -48,12 +50,11 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
+
         setupInsets()
         setupViews()
         observeNetwork()
@@ -62,8 +63,22 @@ class MainActivity : AppCompatActivity() {
         readIntentExtras()
     }
 
+    private fun setupViews() {
+        drawerLayout = findViewById(R.id.drawer_layout)
+        navView = findViewById(R.id.nav_view)
+        toolbar = findViewById(R.id.materialToolbar)
+        toolbarTitleTextView = findViewById(R.id.txt_toolbar_name)
+    }
 
-    private fun setupNavigation(){
+    private fun setupInsets() {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+    }
+
+    private fun setupNavigation() {
         navController = (supportFragmentManager
             .findFragmentById(R.id.fragmentContainerView) as NavHostFragment).navController
 
@@ -78,22 +93,126 @@ class MainActivity : AppCompatActivity() {
         toggle.syncState()
 
         NavigationUI.setupWithNavController(toolbar, navController)
+        NavigationUI.setupWithNavController(navView, navController)
+
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.homeFragment -> {
-                    toolbar.navigationIcon = ContextCompat.getDrawable(this, R.drawable.ic_menu)
-                    toolbar.setNavigationOnClickListener {
-                        drawerLayout.openDrawer(GravityCompat.START)
+                    setupToolbarNavigation(R.drawable.ic_menu) {
+                        drawerLayout.openDrawer(
+                            GravityCompat.START
+                        )
+                    }
+                    setDefaultToolbarIcon()
+                    setToolbarTitle(getString(R.string.toolbar_default_text))
+                }
+
+                R.id.searchFragment -> {
+                    setupToolbarNavigation(R.drawable.ic_back) { navController.navigateUp() }
+                    setDefaultToolbarIcon()
+                    setToolbarTitle(getString(R.string.toolbar_default_text))
+                }
+
+                R.id.settingsFragment -> {
+                    setToolbarTitle(getString(R.string.toolbar_setting_text))
+                    setupToolbarNavigation(R.drawable.ic_back) { navController.navigateUp() }
+                    setToolbarMenu(R.drawable.ic_help_question)
+                }
+
+                R.id.attachmentsFragment -> {
+                    setupToolbarNavigation(R.drawable.ic_back) { navController.navigateUp() }
+                    setDefaultToolbarIcon()
+                    setupAttachmentMenu()
+                }
+
+                R.id.addLogFragment -> {
+                    setupToolbarNavigation(R.drawable.ic_back) { navController.navigateUp() }
+                    setDefaultToolbarIcon()
+
+                    setToolbarTitle(getString(R.string.toolbar_add_log_text))
+                    setToolbarMenu(
+                        iconRes = R.drawable.ic_kebab,
+                        menuRes = R.menu.menu_toolbar_popup_add_log
+                    ) { item ->
+                        when (item.itemId) {
+                            R.id.item_add_attachment -> {
+                            }
+                        }
+                        true
                     }
                 }
+
+                R.id.equipmentDetailFragment -> {
+                    setupToolbarNavigation(R.drawable.ic_back) { navController.navigateUp() }
+                    setDefaultToolbarIcon()
+                    setToolbarTitle(getString(R.string.toolbar_default_text))
+                    setDefaultToolbarIcon()
+                }
+
+                R.id.logDetailFragment -> {
+                    setupToolbarNavigation(R.drawable.ic_back) { navController.navigateUp() }
+                    setDefaultToolbarIcon()
+                }
+
                 else -> {
-                    toolbar.navigationIcon = ContextCompat.getDrawable(this, R.drawable.ic_back)
-                    toolbar.setNavigationOnClickListener {
-                        navController.navigateUp()
-                    }
+                    setupToolbarNavigation(R.drawable.ic_back) { navController.navigateUp() }
+                    setDefaultToolbarIcon()
                 }
             }
+        }
 
+        navView.setNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_exit -> {
+                    AlertDialog.Builder(this)
+                        .setTitle("خروج")
+                        .setMessage("آیا مطمئن هستید که می‌خواهید از برنامه خارج شوید؟")
+                        .setPositiveButton("بله") { _, _ -> finishAffinity() }
+                        .setNegativeButton("خیر", null)
+                        .show()
+                    true
+                }
+
+                else -> {
+                    val handled = NavigationUI.onNavDestinationSelected(item, navController)
+                    if (handled) {
+                        drawerLayout.closeDrawer(GravityCompat.START)
+                    }
+                    handled
+                }
+            }
+        }
+    }
+
+    private fun setupToolbarNavigation(iconRes: Int, onClick: () -> Unit) {
+        toolbar.navigationIcon = ContextCompat.getDrawable(this, iconRes)
+        toolbar.setNavigationOnClickListener { onClick() }
+    }
+
+    private fun setupAttachmentMenu() {
+
+        setToolbarTitle(getString(R.string.toolbar_attachment_text))
+        setToolbarMenu(
+            R.drawable.ic_kebab,
+            menuRes = R.menu.menu_toolbar_popup_attachment
+        ) { item ->
+            when (item.itemId) {
+                R.id.item_download_all -> Toast.makeText(
+                    this,
+                    "دانلود همه داده ها ",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                R.id.item_refresh -> Toast.makeText(this, "بار گذاری مجدد ", Toast.LENGTH_SHORT)
+                    .show()
+
+                R.id.item_share_all -> Toast.makeText(
+                    this,
+                    "اشتراک گذاری همه داده ها ",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            true
         }
     }
 
@@ -107,16 +226,16 @@ class MainActivity : AppCompatActivity() {
         authViewModel.login("saleh", "123456")
 
         authViewModel.token.observe(this) { token ->
-            if (token != null) {
-                Log.d("Auth", "Access Token: ${token.accessToken}")
+            token?.let {
+                Log.d("Auth", "Access Token: ${it.accessToken}")
                 lifecycleScope.launch {
-                    authRepository.saveToken(token)
+                    authRepository.saveToken(it)
                 }
             }
         }
         authViewModel.error.observe(this) { error ->
-            if (error != null) {
-                Log.e("Auth", "Error is : $error")
+            error?.let {
+                Log.e("Auth", "Error is : $it")
             }
         }
     }
@@ -135,26 +254,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupViews() {
-        drawerLayout = findViewById(R.id.drawer_layout)
-        navView = findViewById(R.id.nav_view)
-        toolbar = findViewById(R.id.materialToolbar)
-    }
-
-    private fun setupInsets() {
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
-    }
-
-    private fun readIntentExtras() {
-        equipmentIdUnique = intent.getStringExtra("EQUIPMENT_ID")
-    }
-
     fun setToolbarTitle(title: String) {
-        findViewById<TextView>(R.id.txt_toolbar_name).text = title
+        toolbarTitleTextView.text = title
     }
 
     fun setToolbarMenu(
@@ -162,7 +263,6 @@ class MainActivity : AppCompatActivity() {
         menuRes: Int? = null,
         onMenuItemClick: ((MenuItem) -> Boolean)? = null
     ) {
-        val toolbar = findViewById<MaterialToolbar>(R.id.materialToolbar)
         toolbar.menu.clear()
 
         toolbar.inflateMenu(R.menu.toolbar_menu)
@@ -183,11 +283,10 @@ class MainActivity : AppCompatActivity() {
                 true
             } else false
         }
-
     }
 
     fun setDefaultToolbarIcon() {
-        setToolbarMenu(R.drawable.ic_profile) { item ->
+        setToolbarMenu(R.drawable.ic_profile) {
             navController.navigate(R.id.action_global_settingsFragment)
             true
         }
@@ -211,4 +310,7 @@ class MainActivity : AppCompatActivity() {
         popup.show()
     }
 
+    private fun readIntentExtras() {
+        equipmentIdUnique = intent.getStringExtra("EQUIPMENT_ID")
+    }
 }
