@@ -4,10 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.core.view.isVisible
@@ -19,7 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.textfield.TextInputEditText
-import com.irisaco.iotequipment.BaseFragment
+import com.irisaco.iotequipment.ui.base.BaseFragment
 import com.irisaco.iotequipment.R
 import com.irisaco.iotequipment.ui.components.SkeletonAdapter
 import kotlinx.coroutines.Job
@@ -67,7 +64,7 @@ class SearchFragment : BaseFragment() {
             searchBar.setText(equipmentIdUnique)
             viewModel.onSearch(equipmentIdUnique, true)
         } else {
-            viewModel.startAutoRefresh(5000L)
+            viewModel.startAutoRefresh(10000L)
         }
 
         searchBar.requestFocus()

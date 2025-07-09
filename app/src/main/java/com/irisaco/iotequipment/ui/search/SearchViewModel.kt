@@ -32,7 +32,7 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
     private var autoRefreshJob: Job? = null
     private var isSearching = false
 
-    fun startAutoRefresh(intervalMillis: Long = 5000L) {
+    fun startAutoRefresh(intervalMillis: Long = 10000L) {
         if (autoRefreshJob != null) return
 
         autoRefreshJob = viewModelScope.launch {

@@ -1,12 +1,13 @@
-package com.irisaco.iotequipment
+package com.irisaco.iotequipment.ui.base
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.fragment.app.Fragment
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.irisaco.iotequipment.R
 
 abstract class BaseFragment : Fragment() {
 

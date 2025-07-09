@@ -64,6 +64,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
+        android:background="@color/md_theme_background"
         app:menu="@menu/drawer_menu"
         app:headerLayout="@layout/nav_header" />
 
