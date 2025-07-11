@@ -13,19 +13,19 @@ class TokenAuthenticator(
 ) : Authenticator {
 
     override fun authenticate(route: Route?, response: Response): Request? = runBlocking {
-        val token = repository.getSavedToken()
+        val account = repository.getCachedAccount()
 
-        if (token == null) {
+        if (account == null) {
             Log.e("TokenAuthenticator", "No saved token found")
             return@runBlocking null
         }
 
-        val newToken = repository.refreshToken(token.refreshToken)
+        val newAccount = repository.refreshToken(account.refreshToken)
 
-        return@runBlocking if (newToken != null) {
+        return@runBlocking if (newAccount != null) {
             Log.d("TokenAuthenticator", "Token refreshed successfully")
             response.request.newBuilder()
-                .header("Authorization", "Bearer ${newToken.accessToken}")
+                .header("Authorization", "Bearer ${newAccount.accessToken}")
                 .build()
         } else {
             Log.e("TokenAuthenticator", "Failed to refresh token")

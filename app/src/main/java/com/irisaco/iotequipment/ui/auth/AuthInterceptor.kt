@@ -5,7 +5,7 @@ import okhttp3.Response
 
 class AuthInterceptor(private val repository: AuthRepository) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
-        val token = repository.getCachedToken()?.accessToken
+        val token = repository.getCachedAccount()?.accessToken
         val request = if (token != null) {
             chain.request().newBuilder()
                 .addHeader("Authorization", "Bearer $token")
@@ -16,4 +16,5 @@ class AuthInterceptor(private val repository: AuthRepository) : Interceptor {
         return chain.proceed(request)
     }
 }
+
 

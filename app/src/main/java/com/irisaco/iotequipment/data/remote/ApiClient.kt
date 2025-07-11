@@ -31,7 +31,7 @@ object ApiClient {
         authRepository = AuthRepository(context)
 
         runBlocking {
-            authRepository.loadTokenFromDb()
+            authRepository.loadActiveAccountFromDb()
         }
 
         client = OkHttpClient.Builder()

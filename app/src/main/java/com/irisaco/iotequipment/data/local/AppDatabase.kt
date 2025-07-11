@@ -5,9 +5,10 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [AuthTokenEntity::class], version = 1)
+@Database(entities = [AccountEntity::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun authTokenDao(): AuthTokenDao
+
+    abstract fun accountDao(): AccountDao
 
     companion object {
         @Volatile private var INSTANCE: AppDatabase? = null
@@ -17,7 +18,7 @@ abstract class AppDatabase : RoomDatabase() {
                 val db = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
-                    "iot_app_db"
+                    "account.db"
                 ).build()
                 INSTANCE = db
                 db

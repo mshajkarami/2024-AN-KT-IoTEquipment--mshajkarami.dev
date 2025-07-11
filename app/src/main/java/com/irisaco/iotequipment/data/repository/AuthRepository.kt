@@ -1,62 +1,78 @@
 package com.irisaco.iotequipment.data.repository
 
 import android.content.Context
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
+import com.irisaco.iotequipment.data.local.AccountEntity
 import com.irisaco.iotequipment.data.local.AppDatabase
-import com.irisaco.iotequipment.data.local.AuthTokenDao
-import com.irisaco.iotequipment.data.local.AuthTokenEntity
-import com.irisaco.iotequipment.data.model.KeycloakTokenResponse
 import com.irisaco.iotequipment.data.remote.ApiClient.authService
-import com.irisaco.iotequipment.data.remote.KeycloakAuthService
-import retrofit2.Response
+import org.json.JSONObject
+import java.util.Base64
 
 class AuthRepository(context: Context) {
 
-    private val dao = AppDatabase.getInstance(context).authTokenDao()
+    private val dao = AppDatabase.getInstance(context).accountDao()
 
-    suspend fun saveToken(accessToken: String, refreshToken: String, expiresInSec: Long) {
-        val expiresAt = System.currentTimeMillis() + expiresInSec * 1000
-        val token = AuthTokenEntity(
-            accessToken = accessToken,
-            refreshToken = refreshToken,
-            expiresAt = expiresAt
-        )
-        dao.insert(token)
-        cachedToken = token
+    private var cachedAccount: AccountEntity? = null
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    suspend fun saveAccount(
+        accessToken: String,
+        refreshToken: String,
+        expiresInSec: Long
+    ) {
+        val username = decodeUsernameFromToken(accessToken)
+        if (username != null) {
+            val expiresAt = System.currentTimeMillis() + expiresInSec * 1000
+            val account = AccountEntity(
+                username = username,
+                displayName = username,
+                profileImageUrl = null,
+                accessToken = accessToken,
+                refreshToken = refreshToken,
+                expiresAt = expiresAt,
+                isActive = true
+            )
+            dao.deactivateAllAccounts()
+            dao.insertAccount(account)
+            cachedAccount = account
+        } else {
+            Log.e("AuthRepository", "Unable to decode username from access token")
+        }
     }
 
     suspend fun getValidAccessTokenOrNull(): String? {
-        val token = dao.getToken() ?: return null
-        return if (token.expiresAt > System.currentTimeMillis()) {
-            token.accessToken
+        val account = dao.getActiveAccount() ?: return null
+        return if (account.expiresAt > System.currentTimeMillis()) {
+            account.accessToken
         } else null
     }
 
-    suspend fun getToken(): AuthTokenEntity? = dao.getToken()
+    suspend fun getActiveAccount(): AccountEntity? = dao.getActiveAccount()
 
-    suspend fun clear() = dao.clear()
+    suspend fun clear() = dao.deactivateAllAccounts()
 
-    suspend fun getSavedToken(): AuthTokenEntity? = dao.getToken()
-
-    suspend fun refreshToken(refreshToken: String): AuthTokenEntity? {
+    suspend fun refreshToken(refreshToken: String): AccountEntity? {
+        val account = dao.getActiveAccount() ?: return null
         return try {
             val response = authService.refreshToken(
                 grantType = "refresh_token",
                 clientId = "iem-dev",
-                refreshToken = refreshToken
+                refreshToken = account.refreshToken
             )
 
             if (response.isSuccessful) {
                 val body = response.body()
                 if (body != null) {
-                    val newToken = AuthTokenEntity(
+                    val newAccount = account.copy(
                         accessToken = body.accessToken,
-                        refreshToken = body.refreshToken ?: refreshToken,
+                        refreshToken = body.refreshToken ?: account.refreshToken,
                         expiresAt = System.currentTimeMillis() + (body.expiresIn * 1000)
                     )
-                    dao.insert(newToken)
+                    dao.insertAccount(newAccount)
                     Log.d("AuthRepository", "Token refreshed successfully.")
-                    newToken
+                    newAccount
                 } else {
                     Log.e("AuthRepository", "Response body is null.")
                     null
@@ -72,12 +88,24 @@ class AuthRepository(context: Context) {
         }
     }
 
+    fun getCachedAccount(): AccountEntity? = cachedAccount
 
-    private var cachedToken: AuthTokenEntity? = null
+    suspend fun loadActiveAccountFromDb() {
+        cachedAccount = dao.getActiveAccount()
+    }
 
-    fun getCachedToken(): AuthTokenEntity? = cachedToken
-
-    suspend fun loadTokenFromDb() {
-        cachedToken = dao.getToken()
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun decodeUsernameFromToken(accessToken: String): String? {
+        return try {
+            val parts = accessToken.split(".")
+            if (parts.size != 3) return null
+            val payload = parts[1]
+            val decodedBytes = Base64.getUrlDecoder().decode(payload)
+            val json = JSONObject(String(decodedBytes))
+            json.getString("preferred_username")
+        } catch (e: Exception) {
+            null
+        }
     }
 }
+

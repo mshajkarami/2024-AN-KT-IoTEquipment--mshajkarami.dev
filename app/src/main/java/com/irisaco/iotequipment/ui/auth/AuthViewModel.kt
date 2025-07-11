@@ -2,6 +2,8 @@ package com.irisaco.iotequipment.ui.auth
 
 import android.app.Application
 import android.content.Intent
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.irisaco.iotequipment.data.repository.AuthRepository
@@ -13,6 +15,7 @@ import net.openid.appauth.AuthorizationService
 import net.openid.appauth.AuthorizationServiceConfiguration
 import net.openid.appauth.ResponseTypeValues
 import androidx.core.net.toUri
+import com.irisaco.iotequipment.data.local.AccountEntity
 import com.irisaco.iotequipment.utils.UnsafeConnectionBuilder
 import net.openid.appauth.AppAuthConfiguration
 
@@ -41,12 +44,13 @@ class AuthViewModel(
             "iem-dev",
             ResponseTypeValues.CODE,
             "com.irisaco.iotequipment:/oauth2redirect".toUri()
-        ).setScope("email profile")
+        ).setScope("email profile") // scope هایی که در توکن باشن
             .build()
 
         return authService.getAuthorizationRequestIntent(authRequest)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun handleTokenExchange(intent: Intent, onDone: (Boolean, String?) -> Unit) {
         val response = AuthorizationResponse.fromIntent(intent)
         val exception = AuthorizationException.fromIntent(intent)
@@ -56,27 +60,26 @@ class AuthViewModel(
             authService.performTokenRequest(request) { tokenResponse, ex ->
                 viewModelScope.launch {
                     if (tokenResponse != null) {
-                        val previousRefreshToken = repository.getSavedToken()?.refreshToken ?: ""
-                        val expiresInMillis = tokenResponse.accessTokenExpirationTime ?: 0L
+                        val accessToken = tokenResponse.accessToken ?: ""
+                        val refreshToken = tokenResponse.refreshToken ?: ""
+                        val expiresAtMillis = tokenResponse.accessTokenExpirationTime ?: 0L
                         val currentTimeMillis = System.currentTimeMillis()
-                        val expiresInSec = if (expiresInMillis > currentTimeMillis) {
-                            (expiresInMillis - currentTimeMillis) / 1000
-                        } else {
-                            3600L
-                        }
+                        val expiresInSec = if (expiresAtMillis > currentTimeMillis) {
+                            (expiresAtMillis - currentTimeMillis) / 1000
+                        } else 3600L
 
-                        repository.saveToken(
-                            accessToken = tokenResponse.accessToken ?: "",
-                            refreshToken = tokenResponse.refreshToken ?: previousRefreshToken,
+                        repository.saveAccount(
+                            accessToken = accessToken,
+                            refreshToken = refreshToken,
                             expiresInSec = expiresInSec
                         )
+
                         onDone(true, null)
                     } else {
                         onDone(false, ex?.errorDescription)
                     }
                 }
             }
-
         } else {
             onDone(false, exception?.errorDescription)
         }
@@ -85,10 +88,21 @@ class AuthViewModel(
     suspend fun getValidAccessToken(): String? {
         return repository.getValidAccessTokenOrNull()
     }
+
     suspend fun isLoggedIn(): Boolean {
         return repository.getValidAccessTokenOrNull() != null
     }
 
+    suspend fun getActiveAccount(): AccountEntity? {
+        return repository.getActiveAccount()
+    }
+
+    suspend fun loadActiveAccountFromDb() {
+        repository.loadActiveAccountFromDb()
+    }
+
+
 }
+
 
 

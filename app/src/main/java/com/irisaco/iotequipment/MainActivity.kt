@@ -3,21 +3,16 @@ package com.irisaco.iotequipment
 import android.content.Context
 import android.content.res.Resources
 import android.os.Bundle
-import android.util.Log
 import android.view.ContextThemeWrapper
 import android.view.MenuItem
 import android.view.View
 import android.widget.PopupMenu
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.Guideline
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
@@ -31,15 +26,12 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.navigation.NavigationView
-import com.irisaco.iotequipment.ui.auth.AuthViewModel
-import com.irisaco.iotequipment.ui.auth.AuthViewModelFactory
-import com.irisaco.iotequipment.data.remote.ApiClient
 import com.irisaco.iotequipment.data.repository.AuthRepository
 import com.irisaco.iotequipment.databinding.ActivityMainBinding
-import com.irisaco.iotequipment.di.MyApplication
+import com.irisaco.iotequipment.ui.auth.AuthViewModel
+import com.irisaco.iotequipment.ui.auth.AuthViewModelFactory
 import com.irisaco.iotequipment.ui.components.NoInternetBottomSheet
 import com.irisaco.iotequipment.utils.NetworkConnectionLiveData
-import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -52,34 +44,27 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    private val loginLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            val data = result.data ?: return@registerForActivityResult
-            authViewModel.handleTokenExchange(data) { success, error ->
-                if (success) {
-                    Toast.makeText(this, "ورود موفقیت‌آمیز", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(this, "ورود ناموفق: $error", Toast.LENGTH_SHORT).show()
-                    Log.d("Error Auth", error.toString())
-                }
-            }
-        }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
+        // Inflate view binding
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Set up window insets padding (status bar, nav bar)
         setupInsets()
-        setupAuthViewModel {
-            setupNavGraphAccordingToLogin()
-            checkIfLoggedIn()
-        }
 
+        // Initialize ViewModel for auth (اگر لازمه نگهش دار)
+        setupAuthViewModel()
+
+        // راه‌اندازی ناوبری با گراف ثابت (main_nav_graph)
         setupNavigation()
+
+        // نظارت بر اتصال اینترنت
         observeNetwork()
+
+        // خواندن اکستراهای intent
         readIntentExtras()
     }
 
@@ -92,9 +77,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupNavigation() {
+        // گرفتن NavController از NavHostFragment
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         navController = navHostFragment.navController
 
+        // راه‌اندازی اکشن بار و drawer toggle
         val toggle = ActionBarDrawerToggle(
             this,
             binding.drawerLayout,
@@ -106,9 +93,11 @@ class MainActivity : AppCompatActivity() {
         binding.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
+        // اتصال ناوبری به Toolbar و NavigationView
         NavigationUI.setupWithNavController(binding.materialToolbar, navController)
         NavigationUI.setupWithNavController(binding.navView, navController)
 
+        // تغییر UI بر اساس مقصد ناوبری
         navController.addOnDestinationChangedListener { _, destination, _ ->
             val isAuthScreen = destination.id == R.id.authFragment
             updateUIForDestination(isAuthScreen)
@@ -125,6 +114,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        // مدیریت کلیک‌های NavigationView
         binding.navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.nav_exit -> {
@@ -311,30 +301,10 @@ class MainActivity : AppCompatActivity() {
         equipmentIdUnique = intent.getStringExtra("EQUIPMENT_ID")
     }
 
-    private fun setupAuthViewModel(onReady: () -> Unit) {
+    private fun setupAuthViewModel() {
         val authRepository = AuthRepository(applicationContext)
         val factory = AuthViewModelFactory(authRepository, application)
         authViewModel = ViewModelProvider(this, factory)[AuthViewModel::class.java]
-        onReady()
-    }
-
-    private fun checkIfLoggedIn() {
-        lifecycleScope.launch {
-            val isLoggedIn = authViewModel.isLoggedIn()
-            if (!isLoggedIn) navController.navigate(R.id.authFragment)
-        }
-    }
-
-    private fun setupNavGraphAccordingToLogin() {
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
-        navController = navHostFragment.navController
-
-        lifecycleScope.launch {
-            val isLoggedIn = authViewModel.isLoggedIn()
-            val graphResId = if (isLoggedIn) R.navigation.main_nav_graph else R.navigation.auth_nav_graph
-            val navGraph = navController.navInflater.inflate(graphResId)
-            navController.graph = navGraph
-        }
     }
 
     // Extension function for dp to px conversion
@@ -345,4 +315,3 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }
-
