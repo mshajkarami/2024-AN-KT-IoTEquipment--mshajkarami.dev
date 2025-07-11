@@ -1,60 +1,83 @@
 package com.irisaco.iotequipment.data.repository
 
+import android.content.Context
+import android.util.Log
+import com.irisaco.iotequipment.data.local.AppDatabase
 import com.irisaco.iotequipment.data.local.AuthTokenDao
 import com.irisaco.iotequipment.data.local.AuthTokenEntity
 import com.irisaco.iotequipment.data.model.KeycloakTokenResponse
+import com.irisaco.iotequipment.data.remote.ApiClient.authService
 import com.irisaco.iotequipment.data.remote.KeycloakAuthService
 import retrofit2.Response
 
-class AuthRepository(
-    private val authService: KeycloakAuthService ,
-    private val authTokenDao: AuthTokenDao
-) {
-    suspend fun login(username: String, password: String): Response<KeycloakTokenResponse> {
-        return authService.login(
-            clientId = "iem",
-            username = username,
-            password = password,
-            clientSecret = "4VrcHu9lW4misnkCjdEuSknNCyZ4QTbx"
-        )
-    }
-    suspend fun refreshToken(oldRefreshToken: String): KeycloakTokenResponse? {
-        val response = authService.refreshToken(
-            refreshToken = oldRefreshToken,
-            clientId = "iem",
-            clientSecret = "y2ga3RPSP1RU5zgmt6F1iIeBYbwOKEIs"
-        )
+class AuthRepository(context: Context) {
 
-        return if (response.isSuccessful) {
-            response.body()?.also {
-                authTokenDao.saveToken(
-                    AuthTokenEntity(
-                        id = 1,
-                        accessToken = it.accessToken,
-                        refreshToken = it.refreshToken,
-                        expiresAt = System.currentTimeMillis() + it.expiresIn * 1000
+    private val dao = AppDatabase.getInstance(context).authTokenDao()
+
+    suspend fun saveToken(accessToken: String, refreshToken: String, expiresInSec: Long) {
+        val expiresAt = System.currentTimeMillis() + expiresInSec * 1000
+        val token = AuthTokenEntity(
+            accessToken = accessToken,
+            refreshToken = refreshToken,
+            expiresAt = expiresAt
+        )
+        dao.insert(token)
+        cachedToken = token
+    }
+
+    suspend fun getValidAccessTokenOrNull(): String? {
+        val token = dao.getToken() ?: return null
+        return if (token.expiresAt > System.currentTimeMillis()) {
+            token.accessToken
+        } else null
+    }
+
+    suspend fun getToken(): AuthTokenEntity? = dao.getToken()
+
+    suspend fun clear() = dao.clear()
+
+    suspend fun getSavedToken(): AuthTokenEntity? = dao.getToken()
+
+    suspend fun refreshToken(refreshToken: String): AuthTokenEntity? {
+        return try {
+            val response = authService.refreshToken(
+                grantType = "refresh_token",
+                clientId = "iem-dev",
+                refreshToken = refreshToken
+            )
+
+            if (response.isSuccessful) {
+                val body = response.body()
+                if (body != null) {
+                    val newToken = AuthTokenEntity(
+                        accessToken = body.accessToken,
+                        refreshToken = body.refreshToken ?: refreshToken,
+                        expiresAt = System.currentTimeMillis() + (body.expiresIn * 1000)
                     )
-                )
+                    dao.insert(newToken)
+                    Log.d("AuthRepository", "Token refreshed successfully.")
+                    newToken
+                } else {
+                    Log.e("AuthRepository", "Response body is null.")
+                    null
+                }
+            } else {
+                val errorBody = response.errorBody()?.string()
+                Log.e("AuthRepository", "Refresh failed: ${response.code()} - $errorBody")
+                null
             }
-        } else {
-            authTokenDao.clearTokens()
+        } catch (e: Exception) {
+            Log.e("AuthRepository", "Refresh exception", e)
             null
         }
     }
 
-    suspend fun getSavedToken(): AuthTokenEntity? {
-        return authTokenDao.getToken()
-    }
 
-    suspend fun saveToken(tokenResponse: KeycloakTokenResponse) {
-        val expiresAt = System.currentTimeMillis() + tokenResponse.expiresIn * 1000
-        val tokenEntity = AuthTokenEntity(
-            id = 1,
-            accessToken = tokenResponse.accessToken,
-            refreshToken = tokenResponse.refreshToken,
-            expiresAt = expiresAt
-        )
-        authTokenDao.saveToken(tokenEntity)
-    }
+    private var cachedToken: AuthTokenEntity? = null
 
+    fun getCachedToken(): AuthTokenEntity? = cachedToken
+
+    suspend fun loadTokenFromDb() {
+        cachedToken = dao.getToken()
+    }
 }

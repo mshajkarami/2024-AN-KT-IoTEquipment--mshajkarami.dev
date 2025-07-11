@@ -3,6 +3,7 @@ package com.irisaco.iotequipment.di
 import android.app.Application
 import androidx.room.Room
 import com.irisaco.iotequipment.data.local.AppDatabase
+import com.irisaco.iotequipment.data.remote.ApiClient
 
 class MyApplication : Application() {
 
@@ -23,5 +24,8 @@ class MyApplication : Application() {
             AppDatabase::class.java,
             "iot_equipment_db"
         ).build()
+
+        ApiClient.init(applicationContext)
+
     }
 }

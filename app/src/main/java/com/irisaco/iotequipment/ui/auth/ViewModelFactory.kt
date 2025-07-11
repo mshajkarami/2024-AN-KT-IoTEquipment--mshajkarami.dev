@@ -1,16 +1,17 @@
 package com.irisaco.iotequipment.ui.auth
 
+import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.irisaco.iotequipment.data.repository.AuthRepository
 
 class AuthViewModelFactory(
-    private val repository: AuthRepository
-) : ViewModelProvider.Factory {
+    private val repository: AuthRepository,
+    private val app: Application
+) : ViewModelProvider.AndroidViewModelFactory(app) {
+
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(AuthViewModel::class.java)) {
-            return AuthViewModel(repository) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
+        return AuthViewModel(app, repository) as T
     }
 }
+

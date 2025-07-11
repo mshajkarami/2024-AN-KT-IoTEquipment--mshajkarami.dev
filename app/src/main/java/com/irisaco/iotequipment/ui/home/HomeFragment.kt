@@ -65,6 +65,5 @@ class HomeFragment : Fragment() {
             findNavController().navigate(action,navOptions)
 
         }
-
     }
 }

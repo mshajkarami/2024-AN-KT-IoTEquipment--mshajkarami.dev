@@ -7,12 +7,13 @@ import androidx.room.Query
 
 @Dao
 interface AuthTokenDao {
-    @Query("SELECT * FROM auth_tokens WHERE id = 1")
+    @Query("SELECT * FROM auth_tokens LIMIT 1")
     suspend fun getToken(): AuthTokenEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun saveToken(token: AuthTokenEntity)
+    suspend fun insert(token: AuthTokenEntity)
 
     @Query("DELETE FROM auth_tokens")
-    suspend fun clearTokens()
+    suspend fun clear()
 }
+

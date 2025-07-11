@@ -76,6 +76,7 @@
     <string name="btn_cancel">لغو</string>
     <string name="btn_support">پشتیبانی</string>
     <string name="btn_terms">سیاست‌های حفظ حریم خصوصی</string>
+    <string name="img_equipment">تصویر تجهیز</string>
 
     <!-- ☰ Navigation Drawer -->
     <string name="navigation_drawer_open">باز کردن منو</string>

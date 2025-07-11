@@ -5,40 +5,46 @@
     android:id="@+id/shimmer_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:padding="16dp"
     app:shimmer_auto_start="true"
-    app:shimmer_duration="1200"
-    android:padding="16dp">
+    app:shimmer_duration="1200">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginTop="8dp"
+            android:layout_margin="15dp"
             android:orientation="vertical">
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:background="#DDDDDD"
-                />
+                android:layout_height="18dp"
+                android:background="@drawable/skeleton_bg"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="4dp" />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="25dp"
-                android:background="#DDDDDD"/>
+                android:layout_marginStart="40dp"
+                android:layout_height="14dp"
+                android:background="@drawable/skeleton_bg"/>
         </LinearLayout>
 
-        <View
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginTop="8sp"
-            android:background="#DDDDDD" />
+            app:cardBackgroundColor="#DDDDDD"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="2dp"
+            app:strokeWidth="0dp">
+        </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
 

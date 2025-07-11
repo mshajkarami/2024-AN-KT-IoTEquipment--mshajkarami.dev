@@ -1,6 +1,7 @@
 package com.irisaco.iotequipment
 
 import android.content.Context
+import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
 import android.view.ContextThemeWrapper
@@ -11,13 +12,17 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.Guideline
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -30,6 +35,7 @@ import com.irisaco.iotequipment.ui.auth.AuthViewModel
 import com.irisaco.iotequipment.ui.auth.AuthViewModelFactory
 import com.irisaco.iotequipment.data.remote.ApiClient
 import com.irisaco.iotequipment.data.repository.AuthRepository
+import com.irisaco.iotequipment.databinding.ActivityMainBinding
 import com.irisaco.iotequipment.di.MyApplication
 import com.irisaco.iotequipment.ui.components.NoInternetBottomSheet
 import com.irisaco.iotequipment.utils.NetworkConnectionLiveData
@@ -37,132 +43,90 @@ import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var drawerLayout: DrawerLayout
-    private lateinit var toolbar: MaterialToolbar
-    private lateinit var navView: NavigationView
-    private lateinit var toolbarTitleTextView: TextView
-    private var noInternetDialog: NoInternetBottomSheet? = null
-
     private lateinit var authViewModel: AuthViewModel
     private lateinit var networkConnection: NetworkConnectionLiveData
-
-    var equipmentIdUnique: String? = null
-
     private lateinit var navController: NavController
+
+    private var noInternetDialog: NoInternetBottomSheet? = null
+    internal var equipmentIdUnique: String? = null
+
+    private lateinit var binding: ActivityMainBinding
+
+    private val loginLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            val data = result.data ?: return@registerForActivityResult
+            authViewModel.handleTokenExchange(data) { success, error ->
+                if (success) {
+                    Toast.makeText(this, "ورود موفقیت‌آمیز", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "ورود ناموفق: $error", Toast.LENGTH_SHORT).show()
+                    Log.d("Error Auth", error.toString())
+                }
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_main)
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         setupInsets()
-        setupViews()
-        observeNetwork()
-        setupObservers()
+        setupAuthViewModel {
+            setupNavGraphAccordingToLogin()
+            checkIfLoggedIn()
+        }
+
         setupNavigation()
+        observeNetwork()
         readIntentExtras()
     }
 
-    private fun setupViews() {
-        drawerLayout = findViewById(R.id.drawer_layout)
-        navView = findViewById(R.id.nav_view)
-        toolbar = findViewById(R.id.materialToolbar)
-        toolbarTitleTextView = findViewById(R.id.txt_toolbar_name)
-    }
-
     private fun setupInsets() {
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { view, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            view.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
     }
 
     private fun setupNavigation() {
-        navController = (supportFragmentManager
-            .findFragmentById(R.id.fragmentContainerView) as NavHostFragment).navController
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+        navController = navHostFragment.navController
 
         val toggle = ActionBarDrawerToggle(
             this,
-            drawerLayout,
-            toolbar,
+            binding.drawerLayout,
+            binding.materialToolbar,
             R.string.navigation_drawer_open,
             R.string.navigation_drawer_close
         )
-        drawerLayout.addDrawerListener(toggle)
+
+        binding.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
-        NavigationUI.setupWithNavController(toolbar, navController)
-        NavigationUI.setupWithNavController(navView, navController)
+        NavigationUI.setupWithNavController(binding.materialToolbar, navController)
+        NavigationUI.setupWithNavController(binding.navView, navController)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
+            val isAuthScreen = destination.id == R.id.authFragment
+            updateUIForDestination(isAuthScreen)
+
             when (destination.id) {
-                R.id.homeFragment -> {
-                    setupToolbarNavigation(R.drawable.ic_menu) {
-                        drawerLayout.openDrawer(
-                            GravityCompat.START
-                        )
-                    }
-                    setDefaultToolbarIcon()
-                    setToolbarTitle(getString(R.string.toolbar_default_text))
-                }
-
-                R.id.searchFragment -> {
-                    setupToolbarNavigation(R.drawable.ic_back) { navController.navigateUp() }
-                    setDefaultToolbarIcon()
-                    setToolbarTitle(getString(R.string.toolbar_default_text))
-                }
-
-                R.id.settingsFragment -> {
-                    setToolbarTitle(getString(R.string.toolbar_setting_text))
-                    setupToolbarNavigation(R.drawable.ic_back) { navController.navigateUp() }
-                    setToolbarMenu(R.drawable.ic_help_question)
-                }
-
-                R.id.attachmentsFragment -> {
-                    setupToolbarNavigation(R.drawable.ic_back) { navController.navigateUp() }
-                    setDefaultToolbarIcon()
-                    setupAttachmentMenu()
-                }
-
-                R.id.addLogFragment -> {
-                    setupToolbarNavigation(R.drawable.ic_back) { navController.navigateUp() }
-                    setDefaultToolbarIcon()
-
-                    setToolbarTitle(getString(R.string.toolbar_add_log_text))
-                    setToolbarMenu(
-                        iconRes = R.drawable.ic_kebab,
-                        menuRes = R.menu.menu_toolbar_popup_add_log
-                    ) { item ->
-                        when (item.itemId) {
-                            R.id.item_add_attachment -> {
-                            }
-                        }
-                        true
-                    }
-                }
-
-                R.id.equipmentDetailFragment -> {
-                    setupToolbarNavigation(R.drawable.ic_back) { navController.navigateUp() }
-                    setDefaultToolbarIcon()
-                    setToolbarTitle(getString(R.string.toolbar_default_text))
-                    setDefaultToolbarIcon()
-                }
-
-                R.id.logDetailFragment -> {
-                    setupToolbarNavigation(R.drawable.ic_back) { navController.navigateUp() }
-                    setDefaultToolbarIcon()
-                }
-
-                else -> {
-                    setupToolbarNavigation(R.drawable.ic_back) { navController.navigateUp() }
-                    setDefaultToolbarIcon()
-                }
+                R.id.homeFragment -> configureHomeToolbar()
+                R.id.searchFragment -> configureSearchToolbar()
+                R.id.settingsFragment -> configureSettingsToolbar()
+                R.id.attachmentsFragment -> configureAttachmentsToolbar()
+                R.id.addLogFragment -> configureAddLogToolbar()
+                R.id.equipmentDetailFragment -> configureEquipmentDetailToolbar()
+                R.id.logDetailFragment -> configureLogDetailToolbar()
+                else -> configureDefaultToolbar()
             }
         }
 
-        navView.setNavigationItemSelectedListener { item ->
-            when (item.itemId) {
+        binding.navView.setNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
                 R.id.nav_exit -> {
                     AlertDialog.Builder(this)
                         .setTitle("خروج")
@@ -172,77 +136,166 @@ class MainActivity : AppCompatActivity() {
                         .show()
                     true
                 }
-
                 else -> {
-                    val handled = NavigationUI.onNavDestinationSelected(item, navController)
-                    if (handled) {
-                        drawerLayout.closeDrawer(GravityCompat.START)
-                    }
+                    val handled = NavigationUI.onNavDestinationSelected(menuItem, navController)
+                    if (handled) binding.drawerLayout.closeDrawer(GravityCompat.START)
                     handled
                 }
             }
         }
     }
 
+    private fun updateUIForDestination(isAuthScreen: Boolean) {
+        with(binding) {
+            if (isAuthScreen) {
+                materialToolbar.visibility = View.GONE
+                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+                navView.visibility = View.GONE
+                guidelineToolbarBottom.updateLayoutParams<ConstraintLayout.LayoutParams> {
+                    guideBegin = 0
+                }
+            } else {
+                materialToolbar.visibility = View.VISIBLE
+                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+                navView.visibility = View.VISIBLE
+                guidelineToolbarBottom.updateLayoutParams<ConstraintLayout.LayoutParams> {
+                    guideBegin = 65.dpToPx()
+                }
+            }
+        }
+    }
+
+    private fun configureHomeToolbar() {
+        setupToolbarNavigation(R.drawable.ic_menu) {
+            binding.drawerLayout.openDrawer(GravityCompat.START)
+        }
+        setDefaultToolbarIcon()
+        setToolbarTitle(getString(R.string.toolbar_default_text))
+    }
+
+    private fun configureSearchToolbar() {
+        setupToolbarNavigation(R.drawable.ic_back) { navController.navigateUp() }
+        setDefaultToolbarIcon()
+        setToolbarTitle(getString(R.string.toolbar_default_text))
+    }
+
+    private fun configureSettingsToolbar() {
+        setToolbarTitle(getString(R.string.toolbar_setting_text))
+        setupToolbarNavigation(R.drawable.ic_back) { navController.navigateUp() }
+        setToolbarMenu(R.drawable.ic_help_question)
+    }
+
+    private fun configureAttachmentsToolbar() {
+        setupToolbarNavigation(R.drawable.ic_back) { navController.navigateUp() }
+        setDefaultToolbarIcon()
+        setupAttachmentMenu()
+    }
+
+    private fun configureAddLogToolbar() {
+        setupToolbarNavigation(R.drawable.ic_back) { navController.navigateUp() }
+        setDefaultToolbarIcon()
+        setToolbarTitle(getString(R.string.toolbar_add_log_text))
+        setToolbarMenu(
+            iconRes = R.drawable.ic_kebab,
+            menuRes = R.menu.menu_toolbar_popup_add_log
+        ) { item ->
+            when (item.itemId) {
+                R.id.item_add_attachment -> { /* TODO: Handle action */ }
+            }
+            true
+        }
+    }
+
+    private fun configureEquipmentDetailToolbar() {
+        setupToolbarNavigation(R.drawable.ic_back) { navController.navigateUp() }
+        setDefaultToolbarIcon()
+        setToolbarTitle(getString(R.string.toolbar_default_text))
+    }
+
+    private fun configureLogDetailToolbar() {
+        setupToolbarNavigation(R.drawable.ic_back) { navController.navigateUp() }
+        setDefaultToolbarIcon()
+    }
+
+    private fun configureDefaultToolbar() {
+        setupToolbarNavigation(R.drawable.ic_back) { navController.navigateUp() }
+        setDefaultToolbarIcon()
+    }
+
     private fun setupToolbarNavigation(iconRes: Int, onClick: () -> Unit) {
-        toolbar.navigationIcon = ContextCompat.getDrawable(this, iconRes)
-        toolbar.setNavigationOnClickListener { onClick() }
+        binding.materialToolbar.navigationIcon = ContextCompat.getDrawable(this, iconRes)
+        binding.materialToolbar.setNavigationOnClickListener { onClick() }
     }
 
     private fun setupAttachmentMenu() {
-
         setToolbarTitle(getString(R.string.toolbar_attachment_text))
         setToolbarMenu(
             R.drawable.ic_kebab,
             menuRes = R.menu.menu_toolbar_popup_attachment
         ) { item ->
             when (item.itemId) {
-                R.id.item_download_all -> Toast.makeText(
-                    this,
-                    "دانلود همه داده ها ",
-                    Toast.LENGTH_SHORT
-                ).show()
-
-                R.id.item_refresh -> Toast.makeText(this, "بار گذاری مجدد ", Toast.LENGTH_SHORT)
-                    .show()
-
-                R.id.item_share_all -> Toast.makeText(
-                    this,
-                    "اشتراک گذاری همه داده ها ",
-                    Toast.LENGTH_SHORT
-                ).show()
+                R.id.item_download_all -> toast("دانلود همه داده ها")
+                R.id.item_refresh -> toast("بارگذاری مجدد")
+                R.id.item_share_all -> toast("اشتراک گذاری همه داده ها")
             }
             true
         }
     }
 
-    private fun setupObservers() {
-        val authDao = MyApplication.database.authTokenDao()
-        val authRepository = AuthRepository(ApiClient.authService, authDao)
+    internal fun setToolbarTitle(title: String) {
+        binding.txtToolbarName.text = title
+    }
 
-        val factory = AuthViewModelFactory(authRepository)
-        authViewModel = ViewModelProvider(this, factory)[AuthViewModel::class.java]
-
-        authViewModel.login("saleh", "123456")
-
-        authViewModel.token.observe(this) { token ->
-            token?.let {
-                Log.d("Auth", "Access Token: ${it.accessToken}")
-                lifecycleScope.launch {
-                    authRepository.saveToken(it)
+    internal fun setToolbarMenu(
+        iconRes: Int,
+        menuRes: Int? = null,
+        onMenuItemClick: ((MenuItem) -> Boolean)? = null
+    ) {
+        val toolbar = binding.materialToolbar
+        toolbar.menu.clear()
+        toolbar.inflateMenu(R.menu.toolbar_menu)
+        toolbar.menu.findItem(R.id.toolbar_icon_right)?.setIcon(iconRes)
+        toolbar.setOnMenuItemClickListener { item ->
+            if (item.itemId == R.id.toolbar_icon_right) {
+                val view = toolbar.findViewById<View>(item.itemId)
+                if (menuRes != null) {
+                    showPopupMenu(this, view, menuRes) { clickedItem ->
+                        onMenuItemClick?.invoke(clickedItem)
+                    }
+                } else {
+                    onMenuItemClick?.invoke(item)
                 }
-            }
+                true
+            } else false
         }
-        authViewModel.error.observe(this) { error ->
-            error?.let {
-                Log.e("Auth", "Error is : $it")
+    }
+
+    internal fun setDefaultToolbarIcon() {
+        setToolbarMenu(R.drawable.ic_profile) {
+            navController.navigate(R.id.action_global_settingsFragment)
+            true
+        }
+    }
+
+    private fun showPopupMenu(
+        context: Context,
+        anchor: View,
+        menuRes: Int,
+        onItemClick: (MenuItem) -> Unit
+    ) {
+        val themedContext = ContextThemeWrapper(context, R.style.CustomPopupMenuStyle)
+        PopupMenu(themedContext, anchor).apply {
+            menuInflater.inflate(menuRes, menu)
+            setOnMenuItemClickListener {
+                onItemClick(it)
+                true
             }
+            show()
         }
     }
 
     private fun observeNetwork() {
         networkConnection = NetworkConnectionLiveData(this)
-
         networkConnection.observe(this) { isConnected ->
             if (!isConnected && noInternetDialog == null) {
                 noInternetDialog = NoInternetBottomSheet()
@@ -254,63 +307,42 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun setToolbarTitle(title: String) {
-        toolbarTitleTextView.text = title
-    }
-
-    fun setToolbarMenu(
-        iconRes: Int,
-        menuRes: Int? = null,
-        onMenuItemClick: ((MenuItem) -> Boolean)? = null
-    ) {
-        toolbar.menu.clear()
-
-        toolbar.inflateMenu(R.menu.toolbar_menu)
-
-        val iconItem = toolbar.menu.findItem(R.id.toolbar_icon_right)
-        iconItem?.setIcon(iconRes)
-
-        toolbar.setOnMenuItemClickListener { item ->
-            if (item.itemId == R.id.toolbar_icon_right) {
-                val view = toolbar.findViewById<View>(item.itemId)
-                if (menuRes != null) {
-                    showPopupMenu(toolbar.context, view, menuRes) { clickedItem ->
-                        onMenuItemClick?.invoke(clickedItem)
-                    }
-                } else {
-                    onMenuItemClick?.invoke(item)
-                }
-                true
-            } else false
-        }
-    }
-
-    fun setDefaultToolbarIcon() {
-        setToolbarMenu(R.drawable.ic_profile) {
-            navController.navigate(R.id.action_global_settingsFragment)
-            true
-        }
-    }
-
-    fun showPopupMenu(
-        context: Context,
-        anchor: View,
-        menuRes: Int,
-        onItemClick: (MenuItem) -> Unit
-    ) {
-        val themedContext = ContextThemeWrapper(context, R.style.CustomPopupMenuStyle)
-        val popup = PopupMenu(themedContext, anchor)
-        popup.menuInflater.inflate(menuRes, popup.menu)
-
-        popup.setOnMenuItemClickListener {
-            onItemClick(it)
-            true
-        }
-
-        popup.show()
-    }
-
     private fun readIntentExtras() {
         equipmentIdUnique = intent.getStringExtra("EQUIPMENT_ID")
     }
+
+    private fun setupAuthViewModel(onReady: () -> Unit) {
+        val authRepository = AuthRepository(applicationContext)
+        val factory = AuthViewModelFactory(authRepository, application)
+        authViewModel = ViewModelProvider(this, factory)[AuthViewModel::class.java]
+        onReady()
+    }
+
+    private fun checkIfLoggedIn() {
+        lifecycleScope.launch {
+            val isLoggedIn = authViewModel.isLoggedIn()
+            if (!isLoggedIn) navController.navigate(R.id.authFragment)
+        }
+    }
+
+    private fun setupNavGraphAccordingToLogin() {
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+        navController = navHostFragment.navController
+
+        lifecycleScope.launch {
+            val isLoggedIn = authViewModel.isLoggedIn()
+            val graphResId = if (isLoggedIn) R.navigation.main_nav_graph else R.navigation.auth_nav_graph
+            val navGraph = navController.navInflater.inflate(graphResId)
+            navController.graph = navGraph
+        }
+    }
+
+    // Extension function for dp to px conversion
+    private fun Int.dpToPx(): Int = (this * resources.displayMetrics.density).toInt()
+
+    // Extension function for Toast shortcut
+    private fun toast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
 }
+

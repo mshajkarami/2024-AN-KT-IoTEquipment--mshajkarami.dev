@@ -17,6 +17,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        manifestPlaceholders["appAuthRedirectScheme"] = "com.irisaco.iotequipment"
+
     }
 
     buildTypes {
@@ -37,6 +40,7 @@ android {
     }
     buildFeatures {
         dataBinding = true
+        viewBinding = true
     }
 }
 
@@ -83,7 +87,7 @@ dependencies {
     implementation("androidx.room:room-runtime:$room_version")
     ksp("androidx.room:room-compiler:$room_version")
     // AppAuth
-//    implementation("net.openid:appauth:0.11.1")
+    implementation("net.openid:appauth:0.11.1")
     // CountdownView
     implementation("com.github.iwgang:countdownview:2.1.6")
     // Lotte
