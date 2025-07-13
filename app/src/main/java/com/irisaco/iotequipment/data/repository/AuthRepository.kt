@@ -7,6 +7,7 @@ import androidx.annotation.RequiresApi
 import com.irisaco.iotequipment.data.local.AccountEntity
 import com.irisaco.iotequipment.data.local.AppDatabase
 import com.irisaco.iotequipment.data.remote.ApiClient.authService
+import com.irisaco.iotequipment.domain.UserRole
 import org.json.JSONObject
 import java.util.Base64
 
@@ -23,6 +24,7 @@ class AuthRepository(context: Context) {
         expiresInSec: Long
     ) {
         val username = decodeUsernameFromToken(accessToken)
+        val role = extractUserRoleFromToken(accessToken, clientId = "iem-dev")
         if (username != null) {
             val expiresAt = System.currentTimeMillis() + expiresInSec * 1000
             val account = AccountEntity(
@@ -32,11 +34,15 @@ class AuthRepository(context: Context) {
                 accessToken = accessToken,
                 refreshToken = refreshToken,
                 expiresAt = expiresAt,
-                isActive = true
+                isActive = true,
+                role = role
             )
             dao.deactivateAllAccounts()
             dao.insertAccount(account)
             cachedAccount = account
+
+            Log.d("AuthRepository", "Saving account for $username with role ${role.name}")
+
         } else {
             Log.e("AuthRepository", "Unable to decode username from access token")
         }
@@ -107,5 +113,39 @@ class AuthRepository(context: Context) {
             null
         }
     }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun extractUserRoleFromToken(accessToken: String, clientId: String): UserRole {
+        return try {
+            val payload = accessToken.split(".")[1]
+            val decodedBytes = Base64.getUrlDecoder().decode(payload)
+            val json = JSONObject(String(decodedBytes))
+            val rolesArray = json
+                .getJSONObject("resource_access")
+                .getJSONObject(clientId)
+                .getJSONArray("roles")
+
+            val roles = mutableListOf<String>()
+            for (i in 0 until rolesArray.length()) {
+                roles.add(rolesArray.getString(i))
+            }
+
+            UserRole.fromAccount(roles)
+        } catch (e: Exception) {
+            Log.e("AuthRepository", "Error extracting role", e)
+            UserRole.UNKNOWN
+        }
+    }
+
+
+    suspend fun getCachedOrDbAccount(): AccountEntity? {
+        if (cachedAccount != null) return cachedAccount
+
+        val account = dao.getActiveAccount()
+        cachedAccount = account
+        return account
+    }
+
+
 }
 

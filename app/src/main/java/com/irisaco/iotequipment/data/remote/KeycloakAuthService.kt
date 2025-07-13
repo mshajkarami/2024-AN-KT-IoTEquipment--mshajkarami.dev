@@ -1,7 +1,6 @@
 package com.irisaco.iotequipment.data.remote
 
 import com.irisaco.iotequipment.data.model.KeycloakTokenResponse
-import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded

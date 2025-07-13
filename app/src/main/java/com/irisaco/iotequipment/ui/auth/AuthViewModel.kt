@@ -44,7 +44,7 @@ class AuthViewModel(
             "iem-dev",
             ResponseTypeValues.CODE,
             "com.irisaco.iotequipment:/oauth2redirect".toUri()
-        ).setScope("email profile") // scope هایی که در توکن باشن
+        ).setScope("email profile")
             .build()
 
         return authService.getAuthorizationRequestIntent(authRequest)

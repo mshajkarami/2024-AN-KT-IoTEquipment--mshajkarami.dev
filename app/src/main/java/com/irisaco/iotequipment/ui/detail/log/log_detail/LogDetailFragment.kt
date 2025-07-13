@@ -7,26 +7,24 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
 import com.irisaco.iotequipment.MainActivity
 import com.irisaco.iotequipment.R
+import com.irisaco.iotequipment.ui.base.BaseFragment
 import com.irisaco.iotequipment.ui.detail.EquipmentDetailSharedViewModel
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.TimeZone
 
 @Suppress("UNCHECKED_CAST")
-class LogDetailFragment : Fragment() {
-
+class LogDetailFragment : BaseFragment() {
     private val sharedViewModel: EquipmentDetailSharedViewModel by activityViewModels()
-
     private val viewModel: LogDetailViewModel by viewModels {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -38,27 +36,17 @@ class LogDetailFragment : Fragment() {
             }
         }
     }
-
-    private lateinit var tvDate: TextView
-    private lateinit var tvDetail: TextView
-    private lateinit var btnAttachment: Button
-
     private var recordId: Int = -1
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_detail_log, container, false)
-        tvDate = view.findViewById(R.id.logDate)
-        tvDetail = view.findViewById(R.id.logDetail)
-        btnAttachment = view.findViewById(R.id.btn_logAttachment)
-
-        return view
-    }
+    override fun getLayoutId(): Int = R.layout.fragment_detail_log
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val tvDate = view.findViewById<TextView>(R.id.logDate)
+        val tvDetail = view.findViewById<TextView>(R.id.logDetail)
+        val btnAttachment = view.findViewById<MaterialButton>(R.id.btn_logAttachment)
+
         val activity = requireActivity() as MainActivity
         activity.setToolbarTitle(getString(R.string.toolbar_detail_log_text))
 

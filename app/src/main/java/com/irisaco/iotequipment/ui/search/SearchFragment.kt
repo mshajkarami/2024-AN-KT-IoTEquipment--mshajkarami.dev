@@ -24,7 +24,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class SearchFragment : BaseFragment() {
-
     private val viewModel: SearchViewModel by viewModels()
     private lateinit var adapter: EquipmentPagerAdapter
     private lateinit var searchBar: TextInputEditText
@@ -34,12 +33,19 @@ class SearchFragment : BaseFragment() {
 
     override fun getLayoutId(): Int = R.layout.fragment_search
 
+    override fun onInternetRestored() {
+        viewModel.manualRefresh()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         swipeRefreshLayout.setOnRefreshListener {
             viewModel.manualRefresh()
         }
+
+
+
 
         viewModel.isRefreshing.observe(viewLifecycleOwner) {
             swipeRefreshLayout.isRefreshing = it
@@ -73,7 +79,6 @@ class SearchFragment : BaseFragment() {
             imm.showSoftInput(searchBar, InputMethodManager.SHOW_IMPLICIT)
         }, 100)
     }
-
     private fun observeViewModel(adapter: EquipmentPagerAdapter, progressBar: LottieAnimationView) {
         viewModel.equipmentList.observe(viewLifecycleOwner) { equipmentList ->
             adapter.updateData(equipmentList)
@@ -95,7 +100,6 @@ class SearchFragment : BaseFragment() {
             }
         }
     }
-
     private fun setupSearchBarListener() {
         var searchJob: Job? = null
         searchBar.addTextChangedListener(object : TextWatcher {
@@ -129,7 +133,6 @@ class SearchFragment : BaseFragment() {
             } else false
         }
     }
-
     private fun bindDetailFragment(equipmentId: Int) {
         val action = SearchFragmentDirections.actionSearchFragmentToEquipmentDetailFragment(equipmentId)
         findNavController().navigate(action)
@@ -146,8 +149,3 @@ class SearchFragment : BaseFragment() {
         searchBar.addTextChangedListener(null)
     }
 }
-
-
-
-
-

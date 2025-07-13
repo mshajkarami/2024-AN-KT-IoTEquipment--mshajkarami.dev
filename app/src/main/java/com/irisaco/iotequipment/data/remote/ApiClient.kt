@@ -1,13 +1,9 @@
 package com.irisaco.iotequipment.data.remote
 
 import android.content.Context
-import android.util.Log
 import com.irisaco.iotequipment.ui.auth.TokenAuthenticator
 import com.irisaco.iotequipment.data.repository.AuthRepository
 import com.irisaco.iotequipment.ui.auth.AuthInterceptor
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

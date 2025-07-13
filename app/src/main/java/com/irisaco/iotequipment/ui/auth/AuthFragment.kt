@@ -48,7 +48,7 @@ class AuthFragment : Fragment() {
 
                     viewLifecycleOwner.lifecycleScope.launch {
                         val account = authViewModel.getActiveAccount()
-                        Log.d("AuthFragment", "ورود با کاربر: ${account?.username}")
+                        Log.d("AuthFragment", "login with user name : ${account?.username}")
                     }
 
                     val intent = Intent(requireContext(), MainActivity::class.java)

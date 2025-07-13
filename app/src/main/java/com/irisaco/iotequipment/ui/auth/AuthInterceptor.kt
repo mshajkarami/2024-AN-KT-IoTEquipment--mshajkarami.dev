@@ -16,5 +16,3 @@ class AuthInterceptor(private val repository: AuthRepository) : Interceptor {
         return chain.proceed(request)
     }
 }
-
-

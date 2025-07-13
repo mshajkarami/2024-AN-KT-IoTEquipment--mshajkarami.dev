@@ -14,19 +14,14 @@ import com.google.android.material.textfield.TextInputLayout
 import com.irisaco.iotequipment.MainActivity
 import com.irisaco.iotequipment.ui.scanner.QrScannerActivity
 import com.irisaco.iotequipment.R
+import com.irisaco.iotequipment.ui.base.BaseFragment
 
-class HomeFragment : Fragment() {
+class HomeFragment : BaseFragment() {
+    override fun getLayoutId(): Int = R.layout.fragment_home
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        val view = LayoutInflater.from(context).inflate(R.layout.fragment_home, container, false)
         val searchBox = view.findViewById<TextInputLayout>(R.id.searchBox)
         val searchBar = view.findViewById<TextInputEditText>(R.id.search_bar)
         val btnScan: FloatingActionButton = view.findViewById(R.id.btn_scan)
@@ -46,7 +41,6 @@ class HomeFragment : Fragment() {
             startActivity(Intent(requireContext(), QrScannerActivity::class.java))
         }
 
-        return view
     }
 
     override fun onResume() {
@@ -54,7 +48,6 @@ class HomeFragment : Fragment() {
         val activity = requireActivity() as MainActivity
         val scannedId = activity.equipmentIdUnique
         if (!scannedId.isNullOrEmpty()) {
-
             activity.equipmentIdUnique = null
             val navOptions = NavOptions.Builder()
                 .setPopUpTo(R.id.homeFragment, true)
@@ -62,8 +55,7 @@ class HomeFragment : Fragment() {
 
             val action = HomeFragmentDirections
                 .actionHomeFragmentToSearchFragment(scannedId)
-            findNavController().navigate(action,navOptions)
-
+            findNavController().navigate(action, navOptions)
         }
     }
 }

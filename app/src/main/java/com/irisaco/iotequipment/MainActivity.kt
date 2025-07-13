@@ -1,7 +1,6 @@
 package com.irisaco.iotequipment
 
 import android.content.Context
-import android.content.res.Resources
 import android.os.Bundle
 import android.view.ContextThemeWrapper
 import android.view.MenuItem
@@ -20,18 +19,16 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
-import com.google.android.material.appbar.MaterialToolbar
-import com.google.android.material.navigation.NavigationView
 import com.irisaco.iotequipment.data.repository.AuthRepository
 import com.irisaco.iotequipment.databinding.ActivityMainBinding
 import com.irisaco.iotequipment.ui.auth.AuthViewModel
 import com.irisaco.iotequipment.ui.auth.AuthViewModelFactory
 import com.irisaco.iotequipment.ui.components.NoInternetBottomSheet
 import com.irisaco.iotequipment.utils.NetworkConnectionLiveData
+import com.irisaco.iotequipment.utils.NetworkStatusListener
 
 class MainActivity : AppCompatActivity() {
 
@@ -44,27 +41,23 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+    internal var isConnectedToInternet: Boolean = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        // Inflate view binding
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Set up window insets padding (status bar, nav bar)
         setupInsets()
 
-        // Initialize ViewModel for auth (اگر لازمه نگهش دار)
         setupAuthViewModel()
 
-        // راه‌اندازی ناوبری با گراف ثابت (main_nav_graph)
         setupNavigation()
 
-        // نظارت بر اتصال اینترنت
         observeNetwork()
 
-        // خواندن اکستراهای intent
         readIntentExtras()
     }
 
@@ -77,11 +70,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupNavigation() {
-        // گرفتن NavController از NavHostFragment
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         navController = navHostFragment.navController
 
-        // راه‌اندازی اکشن بار و drawer toggle
         val toggle = ActionBarDrawerToggle(
             this,
             binding.drawerLayout,
@@ -93,11 +84,9 @@ class MainActivity : AppCompatActivity() {
         binding.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
-        // اتصال ناوبری به Toolbar و NavigationView
         NavigationUI.setupWithNavController(binding.materialToolbar, navController)
         NavigationUI.setupWithNavController(binding.navView, navController)
 
-        // تغییر UI بر اساس مقصد ناوبری
         navController.addOnDestinationChangedListener { _, destination, _ ->
             val isAuthScreen = destination.id == R.id.authFragment
             updateUIForDestination(isAuthScreen)
@@ -112,9 +101,15 @@ class MainActivity : AppCompatActivity() {
                 R.id.logDetailFragment -> configureLogDetailToolbar()
                 else -> configureDefaultToolbar()
             }
+            val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as? NavHostFragment
+            val currentFragment = navHostFragment?.childFragmentManager?.fragments?.firstOrNull { it.isVisible }
+
+            if (currentFragment is NetworkStatusListener) {
+                currentFragment.onNetworkChanged(isConnectedToInternet)
+            }
+
         }
 
-        // مدیریت کلیک‌های NavigationView
         binding.navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.nav_exit -> {
@@ -190,7 +185,7 @@ class MainActivity : AppCompatActivity() {
             menuRes = R.menu.menu_toolbar_popup_add_log
         ) { item ->
             when (item.itemId) {
-                R.id.item_add_attachment -> { /* TODO: Handle action */ }
+                R.id.item_add_attachment -> {}
             }
             true
         }
@@ -286,7 +281,21 @@ class MainActivity : AppCompatActivity() {
 
     private fun observeNetwork() {
         networkConnection = NetworkConnectionLiveData(this)
+
         networkConnection.observe(this) { isConnected ->
+            isConnectedToInternet = isConnected
+
+            val navHostFragment =
+                supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as? NavHostFragment
+
+            val currentFragment = navHostFragment?.childFragmentManager?.fragments?.firstOrNull {
+                it.isVisible
+            }
+
+            if (currentFragment is NetworkStatusListener) {
+                currentFragment.onNetworkChanged(isConnected)
+            }
+
             if (!isConnected && noInternetDialog == null) {
                 noInternetDialog = NoInternetBottomSheet()
                 noInternetDialog?.show(supportFragmentManager, "NoInternet")
@@ -307,10 +316,8 @@ class MainActivity : AppCompatActivity() {
         authViewModel = ViewModelProvider(this, factory)[AuthViewModel::class.java]
     }
 
-    // Extension function for dp to px conversion
     private fun Int.dpToPx(): Int = (this * resources.displayMetrics.density).toInt()
 
-    // Extension function for Toast shortcut
     private fun toast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }

@@ -13,7 +13,8 @@ class TokenAuthenticator(
 ) : Authenticator {
 
     override fun authenticate(route: Route?, response: Response): Request? = runBlocking {
-        val account = repository.getCachedAccount()
+
+        val account = repository.getCachedOrDbAccount()
 
         if (account == null) {
             Log.e("TokenAuthenticator", "No saved token found")
