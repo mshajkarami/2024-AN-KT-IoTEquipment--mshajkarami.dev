@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     id("androidx.navigation.safeargs")
     id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -96,4 +97,7 @@ dependencies {
     implementation("com.google.android.material:material:1.11.0")
     // Skeleton
     implementation("com.facebook.shimmer:shimmer:0.5.0")
+    // dependency injection
+    implementation("com.google.dagger:hilt-android:2.56.2")
+    ksp("com.google.dagger:hilt-android-compiler:2.56.2")
 }
