@@ -4,21 +4,27 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import androidx.room.Query
 import com.irisaco.iotequipment.data.model.Items
 import com.irisaco.iotequipment.data.remote.ApiClient
 import com.irisaco.iotequipment.data.repository.EquipmentRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class SearchViewModel(application: Application) : AndroidViewModel(application) {
+@HiltViewModel
+class SearchViewModel @Inject constructor(
+    private val repository: EquipmentRepository
+) :
+    ViewModel() {
 
-    private val repository: EquipmentRepository = EquipmentRepository(ApiClient.apiService)
 
     private val _initialLoading = MutableLiveData<Boolean>()
     val initialLoading: LiveData<Boolean> get() = _initialLoading

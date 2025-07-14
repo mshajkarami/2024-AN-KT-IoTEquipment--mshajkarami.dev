@@ -19,10 +19,12 @@ import com.google.android.material.textfield.TextInputEditText
 import com.irisaco.iotequipment.ui.base.BaseFragment
 import com.irisaco.iotequipment.R
 import com.irisaco.iotequipment.ui.components.SkeletonAdapter
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class SearchFragment : BaseFragment() {
     private val viewModel: SearchViewModel by viewModels()
     private lateinit var adapter: EquipmentPagerAdapter
