@@ -17,31 +17,37 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.irisaco.iotequipment.MainActivity
 import com.irisaco.iotequipment.R
 import com.irisaco.iotequipment.ui.base.BaseFragment
+import com.irisaco.iotequipment.ui.detail.DetailViewModelAssistedFactory
 import com.irisaco.iotequipment.ui.detail.EquipmentDetailSharedViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.TimeZone
+import javax.inject.Inject
 
 @Suppress("UNCHECKED_CAST")
+@AndroidEntryPoint
 class LogDetailFragment : BaseFragment() {
+    @Inject
+    lateinit var assistedFactory: LogDetailViewModelAssistedFactory
     private val sharedViewModel: EquipmentDetailSharedViewModel by activityViewModels()
-    private val viewModel: LogDetailViewModel by viewModels {
-        object : ViewModelProvider.Factory {
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                val app = requireActivity().application
-                return LogDetailViewModel(
-                    app,
-                    equipmentId = sharedViewModel.equipmentId.value ?: -1
-                ) as T
-            }
-        }
-    }
+
+
+    private lateinit var viewModel: LogDetailViewModel
+
     private var recordId: Int = -1
 
     override fun getLayoutId(): Int = R.layout.fragment_detail_log
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val equipmentId = sharedViewModel.equipmentId.value ?: -1
+        viewModel = ViewModelProvider(
+            this,
+            LogDetailViewModelFactory(assistedFactory, equipmentId)
+        )[LogDetailViewModel::class.java]
+
 
         val tvDate = view.findViewById<TextView>(R.id.logDate)
         val tvDetail = view.findViewById<TextView>(R.id.logDetail)
