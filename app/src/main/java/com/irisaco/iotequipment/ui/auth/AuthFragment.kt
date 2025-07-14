@@ -89,7 +89,6 @@ class AuthFragment : Fragment() {
             loginLauncher.launch(loginIntent)
         }
     }
-
 }
 
 

@@ -11,15 +11,17 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
+import javax.inject.Inject
+import javax.inject.Singleton
 
 // Responsible for fetching the main equipment data.
 // Includes general info like title, description, production date, unique ID, and main photo.
 // Use this to retrieve and manage the core equipment entity.
 
-class EquipmentRepository(
+@Singleton
+class EquipmentRepository @Inject constructor(
     private val apiService: EquipmentApiService,
 ) {
-
     suspend fun getEquipments(): List<Items> {
         return getEquipmentsFromRemote()
     }
@@ -135,7 +137,4 @@ class EquipmentRepository(
             false
         }
     }
-
-
 }
-

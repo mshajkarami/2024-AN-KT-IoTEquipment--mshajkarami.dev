@@ -12,13 +12,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.irisaco.iotequipment.MainActivity
 import com.irisaco.iotequipment.R
 import com.irisaco.iotequipment.data.remote.ApiClient
-import com.irisaco.iotequipment.data.repository.AuthRepository
 import com.irisaco.iotequipment.data.repository.EquipmentRepository
-import com.irisaco.iotequipment.ui.detail.DetailViewModel
-import com.irisaco.iotequipment.ui.detail.DetailViewModelFactory
 import com.irisaco.iotequipment.ui.detail.EquipmentDetailSharedViewModel
 import com.irisaco.iotequipment.utils.FileDownloader
 import kotlinx.coroutines.Dispatchers

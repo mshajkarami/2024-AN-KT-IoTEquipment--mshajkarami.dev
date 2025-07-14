@@ -1,55 +1,36 @@
 package com.irisaco.iotequipment.ui.detail
 
-import android.app.Application
-import android.os.Build
-import androidx.annotation.RequiresApi
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
-import com.irisaco.iotequipment.R
-import com.irisaco.iotequipment.data.model.Document
-import com.irisaco.iotequipment.data.model.Equipment
 import com.irisaco.iotequipment.data.model.Items
 import com.irisaco.iotequipment.data.model.Records
-import com.irisaco.iotequipment.data.remote.ApiClient
 import com.irisaco.iotequipment.data.repository.EquipmentRepository
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.time.LocalDate
 
-class DetailViewModel(
-    application: Application,
-    private val equipmentId: Int
-) : AndroidViewModel(application) {
-
+class DetailViewModel @AssistedInject constructor(
+    private val repository: EquipmentRepository,
+    @Assisted private val equipmentId: Int
+) : ViewModel() {
     val title = MutableLiveData<String>()
     val version = MutableLiveData<String>()
     val type = MutableLiveData<String>()
     val description = MutableLiveData<String>()
-
-
-
-
     suspend fun getEquipmentById(equipmentId: Int): Items? {
-
         return repository.getEquipmentById(equipmentId)
-
     }
-
-    private var repository: EquipmentRepository
-
     private val _equipmentDetail = liveData(Dispatchers.IO) {
         val result = repository.getEquipmentById(equipmentId)
         emit(result)
     }
-
     val equipmentDetail: LiveData<Items?> get() = _equipmentDetail
-
     private val _equipmentRecords = MutableLiveData<List<Records>>()
     val equipmentRecords: LiveData<List<Records>> get() = _equipmentRecords
-
     fun loadEquipmentRecords() {
         viewModelScope.launch {
             try {
@@ -62,9 +43,6 @@ class DetailViewModel(
     }
 
     init {
-        val retrofitService = ApiClient.apiService
-        repository = EquipmentRepository(retrofitService)
-
         viewModelScope.launch {
             val item = repository.getEquipmentById(equipmentId)
             item?.let {
@@ -75,5 +53,4 @@ class DetailViewModel(
             }
         }
     }
-
 }

@@ -12,7 +12,9 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import org.json.JSONObject
 import java.util.Base64
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class AuthRepository @Inject constructor(
     @ApplicationContext context: Context
 ){

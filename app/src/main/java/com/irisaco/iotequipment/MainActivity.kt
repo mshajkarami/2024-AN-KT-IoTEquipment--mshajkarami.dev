@@ -29,9 +29,11 @@ import com.irisaco.iotequipment.ui.auth.AuthViewModelFactory
 import com.irisaco.iotequipment.ui.components.NoInternetBottomSheet
 import com.irisaco.iotequipment.utils.NetworkConnectionLiveData
 import com.irisaco.iotequipment.utils.NetworkStatusListener
+import dagger.hilt.android.AndroidEntryPoint
 
+
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    private lateinit var authViewModel: AuthViewModel
     private lateinit var networkConnection: NetworkConnectionLiveData
     private lateinit var navController: NavController
 

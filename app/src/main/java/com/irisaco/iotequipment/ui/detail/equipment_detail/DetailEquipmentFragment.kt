@@ -7,33 +7,41 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.irisaco.iotequipment.MainActivity
 import com.irisaco.iotequipment.R
 import com.irisaco.iotequipment.databinding.FragmentEquipmentDetailBinding
 import com.irisaco.iotequipment.ui.detail.DetailViewModel
 import com.irisaco.iotequipment.ui.detail.DetailViewModelFactory
 import com.irisaco.iotequipment.ui.detail.EquipmentDetailSharedViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 import kotlin.getValue
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+@AndroidEntryPoint
 class DetailEquipmentFragment : Fragment() {
     private lateinit var binding: FragmentEquipmentDetailBinding
-    private lateinit var viewModel: DetailViewModel
 
+    @Inject
+    lateinit var viewModelFactory: DetailViewModelFactory
     private val sharedViewModel: EquipmentDetailSharedViewModel by activityViewModels()
     private var equipmentId: Int = -1
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        equipmentId = arguments?.getInt("equipmentId") ?: -1
+    }
+
+    private val viewModel: DetailViewModel by viewModels {
+        viewModelFactory.create(equipmentId)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        equipmentId = arguments?.getInt("equipmentId") ?: -1
-
-        val factory = DetailViewModelFactory(requireActivity().application, equipmentId)
-        viewModel = ViewModelProvider(this, factory)[DetailViewModel::class.java]
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_equipment_detail, container, false)
         binding.viewModel = viewModel

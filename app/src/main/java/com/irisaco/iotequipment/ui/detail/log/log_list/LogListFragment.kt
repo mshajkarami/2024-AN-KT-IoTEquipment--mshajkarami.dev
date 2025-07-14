@@ -9,6 +9,8 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,12 +22,18 @@ import com.irisaco.iotequipment.data.repository.AuthRepository
 import com.irisaco.iotequipment.domain.RoleViewModel
 import com.irisaco.iotequipment.domain.RoleViewModelFactory
 import com.irisaco.iotequipment.ui.detail.DetailViewModel
+import com.irisaco.iotequipment.ui.detail.DetailViewModelAssistedFactory
 import com.irisaco.iotequipment.ui.detail.DetailViewModelFactory
 import com.irisaco.iotequipment.ui.detail.EquipmentDetailSharedViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class LogListFragment : Fragment() {
 
-    private lateinit var viewModel: DetailViewModel
+    @Inject
+    lateinit var viewModelFactory: DetailViewModelFactory
+
     private lateinit var roleViewModel: RoleViewModel
     private val sharedVm: EquipmentDetailSharedViewModel by activityViewModels()
 
@@ -34,16 +42,20 @@ class LogListFragment : Fragment() {
 
     private var equipmentId: Int = -1
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         equipmentId = arguments?.getInt("equipmentId") ?: -1
 
         if (equipmentId == -1) {
-            Toast.makeText(requireContext(), "شناسه تجهیز نامعتبر است.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "شناسه تجهیز نامعتبر است.", Toast.LENGTH_SHORT).show()
             findNavController().popBackStack()
         }
     }
 
+    private val viewModel: DetailViewModel by viewModels {
+        viewModelFactory.create(equipmentId)
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -59,16 +71,10 @@ class LogListFragment : Fragment() {
     }
 
     private fun setupViewModels() {
-        val activity = requireActivity()
         val context = requireContext()
-
-        val detailFactory = DetailViewModelFactory(activity.application, equipmentId)
-        viewModel = ViewModelProvider(this, detailFactory)[DetailViewModel::class.java]
-
         val authRepository = AuthRepository(context)
         val roleFactory = RoleViewModelFactory(authRepository)
         roleViewModel = ViewModelProvider(this, roleFactory)[RoleViewModel::class.java]
-
         sharedVm.equipmentId.value = equipmentId
     }
 

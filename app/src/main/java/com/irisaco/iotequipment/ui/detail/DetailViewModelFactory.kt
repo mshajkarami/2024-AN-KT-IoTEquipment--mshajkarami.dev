@@ -1,18 +1,17 @@
 package com.irisaco.iotequipment.ui.detail
-import android.app.Application
+
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import javax.inject.Inject
 
-class DetailViewModelFactory(
-    private val application: Application,
-    private val equipmentId: Int
-) : ViewModelProvider.Factory {
-
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(DetailViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return DetailViewModel(application, equipmentId) as T
+class DetailViewModelFactory @Inject constructor(
+    private val assistedFactory: DetailViewModelAssistedFactory
+) {
+    fun create(equipmentId: Int): ViewModelProvider.Factory {
+        return object : ViewModelProvider.Factory {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                return assistedFactory.create(equipmentId) as T
+            }
         }
-        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }
