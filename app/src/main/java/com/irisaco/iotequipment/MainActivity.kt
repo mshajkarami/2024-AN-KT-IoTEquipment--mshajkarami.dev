@@ -31,7 +31,6 @@ import com.irisaco.iotequipment.utils.NetworkConnectionLiveData
 import com.irisaco.iotequipment.utils.NetworkStatusListener
 
 class MainActivity : AppCompatActivity() {
-
     private lateinit var authViewModel: AuthViewModel
     private lateinit var networkConnection: NetworkConnectionLiveData
     private lateinit var navController: NavController
@@ -51,8 +50,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupInsets()
-
-        setupAuthViewModel()
 
         setupNavigation()
 
@@ -310,11 +307,6 @@ class MainActivity : AppCompatActivity() {
         equipmentIdUnique = intent.getStringExtra("EQUIPMENT_ID")
     }
 
-    private fun setupAuthViewModel() {
-        val authRepository = AuthRepository(applicationContext)
-        val factory = AuthViewModelFactory(authRepository, application)
-        authViewModel = ViewModelProvider(this, factory)[AuthViewModel::class.java]
-    }
 
     private fun Int.dpToPx(): Int = (this * resources.displayMetrics.density).toInt()
 

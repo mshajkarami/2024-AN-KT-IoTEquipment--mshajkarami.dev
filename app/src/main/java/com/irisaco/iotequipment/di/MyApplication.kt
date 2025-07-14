@@ -4,7 +4,9 @@ import android.app.Application
 import androidx.room.Room
 import com.irisaco.iotequipment.data.local.AppDatabase
 import com.irisaco.iotequipment.data.remote.ApiClient
+import dagger.hilt.android.HiltAndroidApp
 
+@HiltAndroidApp
 class MyApplication : Application() {
 
     companion object {
@@ -26,6 +28,5 @@ class MyApplication : Application() {
         ).build()
 
         ApiClient.init(applicationContext)
-
     }
 }

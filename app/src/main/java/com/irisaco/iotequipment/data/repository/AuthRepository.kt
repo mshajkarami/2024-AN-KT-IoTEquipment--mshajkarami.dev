@@ -8,10 +8,14 @@ import com.irisaco.iotequipment.data.local.AccountEntity
 import com.irisaco.iotequipment.data.local.AppDatabase
 import com.irisaco.iotequipment.data.remote.ApiClient.authService
 import com.irisaco.iotequipment.domain.UserRole
+import dagger.hilt.android.qualifiers.ApplicationContext
 import org.json.JSONObject
 import java.util.Base64
+import javax.inject.Inject
 
-class AuthRepository(context: Context) {
+class AuthRepository @Inject constructor(
+    @ApplicationContext context: Context
+){
 
     private val dao = AppDatabase.getInstance(context).accountDao()
 

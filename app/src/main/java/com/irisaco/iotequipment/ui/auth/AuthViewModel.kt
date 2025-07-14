@@ -1,6 +1,7 @@
 package com.irisaco.iotequipment.ui.auth
 
 import android.app.Application
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -15,16 +16,23 @@ import net.openid.appauth.AuthorizationService
 import net.openid.appauth.AuthorizationServiceConfiguration
 import net.openid.appauth.ResponseTypeValues
 import androidx.core.net.toUri
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.irisaco.iotequipment.data.local.AccountEntity
 import com.irisaco.iotequipment.utils.UnsafeConnectionBuilder
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import net.openid.appauth.AppAuthConfiguration
+import javax.inject.Inject
 
-class AuthViewModel(
-    application: Application,
+@HiltViewModel
+class AuthViewModel @Inject constructor(
+    @ApplicationContext private val context: Context,
     private val repository: AuthRepository
-) : AndroidViewModel(application) {
-
-    private val context = application.applicationContext
+) : ViewModel() {
+    private val _isLoggedInLiveData = MutableLiveData<Boolean>()
+    val isLoggedInLiveData: LiveData<Boolean> = _isLoggedInLiveData
 
     private val authService = AuthorizationService(
         context,
@@ -92,17 +100,17 @@ class AuthViewModel(
     suspend fun isLoggedIn(): Boolean {
         return repository.getValidAccessTokenOrNull() != null
     }
-
     suspend fun getActiveAccount(): AccountEntity? {
         return repository.getActiveAccount()
     }
-
     suspend fun loadActiveAccountFromDb() {
         repository.loadActiveAccountFromDb()
     }
-
-
+    fun checkLoginState() {
+        viewModelScope.launch {
+            loadActiveAccountFromDb()
+            val isLoggedIn = isLoggedIn()
+            _isLoggedInLiveData.postValue(isLoggedIn)
+        }
+    }
 }
-
-
-
