@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.irisaco.iotequipment.data.model.Records
-import com.irisaco.iotequipment.data.remote.ApiClient
 import com.irisaco.iotequipment.data.repository.EquipmentRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -27,12 +26,6 @@ class AddLogViewModel @Inject constructor(
 
     private val _uploadState = MutableLiveData<Result<Boolean>>()
     val uploadState: LiveData<Result<Boolean>> = _uploadState
-
-    init {
-        val retrofitService = ApiClient.apiService
-        repository = EquipmentRepository(retrofitService)
-    }
-
     fun addRecord(equipmentId: Int, record: Records) {
         viewModelScope.launch {
             try {

@@ -1,14 +1,12 @@
 package com.irisaco.iotequipment.data.repository
 
-import android.content.Context
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
+import com.irisaco.iotequipment.data.local.AccountDao
 import com.irisaco.iotequipment.data.local.AccountEntity
-import com.irisaco.iotequipment.data.local.AppDatabase
-import com.irisaco.iotequipment.data.remote.ApiClient.authService
+import com.irisaco.iotequipment.data.remote.KeycloakAuthService
 import com.irisaco.iotequipment.domain.UserRole
-import dagger.hilt.android.qualifiers.ApplicationContext
 import org.json.JSONObject
 import java.util.Base64
 import javax.inject.Inject
@@ -16,11 +14,9 @@ import javax.inject.Singleton
 
 @Singleton
 class AuthRepository @Inject constructor(
-    @ApplicationContext context: Context
+    private val accountDao: AccountDao,
+    private val authService: KeycloakAuthService
 ){
-
-    private val dao = AppDatabase.getInstance(context).accountDao()
-
     private var cachedAccount: AccountEntity? = null
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -43,8 +39,8 @@ class AuthRepository @Inject constructor(
                 isActive = true,
                 role = role
             )
-            dao.deactivateAllAccounts()
-            dao.insertAccount(account)
+            accountDao.deactivateAllAccounts()
+            accountDao.insertAccount(account)
             cachedAccount = account
 
             Log.d("AuthRepository", "Saving account for $username with role ${role.name}")
@@ -55,18 +51,17 @@ class AuthRepository @Inject constructor(
     }
 
     suspend fun getValidAccessTokenOrNull(): String? {
-        val account = dao.getActiveAccount() ?: return null
+        val account = accountDao.getActiveAccount() ?: return null
         return if (account.expiresAt > System.currentTimeMillis()) {
             account.accessToken
         } else null
     }
 
-    suspend fun getActiveAccount(): AccountEntity? = dao.getActiveAccount()
+    suspend fun getActiveAccount(): AccountEntity? = accountDao.getActiveAccount()
 
-    suspend fun clear() = dao.deactivateAllAccounts()
-
+    suspend fun clear() = accountDao.deactivateAllAccounts()
     suspend fun refreshToken(refreshToken: String): AccountEntity? {
-        val account = dao.getActiveAccount() ?: return null
+        val account = accountDao.getActiveAccount() ?: return null
         return try {
             val response = authService.refreshToken(
                 grantType = "refresh_token",
@@ -82,7 +77,7 @@ class AuthRepository @Inject constructor(
                         refreshToken = body.refreshToken ?: account.refreshToken,
                         expiresAt = System.currentTimeMillis() + (body.expiresIn * 1000)
                     )
-                    dao.insertAccount(newAccount)
+                    accountDao.insertAccount(newAccount)
                     Log.d("AuthRepository", "Token refreshed successfully.")
                     newAccount
                 } else {
@@ -99,11 +94,10 @@ class AuthRepository @Inject constructor(
             null
         }
     }
-
     fun getCachedAccount(): AccountEntity? = cachedAccount
 
     suspend fun loadActiveAccountFromDb() {
-        cachedAccount = dao.getActiveAccount()
+        cachedAccount = accountDao.getActiveAccount()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -147,7 +141,7 @@ class AuthRepository @Inject constructor(
     suspend fun getCachedOrDbAccount(): AccountEntity? {
         if (cachedAccount != null) return cachedAccount
 
-        val account = dao.getActiveAccount()
+        val account = accountDao.getActiveAccount()
         cachedAccount = account
         return account
     }

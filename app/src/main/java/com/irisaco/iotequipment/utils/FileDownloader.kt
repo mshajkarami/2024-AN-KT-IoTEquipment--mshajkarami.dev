@@ -7,7 +7,6 @@ import android.net.Uri
 import android.os.Looper
 import android.widget.Toast
 import androidx.core.content.FileProvider
-import com.irisaco.iotequipment.data.remote.ApiClient
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.ResponseBody
@@ -17,10 +16,13 @@ import retrofit2.http.Streaming
 import retrofit2.http.Url
 import java.io.File
 import java.io.FileOutputStream
+import javax.inject.Inject
+import javax.inject.Singleton
 
-object FileDownloader {
-    private val api = ApiClient.createService<FileDownloadApi>()
-
+@Singleton
+class FileDownloader @Inject constructor(
+    private val api: FileDownloadApi
+) {
     suspend fun downloadFile(
         context: Context,
         fileUrl: String,
@@ -33,7 +35,6 @@ object FileDownloader {
             val response = api.downloadFile(fileUrl)
             if (response.isSuccessful) {
                 response.body()?.let { body ->
-                    val file = File(context.getExternalFilesDir(null), fileName)
                     val inputStream = body.byteStream()
                     val outputStream = FileOutputStream(file)
 
@@ -72,7 +73,6 @@ object FileDownloader {
         }
     }
 
-
     fun getMimeType(fileName: String): String {
         return when {
             fileName.endsWith(".pdf") -> "application/pdf"
@@ -81,12 +81,5 @@ object FileDownloader {
             fileName.endsWith(".txt") -> "text/plain"
             else -> "*/*"
         }
-    }
-
-
-    interface FileDownloadApi {
-        @GET
-        @Streaming
-        suspend fun downloadFile(@Url fileUrl: String): Response<ResponseBody>
     }
 }

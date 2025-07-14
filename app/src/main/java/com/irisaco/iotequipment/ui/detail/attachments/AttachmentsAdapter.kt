@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
 class AttachmentsAdapter(
-    private val onDownloadClicked: suspend (Document) -> File?
+    private val onDownloadClicked: (Document, (File?) -> Unit) -> Unit
 ) : ListAdapter<Document, AttachmentsAdapter.AttachmentViewHolder>(DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AttachmentViewHolder {
@@ -81,18 +81,14 @@ class AttachmentsAdapter(
                 progressBar.visibility = View.VISIBLE
                 itemView.alpha = 0.5f
 
-                CoroutineScope(Dispatchers.IO).launch {
-                    val downloadedFile = onDownloadClicked(document)
+                onDownloadClicked(document) { downloadedFile ->
+                    progressBar.visibility = View.GONE
+                    itemView.alpha = 1.0f
 
-                    withContext(Dispatchers.Main) {
-                        progressBar.visibility = View.GONE
-                        itemView.alpha = 1.0f
-
-                        if (downloadedFile != null) {
-                            updateItem(document)
-                        } else {
-                            Toast.makeText(context, "دانلود ناموفق بود ❌", Toast.LENGTH_SHORT).show()
-                        }
+                    if (downloadedFile != null) {
+                        updateItem(document)
+                    } else {
+                        Toast.makeText(context, "دانلود ناموفق بود ❌", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -109,3 +105,4 @@ class AttachmentsAdapter(
         }
     }
 }
+

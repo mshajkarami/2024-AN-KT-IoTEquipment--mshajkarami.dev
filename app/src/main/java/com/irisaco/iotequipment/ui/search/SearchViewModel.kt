@@ -9,7 +9,6 @@ import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import androidx.room.Query
 import com.irisaco.iotequipment.data.model.Items
-import com.irisaco.iotequipment.data.remote.ApiClient
 import com.irisaco.iotequipment.data.repository.EquipmentRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers

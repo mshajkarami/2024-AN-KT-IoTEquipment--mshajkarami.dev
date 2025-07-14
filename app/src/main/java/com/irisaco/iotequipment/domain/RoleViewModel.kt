@@ -6,9 +6,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.irisaco.iotequipment.data.repository.AuthRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class RoleViewModel(
+@HiltViewModel
+class RoleViewModel @Inject constructor(
     private val authRepository: AuthRepository
 ) : ViewModel() {
 
@@ -26,3 +29,4 @@ class RoleViewModel(
         role in listOf(UserRole.ADMIN, UserRole.ENGINEER)
     }
 }
+

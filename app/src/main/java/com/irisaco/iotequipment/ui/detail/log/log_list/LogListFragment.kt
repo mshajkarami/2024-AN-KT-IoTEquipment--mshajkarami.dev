@@ -33,7 +33,7 @@ class LogListFragment : Fragment() {
     @Inject
     lateinit var viewModelFactory: DetailViewModelFactory
 
-    private lateinit var roleViewModel: RoleViewModel
+    private val roleViewModel: RoleViewModel by viewModels ()
     private val sharedVm: EquipmentDetailSharedViewModel by activityViewModels()
 
     private lateinit var adapter: EquipmentLogListAdapter
@@ -62,20 +62,12 @@ class LogListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupViewModels()
         setupViews(view)
         setupRecyclerView(view)
         setupObservers()
         setupListeners()
     }
 
-    private fun setupViewModels() {
-        val context = requireContext()
-        val authRepository = AuthRepository(context)
-        val roleFactory = RoleViewModelFactory(authRepository)
-        roleViewModel = ViewModelProvider(this, roleFactory)[RoleViewModel::class.java]
-        sharedVm.equipmentId.value = equipmentId
-    }
 
     private fun setupViews(view: View) {
         btnAddLog = view.findViewById(R.id.btn_add_log)

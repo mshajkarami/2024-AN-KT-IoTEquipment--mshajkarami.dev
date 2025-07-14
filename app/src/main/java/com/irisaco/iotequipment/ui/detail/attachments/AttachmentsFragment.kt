@@ -1,28 +1,27 @@
 package com.irisaco.iotequipment.ui.detail.attachments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.irisaco.iotequipment.R
 import com.irisaco.iotequipment.ui.detail.EquipmentDetailSharedViewModel
 import com.irisaco.iotequipment.utils.FileDownloader
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class AttachmentsFragment : Fragment() {
+
+    @Inject lateinit var fileDownloader: FileDownloader
     @Inject
     lateinit var assistedFactory: AttachmentsViewModelAssistedFactory
     private lateinit var adapter: AttachmentsAdapter
@@ -42,24 +41,18 @@ class AttachmentsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         recyclerView = view.findViewById(R.id.attachmentRecyclerView)
-        adapter = AttachmentsAdapter { document ->
-            val file = FileDownloader.downloadFile(
-                requireContext(),
-                document.fileUrl!!,
-                document.fileName.toString()
-            )
-            file?.let {
-                FileDownloader.openFile(requireContext(), it)
-
-                val updatedList = adapter.currentList.map { doc ->
-                    if (doc.id == document.id) doc.copy()
-                    else doc
+        adapter = AttachmentsAdapter { document, callback ->
+            lifecycleScope.launch {
+                val file = fileDownloader.downloadFile(
+                    requireContext(),
+                    document.fileUrl!!,
+                    document.fileName.toString()
+                )
+                if (file != null) {
+                    fileDownloader.openFile(requireContext(), file)
                 }
-                withContext(Dispatchers.Main) {
-                    adapter.submitList(updatedList)
-                }
+                callback(file)
             }
-            file
         }
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())

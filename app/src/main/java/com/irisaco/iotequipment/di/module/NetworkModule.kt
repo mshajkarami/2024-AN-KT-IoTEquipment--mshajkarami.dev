@@ -5,6 +5,7 @@ import com.irisaco.iotequipment.data.remote.KeycloakAuthService
 import com.irisaco.iotequipment.data.repository.AuthRepository
 import com.irisaco.iotequipment.ui.auth.AuthInterceptor
 import com.irisaco.iotequipment.ui.auth.TokenAuthenticator
+import com.irisaco.iotequipment.utils.FileDownloadApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -72,6 +73,12 @@ object NetworkModule {
     @Singleton
     fun provideKeycloakAuthService(@Named("auth") retrofit: Retrofit): KeycloakAuthService {
         return retrofit.create(KeycloakAuthService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFileDownloadApi(retrofit: Retrofit): FileDownloadApi {
+        return retrofit.create(FileDownloadApi::class.java)
     }
 }
 
