@@ -26,6 +26,7 @@ import com.irisaco.iotequipment.data.model.Records
 import com.irisaco.iotequipment.databinding.FragmentAddLogBinding
 import com.irisaco.iotequipment.ui.detail.EquipmentDetailSharedViewModel
 import com.irisaco.iotequipment.ui.detail.log.log_detail.LogDetailFragmentDirections
+import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.time.LocalDate
 import java.time.ZoneOffset
@@ -33,8 +34,8 @@ import java.util.Date
 import java.util.Locale
 import kotlin.getValue
 
+@AndroidEntryPoint
 class AddLogFragment : Fragment() {
-
     private var _binding: FragmentAddLogBinding? = null
     private val binding get() = _binding ?: throw IllegalStateException("Binding is null")
 

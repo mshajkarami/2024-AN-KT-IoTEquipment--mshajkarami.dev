@@ -9,31 +9,27 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.irisaco.iotequipment.R
-import com.irisaco.iotequipment.data.remote.ApiClient
-import com.irisaco.iotequipment.data.repository.EquipmentRepository
 import com.irisaco.iotequipment.ui.detail.EquipmentDetailSharedViewModel
 import com.irisaco.iotequipment.utils.FileDownloader
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class AttachmentsFragment : Fragment() {
-
-    private lateinit var repository: EquipmentRepository
+    @Inject
+    lateinit var assistedFactory: AttachmentsViewModelAssistedFactory
     private lateinit var adapter: AttachmentsAdapter
-
     private lateinit var recyclerView: RecyclerView
-
     private val sharedViewModel: EquipmentDetailSharedViewModel by activityViewModels()
-    private var viewModel: AttachmentsViewModel? = null
+    private lateinit var viewModel: AttachmentsViewModel
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        repository = EquipmentRepository(ApiClient.apiService)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -73,33 +69,34 @@ class AttachmentsFragment : Fragment() {
     }
 
     private fun observeViewModelTriggers() {
-        sharedViewModel.equipmentId.observe(viewLifecycleOwner) { equipmentId ->
-            if (equipmentId == null) return@observe
+        val combinedLiveData = MediatorLiveData<Pair<Int, Int?>>()
 
+        combinedLiveData.addSource(sharedViewModel.equipmentId) { equipId ->
             val recordId = sharedViewModel.recordEquipmentId.value
-            setupViewModel(equipmentId, recordId)
+            if (equipId != null) combinedLiveData.value = equipId to recordId
         }
 
-        sharedViewModel.recordEquipmentId.observe(viewLifecycleOwner) { recordId ->
-            val equipmentId = sharedViewModel.equipmentId.value
-            if (equipmentId != null) {
-                setupViewModel(equipmentId, recordId)
-            }
+        combinedLiveData.addSource(sharedViewModel.recordEquipmentId) { recId ->
+            val equipId = sharedViewModel.equipmentId.value
+            if (equipId != null) combinedLiveData.value = equipId to recId
+        }
+
+        combinedLiveData.observe(viewLifecycleOwner) { (equipId, recId) ->
+            setupViewModel(equipId, recId)
         }
     }
 
     private fun setupViewModel(equipmentId: Int, recordId: Int?) {
-        val factory = AttachmentsViewModelFactory(equipmentId, recordId, repository)
-        viewModel = ViewModelProvider(this, factory)[AttachmentsViewModel::class.java]
+        viewModel = ViewModelProvider(
+            this,
+            AttachmentsViewModelFactory(assistedFactory, equipmentId, recordId)
+        )[AttachmentsViewModel::class.java]
 
-        viewModel?.documents?.observe(viewLifecycleOwner) { documentList ->
+        viewModel.documents.observe(viewLifecycleOwner) { documentList ->
             adapter.submitList(documentList)
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-    }
     override fun onDestroyView() {
         super.onDestroyView()
         sharedViewModel.equipmentId.value = null

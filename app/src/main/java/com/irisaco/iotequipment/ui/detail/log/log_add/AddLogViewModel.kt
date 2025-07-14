@@ -8,13 +8,16 @@ import androidx.lifecycle.viewModelScope
 import com.irisaco.iotequipment.data.model.Records
 import com.irisaco.iotequipment.data.remote.ApiClient
 import com.irisaco.iotequipment.data.repository.EquipmentRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.io.File
+import javax.inject.Inject
 
-class AddLogViewModel(
+@HiltViewModel
+class AddLogViewModel @Inject constructor(
+    private var repository: EquipmentRepository
 ) : ViewModel() {
 
-    private var repository: EquipmentRepository
 
     private val _addRecordResult = MutableLiveData<Result<Boolean>>()
     val addRecordResult: LiveData<Result<Boolean>> = _addRecordResult
@@ -67,7 +70,4 @@ class AddLogViewModel(
             }
         }
     }
-
-
-
 }

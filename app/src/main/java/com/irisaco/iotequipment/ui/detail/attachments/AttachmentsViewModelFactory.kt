@@ -2,15 +2,15 @@ package com.irisaco.iotequipment.ui.detail.attachments
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.irisaco.iotequipment.data.repository.EquipmentRepository
 
 class AttachmentsViewModelFactory(
+    private val assistedFactory: AttachmentsViewModelAssistedFactory,
     private val equipmentId: Int?,
-    private val recordId: Int?,
-    private val repository: EquipmentRepository
+    private val recordId: Int?
 ) : ViewModelProvider.Factory {
 
+    @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return AttachmentsViewModel(equipmentId, recordId, repository) as T
+        return assistedFactory.create(equipmentId, recordId) as T
     }
 }
