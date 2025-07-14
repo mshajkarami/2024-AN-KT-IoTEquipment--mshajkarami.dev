@@ -52,6 +52,11 @@ class DetailEquipmentFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val skeleton = view.findViewById<View>(R.id.skeleton_layout)
+        val contentLayout = view.findViewById<View>(R.id.content_layout)
+
+        binding.btnAttachment.isEnabled = false
+        binding.btnAttachment.visibility = View.INVISIBLE
 
         lifecycleScope.launch {
             val equipment = viewModel.getEquipmentById(equipmentId)
@@ -60,8 +65,17 @@ class DetailEquipmentFragment : Fragment() {
                 viewModel.version.value = equipment.version?.version
                 viewModel.type.value = equipment.type?.name ?: ""
                 viewModel.description.value = equipment.description
+
+                binding.btnAttachment.isEnabled = true
+                binding.btnAttachment.visibility = View.VISIBLE
+
+                skeleton.visibility = View.GONE
+                contentLayout.visibility = View.VISIBLE
             } else {
                 viewModel.title.value = "موردی یافت نشد"
+                binding.btnAttachment.visibility = View.GONE
+                skeleton.visibility = View.GONE
+                contentLayout.visibility = View.VISIBLE
             }
         }
 

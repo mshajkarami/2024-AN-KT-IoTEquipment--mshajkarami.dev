@@ -13,9 +13,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <include
+        android:id="@+id/skeleton_layout"
+        layout="@layout/skeleton_item_equipment_detail"
+        android:visibility="visible" />
+
     <ScrollView
+        android:id="@+id/content_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/top_button_nav"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -108,7 +115,6 @@
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txt_equipment_type" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
@@ -127,6 +133,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_attachment"
             android:layout_width="match_parent"
+            android:checkable="false"
             android:layout_height="50dp"
             android:backgroundTint="@color/md_theme_inversePrimary"
             android:textAlignment="textStart"
