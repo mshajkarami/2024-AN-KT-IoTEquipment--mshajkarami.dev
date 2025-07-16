@@ -1,15 +1,10 @@
 package com.irisaco.iotequipment.ui.detail.log.log_detail
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.button.MaterialButton
@@ -17,8 +12,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.irisaco.iotequipment.MainActivity
 import com.irisaco.iotequipment.R
 import com.irisaco.iotequipment.ui.base.BaseFragment
-import com.irisaco.iotequipment.ui.detail.DetailViewModelAssistedFactory
-import com.irisaco.iotequipment.ui.detail.EquipmentDetailSharedViewModel
+import com.irisaco.iotequipment.ui.detail.base_view_model.SharedViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -30,7 +24,7 @@ import javax.inject.Inject
 class LogDetailFragment : BaseFragment() {
     @Inject
     lateinit var assistedFactory: LogDetailViewModelAssistedFactory
-    private val sharedViewModel: EquipmentDetailSharedViewModel by activityViewModels()
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
 
     private lateinit var viewModel: LogDetailViewModel

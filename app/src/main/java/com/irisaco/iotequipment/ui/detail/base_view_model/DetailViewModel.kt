@@ -1,4 +1,4 @@
-package com.irisaco.iotequipment.ui.detail
+package com.irisaco.iotequipment.ui.detail.base_view_model
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

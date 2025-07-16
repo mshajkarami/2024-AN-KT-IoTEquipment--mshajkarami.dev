@@ -1,41 +1,35 @@
 package com.irisaco.iotequipment.ui.detail.attachments
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.irisaco.iotequipment.R
-import com.irisaco.iotequipment.ui.detail.EquipmentDetailSharedViewModel
+import com.irisaco.iotequipment.ui.base.BaseFragment
+import com.irisaco.iotequipment.ui.detail.base_view_model.SharedViewModel
 import com.irisaco.iotequipment.utils.FileDownloader
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class AttachmentsFragment : Fragment() {
-
-    @Inject lateinit var fileDownloader: FileDownloader
+class AttachmentsFragment : BaseFragment() {
+    @Inject
+    lateinit var fileDownloader: FileDownloader
     @Inject
     lateinit var assistedFactory: AttachmentsViewModelAssistedFactory
+
     private lateinit var adapter: AttachmentsAdapter
     private lateinit var recyclerView: RecyclerView
-    private val sharedViewModel: EquipmentDetailSharedViewModel by activityViewModels()
+    private val sharedViewModel: SharedViewModel by activityViewModels()
     private lateinit var viewModel: AttachmentsViewModel
 
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        return inflater.inflate(R.layout.fragment_attachments, container, false)
-    }
+    override fun getLayoutId(): Int = R.layout.fragment_attachments
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -59,6 +53,10 @@ class AttachmentsFragment : Fragment() {
         recyclerView.adapter = adapter
 
         observeViewModelTriggers()
+        observeDownloadAllTrigger()
+        swipeRefreshLayout.setOnRefreshListener {
+            refreshDocuments()
+        }
     }
 
     private fun observeViewModelTriggers() {
@@ -78,7 +76,39 @@ class AttachmentsFragment : Fragment() {
             setupViewModel(equipId, recId)
         }
     }
+    private fun observeDownloadAllTrigger() {
+        sharedViewModel.downloadAllTrigger.observe(viewLifecycleOwner) {
+            downloadAllAttachments()
+        }
+    }
+    private fun downloadAllAttachments() {
+        val documents = adapter.getItems()
 
+        if (documents.isEmpty()) return
+
+        lifecycleScope.launch {
+            var successCount = 0
+            var failCount = 0
+
+            for (document in documents) {
+                val file = fileDownloader.downloadFile(
+                    requireContext(),
+                    document.fileUrl!!,
+                    document.fileName.toString()
+                )
+                if (file != null) successCount++ else failCount++
+            }
+
+            val message = when {
+                failCount == 0 -> getString(R.string.download_all_success)
+                successCount == 0 -> getString(R.string.download_all_failed)
+                else -> getString(R.string.download_summary, successCount, failCount)
+            }
+            view?.let {
+                Snackbar.make(it, message, Snackbar.LENGTH_LONG).show()
+            }
+        }
+    }
     private fun setupViewModel(equipmentId: Int, recordId: Int?) {
         viewModel = ViewModelProvider(
             this,
@@ -86,10 +116,14 @@ class AttachmentsFragment : Fragment() {
         )[AttachmentsViewModel::class.java]
 
         viewModel.documents.observe(viewLifecycleOwner) { documentList ->
-            adapter.submitList(documentList)
+            adapter.submitDocuments(documentList)
         }
     }
 
+    private fun refreshDocuments() {
+        viewModel.refreshDocuments()
+        swipeRefreshLayout.isRefreshing = false
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         sharedViewModel.equipmentId.value = null

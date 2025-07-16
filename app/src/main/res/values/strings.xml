@@ -9,7 +9,6 @@
     </string>
     <!-- 🔍 Search -->
     <string name="hint_searchbar">جستجو میان تجهیزات</string>
-
     <!-- 📋 Device Info Labels -->
     <string name="label_device_name">نام تجهیز: %1$s</string>
     <string name="label_device_version">نسخه: %1$s</string>
@@ -18,32 +17,26 @@
     <string name="label_device_date">تاریخ ایجاد: %1$s</string>
     <string name="label_device_attachment">نام فایل: %1$s</string>
     <string name="label_device_unique_id">شناسه ‌تجهیز: %1$s</string>
-
     <!-- ⏳ Countdown -->
     <string name="txt_countdown_description">زمان باقیمانده تا پایان فرصت تغیرات :</string>
-
     <!-- 📝 Log Form -->
     <string name="hint_text_add_new_log">نام لاگ</string>
     <string name="hint_text_add_new_date">تاریخ</string>
     <string name="hint_text_add_new_des">توضیحات</string>
-
     <!-- 📁 Attachments -->
     <string name="btn_attachment">فایل‌های پیوست</string>
     <string name="btn_add_attachment">افزودن فایل پیوست</string>
     <string name="toolbar_attachment_text">فایل‌های پیوست</string>
-
     <!-- 📷 QR / Scan -->
     <string name="btn_scan">اسکن</string>
     <string name="btn_select_from_pictures">تصاویر</string>
     <string name="msg_scan_barcode_help">لطفا بارکد را در این محل قرار دهید</string>
-
     <!-- 🔘 Toolbar -->
     <string name="toolbar_edit_log_text">ویرایش لاگ</string>
     <string name="toolbar_add_log_text">افزودن لاگ</string>
     <string name="toolbar_detail_log_text">توضیحات لاگ</string>
     <string name="toolbar_icon_profile">پروفایل</string>
     <string name="toolbar_setting_text">تنظیمات</string>
-
     <!-- 📂 Menu -->
     <string name="menu_device_info">اطلاعات اولیه تجهیزات</string>
     <string name="menu_software_info">سخت‌افزار و نرم‌افزار</string>
@@ -54,7 +47,6 @@
     <string name="menu_item_setting">تنظیمات</string>
     <string name="menu_item_info">درباره ما</string>
     <string name="menu_item_exit">خروج</string>
-
     <!-- ⚙️ Settings -->
     <string name="btn_language">زبان</string>
     <string name="label_language">فارسی</string>
@@ -64,12 +56,10 @@
     <string name="label_preferences">ترجیحات</string>
     <string name="label_account">حساب کاربری</string>
     <string name="btn_notifications">اعلان‌ها و صداها</string>
-
     <!-- 🔐 Auth -->
     <string name="btn_login_secure">ورود امن از طریق مرورگر</string>
     <string name="btn_password">رمز عبور</string>
     <string name="btn_logout">خروج از حساب کاربری</string>
-
     <!-- 📌 Other -->
     <string name="btn_create">ایجاد</string>
     <string name="btn_save">ذخیره</string>
@@ -77,7 +67,11 @@
     <string name="btn_support">پشتیبانی</string>
     <string name="btn_terms">سیاست‌های حفظ حریم خصوصی</string>
     <string name="img_equipment">تصویر تجهیز</string>
-
+    <string name="exit">خروج</string>
+    <string name="exit_app">خروج از برنامه</string>
+    <string name="yes">بله</string>
+    <string name="no">خیر</string>
+    <string name="msg_toolbar_exit">آیا مطمئن هستید که می‌خواهید از برنامه خارج شوید؟"</string>
     <!-- ☰ Navigation Drawer -->
     <string name="navigation_drawer_open">باز کردن منو</string>
     <string name="navigation_drawer_close">بستن منو</string>
@@ -90,7 +84,9 @@
     <string name="toolbar_popup_menu_share_all">اشتراک‌گذاری همه فایل‌ها</string>
     <string name="toolbar_popup_menu_refresh">بارگذاری مجدد</string>
     <string name="toolbar_popup_menu_download_all_file">دانلود همه فایل ها</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    <!-- Snack Bar -->
+    <string name="download_all_success">همه فایل‌ها با موفقیت دانلود شدند ✅</string>
+    <string name="download_all_failed">دانلود همه فایل‌ها ناموفق بود ❌</string>
+    <string name="download_failed">دانلود ناموفق بود ❌</string>
+    <string name="download_summary">%1$d فایل با موفقیت دانلود شد، %2$d ناموفق بودند ⚠️</string>
 </resources>

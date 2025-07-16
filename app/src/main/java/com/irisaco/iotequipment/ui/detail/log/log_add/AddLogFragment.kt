@@ -24,8 +24,7 @@ import com.irisaco.iotequipment.R
 import com.irisaco.iotequipment.data.model.Records
 
 import com.irisaco.iotequipment.databinding.FragmentAddLogBinding
-import com.irisaco.iotequipment.ui.detail.EquipmentDetailSharedViewModel
-import com.irisaco.iotequipment.ui.detail.log.log_detail.LogDetailFragmentDirections
+import com.irisaco.iotequipment.ui.detail.base_view_model.SharedViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.time.LocalDate
@@ -40,7 +39,7 @@ class AddLogFragment : Fragment() {
     private val binding get() = _binding ?: throw IllegalStateException("Binding is null")
 
     private val viewModel: AddLogViewModel by viewModels()
-    private val sharedViewModel: EquipmentDetailSharedViewModel by activityViewModels()
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     private lateinit var pickFileLauncher: ActivityResultLauncher<String>
 

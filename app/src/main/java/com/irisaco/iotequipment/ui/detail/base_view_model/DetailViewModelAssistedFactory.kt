@@ -1,4 +1,4 @@
-package com.irisaco.iotequipment.ui.detail
+package com.irisaco.iotequipment.ui.detail.base_view_model
 
 import dagger.assisted.AssistedFactory
 

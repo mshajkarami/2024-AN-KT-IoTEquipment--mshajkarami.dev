@@ -10,6 +10,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.irisaco.iotequipment.R
+import com.irisaco.iotequipment.ui.detail.base_view_model.SharedViewModel
 
 class DetailFragment : Fragment() {
 
@@ -17,7 +18,7 @@ class DetailFragment : Fragment() {
     private lateinit var tabLayout: TabLayout
     private var equipmentId: Int = -1
 
-    val vm by activityViewModels<EquipmentDetailSharedViewModel>()
+    val vm by activityViewModels<SharedViewModel>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

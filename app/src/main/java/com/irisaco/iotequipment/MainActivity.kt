@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -18,30 +19,25 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
-import com.irisaco.iotequipment.data.repository.AuthRepository
 import com.irisaco.iotequipment.databinding.ActivityMainBinding
-import com.irisaco.iotequipment.ui.auth.AuthViewModel
-import com.irisaco.iotequipment.ui.auth.AuthViewModelFactory
 import com.irisaco.iotequipment.ui.components.NoInternetBottomSheet
+import com.irisaco.iotequipment.ui.detail.base_view_model.SharedViewModel
 import com.irisaco.iotequipment.utils.NetworkConnectionLiveData
 import com.irisaco.iotequipment.utils.NetworkStatusListener
 import dagger.hilt.android.AndroidEntryPoint
-
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var networkConnection: NetworkConnectionLiveData
     private lateinit var navController: NavController
-
     private var noInternetDialog: NoInternetBottomSheet? = null
     internal var equipmentIdUnique: String? = null
-
     private lateinit var binding: ActivityMainBinding
 
+    private val shareViewModel : SharedViewModel by viewModels ()
     internal var isConnectedToInternet: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,7 +65,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupNavigation() {
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         navController = navHostFragment.navController
 
         val toggle = ActionBarDrawerToggle(
@@ -100,8 +97,10 @@ class MainActivity : AppCompatActivity() {
                 R.id.logDetailFragment -> configureLogDetailToolbar()
                 else -> configureDefaultToolbar()
             }
-            val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as? NavHostFragment
-            val currentFragment = navHostFragment?.childFragmentManager?.fragments?.firstOrNull { it.isVisible }
+            val navHostFragment =
+                supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as? NavHostFragment
+            val currentFragment =
+                navHostFragment?.childFragmentManager?.fragments?.firstOrNull { it.isVisible }
 
             if (currentFragment is NetworkStatusListener) {
                 currentFragment.onNetworkChanged(isConnectedToInternet)
@@ -113,13 +112,14 @@ class MainActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.nav_exit -> {
                     AlertDialog.Builder(this)
-                        .setTitle("خروج")
-                        .setMessage("آیا مطمئن هستید که می‌خواهید از برنامه خارج شوید؟")
-                        .setPositiveButton("بله") { _, _ -> finishAffinity() }
-                        .setNegativeButton("خیر", null)
+                        .setTitle(getString(R.string.exit))
+                        .setMessage(getString(R.string.msg_toolbar_exit))
+                        .setPositiveButton(getString(R.string.yes)) { _, _ -> finishAffinity() }
+                        .setNegativeButton(getString(R.string.no), null)
                         .show()
                     true
                 }
+
                 else -> {
                     val handled = NavigationUI.onNavDestinationSelected(menuItem, navController)
                     if (handled) binding.drawerLayout.closeDrawer(GravityCompat.START)
@@ -218,9 +218,11 @@ class MainActivity : AppCompatActivity() {
             menuRes = R.menu.menu_toolbar_popup_attachment
         ) { item ->
             when (item.itemId) {
-                R.id.item_download_all -> toast("دانلود همه داده ها")
-                R.id.item_refresh -> toast("بارگذاری مجدد")
-                R.id.item_share_all -> toast("اشتراک گذاری همه داده ها")
+                R.id.item_download_all -> {
+                    shareViewModel.triggerDownloadAll()
+                }
+                R.id.item_refresh -> {}
+                R.id.item_share_all -> {}
             }
             true
         }
@@ -308,7 +310,6 @@ class MainActivity : AppCompatActivity() {
     private fun readIntentExtras() {
         equipmentIdUnique = intent.getStringExtra("EQUIPMENT_ID")
     }
-
 
     private fun Int.dpToPx(): Int = (this * resources.displayMetrics.density).toInt()
 

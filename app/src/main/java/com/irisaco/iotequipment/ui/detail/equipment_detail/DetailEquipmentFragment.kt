@@ -12,9 +12,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.irisaco.iotequipment.R
 import com.irisaco.iotequipment.databinding.FragmentEquipmentDetailBinding
-import com.irisaco.iotequipment.ui.detail.DetailViewModel
-import com.irisaco.iotequipment.ui.detail.DetailViewModelFactory
-import com.irisaco.iotequipment.ui.detail.EquipmentDetailSharedViewModel
+import com.irisaco.iotequipment.ui.detail.base_view_model.DetailViewModel
+import com.irisaco.iotequipment.ui.detail.base_view_model.DetailViewModelFactory
+import com.irisaco.iotequipment.ui.detail.base_view_model.SharedViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,7 +26,7 @@ class DetailEquipmentFragment : Fragment() {
 
     @Inject
     lateinit var viewModelFactory: DetailViewModelFactory
-    private val sharedViewModel: EquipmentDetailSharedViewModel by activityViewModels()
+    private val sharedViewModel: SharedViewModel by activityViewModels()
     private var equipmentId: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {

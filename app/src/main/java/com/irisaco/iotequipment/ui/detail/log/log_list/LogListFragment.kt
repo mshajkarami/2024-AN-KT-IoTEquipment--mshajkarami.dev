@@ -10,20 +10,16 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.irisaco.iotequipment.MainActivity
 import com.irisaco.iotequipment.R
 import com.irisaco.iotequipment.data.model.Records
-import com.irisaco.iotequipment.data.repository.AuthRepository
 import com.irisaco.iotequipment.domain.RoleViewModel
-import com.irisaco.iotequipment.domain.RoleViewModelFactory
-import com.irisaco.iotequipment.ui.detail.DetailViewModel
-import com.irisaco.iotequipment.ui.detail.DetailViewModelAssistedFactory
-import com.irisaco.iotequipment.ui.detail.DetailViewModelFactory
-import com.irisaco.iotequipment.ui.detail.EquipmentDetailSharedViewModel
+import com.irisaco.iotequipment.ui.detail.base_view_model.DetailViewModel
+import com.irisaco.iotequipment.ui.detail.base_view_model.DetailViewModelFactory
+import com.irisaco.iotequipment.ui.detail.base_view_model.SharedViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -34,7 +30,7 @@ class LogListFragment : Fragment() {
     lateinit var viewModelFactory: DetailViewModelFactory
 
     private val roleViewModel: RoleViewModel by viewModels ()
-    private val sharedVm: EquipmentDetailSharedViewModel by activityViewModels()
+    private val sharedVm: SharedViewModel by activityViewModels()
 
     private lateinit var adapter: EquipmentLogListAdapter
     private lateinit var btnAddLog: ImageButton

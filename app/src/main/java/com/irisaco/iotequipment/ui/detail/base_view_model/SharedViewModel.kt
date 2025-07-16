@@ -1,18 +1,18 @@
-package com.irisaco.iotequipment.ui.detail
+package com.irisaco.iotequipment.ui.detail.base_view_model
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.irisaco.iotequipment.data.model.Records
 
-class EquipmentDetailSharedViewModel : ViewModel() {
+class SharedViewModel : ViewModel() {
 
     val equipmentId = MutableLiveData<Int>()
-
     val recordEquipmentId = MutableLiveData<Int?>()
-
     val recordToEdit = MutableLiveData<Records>()
 
-
+    private val _downloadAllTrigger = MutableLiveData<Unit>()
+    val downloadAllTrigger: LiveData<Unit> get() = _downloadAllTrigger
 
     fun setEquipmentId(id: Int) {
         if (equipmentId.value != id) {
@@ -22,5 +22,8 @@ class EquipmentDetailSharedViewModel : ViewModel() {
 
     fun setRecordEquipmentId(id: Int?) {
         recordEquipmentId.value = id
+    }
+    fun triggerDownloadAll() {
+        _downloadAllTrigger.value = Unit
     }
 }

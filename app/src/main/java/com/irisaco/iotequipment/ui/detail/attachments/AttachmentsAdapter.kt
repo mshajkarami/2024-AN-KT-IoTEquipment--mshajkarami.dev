@@ -1,7 +1,5 @@
 package com.irisaco.iotequipment.ui.detail.attachments
 
-import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,22 +7,31 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.irisaco.iotequipment.R
 import com.irisaco.iotequipment.data.model.Document
-import com.irisaco.iotequipment.utils.FileDownloader
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.io.File
 class AttachmentsAdapter(
     private val onDownloadClicked: (Document, (File?) -> Unit) -> Unit
-) : ListAdapter<Document, AttachmentsAdapter.AttachmentViewHolder>(DiffCallback()) {
+) : RecyclerView.Adapter<AttachmentsAdapter.AttachmentViewHolder>() {
+
+    private val items = mutableListOf<Document>()
+    fun getItems(): List<Document> = items.toList()
+
+    fun submitDocuments(documents: List<Document>) {
+        items.clear()
+        items.addAll(documents)
+        notifyDataSetChanged()
+    }
+
+    fun updateItem(document: Document) {
+        val index = items.indexOfFirst { it.id == document.id }
+        if (index != -1) {
+            items[index] = document
+            notifyItemChanged(index, "isDownloadingChanged")
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AttachmentViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -33,25 +40,30 @@ class AttachmentsAdapter(
     }
 
     override fun onBindViewHolder(holder: AttachmentViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(items[position])
     }
 
-    fun updateItem(document: Document) {
-        val index = currentList.indexOfFirst { it.id == document.id }
-        if (index != -1) {
-            val newList = currentList.toMutableList()
-            newList[index] = document
-            submitList(newList)
+    override fun onBindViewHolder(
+        holder: AttachmentViewHolder,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
+        if (payloads.isEmpty()) {
+            holder.bind(items[position])
+        } else {
+            holder.partialBind(items[position], payloads)
         }
     }
 
-    inner class AttachmentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val txtName: TextView = itemView.findViewById(R.id.txt_attachment)
-        private val icAttachment: ImageView = itemView.findViewById(R.id.ic_attachment)
-        private val downloadIcon: ImageView = itemView.findViewById(R.id.downloadIcon)
-        private val progressBar: ProgressBar = itemView.findViewById(R.id.download_progressBar)
+    override fun getItemCount(): Int = items.size
 
-        @SuppressLint("UseKtx")
+    @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+    inner class AttachmentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val txtName: TextView = itemView.findViewById(R.id.txt_attachment)
+        val icAttachment: ImageView = itemView.findViewById(R.id.ic_attachment)
+        val downloadIcon: ImageView = itemView.findViewById(R.id.downloadIcon)
+        val progressBar: ProgressBar = itemView.findViewById(R.id.download_progressBar)
+
         fun bind(document: Document) {
             val context = itemView.context
             txtName.text = context.getString(R.string.label_device_attachment, document.fileName)
@@ -65,44 +77,68 @@ class AttachmentsAdapter(
 
             val file = File(context.getExternalFilesDir(null), document.fileName)
 
-            if (file.exists()) {
-                downloadIcon.setColorFilter(ContextCompat.getColor(context, R.color.icon_downloaded))
-                progressBar.visibility = View.GONE
-                itemView.alpha = 1f
+            val iconColor = if (file.exists())
+                R.color.icon_downloaded
+            else
+                R.color.md_theme_background
+
+            downloadIcon.setColorFilter(ContextCompat.getColor(context, iconColor))
+
+            if (document.isDownloading) {
+                showProgress()
             } else {
-                downloadIcon.setColorFilter(ContextCompat.getColor(context, R.color.md_theme_background))
-                progressBar.visibility = View.GONE
-                itemView.alpha = 1f
+                hideProgress()
             }
 
             itemView.setOnClickListener {
-                if (progressBar.visibility == View.VISIBLE) return@setOnClickListener
+                if (document.isDownloading) return@setOnClickListener
 
-                progressBar.visibility = View.VISIBLE
-                itemView.alpha = 0.5f
+                document.isDownloading = true
+                updateItem(document)
 
                 onDownloadClicked(document) { downloadedFile ->
-                    progressBar.visibility = View.GONE
-                    itemView.alpha = 1.0f
+                    document.isDownloading = false
+                    updateItem(document)
 
                     if (downloadedFile != null) {
-                        updateItem(document)
+                        downloadIcon.setColorFilter(ContextCompat.getColor(context, R.color.icon_downloaded))
                     } else {
-                        Toast.makeText(context, "دانلود ناموفق بود ❌", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, context.getString(R.string.download_failed), Toast.LENGTH_SHORT).show()
                     }
                 }
             }
         }
-    }
 
-    class DiffCallback : DiffUtil.ItemCallback<Document>() {
-        override fun areItemsTheSame(oldItem: Document, newItem: Document): Boolean {
-            return oldItem.id == newItem.id
+        fun partialBind(document: Document, payloads: List<Any>) {
+            if (payloads.contains("isDownloadingChanged")) {
+                if (document.isDownloading) {
+                    showProgress()
+                } else {
+                    hideProgress()
+                }
+            }
         }
 
-        override fun areContentsTheSame(oldItem: Document, newItem: Document): Boolean {
-            return oldItem == newItem
+        private fun showProgress() {
+            progressBar.apply {
+                alpha = 0f
+                visibility = View.VISIBLE
+                animate().alpha(1f).setDuration(300).start()
+            }
+            itemView.animate().alpha(0.5f).setDuration(300).start()
+            downloadIcon.animate().alpha(0f).setDuration(300).start()
+        }
+
+        private fun hideProgress() {
+            progressBar.animate()
+                .alpha(0f)
+                .setDuration(300)
+                .withEndAction {
+                    progressBar.visibility = View.GONE
+                }
+                .start()
+            itemView.animate().alpha(1f).setDuration(300).start()
+            downloadIcon.animate().alpha(1f).setDuration(300).start()
         }
     }
 }
-

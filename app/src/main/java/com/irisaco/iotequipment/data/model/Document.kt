@@ -4,7 +4,6 @@ import com.google.gson.annotations.SerializedName
 
 
 data class Document (
-
   @SerializedName("id"                        ) var id                        : Int?                              = null,
   @SerializedName("userCreatorId"             ) var userCreatorId             : Int?                              = null,
   @SerializedName("fileName"                  ) var fileName                  : String?                           = null,
@@ -18,6 +17,7 @@ data class Document (
   @SerializedName("equipmentVersionDocuments" ) var equipmentVersionDocuments : ArrayList<String>                 = arrayListOf(),
   @SerializedName("equipmentDocuments"        ) var equipmentDocuments        : ArrayList<String>                 = arrayListOf(),
   @SerializedName("recordDocuments"           ) var recordDocuments           : ArrayList<String>                 = arrayListOf(),
-  @SerializedName("user"                      ) var user                      : User?                             = User()
+  @SerializedName("user"                      ) var user                      : User?                             = User(),
+  var isDownloading: Boolean = false
 
 )
