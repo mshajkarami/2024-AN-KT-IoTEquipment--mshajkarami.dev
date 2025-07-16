@@ -89,4 +89,6 @@
     <string name="download_all_failed">دانلود همه فایل‌ها ناموفق بود ❌</string>
     <string name="download_failed">دانلود ناموفق بود ❌</string>
     <string name="download_summary">%1$d فایل با موفقیت دانلود شد، %2$d ناموفق بودند ⚠️</string>
+    <string name="share_failed_no_files">اشتراک گذاری ناموفق بود</string>
+    <string name="share_with">اشتراک گذاری با</string>
 </resources>

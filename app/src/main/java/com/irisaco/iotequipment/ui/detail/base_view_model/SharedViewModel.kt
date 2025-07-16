@@ -10,9 +10,12 @@ class SharedViewModel : ViewModel() {
     val equipmentId = MutableLiveData<Int>()
     val recordEquipmentId = MutableLiveData<Int?>()
     val recordToEdit = MutableLiveData<Records>()
-
     private val _downloadAllTrigger = MutableLiveData<Unit>()
     val downloadAllTrigger: LiveData<Unit> get() = _downloadAllTrigger
+    private val _triggerRefresh = MutableLiveData<Unit>()
+    val triggerRefresh: LiveData<Unit> get() = _triggerRefresh
+    private val _triggerShareAll = MutableLiveData<Unit>()
+    val triggerShareAll: LiveData<Unit> get() = _triggerShareAll
 
     fun setEquipmentId(id: Int) {
         if (equipmentId.value != id) {
@@ -26,4 +29,14 @@ class SharedViewModel : ViewModel() {
     fun triggerDownloadAll() {
         _downloadAllTrigger.value = Unit
     }
+
+
+    fun triggerRefresh() {
+        _triggerRefresh.value = Unit
+    }
+
+    fun triggerShareAll() {
+        _triggerShareAll.value = Unit
+    }
+
 }

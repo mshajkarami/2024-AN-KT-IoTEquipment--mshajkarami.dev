@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
     internal var equipmentIdUnique: String? = null
     private lateinit var binding: ActivityMainBinding
 
-    private val shareViewModel : SharedViewModel by viewModels ()
+    private val shareViewModel: SharedViewModel by viewModels()
     internal var isConnectedToInternet: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -221,8 +221,15 @@ class MainActivity : AppCompatActivity() {
                 R.id.item_download_all -> {
                     shareViewModel.triggerDownloadAll()
                 }
-                R.id.item_refresh -> {}
-                R.id.item_share_all -> {}
+
+                R.id.item_refresh -> {
+                    shareViewModel.triggerRefresh()
+
+                }
+
+                R.id.item_share_all -> {
+                    shareViewModel.triggerShareAll()
+                }
             }
             true
         }
