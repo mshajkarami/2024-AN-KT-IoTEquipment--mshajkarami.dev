@@ -90,5 +90,3 @@ class AuthFragment : Fragment() {
         }
     }
 }
-
-
