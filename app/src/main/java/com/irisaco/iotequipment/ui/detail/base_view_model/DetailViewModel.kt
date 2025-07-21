@@ -18,6 +18,7 @@ class DetailViewModel @AssistedInject constructor(
     @Assisted private val equipmentId: Int
 ) : ViewModel() {
     val title = MutableLiveData<String>()
+    val img = MutableLiveData<String>()
     val version = MutableLiveData<String>()
     val type = MutableLiveData<String>()
     val description = MutableLiveData<String>()
@@ -48,6 +49,7 @@ class DetailViewModel @AssistedInject constructor(
             item?.let {
                 title.postValue(it.title ?: "-")
                 version.postValue(it.version?.version ?: "-")
+                img.postValue(it.imageUrl?: "")
                 type.postValue(it.type?.name ?: "-")
                 description.postValue(it.description ?: "-")
             }

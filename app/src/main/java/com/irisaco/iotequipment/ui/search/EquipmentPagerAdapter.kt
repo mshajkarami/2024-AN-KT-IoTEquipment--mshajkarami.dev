@@ -6,9 +6,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.airbnb.lottie.animation.content.Content
+import coil.load
 import com.irisaco.iotequipment.R
-import com.irisaco.iotequipment.data.model.Equipment
 import com.irisaco.iotequipment.data.model.Items
 
 class EquipmentPagerAdapter(
@@ -22,16 +21,30 @@ class EquipmentPagerAdapter(
         val id = itemView.findViewById<TextView>(R.id.txt_id)
         val img = itemView.findViewById<ImageView>(R.id.img)
 
-        fun bind(equipment : Items) {
+        fun bind(equipment: Items) {
             val context = itemView.context
             val equipmentName = equipment.title
-            title.text = context.getString(R.string.label_device_name,equipmentName)
             val equipmentUniqueId = equipment.equipmentUniqueId
-            id.text = context.getString(R.string.label_device_unique_id,equipmentUniqueId)
+            val imageUrl = equipment.imageUrl
+
+            title.text = context.getString(R.string.label_device_name, equipmentName)
+            id.text = context.getString(R.string.label_device_unique_id, equipmentUniqueId)
+
+            if (imageUrl.isNullOrEmpty()) {
+                img.setImageResource(R.drawable.der_img_equipment)
+            } else {
+                img.load(imageUrl) {
+                    crossfade(true)
+                    placeholder(R.drawable.placeholder)
+                    error(R.drawable.der_img_equipment)
+                }
+            }
+
             itemView.setOnClickListener {
                 onItemClick(equipment.id ?: 0)
             }
         }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EquipmentViewHolder {

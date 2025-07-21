@@ -19,6 +19,6 @@ data class Items (
   @SerializedName("documents"               ) var documents               : ArrayList<Document>    = arrayListOf(),
   @SerializedName("records"                 ) var records                 : ArrayList<Records>      = arrayListOf(),
   @SerializedName("equipmentLOM"            ) var equipmentLOM            : ArrayList<EquipmentLOM> = arrayListOf(),
-  @SerializedName("equipmentConfigurations" ) var equipmentConfigurations : String?                 = null
-
+  @SerializedName("equipmentConfigurations" ) var equipmentConfigurations : String?                 = null,
+  @SerializedName("imageUrl" ) var imageUrl : String?                 = null
 )

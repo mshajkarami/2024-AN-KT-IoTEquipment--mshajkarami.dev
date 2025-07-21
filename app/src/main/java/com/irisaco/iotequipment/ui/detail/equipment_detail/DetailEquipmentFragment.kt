@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import coil.load
 import com.irisaco.iotequipment.R
 import com.irisaco.iotequipment.databinding.FragmentEquipmentDetailBinding
 import com.irisaco.iotequipment.ui.detail.base_view_model.DetailViewModel
@@ -65,6 +66,19 @@ class DetailEquipmentFragment : Fragment() {
                 viewModel.version.value = equipment.version?.version
                 viewModel.type.value = equipment.type?.name ?: ""
                 viewModel.description.value = equipment.description
+
+                viewModel.img.observe(viewLifecycleOwner) { imageUrl ->
+                    if (imageUrl.isNullOrEmpty()) {
+                        binding.imgEquipment.setImageResource(R.drawable.der_img_equipment)
+                    } else {
+                        binding.imgEquipment.load(imageUrl) {
+                            crossfade(true)
+                            placeholder(R.drawable.placeholder)
+                            error(R.drawable.der_img_equipment)
+                        }
+                    }
+                }
+
 
                 binding.btnAttachment.isEnabled = true
                 binding.btnAttachment.visibility = View.VISIBLE

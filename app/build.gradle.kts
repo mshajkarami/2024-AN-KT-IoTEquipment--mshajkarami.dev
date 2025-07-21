@@ -100,4 +100,6 @@ dependencies {
     // dependency injection
     implementation("com.google.dagger:hilt-android:2.56.2")
     ksp("com.google.dagger:hilt-android-compiler:2.56.2")
+    // Coil
+    implementation("io.coil-kt:coil:2.5.0")
 }
