@@ -72,12 +72,20 @@
     <!-- ⚙️ Settings -->
     <string name="settings_language_btn">Language</string>
     <string name="settings_language_fa">Persian</string>
+    <string name="settings_language_en">English</string>
     <string name="settings_theme_btn">Theme</string>
     <string name="settings_theme_light">Light</string>
     <string name="settings_theme_dark">Dark</string>
     <string name="settings_preferences">Preferences</string>
     <string name="settings_account">Account</string>
+    <string name="settings_help">Help</string>
     <string name="settings_notifications">Notifications and Sounds</string>
+    <string name="user_trial">Trial user</string>
+    <string name="setting_select_language">Language selection</string>
+    <string name="setting_email">email :</string>
+    <string name="setting_display_name">Display Name :</string>
+
+
 
     <!-- 📌 Tabs -->
     <string name="tab_description">Description</string>

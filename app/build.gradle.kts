@@ -102,4 +102,7 @@ dependencies {
     ksp("com.google.dagger:hilt-android-compiler:2.56.2")
     // Coil
     implementation("io.coil-kt:coil:2.5.0")
+    // Datastore
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+
 }

@@ -15,10 +15,56 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/settings_account"
-            android:textDirection="ltr"
             android:layout_gravity="start"
             />
-        <!-- Password -->
+        <!-- Email -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingVertical="8dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_email" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"
+                android:text="@string/setting_email"
+                android:textDirection="locale"
+                android:gravity="start"
+                />
+
+        </LinearLayout>
+        <!-- Display Name -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingVertical="8dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_user" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"
+                android:text="@string/setting_display_name"
+                android:textDirection="locale"
+                android:gravity="start"
+                />
+
+        </LinearLayout>
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -36,7 +82,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_weight="1"
                 android:text="@string/auth_password"
-                android:textDirection="ltr"
+                android:textDirection="locale"
                 android:gravity="start"
                 />
 
@@ -46,92 +92,9 @@
                 android:src="@drawable/ic_back"
                 android:scaleX="-1"
                 />
-
         </LinearLayout>
-        <!-- Support -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:paddingVertical="8dp">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_help" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_weight="1"
-                android:text="@string/action_support"
-                android:textDirection="ltr"
-                android:gravity="start"
-                />
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_back"
-                android:scaleX="-1"
-                />
-
-        </LinearLayout>
-        <!-- Terms -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:paddingVertical="8dp">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_policy" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_weight="1"
-                android:text="@string/action_privacy"
-                android:textDirection="ltr"
-                android:gravity="start"
-                />
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_back"
-                android:scaleX="-1"
-                />
-
-        </LinearLayout>
-        <!-- Logout -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:paddingVertical="8dp">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_logout" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:textColor="@color/md_theme_errorContainer_mediumContrast"
-                android:layout_weight="1"
-                android:text="@string/auth_logout"
-                android:textDirection="ltr"
-                android:gravity="start"
-                />
 
 
-        </LinearLayout>
+
     </LinearLayout>
 </androidx.cardview.widget.CardView>

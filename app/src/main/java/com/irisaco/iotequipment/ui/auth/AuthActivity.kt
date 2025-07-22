@@ -1,5 +1,6 @@
 package com.irisaco.iotequipment.ui.auth
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -7,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.irisaco.iotequipment.R
+import com.irisaco.iotequipment.utils.LanguageUtils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -24,5 +26,13 @@ class AuthActivity : AppCompatActivity() {
             insets
         }
     }
+
+    override fun attachBaseContext(newBase: Context) {
+        val lang = newBase.getSharedPreferences("app_settings", Context.MODE_PRIVATE)
+            .getString("language", "fa") ?: "fa"
+        val contextWithLocale = LanguageUtils.setLocale(newBase, lang)
+        super.attachBaseContext(contextWithLocale)
+    }
+
 
 }

@@ -73,12 +73,19 @@
     <!-- ⚙️ Settings -->
     <string name="settings_language_btn">زبان</string>
     <string name="settings_language_fa">فارسی</string>
+    <string name="settings_language_en">انگلیسی</string>
     <string name="settings_theme_btn">تم</string>
     <string name="settings_theme_light">روشن</string>
     <string name="settings_theme_dark">تاریک</string>
     <string name="settings_preferences">ترجیحات</string>
+    <string name="settings_help">کمک</string>
     <string name="settings_account">حساب کاربری</string>
     <string name="settings_notifications">اعلان‌ها و صداها</string>
+    <string name="user_trial">کاربر آزمایشی</string>
+    <string name="setting_select_language">انتخاب زبان</string>
+    <string name="setting_email">ایمیل :</string>
+    <string name="setting_display_name">نام نمایشی :</string>
+
 
     <!-- 📌 Tabs -->
     <string name="tab_description">توضیحات</string>

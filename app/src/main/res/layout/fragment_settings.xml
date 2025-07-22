@@ -15,15 +15,18 @@
 
         <include layout="@layout/item_profile" />
 
-        <View android:layout_width="match_parent"
-            android:layout_height="5dp" />
-
-        <include layout="@layout/item_preferences" />
-
-        <View android:layout_width="match_parent"
-            android:layout_height="5dp" />
-
         <include layout="@layout/item_account" />
 
+        <View android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <include layout="@layout/item_preferences"
+            android:id="@+id/include_preferences"
+
+            />
+
+        <View android:layout_width="match_parent"
+            android:layout_height="10dp" />
+        <include layout="@layout/item_help" />
     </LinearLayout>
 </ScrollView>

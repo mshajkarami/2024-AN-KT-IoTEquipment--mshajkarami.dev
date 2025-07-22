@@ -3,6 +3,7 @@ package com.irisaco.iotequipment
 import android.content.Context
 import android.os.Bundle
 import android.view.ContextThemeWrapper
+import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
 import android.widget.PopupMenu
@@ -24,6 +25,7 @@ import androidx.navigation.ui.NavigationUI
 import com.irisaco.iotequipment.databinding.ActivityMainBinding
 import com.irisaco.iotequipment.ui.components.NoInternetBottomSheet
 import com.irisaco.iotequipment.ui.detail.base_view_model.SharedViewModel
+import com.irisaco.iotequipment.utils.LanguageUtils
 import com.irisaco.iotequipment.utils.NetworkConnectionLiveData
 import com.irisaco.iotequipment.utils.NetworkStatusListener
 import dagger.hilt.android.AndroidEntryPoint
@@ -53,6 +55,13 @@ class MainActivity : AppCompatActivity() {
         observeNetwork()
 
         readIntentExtras()
+    }
+
+    override fun attachBaseContext(newBase: Context) {
+        val lang = newBase.getSharedPreferences("app_settings", Context.MODE_PRIVATE)
+            .getString("language", "fa") ?: "fa"
+        val contextWithLocale = LanguageUtils.setLocale(newBase, lang)
+        super.attachBaseContext(contextWithLocale)
     }
 
     private fun setupInsets() {
@@ -121,7 +130,7 @@ class MainActivity : AppCompatActivity() {
 
                 else -> {
                     val handled = NavigationUI.onNavDestinationSelected(menuItem, navController)
-                    if (handled) binding.drawerLayout.closeDrawer(GravityCompat.START)
+                    if (handled) binding.drawerLayout.closeDrawer(Gravity.LEFT)
                     handled
                 }
             }
@@ -150,7 +159,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun configureHomeToolbar() {
         setupToolbarNavigation(R.drawable.ic_menu) {
-            binding.drawerLayout.openDrawer(GravityCompat.START)
+            binding.drawerLayout.openDrawer(Gravity.LEFT)
         }
         setDefaultToolbarIcon()
         setToolbarTitle(getString(R.string.toolbar_default_text))
