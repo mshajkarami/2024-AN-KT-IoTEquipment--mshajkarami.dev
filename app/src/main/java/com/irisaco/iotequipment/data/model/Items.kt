@@ -15,10 +15,10 @@ data class Items (
   @SerializedName("creationTime"            ) var creationTime            : String?                 = null,
   @SerializedName("lastModifyTime"          ) var lastModifyTime          : String?                 = null,
   @SerializedName("version"                 ) var version                 : Version?                = Version(),
-  @SerializedName("type"                    ) var type                    : Type?                   = Type(),
+  @SerializedName("type"                    ) var equipmentType                    : EquipmentType?                   = EquipmentType(),
   @SerializedName("documents"               ) var documents               : ArrayList<Document>    = arrayListOf(),
   @SerializedName("records"                 ) var records                 : ArrayList<Records>      = arrayListOf(),
   @SerializedName("equipmentLOM"            ) var equipmentLOM            : ArrayList<EquipmentLOM> = arrayListOf(),
-  @SerializedName("equipmentConfigurations" ) var equipmentConfigurations : String?                 = null,
+  @SerializedName("equipmentConfigurations" ) var equipmentConfigurations : List<EquipmentConfiguration>?                 = null,
   @SerializedName("imageUrl" ) var imageUrl : String?                 = null
 )

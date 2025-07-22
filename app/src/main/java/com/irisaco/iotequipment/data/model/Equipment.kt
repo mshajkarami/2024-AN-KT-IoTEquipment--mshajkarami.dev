@@ -21,7 +21,7 @@ data class Equipment (
   @SerializedName("equipmentConfigurations"  ) var equipmentConfigurations  : String?                             = null,
   @SerializedName("equipmentLoms"            ) var equipmentLoms            : ArrayList<String>                   = arrayListOf(),
   @SerializedName("user"                     ) var user                     : User?                               = User(),
-  @SerializedName("configurationsDictionary" ) var configurationsDictionary : ArrayList<ConfigurationsDictionary> = arrayListOf(),
+  @SerializedName("configurationsDictionary" ) var configurationsDictionary : ArrayList<EquipmentConfiguration> = arrayListOf(),
   @SerializedName("equipmentUniqueId"        ) var equipmentUniqueId        : String?                             = null
 
 )

@@ -26,7 +26,7 @@ class AuthRepository @Inject constructor(
         expiresInSec: Long
     ) {
         val username = decodeUsernameFromToken(accessToken)
-        val role = extractUserRoleFromToken(accessToken, clientId = "iem-dev")
+        val role = extractUserRoleFromToken(accessToken, clientId = "iem")
         if (username != null) {
             val expiresAt = System.currentTimeMillis() + expiresInSec * 1000
             val account = AccountEntity(
@@ -65,7 +65,7 @@ class AuthRepository @Inject constructor(
         return try {
             val response = authService.refreshToken(
                 grantType = "refresh_token",
-                clientId = "iem-dev",
+                clientId = "iem",
                 refreshToken = account.refreshToken
             )
 
@@ -136,8 +136,6 @@ class AuthRepository @Inject constructor(
             UserRole.UNKNOWN
         }
     }
-
-
     suspend fun getCachedOrDbAccount(): AccountEntity? {
         if (cachedAccount != null) return cachedAccount
 
@@ -145,7 +143,4 @@ class AuthRepository @Inject constructor(
         cachedAccount = account
         return account
     }
-
-
 }
-

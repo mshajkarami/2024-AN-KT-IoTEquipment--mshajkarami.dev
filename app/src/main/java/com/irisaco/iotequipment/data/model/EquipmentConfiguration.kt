@@ -3,7 +3,7 @@ package com.irisaco.iotequipment.data.model
 import com.google.gson.annotations.SerializedName
 
 
-data class ConfigurationsDictionary (
+data class EquipmentConfiguration (
 
   @SerializedName("additionalProp1" ) var additionalProp1 : String? = null,
   @SerializedName("additionalProp2" ) var additionalProp2 : String? = null,

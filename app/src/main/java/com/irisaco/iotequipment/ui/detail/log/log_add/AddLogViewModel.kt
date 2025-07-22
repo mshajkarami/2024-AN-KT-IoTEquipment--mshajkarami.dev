@@ -20,35 +20,32 @@ class AddLogViewModel @Inject constructor(
 
     private val _addRecordResult = MutableLiveData<Result<Boolean>>()
     val addRecordResult: LiveData<Result<Boolean>> = _addRecordResult
-
     private val _updateResult = MutableLiveData<Result<Boolean>>()
     val updateResult: LiveData<Result<Boolean>> = _updateResult
-
     private val _uploadState = MutableLiveData<Result<Boolean>>()
     val uploadState: LiveData<Result<Boolean>> = _uploadState
-    fun addRecord(equipmentId: Int, record: Records) {
+
+    fun addRecord(record: Records) {
         viewModelScope.launch {
             try {
-                repository.addRecord(equipmentId, record)
+                repository.addRecord(record)
                 _addRecordResult.postValue(Result.success(true))
             } catch (e: Exception) {
                 _addRecordResult.postValue(Result.failure(e))
             }
         }
     }
-
-    fun updateRecord(equipmentId: Int, recordId: Int, updatedRecord: Records) {
+    fun updateRecord(updatedRecord: Records) {
         viewModelScope.launch {
             try {
-                Log.d("AddLogViewModel", "Sending update request for recordId=$recordId")
-                repository.updateRecord(equipmentId, recordId, updatedRecord)
+                Log.d("AddLogViewModel", "Sending update request for recordId=${updatedRecord.id}")
+                repository.updateRecord(updatedRecord)
                 _updateResult.postValue(Result.success(true))
             } catch (e: Exception) {
                 _updateResult.postValue(Result.failure(e))
             }
         }
     }
-
     fun uploadDocument(equipmentId: Int, recordId: Int?, file: File) {
         viewModelScope.launch {
             try {

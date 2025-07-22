@@ -67,7 +67,6 @@ class SearchViewModel @Inject constructor(
             }
         }
     }
-
     fun manualRefresh() {
         if (!isSearching) {
             viewModelScope.launch {
@@ -84,20 +83,16 @@ class SearchViewModel @Inject constructor(
             }
         }
     }
-
-
     fun stopAutoRefresh() {
         autoRefreshJob?.cancel()
         autoRefreshJob = null
     }
-
     fun clearSearchAndResumeAutoRefresh() {
         isSearching = false
         stopAutoRefresh()
         loadAllEquipments()
         startAutoRefresh()
     }
-
     private fun loadAllEquipments() {
         viewModelScope.launch {
             _initialLoading.value = true
@@ -135,8 +130,3 @@ class SearchViewModel @Inject constructor(
     }
 
 }
-
-
-
-
-

@@ -4,11 +4,8 @@ import com.google.gson.annotations.SerializedName
 
 
 data class Data (
-
-  @SerializedName("isSuccess" ) var isSuccess : Boolean? = null,
-  @SerializedName("isFailure" ) var isFailure : Boolean? = null,
-  @SerializedName("status"    ) var status    : Int?     = null,
-  @SerializedName("value"     ) var value     : Value?   = Value(),
-  @SerializedName("message"   ) var message   : Message? = Message()
-
+  @SerializedName("currentPage" ) var currentPage : Int? = null,
+  @SerializedName("totalPages" ) var totalPages : Int? = null,
+  @SerializedName("totalCount" ) var totalCount : Int? = null,
+  @SerializedName("items"       ) var items       : ArrayList<Items> = arrayListOf()
 )

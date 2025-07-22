@@ -10,25 +10,24 @@ import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.POST
-import retrofit2.http.PUT
 import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface EquipmentApiService {
-    @GET("equipment")
+    @GET("api/Equipment/GetAll")
     suspend fun getEquipment(): Response<RootResponse>
 
-    @GET("equipment/{id}")
+    @GET("api/Equipment/{id}")
     suspend fun getEquipmentById(@Path("id") id: Int): Response<Items>
 
-    @GET("equipment/search")
+    @GET("api/Equipment/search")
     suspend fun searchEquipment(
         @Query("q") query: String,
         @Query("equipmentIdOnly") equipmentIdOnly: Boolean = false
     ): Response<List<Items>>
 
-    @POST("equipment/{id}/records")
+    @POST("api/Equipment/{id}/records")
     suspend fun addRecorde(@Path("id") id: Int,@Body record: Records): Response<Records>
 
     @DELETE("equipment/{equipmentId}/records/{recordId}")
@@ -37,12 +36,11 @@ interface EquipmentApiService {
         @Path("recordId") recordId: Int
     ): Response<Unit>
 
-    @PUT("equipment/{equipmentId}/records/{recordId}")
-    suspend fun updateRecord(
-        @Path("equipmentId") equipmentId: Int,
-        @Path("recordId") recordId: Int,
-        @Body updatedRecord: Records
+    @POST("api/Record/CreateOrUpdate")
+    suspend fun addOrUpdateRecord(
+        @Body record: Records
     ): Response<Records>
+
 
     @Multipart
     @POST("equipment/{equipmentId}/records/{recordId}/upload")

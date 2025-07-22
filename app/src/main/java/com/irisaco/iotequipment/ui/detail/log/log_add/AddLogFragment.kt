@@ -22,7 +22,6 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.irisaco.iotequipment.MainActivity
 import com.irisaco.iotequipment.R
 import com.irisaco.iotequipment.data.model.Records
-
 import com.irisaco.iotequipment.databinding.FragmentAddLogBinding
 import com.irisaco.iotequipment.ui.detail.base_view_model.SharedViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -103,12 +102,12 @@ class AddLogFragment : Fragment() {
             binding.etNewLogDate.setText(it.creationTime?.substring(0, 10))
             binding.btnAddRecorde.text = "ویرایش لاگ"
             binding.btnAddRecorde.setOnClickListener {
-                val updatedRecord = createRecord().copy(id = recordToEdit.id ?: return@setOnClickListener)
-                viewModel.updateRecord(equipmentId, recordToEdit.id!!, updatedRecord)
+                val updatedRecord = createRecord(equipmentId).copy(id = it.id ?: 0)
+                viewModel.updateRecord(updatedRecord)
             }
         } ?: run {
             binding.btnAddRecorde.setOnClickListener {
-                viewModel.addRecord(equipmentId, createRecord())
+                viewModel.addRecord(createRecord(equipmentId))
             }
         }
 
@@ -116,6 +115,7 @@ class AddLogFragment : Fragment() {
             pickFileLauncher.launch("*/*")
         }
     }
+
 
     private fun uriToFile(context: Context, uri: Uri): File? {
         return try {
@@ -201,19 +201,22 @@ class AddLogFragment : Fragment() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun createRecord(): Records {
+    private fun createRecord(equipmentId: Int): Records {
         val description = binding.etNewLogDes.text.toString().trim()
         val date = binding.etNewLogDate.text.toString().trim()
         val creationTimeIso = convertToIso8601(date)
         val currentTime = getCurrentIsoDateTime()
 
         return Records(
+            id = 0,
+            equipmentId = equipmentId,
             description = description,
             creationTime = creationTimeIso,
             lastModifyTime = currentTime,
             documents = arrayListOf()
         )
     }
+
 
     private fun getCurrentIsoDateTime(): String {
         val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US)

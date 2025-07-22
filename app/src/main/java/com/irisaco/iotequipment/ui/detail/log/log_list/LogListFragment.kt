@@ -78,7 +78,7 @@ class LogListFragment : Fragment() {
 
     private fun setupObservers() {
         roleViewModel.canAddOrEditLog.observe(viewLifecycleOwner) { allowed ->
-            btnAddLog.isVisible = allowed
+//            btnAddLog.isVisible = allowed
         }
 
         viewModel.equipmentRecords.observe(viewLifecycleOwner) { records ->

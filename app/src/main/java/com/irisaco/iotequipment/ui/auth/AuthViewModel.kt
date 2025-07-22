@@ -1,11 +1,9 @@
 package com.irisaco.iotequipment.ui.auth
 
-import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.irisaco.iotequipment.data.repository.AuthRepository
 import kotlinx.coroutines.launch
@@ -24,6 +22,9 @@ import com.irisaco.iotequipment.utils.UnsafeConnectionBuilder
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import net.openid.appauth.AppAuthConfiguration
+import net.openid.appauth.ClientSecretBasic
+import net.openid.appauth.GrantTypeValues
+import net.openid.appauth.TokenRequest
 import javax.inject.Inject
 
 @HiltViewModel
@@ -43,15 +44,15 @@ class AuthViewModel @Inject constructor(
 
     fun startLoginIntent(): Intent {
         val config = AuthorizationServiceConfiguration(
-            "http://192.168.1.100:8080/realms/dev/protocol/openid-connect/auth".toUri(),
-            "http://192.168.1.100:8080/realms/dev/protocol/openid-connect/token".toUri()
+            "https://account.irisaprime.ir/realms/dev/protocol/openid-connect/auth".toUri(),
+            "https://account.irisaprime.ir/realms/dev/protocol/openid-connect/token".toUri()
         )
 
         val authRequest = AuthorizationRequest.Builder(
             config,
-            "iem-dev",
+            "iem",
             ResponseTypeValues.CODE,
-            "com.irisaco.iotequipment:/oauth2redirect".toUri()
+            "com.irisaco.iotequipment://oauth2redirect".toUri()
         ).setScope("email profile")
             .build()
 
@@ -64,8 +65,19 @@ class AuthViewModel @Inject constructor(
         val exception = AuthorizationException.fromIntent(intent)
 
         if (response != null) {
-            val request = response.createTokenExchangeRequest()
-            authService.performTokenRequest(request) { tokenResponse, ex ->
+            val request = TokenRequest.Builder(
+                response.request.configuration,
+                response.request.clientId
+            )
+                .setGrantType(GrantTypeValues.AUTHORIZATION_CODE)
+                .setAuthorizationCode(response.authorizationCode)
+                .setRedirectUri(response.request.redirectUri)
+                .setCodeVerifier(response.request.codeVerifier)
+                .build()
+
+            val clientAuthentication = ClientSecretBasic("GN2HvCkONDIQOtgOm4pfTepqFv34fJL3")
+
+            authService.performTokenRequest(request, clientAuthentication) { tokenResponse, ex ->
                 viewModelScope.launch {
                     if (tokenResponse != null) {
                         val accessToken = tokenResponse.accessToken ?: ""

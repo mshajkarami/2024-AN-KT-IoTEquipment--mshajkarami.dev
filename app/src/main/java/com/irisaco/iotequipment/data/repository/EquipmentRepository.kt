@@ -22,38 +22,28 @@ import javax.inject.Singleton
 class EquipmentRepository @Inject constructor(
     private val apiService: EquipmentApiService,
 ) {
-    suspend fun getEquipments(): List<Items> {
-        return getEquipmentsFromRemote()
-    }
+    private var cachedItems: List<Items> = emptyList()
 
-    private suspend fun getEquipmentsFromRemote(): List<Items> = withContext(Dispatchers.IO) {
+    suspend fun getEquipments(): List<Items> = withContext(Dispatchers.IO) {
         try {
             val response = apiService.getEquipment()
             if (response.isSuccessful) {
-                response.body()?.data?.value?.items ?: emptyList()
+                response.body()?.data?.items ?: emptyList()
             } else {
                 emptyList()
             }
         } catch (e: Exception) {
+            Log.e("Repository", "Error fetching equipment: ${e.message}", e)
             emptyList()
         }
     }
 
-    suspend fun getEquipmentById(id: Int): Items? = withContext(Dispatchers.IO) {
-        try {
-            val response = apiService.getEquipmentById(id)
-            if (response.isSuccessful) {
-                // TODO: if use server with complex Response need to fix
-                response.body()
-            } else {
-                Log.e("API_ERROR", "Code: ${response.code()}, Message: ${response.message()}")
-                null
-            }
-        } catch (e: Exception) {
-            Log.e("EXCEPTION", "Error getting equipment by ID", e)
-
-            null
+    suspend fun getEquipmentById(id: Int): Items? = withContext(Dispatchers.Default) {
+        if (cachedItems.isEmpty()) {
+            cachedItems = getEquipments()
         }
+
+        return@withContext cachedItems.find { it.id == id }
     }
 
     suspend fun getRecordsForEquipment(id: Int): List<Records> =
@@ -62,24 +52,21 @@ class EquipmentRepository @Inject constructor(
             equipment?.records ?: emptyList()
         }
 
-    suspend fun addRecord(equipmentId: Int, record: Records): Records =
-        withContext(Dispatchers.IO) {
-            try {
-                val response = apiService.addRecorde(equipmentId, record)
-                if (response.isSuccessful) {
-                    return@withContext response.body() ?: throw Exception("Empty response")
-                } else {
-                    throw Exception(
-                        "API Error: ${response.code()} ${
-                            response.errorBody()?.string()
-                        }"
-                    )
-                }
-            } catch (e: Exception) {
-                Log.e("API", "Add record failed", e)
-                throw e
+    suspend fun addRecord(record: Records): Records? = withContext(Dispatchers.IO) {
+        try {
+            val response = apiService.addOrUpdateRecord(record)
+            if (response.isSuccessful) {
+                response.body()
+            } else {
+                Log.e("API_ERROR", "Code: ${response.code()}, Message: ${response.message()}")
+                null
             }
+        } catch (e: Exception) {
+            Log.e("EXCEPTION", "Error adding record", e)
+            null
         }
+    }
+
 
     suspend fun getDocumentForEquipment(id: Int): List<Document> =
         withContext(Dispatchers.IO) {
@@ -92,27 +79,40 @@ class EquipmentRepository @Inject constructor(
 
         }
 
-    suspend fun search(query: String, onlyById: Boolean): List<Items> {
-        return try {
-            val response = apiService.searchEquipment(query, onlyById)
-            if (response.isSuccessful) {
-                response.body() ?: emptyList()
-            } else {
-                emptyList()
+    suspend fun search(query: String, onlyById: Boolean): List<Items> = withContext(Dispatchers.Default) {
+        val trimmedQuery = query.trim()
+        if (trimmedQuery.isEmpty()) return@withContext emptyList()
+
+        if (cachedItems.isEmpty()) {
+            cachedItems = getEquipments()
+        }
+
+        return@withContext if (onlyById) {
+            cachedItems.filter {
+                it.equipmentUniqueId?.contains(trimmedQuery, ignoreCase = true) == true
             }
-        } catch (e: Exception) {
+        } else {
             emptyList()
         }
     }
 
-    suspend fun updateRecord(equipmentId: Int, recordId: Int, record: Records) {
-        apiService.updateRecord(equipmentId, recordId, record)
+    suspend fun updateRecord(record: Records): Records = withContext(Dispatchers.IO) {
+        try {
+            val response = apiService.addOrUpdateRecord(record)
+            if (response.isSuccessful) {
+                response.body() ?: throw Exception("Empty response")
+            } else {
+                throw Exception("API Error: ${response.code()} ${response.errorBody()?.string()}")
+            }
+        } catch (e: Exception) {
+            Log.e("API", "Add record failed", e)
+            throw e
+        }
     }
 
     suspend fun deleteRecord(equipmentId: Int, recordId: Int) {
         apiService.deleteRecord(equipmentId, recordId)
     }
-
     suspend fun uploadRecordDocument(
         equipmentId: Int,
         recordId: Int?,

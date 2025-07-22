@@ -64,7 +64,7 @@ class DetailEquipmentFragment : Fragment() {
             if (equipment != null) {
                 viewModel.title.value = equipment.title
                 viewModel.version.value = equipment.version?.version
-                viewModel.type.value = equipment.type?.name ?: ""
+                viewModel.type.value = equipment.equipmentType?.name ?: ""
                 viewModel.description.value = equipment.description
 
                 viewModel.img.observe(viewLifecycleOwner) { imageUrl ->

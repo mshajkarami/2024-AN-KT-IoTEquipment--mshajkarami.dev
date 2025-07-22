@@ -16,7 +16,7 @@
     <string name="label_device_type">نوع: %1$s</string>
     <string name="label_device_date">تاریخ ایجاد: %1$s</string>
     <string name="label_device_attachment">نام فایل: %1$s</string>
-    <string name="label_device_unique_id">شناسه ‌تجهیز: %1$s</string>
+    <string name="label_device_unique_id">شناسه: %1$s</string>
     <!-- ⏳ Countdown -->
     <string name="txt_countdown_description">زمان باقیمانده تا پایان فرصت تغیرات :</string>
     <!-- 📝 Log Form -->

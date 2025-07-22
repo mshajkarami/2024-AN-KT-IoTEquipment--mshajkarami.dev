@@ -13,36 +13,34 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
         android:orientation="vertical"
-        android:padding="5dp">
+        android:padding="3dp">
 
         <TextView
             android:id="@+id/txt_id"
             android:layout_width="0dp"
             android:layout_height="30dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="15dp"
+            android:layout_marginEnd="5dp"
             android:textSize="16sp"
-            android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/card_img"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_name"
             tools:text="@string/label_device_unique_id" />
 
         <TextView
             android:id="@+id/txt_name"
             android:layout_width="0dp"
             android:layout_height="30dp"
-            android:layout_marginEnd="15dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="5dp"
             android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/card_img"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_id"
-            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="@string/label_device_name" />
 
         <com.google.android.material.card.MaterialCardView
@@ -61,6 +59,7 @@
                 android:contentDescription="@string/img_equipment"
                 android:scaleType="centerCrop" />
         </com.google.android.material.card.MaterialCardView>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

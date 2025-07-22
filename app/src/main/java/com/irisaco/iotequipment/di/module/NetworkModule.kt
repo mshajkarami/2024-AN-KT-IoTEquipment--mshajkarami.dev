@@ -22,6 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object NetworkModule {
     private const val BASE_URL_API = "http://192.168.1.100:8081/"
     private const val BASE_URL_AUTH = "http://192.168.1.100:8080/"
+    private const val URL_API = "http://37.32.10.23:32711/"
 
     @Provides
     @Singleton
@@ -47,7 +48,7 @@ object NetworkModule {
     @Singleton
     fun provideRetrofitApi(client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(BASE_URL_API)
+            .baseUrl(URL_API)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()

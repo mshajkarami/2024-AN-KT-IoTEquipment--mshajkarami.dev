@@ -50,7 +50,7 @@ class DetailViewModel @AssistedInject constructor(
                 title.postValue(it.title ?: "-")
                 version.postValue(it.version?.version ?: "-")
                 img.postValue(it.imageUrl?: "")
-                type.postValue(it.type?.name ?: "-")
+                type.postValue(it.equipmentType?.name ?: "-")
                 description.postValue(it.description ?: "-")
             }
         }

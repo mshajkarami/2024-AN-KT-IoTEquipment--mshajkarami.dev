@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class Records (
 
-  @SerializedName("id"             ) var id             : Int?                 = null,
+  @SerializedName("id"             ) var id             : Int?                 = 0,
   @SerializedName("equipmentId"    ) var equipmentId    : Int?                 = null,
   @SerializedName("userCreatorId"  ) var userCreatorId  : Int?                 = null,
   @SerializedName("description"    ) var description    : String?              = null,
@@ -13,5 +13,4 @@ data class Records (
   @SerializedName("lastModifyTime" ) var lastModifyTime : String?              = null,
   @SerializedName("documents"      ) var documents      : ArrayList<Document> = arrayListOf(),
   @SerializedName("user"           ) var user           : User?                = User()
-
 )
