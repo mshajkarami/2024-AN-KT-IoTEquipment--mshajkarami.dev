@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import coil.load
+import com.airbnb.lottie.LottieAnimationView
 import com.irisaco.iotequipment.R
 import com.irisaco.iotequipment.databinding.FragmentEquipmentDetailBinding
 import com.irisaco.iotequipment.ui.detail.base_view_model.DetailViewModel
@@ -53,7 +54,7 @@ class DetailEquipmentFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val skeleton = view.findViewById<View>(R.id.skeleton_layout)
+        val progressbar = view.findViewById<LottieAnimationView>(R.id.progressBar)
         val contentLayout = view.findViewById<View>(R.id.content_layout)
 
         binding.btnAttachment.isEnabled = false
@@ -83,12 +84,12 @@ class DetailEquipmentFragment : Fragment() {
                 binding.btnAttachment.isEnabled = true
                 binding.btnAttachment.visibility = View.VISIBLE
 
-                skeleton.visibility = View.GONE
+                progressbar.visibility = View.GONE
                 contentLayout.visibility = View.VISIBLE
             } else {
                 viewModel.title.value = requireContext().getString(R.string.equipment_not_found)
                 binding.btnAttachment.visibility = View.GONE
-                skeleton.visibility = View.GONE
+                progressbar.visibility = View.GONE
                 contentLayout.visibility = View.VISIBLE
             }
         }

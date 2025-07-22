@@ -1,5 +1,6 @@
 package com.irisaco.iotequipment.ui.search
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,18 +29,18 @@ class EquipmentPagerAdapter(
             val imageUrl = equipment.imageUrl
 
             title.text = context.getString(R.string.equipment_label_name, equipmentName)
-            id.text = equipmentUniqueId
+            id.text = context.getString(R.string.equipment_label_unique_id, equipmentUniqueId)
 
-            id.post {
-                val textWidth = id.paint.measureText(id.text.toString())
-                val viewWidth = id.width.toFloat()
-
-                if (textWidth > viewWidth) {
-                    id.isSelected = true
-                } else {
-                    id.isSelected = false
-                }
-            }
+//            id.post {
+//                val textWidth = id.paint.measureText(id.text.toString())
+//                val viewWidth = id.width.toFloat()
+//
+//                if (textWidth > viewWidth) {
+//                    id.isSelected = true
+//                } else {
+//                    id.isSelected = false
+//                }
+//            }
 
             if (imageUrl.isNullOrEmpty()) {
                 img.setImageResource(R.drawable.der_img_equipment)
