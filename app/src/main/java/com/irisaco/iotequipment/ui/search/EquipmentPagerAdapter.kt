@@ -27,8 +27,19 @@ class EquipmentPagerAdapter(
             val equipmentUniqueId = equipment.equipmentUniqueId
             val imageUrl = equipment.imageUrl
 
-            title.text = context.getString(R.string.label_device_name, equipmentName)
-            id.text = context.getString(R.string.label_device_unique_id, equipmentUniqueId)
+            title.text = context.getString(R.string.equipment_label_name, equipmentName)
+            id.text = equipmentUniqueId
+
+            id.post {
+                val textWidth = id.paint.measureText(id.text.toString())
+                val viewWidth = id.width.toFloat()
+
+                if (textWidth > viewWidth) {
+                    id.isSelected = true
+                } else {
+                    id.isSelected = false
+                }
+            }
 
             if (imageUrl.isNullOrEmpty()) {
                 img.setImageResource(R.drawable.der_img_equipment)

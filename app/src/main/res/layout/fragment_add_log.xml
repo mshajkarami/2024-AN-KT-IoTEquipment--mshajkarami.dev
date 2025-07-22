@@ -33,7 +33,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:hint="@string/hint_text_add_new_date"
+                    android:hint="@string/log_hint_date"
                     app:startIconDrawable="@drawable/ic_date"
                     app:startIconTint="@color/md_theme_primaryContainer_mediumContrast">
 
@@ -51,7 +51,7 @@
                     android:id="@+id/textInputLayout3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/hint_text_add_new_des"
+                    android:hint="@string/log_hint_description"
                     app:boxBackgroundMode="outline"
                     app:boxStrokeColor="@color/md_theme_inverseSurface"
                     app:boxStrokeWidth="2dp">
@@ -87,7 +87,7 @@
             android:layout_marginBottom="32dp"
             android:layout_weight="0"
             android:backgroundTint="@color/md_theme_primary"
-            android:text="@string/btn_create"
+            android:text="@string/action_create"
             android:textColor="@color/white"
             android:textSize="14sp"
             app:cornerRadius="10dp"
@@ -103,7 +103,7 @@
             android:layout_marginBottom="32dp"
             android:layout_weight="0"
             android:backgroundTint="@color/md_theme_inverseSurface"
-            android:text="@string/btn_cancel"
+            android:text="@string/action_cancel"
             android:textColor="@color/white"
             android:textSize="14sp"
             app:cornerRadius="10dp"
@@ -126,7 +126,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_marginEnd="15dp"
-                android:text="@string/txt_countdown_description"
+                android:text="@string/countdown_label_remaining"
                 android:textAlignment="textStart"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -173,7 +173,7 @@
             app:tint="@color/white"
             app:shapeAppearanceOverlay="@style/FabShape_Circle"
             android:backgroundTint="@color/md_theme_primaryContainer_mediumContrast"
-            android:contentDescription="@string/btn_add_attachment"
+            android:contentDescription="@string/attachment_btn_add"
             android:src="@drawable/ic_attachment"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
             app:layout_constraintEnd_toEndOf="parent" />

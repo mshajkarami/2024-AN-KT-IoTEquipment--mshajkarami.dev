@@ -3,29 +3,29 @@
     <item
         android:id="@+id/homeFragment"
         android:icon="@drawable/ic_home"
-        android:title="@string/menu_item_home" />
+        android:title="@string/menu_home" />
     <item
         android:id="@+id/searchFragment"
         android:icon="@drawable/ic_search"
-        android:title="@string/menu_item_search" />
+        android:title="@string/menu_search" />
     <item
         android:id="@+id/nav_help"
         android:icon="@drawable/ic_help"
-        android:title="@string/menu_item_help" />
+        android:title="@string/menu_support" />
     <item
         android:id="@+id/nav_web_view"
         android:icon="@drawable/ic_web"
-        android:title="@string/menu_item_web_view" />
+        android:title="@string/menu_web" />
     <item
         android:id="@+id/settingsFragment"
         android:icon="@drawable/ic_setting"
-        android:title="@string/menu_item_setting" />
+        android:title="@string/menu_settings" />
     <item
         android:id="@+id/nav_about"
         android:icon="@drawable/ic_info"
-        android:title="@string/menu_item_info" />
+        android:title="@string/menu_about" />
     <item
         android:id="@+id/nav_exit"
         android:icon="@drawable/ic_exit"
-        android:title="@string/menu_item_exit" />
+        android:title="@string/menu_exit" />
 </menu>

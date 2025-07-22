@@ -70,7 +70,7 @@ class AddLogFragment : Fragment() {
         pickFileLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             val file = uri?.let { uriToFile(requireContext(), it) }
             if (file == null) {
-                showToast("هیچ فایلی انتخاب نکردین!")
+                showToast(requireContext().getString(R.string.msg_error_no_file_selected))
                 return@registerForActivityResult
             }
 
@@ -80,7 +80,7 @@ class AddLogFragment : Fragment() {
             if (equipmentId != null) {
                 viewModel.uploadDocument(equipmentId, recordId, file)
             } else {
-                showToast("شناسه تجهیز یافت نشد")
+                showToast(requireContext().getString(R.string.msg_error_id_not_found))
             }
         }
     }
@@ -92,7 +92,7 @@ class AddLogFragment : Fragment() {
         val equipmentId = sharedViewModel.equipmentId.value
 
         if (equipmentId == null) {
-            showToast("شناسه تجهیز نامعتبر است")
+            showToast(requireContext().getString(R.string.msg_error_id_invalid))
             findNavController().navigateUp()
             return
         }
@@ -100,7 +100,7 @@ class AddLogFragment : Fragment() {
         recordToEdit?.let {
             binding.etNewLogDes.setText(it.description)
             binding.etNewLogDate.setText(it.creationTime?.substring(0, 10))
-            binding.btnAddRecorde.text = "ویرایش لاگ"
+            binding.btnAddRecorde.text = requireContext().getString(R.string.log_toolbar_edit)
             binding.btnAddRecorde.setOnClickListener {
                 val updatedRecord = createRecord(equipmentId).copy(id = it.id ?: 0)
                 viewModel.updateRecord(updatedRecord)
@@ -134,10 +134,10 @@ class AddLogFragment : Fragment() {
     private fun setupObservers() {
         viewModel.addRecordResult.observe(viewLifecycleOwner) { result ->
             result.onSuccess {
-                showToast("لاگ با موفقیت افزوده شد")
+                showToast(requireContext().getString(R.string.log_add_success))
                 findNavController().navigateUp()
             }.onFailure {
-                showToast("خطا در افزودن لاگ: ${it.message}")
+                showToast("${requireContext().getString(R.string.log_add_fail)}${it.message}")
             }
         }
 
@@ -146,24 +146,24 @@ class AddLogFragment : Fragment() {
                 sharedViewModel.recordToEdit.value = null
                 binding.etNewLogDes.text?.clear()
                 binding.etNewLogDate.text?.clear()
-                showToast("ویرایش با موفقیت انجام شد")
+                showToast(requireContext().getString(R.string.log_edit_success))
                 findNavController().navigateUp()
             }.onFailure {
-                showToast("خطا در ویرایش: ${it.message}")
+                showToast("${requireContext().getString(R.string.log_edit_fail)} ${it.message}")
             }
         }
 
         viewModel.uploadState.observe(viewLifecycleOwner) { result ->
             result.onSuccess {
-                showToast("فایل با موفقیت آپلود شد")
+                showToast(requireContext().getString(R.string.file_upload_success))
             }.onFailure {
-                showToast("آپلود فایل ناموفق بود: ${it.message}")
+                showToast("${requireContext().getString(R.string.file_upload_fail)}${it.message}")
             }
         }
     }
 
     private fun setupToolbar() {
-        (requireActivity() as? MainActivity)?.setToolbarTitle(getString(R.string.toolbar_add_log_text))
+        (requireActivity() as? MainActivity)?.setToolbarTitle(getString(R.string.log_toolbar_add))
         setupToolbarMenu()
     }
 
@@ -186,7 +186,7 @@ class AddLogFragment : Fragment() {
     private fun setupDatePicker() {
         binding.etNewLogDate.setOnClickListener {
             val picker = MaterialDatePicker.Builder.datePicker()
-                .setTitleText("تاریخ را انتخاب کنید")
+                .setTitleText(requireContext().getString(R.string.msg_date_picker_select))
                 .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
                 .build()
 

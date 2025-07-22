@@ -66,7 +66,7 @@ class AttachmentsAdapter(
 
         fun bind(document: Document) {
             val context = itemView.context
-            txtName.text = context.getString(R.string.label_device_attachment, document.fileName)
+            txtName.text = context.getString(R.string.equipment_label_attachment, document.fileName)
 
             when (document.type?.lowercase()) {
                 ".pdf" -> icAttachment.setImageResource(R.drawable.ic_pdf)
@@ -103,7 +103,7 @@ class AttachmentsAdapter(
                     if (downloadedFile != null) {
                         downloadIcon.setColorFilter(ContextCompat.getColor(context, R.color.icon_downloaded))
                     } else {
-                        Toast.makeText(context, context.getString(R.string.download_failed), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, context.getString(R.string.msg_download_fail), Toast.LENGTH_SHORT).show()
                     }
                 }
             }

@@ -6,7 +6,6 @@ import android.view.ContextThemeWrapper
 import android.view.MenuItem
 import android.view.View
 import android.widget.PopupMenu
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -73,8 +72,8 @@ class MainActivity : AppCompatActivity() {
             this,
             binding.drawerLayout,
             binding.materialToolbar,
-            R.string.navigation_drawer_open,
-            R.string.navigation_drawer_close
+            R.string.nav_open,
+            R.string.nav_close
         )
 
         binding.drawerLayout.addDrawerListener(toggle)
@@ -112,8 +111,8 @@ class MainActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.nav_exit -> {
                     AlertDialog.Builder(this)
-                        .setTitle(getString(R.string.exit))
-                        .setMessage(getString(R.string.msg_toolbar_exit))
+                        .setTitle(getString(R.string.menu_exit))
+                        .setMessage(getString(R.string.msg_confirm_exit))
                         .setPositiveButton(getString(R.string.yes)) { _, _ -> finishAffinity() }
                         .setNegativeButton(getString(R.string.no), null)
                         .show()
@@ -178,7 +177,7 @@ class MainActivity : AppCompatActivity() {
     private fun configureAddLogToolbar() {
         setupToolbarNavigation(R.drawable.ic_back) { navController.navigateUp() }
         setDefaultToolbarIcon()
-        setToolbarTitle(getString(R.string.toolbar_add_log_text))
+        setToolbarTitle(getString(R.string.log_toolbar_add))
         setToolbarMenu(
             iconRes = R.drawable.ic_kebab,
             menuRes = R.menu.menu_toolbar_popup_add_log
@@ -212,7 +211,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupAttachmentMenu() {
-        setToolbarTitle(getString(R.string.toolbar_attachment_text))
+        setToolbarTitle(getString(R.string.toolbar_title_attachments))
         setToolbarMenu(
             R.drawable.ic_kebab,
             menuRes = R.menu.menu_toolbar_popup_attachment
@@ -320,7 +319,4 @@ class MainActivity : AppCompatActivity() {
 
     private fun Int.dpToPx(): Int = (this * resources.displayMetrics.density).toInt()
 
-    private fun toast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-    }
 }

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:elevation="8dp"
-    app:cardCornerRadius="15dp"
+    app:cardCornerRadius="5dp"
     android:layout_marginBottom="10dp"
     app:cardPreventCornerOverlap="false"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -16,47 +16,71 @@
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
         android:orientation="vertical"
-        android:padding="3dp">
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/txt_id_view"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:textSize="16sp"
+            android:text="@string/equipment_label_unique_id"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/card_img"
+            app:layout_constraintTop_toBottomOf="@+id/txt_name"
+             />
 
         <TextView
             android:id="@+id/txt_id"
             android:layout_width="0dp"
             android:layout_height="30dp"
-            android:layout_marginEnd="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="3dp"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
             android:textSize="16sp"
-            app:layout_constraintEnd_toStartOf="@+id/card_img"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_name"
-            tools:text="@string/label_device_unique_id" />
+            app:layout_constraintEnd_toStartOf="@+id/txt_id_view"
+            app:layout_constraintStart_toEndOf="@+id/card_img"
+            app:layout_constraintTop_toBottomOf="@+id/txt_name" />
 
         <TextView
             android:id="@+id/txt_name"
             android:layout_width="0dp"
             android:layout_height="30dp"
+            android:layout_marginStart="5dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="5dp"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/card_img"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/card_img"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/label_device_name" />
+            tools:text="@string/equipment_label_name" />
 
         <com.google.android.material.card.MaterialCardView
-             android:id="@+id/card_img"
+            android:id="@+id/card_img"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginTop="8dp"
-            app:cardCornerRadius="8dp"
+            app:cardCornerRadius="15dp"
             app:cardElevation="1dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+
             <ImageView
                 android:id="@+id/img"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:contentDescription="@string/img_equipment"
+                android:contentDescription="@string/equipment_image_label"
                 android:scaleType="centerCrop" />
         </com.google.android.material.card.MaterialCardView>
 

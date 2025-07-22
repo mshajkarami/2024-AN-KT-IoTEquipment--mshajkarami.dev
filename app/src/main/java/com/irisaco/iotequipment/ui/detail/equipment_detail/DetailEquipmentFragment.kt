@@ -86,7 +86,7 @@ class DetailEquipmentFragment : Fragment() {
                 skeleton.visibility = View.GONE
                 contentLayout.visibility = View.VISIBLE
             } else {
-                viewModel.title.value = "موردی یافت نشد"
+                viewModel.title.value = requireContext().getString(R.string.equipment_not_found)
                 binding.btnAttachment.visibility = View.GONE
                 skeleton.visibility = View.GONE
                 contentLayout.visibility = View.VISIBLE

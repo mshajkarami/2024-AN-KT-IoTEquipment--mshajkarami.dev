@@ -16,7 +16,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/label_preferences"
+            android:text="@string/settings_preferences"
             android:textDirection="ltr"
             android:layout_gravity="start"
             />
@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_weight="1"
-                android:text="@string/btn_notifications"
+                android:text="@string/settings_notifications"
                 android:textDirection="ltr"
                 android:gravity="start"
                 />
@@ -70,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_weight="1"
-                android:text="@string/btn_language"
+                android:text="@string/settings_language_btn"
                 android:textDirection="ltr"
                 android:gravity="start"
                 />
@@ -78,7 +78,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/label_language" />
+                android:text="@string/settings_language_fa" />
         </LinearLayout>
         <!-- Theme -->
         <View
@@ -102,7 +102,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_weight="1"
-                android:text="@string/btn_theme"
+                android:text="@string/settings_theme_btn"
                 android:textDirection="ltr"
                 android:gravity="start"
                 />
@@ -110,7 +110,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/label_theme_light"
+                android:text="@string/settings_theme_light"
 
                 />
 

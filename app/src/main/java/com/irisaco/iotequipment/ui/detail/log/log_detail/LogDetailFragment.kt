@@ -48,7 +48,7 @@ class LogDetailFragment : BaseFragment() {
         val btnAttachment = view.findViewById<MaterialButton>(R.id.btn_logAttachment)
 
         val activity = requireActivity() as MainActivity
-        activity.setToolbarTitle(getString(R.string.toolbar_detail_log_text))
+        activity.setToolbarTitle(getString(R.string.log_toolbar_detail))
 
         observeDeleteResult()
 
@@ -88,9 +88,9 @@ class LogDetailFragment : BaseFragment() {
             viewModel.getRecordById(recordId).observe(viewLifecycleOwner) { record ->
                 record?.let {
                     val formattedDate = formatIsoDateToReadable(it.creationTime.toString())
-                    tvDate.text = getString(R.string.label_device_date, formattedDate)
+                    tvDate.text = getString(R.string.equipment_label_date, formattedDate)
                     val description = it.description
-                    tvDetail.text = this.getString(R.string.label_device_description, description)
+                    tvDetail.text = this.getString(R.string.equipment_label_description, description)
                 }
             }
         }

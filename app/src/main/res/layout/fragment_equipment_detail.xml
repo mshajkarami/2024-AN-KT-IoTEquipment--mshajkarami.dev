@@ -40,7 +40,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="12dp"
                 android:maxLines="2"
-                android:text='@{String.format(@string/label_device_name, viewModel.title)}'
+                android:text="@{String.format(@string/equipment_label_name, viewModel.title)}"
                 android:textColor="@color/md_theme_scrim"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -56,7 +56,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="12dp"
                 android:maxLines="1"
-                android:text='@{String.format(@string/label_device_version, viewModel.version)}'
+                android:text="@{String.format(@string/equipment_label_version, viewModel.version)}"
                 android:textColor="@color/md_theme_scrim"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -71,7 +71,7 @@
                 android:layout_marginStart="2dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="12dp"
-                android:text='@{String.format(@string/label_device_type, viewModel.type)}'
+                android:text="@{String.format(@string/equipment_label_type, viewModel.type)}"
                 android:textColor="@color/md_theme_scrim"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -108,7 +108,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="12dp"
                 android:lineSpacingExtra="4dp"
-                android:text='@{String.format(@string/label_device_description, viewModel.description)}'
+                android:text="@{String.format(@string/equipment_label_description, viewModel.description)}"
                 android:textColor="@color/md_theme_scrim"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -137,8 +137,8 @@
             android:layout_height="50dp"
             android:backgroundTint="@color/md_theme_inversePrimary"
             android:textAlignment="textStart"
-            android:contentDescription="@string/btn_attachment"
-            android:text="@string/btn_attachment"
+            android:contentDescription="@string/attachment_btn_open"
+            android:text="@string/attachment_btn_open"
             android:textColor="@color/black"
             app:cornerRadius="0dp"
             app:icon="@drawable/ic_attachment"

@@ -115,9 +115,9 @@ class AttachmentsFragment : BaseFragment() {
             }
 
             val message = when {
-                failCount == 0 -> getString(R.string.download_all_success)
-                successCount == 0 -> getString(R.string.download_all_failed)
-                else -> getString(R.string.download_summary, successCount, failCount)
+                failCount == 0 -> getString(R.string.msg_download_success)
+                successCount == 0 -> getString(R.string.msg_download_fail)
+                else -> getString(R.string.msg_download_summary, successCount, failCount)
             }
             view?.let {
                 Snackbar.make(it, message, Snackbar.LENGTH_LONG).show()
@@ -154,7 +154,7 @@ class AttachmentsFragment : BaseFragment() {
             if (uris.isEmpty()) {
                 Snackbar.make(
                     requireView(),
-                    getString(R.string.share_failed_no_files),
+                    getString(R.string.msg_share_fail),
                     Snackbar.LENGTH_SHORT
                 ).show()
                 return@launch
@@ -165,7 +165,7 @@ class AttachmentsFragment : BaseFragment() {
                 putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris)
                 addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             }
-            startActivity(Intent.createChooser(shareIntent, getString(R.string.share_with)))
+            startActivity(Intent.createChooser(shareIntent, getString(R.string.msg_share_with)))
         }
     }
 

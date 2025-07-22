@@ -14,7 +14,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/label_account"
+            android:text="@string/settings_account"
             android:textDirection="ltr"
             android:layout_gravity="start"
             />
@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_weight="1"
-                android:text="@string/btn_password"
+                android:text="@string/auth_password"
                 android:textDirection="ltr"
                 android:gravity="start"
                 />
@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_weight="1"
-                android:text="@string/btn_support"
+                android:text="@string/action_support"
                 android:textDirection="ltr"
                 android:gravity="start"
                 />
@@ -95,7 +95,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_weight="1"
-                android:text="@string/btn_terms"
+                android:text="@string/action_privacy"
                 android:textDirection="ltr"
                 android:gravity="start"
                 />
@@ -126,7 +126,7 @@
                 android:layout_marginStart="16dp"
                 android:textColor="@color/md_theme_errorContainer_mediumContrast"
                 android:layout_weight="1"
-                android:text="@string/btn_logout"
+                android:text="@string/auth_logout"
                 android:textDirection="ltr"
                 android:gravity="start"
                 />

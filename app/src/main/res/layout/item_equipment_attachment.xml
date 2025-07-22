@@ -25,7 +25,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="4dp"
-            android:text="@string/label_device_attachment"
+            android:text="@string/equipment_label_attachment"
             android:textColor="@color/md_theme_background"
             android:textSize="14sp"
             android:textStyle="bold"

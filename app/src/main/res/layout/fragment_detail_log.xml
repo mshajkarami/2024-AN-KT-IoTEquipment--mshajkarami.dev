@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text="@string/label_device_date"
+        android:text="@string/equipment_label_date"
         android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -46,7 +46,7 @@
                 android:lineSpacingExtra="4dp"
                 android:textColor="@color/md_theme_scrim"
                 android:textSize="16sp"
-                tools:text="@string/label_device_description" />
+                tools:text="@string/equipment_label_description" />
         </LinearLayout>
     </ScrollView>
 
@@ -57,8 +57,8 @@
         android:layout_height="50dp"
         android:layout_marginBottom="16dp"
         android:backgroundTint="@color/md_theme_inversePrimary"
-        android:contentDescription="@string/btn_attachment"
-        android:text="@string/btn_attachment"
+        android:contentDescription="@string/attachment_btn_open"
+        android:text="@string/attachment_btn_open"
         android:textAlignment="textStart"
         android:textColor="@color/black"
         app:cornerRadius="0dp"

@@ -104,11 +104,6 @@ class AuthViewModel @Inject constructor(
             onDone(false, exception?.errorDescription)
         }
     }
-
-    suspend fun getValidAccessToken(): String? {
-        return repository.getValidAccessTokenOrNull()
-    }
-
     suspend fun isLoggedIn(): Boolean {
         return repository.getValidAccessTokenOrNull() != null
     }

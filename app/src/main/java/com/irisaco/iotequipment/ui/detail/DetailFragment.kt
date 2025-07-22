@@ -47,8 +47,8 @@ class DetailFragment : Fragment() {
 
         TabLayoutMediator(tabLayout,viewPager){
             tab,position -> tab.text = when (position) {
-                0 -> "توضیحات"
-                1 -> "لاگ ها"
+                0 -> requireContext().getString(R.string.tab_description)
+                1 -> requireContext().getString(R.string.tab_logs)
                 else -> ""
             }
         }.attach()

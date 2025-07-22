@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.Toast
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -43,7 +42,7 @@ class LogListFragment : Fragment() {
         equipmentId = arguments?.getInt("equipmentId") ?: -1
 
         if (equipmentId == -1) {
-            Toast.makeText(context, "شناسه تجهیز نامعتبر است.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, requireContext().getString(R.string.msg_error_id_invalid), Toast.LENGTH_SHORT).show()
             findNavController().popBackStack()
         }
     }

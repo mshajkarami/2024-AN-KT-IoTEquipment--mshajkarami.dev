@@ -40,9 +40,9 @@ class EquipmentLogListAdapter (
             val context = itemView.context
             val recordDate = records.creationTime
             val formattedDate = formatIsoDate(recordDate.toString())
-            tvDate.text = context.getString(R.string.label_device_date, formattedDate)
+            tvDate.text = context.getString(R.string.equipment_label_date, formattedDate)
             val recordDis = records.description
-            tvDescription.text = context.getString(R.string.label_device_description,recordDis)
+            tvDescription.text = context.getString(R.string.equipment_label_description,recordDis)
             itemView.setOnClickListener {
                 onItemClick(records)
             }

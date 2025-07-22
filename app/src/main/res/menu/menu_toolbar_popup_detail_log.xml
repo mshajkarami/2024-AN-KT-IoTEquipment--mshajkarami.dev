@@ -2,15 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/item_print"
-        android:title="@string/toolbar_popup_menu_print"/>
+        android:title="@string/toolbar_action_print"/>
 
     <item
         android:id="@+id/item_edit"
-        android:title="@string/toolbar_popup_menu_edit"/>
+        android:title="@string/toolbar_action_edit"/>
     <item
         android:id="@+id/item_share"
-        android:title="@string/toolbar_popup_menu_share"/>
+        android:title="@string/toolbar_action_share"/>
     <item
         android:id="@+id/item_delete"
-        android:title="@string/toolbar_popup_menu_delete"/>
+        android:title="@string/toolbar_action_delete"/>
 </menu>

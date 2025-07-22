@@ -1,94 +1,125 @@
 <resources>
+
     <!-- 🌐 App -->
     <string name="app_name">Iotequipment</string>
     <string name="toolbar_default_text">سامانه مدیریت تجهیزات اینترنت اشیا</string>
+
+    <!-- 🔐 Authentication -->
     <string name="auth_dec">
         این اپلیکیشن به شما کمک می‌کند دستگاه‌های IoT
         را به‌صورت متمرکز کنترل، مانیتور و پشتیبانی کنید.
         با ورود امن از طریق مرورگر، بدون نگرانی از امنیت، عملیات صنعتی خود را مدیریت نمایید.
     </string>
+    <string name="auth_login_browser">ورود امن از طریق مرورگر</string>
+    <string name="auth_password">رمز عبور</string>
+    <string name="auth_logout">خروج از حساب کاربری</string>
+
     <!-- 🔍 Search -->
     <string name="hint_searchbar">جستجو میان تجهیزات</string>
-    <!-- 📋 Device Info Labels -->
-    <string name="label_device_name">نام تجهیز: %1$s</string>
-    <string name="label_device_version">نسخه: %1$s</string>
-    <string name="label_device_description">توضیحات: %1$s</string>
-    <string name="label_device_type">نوع: %1$s</string>
-    <string name="label_device_date">تاریخ ایجاد: %1$s</string>
-    <string name="label_device_attachment">نام فایل: %1$s</string>
-    <string name="label_device_unique_id">شناسه: %1$s</string>
+    <string name="hint_searchbar_small">جستجو</string>
+
+    <!-- 📋 Equipment Details -->
+    <string name="equipment_label_name">نام تجهیز: %1$s</string>
+    <string name="equipment_label_version">نسخه: %1$s</string>
+    <string name="equipment_label_description">توضیحات: %1$s</string>
+    <string name="equipment_label_type">نوع: %1$s</string>
+    <string name="equipment_label_date">تاریخ ایجاد: %1$s</string>
+    <string name="equipment_label_attachment">نام فایل: %1$s</string>
+    <string name="equipment_label_unique_id">شناسه تجهیز:</string>
+    <string name="equipment_not_found">موردی یافت نشد!</string>
+    <string name="equipment_image_label">تصویر تجهیز</string>
+
     <!-- ⏳ Countdown -->
-    <string name="txt_countdown_description">زمان باقیمانده تا پایان فرصت تغیرات :</string>
-    <!-- 📝 Log Form -->
-    <string name="hint_text_add_new_log">نام لاگ</string>
-    <string name="hint_text_add_new_date">تاریخ</string>
-    <string name="hint_text_add_new_des">توضیحات</string>
-    <!-- 📁 Attachments -->
-    <string name="btn_attachment">فایل‌های پیوست</string>
-    <string name="btn_add_attachment">افزودن فایل پیوست</string>
-    <string name="toolbar_attachment_text">فایل‌های پیوست</string>
-    <!-- 📷 QR / Scan -->
-    <string name="btn_scan">اسکن</string>
-    <string name="btn_select_from_pictures">تصاویر</string>
-    <string name="msg_scan_barcode_help">لطفا بارکد را در این محل قرار دهید</string>
-    <!-- 🔘 Toolbar -->
-    <string name="toolbar_edit_log_text">ویرایش لاگ</string>
-    <string name="toolbar_add_log_text">افزودن لاگ</string>
-    <string name="toolbar_detail_log_text">توضیحات لاگ</string>
+    <string name="countdown_label_remaining">زمان باقیمانده تا پایان فرصت تغیرات :</string>
+
+    <!-- 📝 Logs -->
+    <string name="log_hint_name">نام لاگ</string>
+    <string name="log_hint_date">تاریخ</string>
+    <string name="log_hint_description">توضیحات</string>
+    <string name="log_toolbar_edit">ویرایش لاگ</string>
+    <string name="log_toolbar_add">افزودن لاگ</string>
+    <string name="log_toolbar_detail">جزئیات لاگ</string>
     <string name="toolbar_icon_profile">پروفایل</string>
     <string name="toolbar_setting_text">تنظیمات</string>
-    <!-- 📂 Menu -->
-    <string name="menu_device_info">اطلاعات اولیه تجهیزات</string>
+    <string name="log_add_success">لاگ با موفقیت افزوده شد ✅</string>
+    <string name="log_edit_success">ویرایش با موفقیت انجام شد ✅</string>
+    <string name="log_add_fail">خطا در افزودن لاگ ❌</string>
+    <string name="log_edit_fail">خطا در ویرایش لاگ ❌</string>
+
+    <!-- 📁 Attachments -->
+    <string name="attachment_btn_open">فایل‌های پیوست</string>
+    <string name="attachment_btn_add">افزودن فایل پیوست</string>
+    <string name="toolbar_title_attachments">فایل‌های پیوست</string>
+    <string name="file_upload_success">فایل با موفقیت آپلود شد ✅</string>
+    <string name="file_upload_fail">آپلود فایل ناموفق بود ❌</string>
+
+    <!-- 📷 QR / Scan -->
+    <string name="qr_btn_scan">اسکن</string>
+    <string name="qr_btn_gallery">انتخاب از گالری</string>
+    <string name="qr_msg_help">لطفا بارکد را در این محل قرار دهید</string>
+    <string name="qr_msg_success">بارکد با موفقیت شناسایی شد ✅</string>
+
+    <!-- 🧭 Navigation -->
+    <string name="menu_home">خانه</string>
+    <string name="menu_search">جستجو</string>
+    <string name="menu_support">پشتیبانی</string>
+    <string name="menu_web">مشاهده نسخه وب</string>
+    <string name="menu_settings">تنظیمات</string>
+    <string name="menu_about">درباره ما</string>
+    <string name="menu_exit">خروج</string>
+    <string name="menu_equipment_info">اطلاعات اولیه تجهیزات</string>
     <string name="menu_software_info">سخت‌افزار و نرم‌افزار</string>
-    <string name="menu_item_home">داشبورد</string>
-    <string name="menu_item_search">جستجو</string>
-    <string name="menu_item_help">پشتیبانی</string>
-    <string name="menu_item_web_view">مشاهده نسخه وب</string>
-    <string name="menu_item_setting">تنظیمات</string>
-    <string name="menu_item_info">درباره ما</string>
-    <string name="menu_item_exit">خروج</string>
+
     <!-- ⚙️ Settings -->
-    <string name="btn_language">زبان</string>
-    <string name="label_language">فارسی</string>
-    <string name="btn_theme">تم</string>
-    <string name="label_theme_light">روشن</string>
-    <string name="label_theme_dark">تاریک</string>
-    <string name="label_preferences">ترجیحات</string>
-    <string name="label_account">حساب کاربری</string>
-    <string name="btn_notifications">اعلان‌ها و صداها</string>
-    <!-- 🔐 Auth -->
-    <string name="btn_login_secure">ورود امن از طریق مرورگر</string>
-    <string name="btn_password">رمز عبور</string>
-    <string name="btn_logout">خروج از حساب کاربری</string>
-    <!-- 📌 Other -->
-    <string name="btn_create">ایجاد</string>
-    <string name="btn_save">ذخیره</string>
-    <string name="btn_cancel">لغو</string>
-    <string name="btn_support">پشتیبانی</string>
-    <string name="btn_terms">سیاست‌های حفظ حریم خصوصی</string>
-    <string name="img_equipment">تصویر تجهیز</string>
-    <string name="exit">خروج</string>
-    <string name="exit_app">خروج از برنامه</string>
+    <string name="settings_language_btn">زبان</string>
+    <string name="settings_language_fa">فارسی</string>
+    <string name="settings_theme_btn">تم</string>
+    <string name="settings_theme_light">روشن</string>
+    <string name="settings_theme_dark">تاریک</string>
+    <string name="settings_preferences">ترجیحات</string>
+    <string name="settings_account">حساب کاربری</string>
+    <string name="settings_notifications">اعلان‌ها و صداها</string>
+
+    <!-- 📌 Tabs -->
+    <string name="tab_description">توضیحات</string>
+    <string name="tab_logs">لاگ ها</string>
+
+    <!-- ☰ Drawer & Toolbar Actions -->
+    <string name="nav_open">باز کردن منو</string>
+    <string name="nav_close">بستن منو</string>
+    <string name="toolbar_profile">پروفایل</string>
+    <string name="toolbar_settings">تنظیمات</string>
+    <string name="toolbar_action_print">چاپ</string>
+    <string name="toolbar_action_edit">ویرایش</string>
+    <string name="toolbar_action_share">اشتراک گذاری</string>
+    <string name="toolbar_action_delete">حذف</string>
+    <string name="toolbar_action_share_all">اشتراک‌گذاری همه فایل‌ها</string>
+    <string name="toolbar_action_refresh">بارگذاری مجدد</string>
+    <string name="toolbar_action_download_all">دانلود همه فایل ها</string>
+
+    <!-- 📦 Actions -->
+    <string name="action_create">ایجاد</string>
+    <string name="action_save">ذخیره</string>
+    <string name="action_cancel">لغو</string>
+    <string name="action_support">پشتیبانی</string>
+    <string name="action_privacy">سیاست‌های حفظ حریم خصوصی</string>
+
+    <!-- 🧾 Messages -->
+    <string name="msg_confirm_exit">آیا از خروج از برنامه مطمئن هستید؟</string>
+    <string name="msg_date_picker_select">تاریخ را انتخاب کنید"</string>
+    <string name="msg_error_no_file_selected">هیچ فایلی انتخاب نشده است!</string>
+    <string name="msg_error_id_not_found">شناسه تجهیز یافت نشد</string>
+    <string name="msg_error_id_invalid">شناسه تجهیز نامعتبر است</string>
+    <string name="msg_download_success">همه فایل‌ها با موفقیت دانلود شدند ✅</string>
+    <string name="msg_download_fail">دانلود ناموفق بود ❌</string>
+    <string name="msg_download_summary">%1$d فایل با موفقیت دانلود شد، %2$d ناموفق بودند ⚠️</string>
+    <string name="msg_share_fail">اشتراک گذاری ناموفق بود</string>
+    <string name="msg_share_with">اشتراک گذاری با</string>
+
+    <!-- ✅ Yes / No -->
     <string name="yes">بله</string>
     <string name="no">خیر</string>
-    <string name="msg_toolbar_exit">آیا مطمئن هستید که می‌خواهید از برنامه خارج شوید؟"</string>
-    <!-- ☰ Navigation Drawer -->
-    <string name="navigation_drawer_open">باز کردن منو</string>
-    <string name="navigation_drawer_close">بستن منو</string>
-    <string name="toolbar_popup_menu_print">پرینت</string>
-    <string name="toolbar_popup_menu_edit">ویرایش</string>
-    <string name="toolbar_popup_menu_share">اشتراک گذاری</string>
-    <string name="toolbar_popup_menu_delete">حذف</string>
-    <string name="btn_search_equipment">جستجو در محصولات</string>
-    <string name="msg_barcode">بارکد با موفقیت شناسایی شد:</string>
-    <string name="toolbar_popup_menu_share_all">اشتراک‌گذاری همه فایل‌ها</string>
-    <string name="toolbar_popup_menu_refresh">بارگذاری مجدد</string>
-    <string name="toolbar_popup_menu_download_all_file">دانلود همه فایل ها</string>
-    <!-- Snack Bar -->
-    <string name="download_all_success">همه فایل‌ها با موفقیت دانلود شدند ✅</string>
-    <string name="download_all_failed">دانلود همه فایل‌ها ناموفق بود ❌</string>
-    <string name="download_failed">دانلود ناموفق بود ❌</string>
-    <string name="download_summary">%1$d فایل با موفقیت دانلود شد، %2$d ناموفق بودند ⚠️</string>
-    <string name="share_failed_no_files">اشتراک گذاری ناموفق بود</string>
-    <string name="share_with">اشتراک گذاری با</string>
+
+
+
 </resources>

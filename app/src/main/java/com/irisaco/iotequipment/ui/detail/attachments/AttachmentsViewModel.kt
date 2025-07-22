@@ -13,6 +13,7 @@ import kotlinx.coroutines.NonCancellable.isActive
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+@Suppress("DEPRECATION")
 class AttachmentsViewModel @AssistedInject constructor(
     @Assisted("equipmentId") private val equipmentId: Int?,
     @Assisted("recordId") private val recordId: Int?,

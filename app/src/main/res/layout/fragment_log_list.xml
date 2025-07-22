@@ -17,7 +17,7 @@
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:layout_marginBottom="40dp"
-        android:contentDescription="@string/btn_scan"
+        android:contentDescription="@string/qr_btn_scan"
         android:backgroundTint="@color/md_theme_primary"
         app:srcCompat="@drawable/ic_add"
         app:tint="@android:color/white"
