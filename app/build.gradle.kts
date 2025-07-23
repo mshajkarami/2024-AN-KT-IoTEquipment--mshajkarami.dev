@@ -101,6 +101,7 @@ dependencies {
 
     // =================== Data Persistence ===================
     implementation("androidx.datastore:datastore-preferences:1.0.0") // Modern data storage (replacement for SharedPreferences)
+    implementation("androidx.security:security-crypto:1.1.0-alpha06") // Security data save (replacement for SharedPreferences)
 
     // =================== Image Loading ===================
     implementation("io.coil-kt:coil:2.5.0") // Image loading and caching library for Android

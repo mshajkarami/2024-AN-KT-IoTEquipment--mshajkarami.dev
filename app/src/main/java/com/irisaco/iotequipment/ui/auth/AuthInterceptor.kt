@@ -1,11 +1,18 @@
 package com.irisaco.iotequipment.ui.auth
 import com.irisaco.iotequipment.data.repository.AuthRepository
+import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Response
 
-class AuthInterceptor(private val repository: AuthRepository) : Interceptor {
+class AuthInterceptor(
+    private val repository: AuthRepository
+) : Interceptor {
+
     override fun intercept(chain: Interceptor.Chain): Response {
-        val token = repository.getCachedAccount()?.accessToken
+        val token = runBlocking {
+            repository.getValidAccessTokenOrNull()
+        }
+
         val request = if (token != null) {
             chain.request().newBuilder()
                 .addHeader("Authorization", "Bearer $token")
@@ -13,6 +20,7 @@ class AuthInterceptor(private val repository: AuthRepository) : Interceptor {
         } else {
             chain.request()
         }
+
         return chain.proceed(request)
     }
 }

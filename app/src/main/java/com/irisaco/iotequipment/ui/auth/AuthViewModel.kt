@@ -22,6 +22,7 @@ import com.irisaco.iotequipment.utils.UnsafeConnectionBuilder
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import net.openid.appauth.AppAuthConfiguration
+import net.openid.appauth.AuthState
 import net.openid.appauth.ClientSecretBasic
 import net.openid.appauth.GrantTypeValues
 import net.openid.appauth.TokenRequest
@@ -32,6 +33,7 @@ class AuthViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     private val repository: AuthRepository
 ) : ViewModel() {
+
     private val _isLoggedInLiveData = MutableLiveData<Boolean>()
     val isLoggedInLiveData: LiveData<Boolean> = _isLoggedInLiveData
 
@@ -42,18 +44,19 @@ class AuthViewModel @Inject constructor(
             .build()
     )
 
-    fun startLoginIntent(): Intent {
-        val config = AuthorizationServiceConfiguration(
-            "https://account.irisaprime.ir/realms/dev/protocol/openid-connect/auth".toUri(),
-            "https://account.irisaprime.ir/realms/dev/protocol/openid-connect/token".toUri()
-        )
+    private val serviceConfig = AuthorizationServiceConfiguration(
+        "https://account.irisaprime.ir/realms/dev/protocol/openid-connect/auth".toUri(),
+        "https://account.irisaprime.ir/realms/dev/protocol/openid-connect/token".toUri()
+    )
 
+    fun startLoginIntent(): Intent {
         val authRequest = AuthorizationRequest.Builder(
-            config,
+            serviceConfig,
             "iem",
             ResponseTypeValues.CODE,
             "com.irisaco.iotequipment://oauth2redirect".toUri()
-        ).setScope("email profile")
+        )
+            .setScope("email profile")
             .build()
 
         return authService.getAuthorizationRequestIntent(authRequest)
@@ -65,35 +68,19 @@ class AuthViewModel @Inject constructor(
         val exception = AuthorizationException.fromIntent(intent)
 
         if (response != null) {
-            val request = TokenRequest.Builder(
-                response.request.configuration,
-                response.request.clientId
-            )
-                .setGrantType(GrantTypeValues.AUTHORIZATION_CODE)
-                .setAuthorizationCode(response.authorizationCode)
-                .setRedirectUri(response.request.redirectUri)
-                .setCodeVerifier(response.request.codeVerifier)
-                .build()
-
             val clientAuthentication = ClientSecretBasic("GN2HvCkONDIQOtgOm4pfTepqFv34fJL3")
 
-            authService.performTokenRequest(request, clientAuthentication) { tokenResponse, ex ->
+            authService.performTokenRequest(
+                response.createTokenExchangeRequest(),
+                clientAuthentication
+            ) { tokenResponse, ex ->
+
                 viewModelScope.launch {
                     if (tokenResponse != null) {
-                        val accessToken = tokenResponse.accessToken ?: ""
-                        val refreshToken = tokenResponse.refreshToken ?: ""
-                        val expiresAtMillis = tokenResponse.accessTokenExpirationTime ?: 0L
-                        val currentTimeMillis = System.currentTimeMillis()
-                        val expiresInSec = if (expiresAtMillis > currentTimeMillis) {
-                            (expiresAtMillis - currentTimeMillis) / 1000
-                        } else 3600L
-
-                        repository.saveAccount(
-                            accessToken = accessToken,
-                            refreshToken = refreshToken,
-                            expiresInSec = expiresInSec
+                        repository.appAuthManager.saveAuthState(
+                            AuthState(response, tokenResponse, ex)
                         )
-
+                        repository.saveBasicAccountInfoFromAppAuth()
                         onDone(true, null)
                     } else {
                         onDone(false, ex?.errorDescription)
@@ -104,15 +91,20 @@ class AuthViewModel @Inject constructor(
             onDone(false, exception?.errorDescription)
         }
     }
+
+
     suspend fun isLoggedIn(): Boolean {
         return repository.getValidAccessTokenOrNull() != null
     }
+
     suspend fun getActiveAccount(): AccountEntity? {
         return repository.getActiveAccount()
     }
+
     suspend fun loadActiveAccountFromDb() {
         repository.loadActiveAccountFromDb()
     }
+
     fun checkLoginState() {
         viewModelScope.launch {
             loadActiveAccountFromDb()
