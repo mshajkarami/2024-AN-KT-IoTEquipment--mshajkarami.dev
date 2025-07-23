@@ -23,7 +23,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.irisaco.iotequipment.R
-import com.irisaco.iotequipment.utils.LanguageUtils
+import com.irisaco.iotequipment.utils.LocaleHelper
 import com.irisaco.iotequipment.utils.QRImageAnalyzer
 import kotlinx.coroutines.*
 import kotlinx.coroutines.guava.await
@@ -78,7 +78,7 @@ class QrScannerActivity : AppCompatActivity() {
     override fun attachBaseContext(newBase: Context) {
         val lang = newBase.getSharedPreferences("app_settings", Context.MODE_PRIVATE)
             .getString("language", "fa") ?: "fa"
-        val contextWithLocale = LanguageUtils.setLocale(newBase, lang)
+        val contextWithLocale = LocaleHelper.setLocale(newBase, lang)
         super.attachBaseContext(contextWithLocale)
     }
 

@@ -14,7 +14,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
-import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
@@ -25,7 +24,7 @@ import androidx.navigation.ui.NavigationUI
 import com.irisaco.iotequipment.databinding.ActivityMainBinding
 import com.irisaco.iotequipment.ui.components.NoInternetBottomSheet
 import com.irisaco.iotequipment.ui.detail.base_view_model.SharedViewModel
-import com.irisaco.iotequipment.utils.LanguageUtils
+import com.irisaco.iotequipment.utils.LocaleHelper
 import com.irisaco.iotequipment.utils.NetworkConnectionLiveData
 import com.irisaco.iotequipment.utils.NetworkStatusListener
 import dagger.hilt.android.AndroidEntryPoint
@@ -60,7 +59,7 @@ class MainActivity : AppCompatActivity() {
     override fun attachBaseContext(newBase: Context) {
         val lang = newBase.getSharedPreferences("app_settings", Context.MODE_PRIVATE)
             .getString("language", "fa") ?: "fa"
-        val contextWithLocale = LanguageUtils.setLocale(newBase, lang)
+        val contextWithLocale = LocaleHelper.setLocale(newBase, lang)
         super.attachBaseContext(contextWithLocale)
     }
 

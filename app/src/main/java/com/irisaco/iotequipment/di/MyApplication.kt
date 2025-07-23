@@ -2,19 +2,15 @@ package com.irisaco.iotequipment.di
 
 import android.app.Application
 import android.content.Context
-import androidx.room.Room
-import com.irisaco.iotequipment.data.dataStore.LanguageDataStore
-import com.irisaco.iotequipment.data.local.AppDatabase
-import com.irisaco.iotequipment.utils.LanguageUtils
+import com.irisaco.iotequipment.utils.LocaleHelper
 import dagger.hilt.android.HiltAndroidApp
-import kotlinx.coroutines.runBlocking
 
 @HiltAndroidApp
 class MyApplication : Application() {
 
     override fun attachBaseContext(base: Context?) {
-        val lang = getSavedLanguageFromPreferences(base)
-        val contextWithLocale = lang?.let { LanguageUtils.setLocale(base!!, it) } ?: base
+        val language = getSavedLanguageFromPreferences(base) ?: "fa"
+        val contextWithLocale = base?.let { LocaleHelper.setLocale(it, language) }
         super.attachBaseContext(contextWithLocale)
     }
 

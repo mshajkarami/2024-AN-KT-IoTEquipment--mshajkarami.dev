@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ import com.irisaco.iotequipment.databinding.FragmentSettingsBinding
 import com.irisaco.iotequipment.ui.components.LanguageBottomSheet
 import kotlinx.coroutines.launch
 import java.util.Locale
+import androidx.core.content.edit
 
 class SettingsFragment : Fragment() {
     private var _binding: FragmentSettingsBinding? = null
@@ -37,19 +39,22 @@ class SettingsFragment : Fragment() {
 
 
         languageLayout.setOnClickListener {
-            val bottomSheet = LanguageBottomSheet { selectedLang ->
+            val bottomSheet = LanguageBottomSheet()
+            bottomSheet.onLanguageSelected = { selectedLang ->
                 applyLanguage(selectedLang)
                 activity?.recreate()
             }
             bottomSheet.show(parentFragmentManager, "LanguageBottomSheet")
+
         }
+
 
         lifecycleScope.launch {
             LanguageDataStore.getLanguageFlow(requireContext()).collect { lang ->
                 languageText.text = when (lang) {
-                    "en" -> "English"
-                    "fa" -> "فارسی"
-                    else -> "فارسی"
+                    "en" -> getString(R.string.settings_language_en)
+                    "fa" -> getString(R.string.settings_language_fa)
+                    else -> getString(R.string.settings_language_fa)
                 }
             }
         }
@@ -61,13 +66,16 @@ class SettingsFragment : Fragment() {
     }
 
     private fun applyLanguage(lang: String) {
-        val prefs = requireContext().getSharedPreferences("app_settings", Context.MODE_PRIVATE)
-        prefs.edit().putString("language", lang).apply()
-
         val locale = Locale(lang)
         Locale.setDefault(locale)
+
         val config = Configuration()
         config.setLocale(locale)
-        requireContext().resources.updateConfiguration(config, requireContext().resources.displayMetrics)
+
+        val prefs = requireContext().getSharedPreferences("app_settings", Context.MODE_PRIVATE)
+        prefs.edit { putString("language", lang) }
+
+        requireActivity().recreate()
     }
+
 }

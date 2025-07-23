@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.irisaco.iotequipment.R
-import com.irisaco.iotequipment.utils.LanguageUtils
+import com.irisaco.iotequipment.utils.LocaleHelper
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -30,7 +30,7 @@ class AuthActivity : AppCompatActivity() {
     override fun attachBaseContext(newBase: Context) {
         val lang = newBase.getSharedPreferences("app_settings", Context.MODE_PRIVATE)
             .getString("language", "fa") ?: "fa"
-        val contextWithLocale = LanguageUtils.setLocale(newBase, lang)
+        val contextWithLocale = LocaleHelper.setLocale(newBase, lang)
         super.attachBaseContext(contextWithLocale)
     }
 

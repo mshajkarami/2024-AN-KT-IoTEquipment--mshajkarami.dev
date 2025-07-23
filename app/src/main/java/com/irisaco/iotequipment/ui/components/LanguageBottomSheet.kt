@@ -11,19 +11,25 @@ import com.irisaco.iotequipment.R
 import com.irisaco.iotequipment.data.dataStore.LanguageDataStore
 import kotlinx.coroutines.launch
 
-class LanguageBottomSheet(
-    private val onLanguageSelected: (String) -> Unit
-) : BottomSheetDialogFragment() {
+class LanguageBottomSheet : BottomSheetDialogFragment() {
+
+    var onLanguageSelected: ((String) -> Unit)? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.bottom_sheet_language, container, false)
-    }
+    ): View = inflater.inflate(R.layout.bottom_sheet_language, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val radioGroup = view.findViewById<RadioGroup>(R.id.languageRadioGroup)
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            val currentLang = LanguageDataStore.getLanguage(requireContext())
+            when (currentLang) {
+                "fa" -> radioGroup.check(R.id.radio_fa)
+                "en" -> radioGroup.check(R.id.radio_en)
+            }
+        }
 
         radioGroup.setOnCheckedChangeListener { _, checkedId ->
             val selectedLang = when (checkedId) {
@@ -32,22 +38,11 @@ class LanguageBottomSheet(
                 else -> return@setOnCheckedChangeListener
             }
 
-            lifecycleScope.launch {
+            viewLifecycleOwner.lifecycleScope.launch {
                 LanguageDataStore.saveLanguage(requireContext(), selectedLang)
-                onLanguageSelected(selectedLang)
-            }
-
-            dismiss()
-        }
-
-        lifecycleScope.launch {
-            val currentLang = LanguageDataStore.getLanguage(requireContext())
-            when (currentLang) {
-                "fa" -> radioGroup.check(R.id.radio_fa)
-                "en" -> radioGroup.check(R.id.radio_en)
+                onLanguageSelected?.invoke(selectedLang)
+                dismiss()
             }
         }
     }
-
 }
-
