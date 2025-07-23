@@ -64,6 +64,7 @@ class EquipmentPagerAdapter(
 
     override fun getItemCount(): Int = equipmentList.size
 
+    @SuppressLint("NotifyDataSetChanged")
     fun updateData(newList: List<Items>) {
         equipmentList = newList
         notifyDataSetChanged()

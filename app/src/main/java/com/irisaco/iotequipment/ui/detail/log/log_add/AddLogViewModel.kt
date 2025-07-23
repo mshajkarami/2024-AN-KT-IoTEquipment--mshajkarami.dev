@@ -16,8 +16,6 @@ import javax.inject.Inject
 class AddLogViewModel @Inject constructor(
     private var repository: EquipmentRepository
 ) : ViewModel() {
-
-
     private val _addRecordResult = MutableLiveData<Result<Boolean>>()
     val addRecordResult: LiveData<Result<Boolean>> = _addRecordResult
     private val _updateResult = MutableLiveData<Result<Boolean>>()

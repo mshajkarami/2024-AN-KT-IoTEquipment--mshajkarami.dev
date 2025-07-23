@@ -65,7 +65,6 @@ class AddLogFragment : Fragment() {
             findNavController().navigateUp()
         }
     }
-
     private fun registerFilePicker() {
         pickFileLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             val file = uri?.let { uriToFile(requireContext(), it) }
@@ -113,8 +112,6 @@ class AddLogFragment : Fragment() {
             pickFileLauncher.launch("*/*")
         }
     }
-
-
     private fun uriToFile(context: Context, uri: Uri): File? {
         return try {
             val inputStream = context.contentResolver.openInputStream(uri)
@@ -158,7 +155,6 @@ class AddLogFragment : Fragment() {
             }
         }
     }
-
     private fun setupToolbar() {
         (requireActivity() as? MainActivity)?.setToolbarTitle(getString(R.string.log_toolbar_add))
         setupToolbarMenu()

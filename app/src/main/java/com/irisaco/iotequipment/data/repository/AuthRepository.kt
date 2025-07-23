@@ -18,7 +18,6 @@ class AuthRepository @Inject constructor(
     private val authService: KeycloakAuthService
 ){
     private var cachedAccount: AccountEntity? = null
-
     @RequiresApi(Build.VERSION_CODES.O)
     suspend fun saveAccount(
         accessToken: String,
@@ -56,7 +55,6 @@ class AuthRepository @Inject constructor(
             account.accessToken
         } else null
     }
-
     suspend fun getActiveAccount(): AccountEntity? = accountDao.getActiveAccount()
 
     suspend fun clear() = accountDao.deactivateAllAccounts()
@@ -95,11 +93,9 @@ class AuthRepository @Inject constructor(
         }
     }
     fun getCachedAccount(): AccountEntity? = cachedAccount
-
     suspend fun loadActiveAccountFromDb() {
         cachedAccount = accountDao.getActiveAccount()
     }
-
     @RequiresApi(Build.VERSION_CODES.O)
     private fun decodeUsernameFromToken(accessToken: String): String? {
         return try {
@@ -113,7 +109,6 @@ class AuthRepository @Inject constructor(
             null
         }
     }
-
     @RequiresApi(Build.VERSION_CODES.O)
     private fun extractUserRoleFromToken(accessToken: String, clientId: String): UserRole {
         return try {

@@ -1,17 +1,12 @@
 package com.irisaco.iotequipment.ui.search
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
-import androidx.room.Query
 import com.irisaco.iotequipment.data.model.Items
 import com.irisaco.iotequipment.data.repository.EquipmentRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
@@ -23,20 +18,15 @@ class SearchViewModel @Inject constructor(
     private val repository: EquipmentRepository
 ) :
     ViewModel() {
-
-
     private val _initialLoading = MutableLiveData<Boolean>()
     val initialLoading: LiveData<Boolean> get() = _initialLoading
 
     private val _isRefreshing = MutableLiveData<Boolean>()
     val isRefreshing: LiveData<Boolean> get() = _isRefreshing
-
     private val _equipmentList = MutableLiveData<List<Items>>()
     val equipmentList: LiveData<List<Items>> get() = _equipmentList
-
     private var autoRefreshJob: Job? = null
     private var isSearching = false
-
     fun startAutoRefresh(intervalMillis: Long = 10000L) {
         if (autoRefreshJob != null) return
 
@@ -109,8 +99,6 @@ class SearchViewModel @Inject constructor(
             }
         }
     }
-
-
     fun onSearch(query: String, onlyById: Boolean = false) {
         isSearching = true
         _initialLoading.value = true
@@ -128,5 +116,4 @@ class SearchViewModel @Inject constructor(
             }
         }
     }
-
 }

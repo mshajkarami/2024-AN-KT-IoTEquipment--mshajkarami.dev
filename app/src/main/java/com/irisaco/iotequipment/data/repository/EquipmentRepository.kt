@@ -118,7 +118,8 @@ class EquipmentRepository @Inject constructor(
         file: File
     ): Boolean = withContext(Dispatchers.IO) {
         try {
-            val requestFile = file.asRequestBody("application/octet-stream".toMediaTypeOrNull())
+            val requestFile = file.asRequestBody(
+                "application/octet-stream".toMediaTypeOrNull())
             val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
 
             val finalRecordId = recordId ?: -1
