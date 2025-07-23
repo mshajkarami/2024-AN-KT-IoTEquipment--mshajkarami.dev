@@ -33,6 +33,7 @@
                 android:src="@drawable/ic_email" />
 
             <TextView
+                android:id="@+id/txtEmailName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -60,6 +61,7 @@
                 android:src="@drawable/ic_user" />
 
             <TextView
+                android:id="@+id/txtDisplayName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -88,6 +90,7 @@
                 android:src="@drawable/ic_password" />
 
             <TextView
+                android:id="@+id/btnPassword"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"

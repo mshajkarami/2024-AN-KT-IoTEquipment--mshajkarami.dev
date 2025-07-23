@@ -13,6 +13,11 @@
     <string name="auth_login_browser">ورود امن از طریق مرورگر</string>
     <string name="auth_password">رمز عبور</string>
     <string name="auth_logout">خروج از حساب کاربری</string>
+    <string name="logout_dialog_title">خروج از حساب</string>
+    <string name="logout_dialog_message">آیا مطمئن هستید که می‌خواهید خارج شوید؟</string>
+    <string name="logout_dialog_confirm">خروج</string>
+    <string name="logout_dialog_cancel">لغو</string>
+
 
     <!-- 🔍 Search -->
     <string name="hint_searchbar">جستجو میان تجهیزات</string>
@@ -93,8 +98,8 @@
     <string name="settings_notifications">اعلان‌ها و صداها</string>
     <string name="user_trial">کاربر آزمایشی</string>
     <string name="setting_select_language">انتخاب زبان</string>
-    <string name="setting_email">ایمیل :</string>
-    <string name="setting_display_name">نام نمایشی :</string>
+    <string name="setting_email">ایمیل: %1$s</string>
+    <string name="setting_display_name">نام نمایشی: %1$s</string>
 
 
     <!-- 📌 Tabs -->
@@ -132,6 +137,11 @@
     <string name="msg_download_summary">%1$d فایل با موفقیت دانلود شد، %2$d ناموفق بودند ⚠️</string>
     <string name="msg_share_fail">اشتراک گذاری ناموفق بود</string>
     <string name="msg_share_with">اشتراک گذاری با</string>
+    <string name="msg_user_anonymous">کاربر ناشناس</string>
+    <string name="msg_user_welcome">خوش آمدید</string>
+    <string name="msg_user_login_fail">ورود ناموفق بود: </string>
+    <string name="msg_email_anonymous">ایمیل در دسترس نیست </string>
+
 
     <!-- ✅ Yes / No -->
     <string name="yes">بله</string>

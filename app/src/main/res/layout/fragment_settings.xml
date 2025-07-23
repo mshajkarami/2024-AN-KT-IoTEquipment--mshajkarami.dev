@@ -13,14 +13,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <include layout="@layout/item_profile" />
+        <include layout="@layout/item_profile"
+            android:id="@+id/include_profile"
+            />
 
-        <include layout="@layout/item_account" />
+        <include layout="@layout/item_account"
+            android:id="@+id/item_account"
+            />
 
         <View android:layout_width="match_parent"
             android:layout_height="10dp" />
 
-        <include layout="@layout/item_preferences"
+        <include
+            layout="@layout/item_preferences"
             android:id="@+id/include_preferences"
 
             />

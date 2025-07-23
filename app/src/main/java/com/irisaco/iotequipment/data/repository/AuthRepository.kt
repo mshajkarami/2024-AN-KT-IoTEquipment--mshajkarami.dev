@@ -35,20 +35,19 @@ class AuthRepository @Inject constructor(
         val authState = appAuthManager.readAuthState() ?: return
         val accessToken = authState.accessToken ?: return
 
-        val username = decodeUsernameFromToken(accessToken) ?: return
+        val accountEntity = decodeUsernameFromToken(accessToken) ?: return
         val role = extractUserRoleFromToken(accessToken, clientId = "iem")
 
-        val account = AccountEntity(
-            username = username,
-            displayName = username,
-            profileImageUrl = null,
+        val account = accountEntity.copy(
             isActive = true,
             role = role
         )
+
         accountDao.deactivateAllAccounts()
         accountDao.insertAccount(account)
         cachedAccount = account
     }
+
 
 
 
@@ -79,18 +78,62 @@ class AuthRepository @Inject constructor(
         cachedAccount = accountDao.getActiveAccount()
     }
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun decodeUsernameFromToken(accessToken: String): String? {
+    private fun decodeUsernameFromToken(accessToken: String): AccountEntity? {
         return try {
-            val parts = accessToken.split(".")
-            if (parts.size != 3) return null
-            val payload = parts[1]
+            val payload = accessToken.split(".")[1]
             val decodedBytes = Base64.getUrlDecoder().decode(payload)
             val json = JSONObject(String(decodedBytes))
-            json.getString("preferred_username")
+
+            val sub = json.getString("sub")
+            val username = json.getString("preferred_username")
+            val displayName = json.optString("name")
+            val email = json.optString("email")
+            val emailVerified = json.optBoolean("email_verified", false)
+            val givenName = json.optString("given_name")
+            val familyName = json.optString("family_name")
+
+            val roles = mutableListOf<String>()
+            val realmRoles = json.optJSONObject("realm_access")?.optJSONArray("roles")
+            if (realmRoles != null) {
+                for (i in 0 until realmRoles.length()) {
+                    roles.add(realmRoles.getString(i))
+                }
+            }
+            val resourceAccess = json.optJSONObject("resource_access")
+            resourceAccess?.keys()?.forEach { client ->
+                val clientRoles = resourceAccess.optJSONObject(client)?.optJSONArray("roles")
+                if (clientRoles != null) {
+                    for (i in 0 until clientRoles.length()) {
+                        roles.add(clientRoles.getString(i))
+                    }
+                }
+            }
+
+            val groupsArray = json.optJSONArray("groups")
+            val groups = mutableListOf<String>()
+            if (groupsArray != null) {
+                for (i in 0 until groupsArray.length()) {
+                    groups.add(groupsArray.getString(i))
+                }
+            }
+
+            AccountEntity(
+                sub = sub,
+                username = username,
+                displayName = displayName,
+                email = email,
+                emailVerified = emailVerified,
+                givenName = givenName,
+                familyName = familyName,
+                roles = roles,
+                groups = if (groups.isEmpty()) null else groups,
+                isActive = true
+            )
         } catch (e: Exception) {
             null
         }
     }
+
     @RequiresApi(Build.VERSION_CODES.O)
     private fun extractUserRoleFromToken(accessToken: String, clientId: String): UserRole {
         return try {

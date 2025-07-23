@@ -43,7 +43,7 @@ class AuthFragment : Fragment() {
 
             authViewModel.handleTokenExchange(data) { success, error ->
                 if (success) {
-                    Toast.makeText(requireContext(), "خوش آمدید", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(R.string.msg_user_welcome), Toast.LENGTH_SHORT).show()
 
                     viewLifecycleOwner.lifecycleScope.launch {
                         val account = authViewModel.getActiveAccount()
@@ -55,7 +55,7 @@ class AuthFragment : Fragment() {
                     startActivity(intent)
 
                 } else {
-                    Toast.makeText(requireContext(), "ورود ناموفق بود: $error", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "${getString(R.string.msg_user_login_fail)} $error", Toast.LENGTH_SHORT).show()
                     Log.e("AuthError", error ?: "Unknown error")
                 }
             }

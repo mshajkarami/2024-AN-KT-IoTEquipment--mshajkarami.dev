@@ -6,9 +6,15 @@ import com.irisaco.iotequipment.domain.UserRole
 
 @Entity(tableName = "accounts")
 data class AccountEntity(
-    @PrimaryKey val username: String,
+    @PrimaryKey val sub: String,
+    val username: String,
     val displayName: String?,
-    val profileImageUrl: String?,
-    val role: UserRole,
-    val isActive: Boolean
+    val email: String?,
+    val emailVerified: Boolean = false,
+    val givenName: String?,
+    val familyName: String?,
+    val roles: List<String>,
+    val groups: List<String>?,
+    val role: UserRole = UserRole.UNKNOWN,
+    val isActive: Boolean = false
 )

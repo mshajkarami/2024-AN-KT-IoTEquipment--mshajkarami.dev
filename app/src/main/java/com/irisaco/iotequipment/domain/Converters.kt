@@ -3,18 +3,23 @@ package com.irisaco.iotequipment.domain
 import androidx.room.TypeConverter
 
 class Converters {
-
     @TypeConverter
-    fun fromUserRole(role: UserRole): String {
-        return role.name
+    fun fromUserRole(value: UserRole): String {
+        return value.name
     }
 
     @TypeConverter
     fun toUserRole(value: String): UserRole {
-        return try {
-            UserRole.valueOf(value)
-        } catch (e: Exception) {
-            UserRole.UNKNOWN
-        }
+        return UserRole.valueOf(value)
+    }
+
+    @TypeConverter
+    fun fromStringList(value: List<String>?): String? {
+        return value?.joinToString(",")
+    }
+
+    @TypeConverter
+    fun toStringList(value: String?): List<String>? {
+        return value?.split(",")
     }
 }

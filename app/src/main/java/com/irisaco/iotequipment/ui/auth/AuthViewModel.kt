@@ -112,4 +112,28 @@ class AuthViewModel @Inject constructor(
             _isLoggedInLiveData.postValue(isLoggedIn)
         }
     }
+
+    suspend fun getDisplayName(): String? {
+        val account = repository.getActiveAccount()
+        return account?.displayName
+    }
+
+    suspend fun getUserName(): String? {
+        val account = repository.getActiveAccount()
+        return account?.username
+    }
+
+    suspend fun getEmailName(): String? {
+        val account = repository.getActiveAccount()
+        return account?.email
+    }
+
+    fun logout(onLogoutComplete: () -> Unit) {
+        viewModelScope.launch {
+            repository.clear()
+            onLogoutComplete()
+        }
+    }
+
+
 }
