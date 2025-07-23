@@ -6,14 +6,18 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.provider.Settings
 import android.util.Size
+import android.view.WindowManager
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
@@ -25,11 +29,14 @@ import androidx.core.view.WindowInsetsCompat
 import com.irisaco.iotequipment.R
 import com.irisaco.iotequipment.utils.LocaleHelper
 import com.irisaco.iotequipment.utils.QRImageAnalyzer
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import kotlinx.coroutines.guava.await
+import java.io.IOException
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
+@AndroidEntryPoint
 class QrScannerActivity : AppCompatActivity() {
 
     private lateinit var previewView: PreviewView
@@ -38,51 +45,36 @@ class QrScannerActivity : AppCompatActivity() {
     private lateinit var cameraExecutor: ExecutorService
     private lateinit var imageAnalyzer: QRImageAnalyzer
 
-    private val mainScope = CoroutineScope(Dispatchers.Main + Job())
-
     private lateinit var galleryLauncher: ActivityResultLauncher<Intent>
+    private lateinit var cameraPermissionLauncher: ActivityResultLauncher<String>
+    private lateinit var galleryPermissionLauncher: ActivityResultLauncher<String>
+
+    private val mainScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_qr_scanner)
 
-        setupInsets()
+        applyWindowInsets()
         initViews()
-        setupGalleryPicker()
+        initListeners()
+        initGalleryPicker()
+        initPermissionLaunchers()
 
         cameraExecutor = Executors.newSingleThreadExecutor()
         imageAnalyzer = QRImageAnalyzer(supportFragmentManager)
 
-        checkCameraPermission()
-
-        btnScan.setOnClickListener {
-            imageAnalyzer.scanLatestFrameManually()
-        }
-
-        btnScanLocal.setOnClickListener {
-            val permission = getReadStoragePermission()
-
-            if (ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED) {
-                openGallery()
-            } else {
-                ActivityCompat.requestPermissions(this, arrayOf(permission), REQUEST_IMAGE_PERMISSION)
-            }
-        }
-
-
-
-
+        checkCameraPermissionAndStart()
     }
 
     override fun attachBaseContext(newBase: Context) {
         val lang = newBase.getSharedPreferences("app_settings", Context.MODE_PRIVATE)
             .getString("language", "fa") ?: "fa"
-        val contextWithLocale = LocaleHelper.setLocale(newBase, lang)
-        super.attachBaseContext(contextWithLocale)
+        super.attachBaseContext(LocaleHelper.setLocale(newBase, lang))
     }
 
-    private fun setupInsets() {
+    private fun applyWindowInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { view, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             view.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -94,61 +86,83 @@ class QrScannerActivity : AppCompatActivity() {
         previewView = findViewById(R.id.previewView)
         btnScan = findViewById(R.id.btn_scanBarcode)
         btnScanLocal = findViewById(R.id.btn_scanLocal)
-        window.setFlags(1024, 1024)
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
     }
 
-    private fun setupGalleryPicker() {
+    private fun initListeners() {
+        btnScan.setOnClickListener {
+            imageAnalyzer.scanLatestFrameManually()
+        }
+
+        btnScanLocal.setOnClickListener {
+            checkGalleryPermissionAndPickImage()
+        }
+    }
+
+    private fun initGalleryPicker() {
         galleryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            val data = result.data
-            if (result.resultCode == RESULT_OK && data != null) {
-                val imageUri: Uri? = data.data
-                try {
-                    val bitmap: Bitmap = MediaStore.Images.Media.getBitmap(contentResolver, imageUri)
-                    imageAnalyzer.scanBitmap(bitmap)
-                } catch (e: Exception) {
-                    Toast.makeText(this, "Unable to read image", Toast.LENGTH_SHORT).show()
-                    e.printStackTrace()
+            if (result.resultCode == RESULT_OK) {
+                val imageUri = result.data?.data
+                if (imageUri != null) {
+                    try {
+                        val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, imageUri)
+                        imageAnalyzer.scanBitmap(bitmap)
+                    } catch (e: IOException) {
+                        showToast(getString(R.string.qr_msg_img_reading_fail))
+                        e.printStackTrace()
+                    }
                 }
             }
         }
     }
-    private fun getReadStoragePermission(): String {
-        return if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
-            Manifest.permission.READ_MEDIA_IMAGES
-        } else {
-            Manifest.permission.READ_EXTERNAL_STORAGE
+
+    private fun initPermissionLaunchers() {
+        cameraPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+            if (granted) {
+                startCamera()
+            } else {
+                showPermissionDialog(
+                    getString(R.string.qr_title_camera),
+                    getString(R.string.qr_msg_camera_permission_denied)
+                )
+            }
+        }
+
+        galleryPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+            if (granted) {
+                openGallery()
+            } else {
+                showPermissionDialog(
+                    getString(R.string.qr_title_gallery),
+                    getString(R.string.qr_msg_img_permission_denied)
+                )
+            }
         }
     }
 
-
-    private fun openGallery() {
-        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        intent.type = "image/*"
-        galleryLauncher.launch(intent)
-    }
-
-    private fun checkCameraPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-            setupCamera()
+    private fun checkCameraPermissionAndStart() {
+        val permission = Manifest.permission.CAMERA
+        if (ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED) {
+            startCamera()
         } else {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), REQUEST_CAMERA_PERMISSION)
+            cameraPermissionLauncher.launch(permission)
         }
     }
 
-    private fun setupCamera() {
+    private fun startCamera() {
         mainScope.launch {
             val cameraProvider = ProcessCameraProvider.getInstance(this@QrScannerActivity).await()
             bindCamera(cameraProvider)
         }
     }
 
-
-
     private fun bindCamera(cameraProvider: ProcessCameraProvider) {
-        val preview = Preview.Builder().build()
-        val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
-
-        val imageCapture = ImageCapture.Builder().build()
+        val preview = Preview.Builder().build().apply {
+            setSurfaceProvider(previewView.surfaceProvider)
+        }
 
         val imageAnalysis = ImageAnalysis.Builder()
             .setTargetResolution(Size(1280, 720))
@@ -157,35 +171,56 @@ class QrScannerActivity : AppCompatActivity() {
                 it.setAnalyzer(cameraExecutor, imageAnalyzer)
             }
 
-        preview.setSurfaceProvider(previewView.surfaceProvider)
-
         cameraProvider.unbindAll()
-        cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageCapture, imageAnalysis)
+        cameraProvider.bindToLifecycle(
+            this,
+            CameraSelector.DEFAULT_BACK_CAMERA,
+            preview,
+            imageAnalysis
+        )
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int, permissions: Array<out String>, grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    private fun checkGalleryPermissionAndPickImage() {
+        val permission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+            Manifest.permission.READ_MEDIA_IMAGES
+        else
+            Manifest.permission.READ_EXTERNAL_STORAGE
 
-        if (requestCode == REQUEST_CAMERA_PERMISSION && grantResults.firstOrNull() == PackageManager.PERMISSION_GRANTED) {
-            setupCamera()
-        } else if (requestCode == REQUEST_IMAGE_PERMISSION && grantResults.firstOrNull() == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED) {
             openGallery()
-        } else if (requestCode == REQUEST_IMAGE_PERMISSION) {
-            Toast.makeText(this, "Permission denied to access images", Toast.LENGTH_SHORT).show()
+        } else {
+            galleryPermissionLauncher.launch(permission)
         }
     }
 
+    private fun openGallery() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply {
+            type = "image/*"
+        }
+        galleryLauncher.launch(intent)
+    }
+
+    private fun showPermissionDialog(title: String, message: String) {
+        AlertDialog.Builder(this)
+            .setTitle(getString(R.string.qr_permission_required_title, title))
+            .setMessage(message)
+            .setPositiveButton(getString(R.string.qr_btn_go_to_settings)) { _, _ ->
+                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                    data = Uri.fromParts("package", packageName, null)
+                }
+                startActivity(intent)
+            }
+            .setNegativeButton(getString(R.string.qr_btn_cancel), null)
+            .show()
+    }
+
+    private fun showToast(msg: String) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+    }
 
     override fun onDestroy() {
         super.onDestroy()
         cameraExecutor.shutdown()
         mainScope.cancel()
-    }
-
-    companion object {
-        private const val REQUEST_CAMERA_PERMISSION = 101
-        private const val REQUEST_IMAGE_PERMISSION = 102
     }
 }

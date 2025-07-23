@@ -84,8 +84,6 @@ class AddLogFragment : Fragment() {
             }
         }
     }
-
-
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setupFormMode() {
         val recordToEdit = sharedViewModel.recordToEdit.value
@@ -97,12 +95,12 @@ class AddLogFragment : Fragment() {
             return
         }
 
-        recordToEdit?.let {
-            binding.etNewLogDes.setText(it.description)
-            binding.etNewLogDate.setText(it.creationTime?.substring(0, 10))
+        recordToEdit?.let { record ->
+            binding.etNewLogDes.setText(record.description)
+            binding.etNewLogDate.setText(record.creationTime?.substring(0, 10))
             binding.btnAddRecorde.text = requireContext().getString(R.string.log_toolbar_edit)
             binding.btnAddRecorde.setOnClickListener {
-                val updatedRecord = createRecord(equipmentId).copy(id = it.id ?: 0)
+                val updatedRecord = createRecord(equipmentId, recordId = record.id ?: 0)
                 viewModel.updateRecord(updatedRecord)
             }
         } ?: run {
@@ -130,7 +128,6 @@ class AddLogFragment : Fragment() {
             null
         }
     }
-
     private fun setupObservers() {
         viewModel.addRecordResult.observe(viewLifecycleOwner) { result ->
             result.onSuccess {
@@ -201,14 +198,14 @@ class AddLogFragment : Fragment() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun createRecord(equipmentId: Int): Records {
+    private fun createRecord(equipmentId: Int,recordId : Int = 0): Records {
         val description = binding.etNewLogDes.text.toString().trim()
         val date = binding.etNewLogDate.text.toString().trim()
         val creationTimeIso = convertToIso8601(date)
         val currentTime = getCurrentIsoDateTime()
 
         return Records(
-            id = 0,
+            id = recordId,
             equipmentId = equipmentId,
             description = description,
             creationTime = creationTimeIso,

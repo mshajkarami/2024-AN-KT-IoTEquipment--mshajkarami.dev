@@ -81,7 +81,7 @@ class QRImageAnalyzer(
         val inputImage = InputImage.fromBitmap(bitmap, 0)
 
         val options = BarcodeScannerOptions.Builder()
-            .setBarcodeFormats(Barcode.FORMAT_QR_CODE, Barcode.FORMAT_AZTEC)
+            .setBarcodeFormats(Barcode.FORMAT_ALL_FORMATS)
             .build()
 
         val scanner: BarcodeScanner = BarcodeScanning.getClient(options)
@@ -116,7 +116,5 @@ class QRImageAnalyzer(
             break
         }
     }
-
-
 
 }

@@ -57,6 +57,14 @@
     <string name="qr_btn_gallery">Select from Gallery</string>
     <string name="qr_msg_help">Please place the barcode here</string>
     <string name="qr_msg_success">Barcode detected successfully ✅</string>
+    <string name="qr_msg_img_reading_fail">Error reading image</string>
+    <string name="qr_msg_img_permission_denied">Camera permission denied</string>
+    <string name="qr_msg_camera_permission_denied">Error reading image</string>
+    <string name="qr_title_camera">Camera</string>
+    <string name="qr_title_gallery">Gallery</string>
+    <string name="qr_permission_required_title">%1$s access required</string>
+    <string name="qr_btn_go_to_settings">Go to Settings</string>
+    <string name="qr_btn_cancel">Cancel</string>
 
     <!-- 🧭 Navigation -->
     <string name="menu_home">Home</string>

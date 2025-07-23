@@ -56,6 +56,7 @@ class EquipmentRepository @Inject constructor(
         try {
             val response = apiService.addOrUpdateRecord(record)
             if (response.isSuccessful) {
+                cachedItems = emptyList()
                 response.body()
             } else {
                 Log.e("API_ERROR", "Code: ${response.code()}, Message: ${response.message()}")
@@ -67,16 +68,13 @@ class EquipmentRepository @Inject constructor(
         }
     }
 
-
     suspend fun getDocumentForEquipment(id: Int): List<Document> =
         withContext(Dispatchers.IO) {
             val equipment = getEquipmentById(id)
             equipment?.documents?.forEach { doc ->
                 Log.d("Repo", "Document from API: $doc")
             }
-
             equipment?.documents ?: emptyList()
-
         }
 
     suspend fun search(query: String, onlyById: Boolean): List<Items> = withContext(Dispatchers.Default) {
@@ -100,6 +98,7 @@ class EquipmentRepository @Inject constructor(
         try {
             val response = apiService.addOrUpdateRecord(record)
             if (response.isSuccessful) {
+                cachedItems = emptyList()
                 response.body() ?: throw Exception("Empty response")
             } else {
                 throw Exception("API Error: ${response.code()} ${response.errorBody()?.string()}")

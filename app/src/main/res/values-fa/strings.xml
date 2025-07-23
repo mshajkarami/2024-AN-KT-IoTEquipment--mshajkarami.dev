@@ -58,6 +58,16 @@
     <string name="qr_btn_gallery">انتخاب از گالری</string>
     <string name="qr_msg_help">لطفا بارکد را در این محل قرار دهید</string>
     <string name="qr_msg_success">بارکد با موفقیت شناسایی شد ✅</string>
+    <string name="qr_msg_img_reading_fail">خطا در خواندن تصویر</string>
+    <string name="qr_msg_img_permission_denied">مجوز دسترسی به گالری رد شد</string>
+    <string name="qr_msg_camera_permission_denied">مجوز دوربین رد شد</string>
+    <string name="qr_title_camera">دوربین</string>
+    <string name="qr_title_gallery">گالری</string>
+    <string name="qr_permission_required_title">دسترسی %1$s مورد نیاز است</string>
+    <string name="qr_btn_go_to_settings">رفتن به تنظیمات</string>
+    <string name="qr_btn_cancel">لغو</string>
+
+
 
     <!-- 🧭 Navigation -->
     <string name="menu_home">خانه</string>
