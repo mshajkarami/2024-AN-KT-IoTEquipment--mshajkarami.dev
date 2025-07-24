@@ -41,6 +41,7 @@ class AddLogFragment : Fragment() {
     private val sharedViewModel: SharedViewModel by activityViewModels()
 
     private lateinit var pickFileLauncher: ActivityResultLauncher<String>
+    private var uploadedFile: File? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,11 +66,12 @@ class AddLogFragment : Fragment() {
             findNavController().navigateUp()
         }
     }
+
     private fun registerFilePicker() {
         pickFileLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
             val file = uri?.let { uriToFile(requireContext(), it) }
             if (file == null) {
-                showToast(requireContext().getString(R.string.msg_error_no_file_selected))
+                showToast(getString(R.string.msg_error_no_file_selected))
                 return@registerForActivityResult
             }
 
@@ -77,34 +79,39 @@ class AddLogFragment : Fragment() {
             val recordId = sharedViewModel.recordEquipmentId.value
 
             if (equipmentId != null) {
+                uploadedFile = file
                 viewModel.uploadDocument(equipmentId, recordId, file)
             } else {
-                showToast(requireContext().getString(R.string.msg_error_id_not_found))
+                showToast(getString(R.string.msg_error_id_not_found))
             }
         }
     }
+
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setupFormMode() {
         val recordToEdit = sharedViewModel.recordToEdit.value
         val equipmentId = sharedViewModel.equipmentId.value
 
         if (equipmentId == null) {
-            showToast(requireContext().getString(R.string.msg_error_id_invalid))
+            showToast(getString(R.string.msg_error_id_invalid))
             findNavController().navigateUp()
             return
         }
 
-        recordToEdit?.let { record ->
-            binding.etNewLogDes.setText(record.description)
-            binding.etNewLogDate.setText(record.creationTime?.substring(0, 10))
-            binding.btnAddRecorde.text = requireContext().getString(R.string.log_toolbar_edit)
+        if (recordToEdit != null) {
+            binding.etNewLogDes.setText(recordToEdit.description)
+            binding.etNewLogDate.setText(recordToEdit.creationTime?.substring(0, 10))
+            binding.btnAddRecorde.text = getString(R.string.log_toolbar_edit)
             binding.btnAddRecorde.setOnClickListener {
-                val updatedRecord = createRecord(equipmentId, recordId = record.id ?: 0)
-                viewModel.updateRecord(updatedRecord)
+                recordToEdit.id?.let { id ->
+                    val updatedRecord = createRecord(equipmentId, id)
+                    viewModel.updateRecord(updatedRecord)
+                } ?: showToast("خطا: شناسه‌ی رکورد یافت نشد")
             }
-        } ?: run {
+        } else {
             binding.btnAddRecorde.setOnClickListener {
-                viewModel.addRecord(createRecord(equipmentId))
+                val newRecord = createRecord(equipmentId)
+                viewModel.addRecord(newRecord)
             }
         }
 
@@ -112,6 +119,7 @@ class AddLogFragment : Fragment() {
             pickFileLauncher.launch("*/*")
         }
     }
+
     private fun uriToFile(context: Context, uri: Uri): File? {
         return try {
             val inputStream = context.contentResolver.openInputStream(uri)
@@ -125,13 +133,14 @@ class AddLogFragment : Fragment() {
             null
         }
     }
+
     private fun setupObservers() {
         viewModel.addRecordResult.observe(viewLifecycleOwner) { result ->
             result.onSuccess {
-                showToast(requireContext().getString(R.string.log_add_success))
+                showToast(getString(R.string.log_add_success))
                 findNavController().navigateUp()
             }.onFailure {
-                showToast("${requireContext().getString(R.string.log_add_fail)}${it.message}")
+                showToast("${getString(R.string.log_add_fail)} ${it.message}")
             }
         }
 
@@ -140,23 +149,29 @@ class AddLogFragment : Fragment() {
                 sharedViewModel.recordToEdit.value = null
                 binding.etNewLogDes.text?.clear()
                 binding.etNewLogDate.text?.clear()
-                showToast(requireContext().getString(R.string.log_edit_success))
+                showToast(getString(R.string.log_edit_success))
                 findNavController().navigateUp()
             }.onFailure {
-                showToast("${requireContext().getString(R.string.log_edit_fail)} ${it.message}")
+                showToast("${getString(R.string.log_edit_fail)} ${it.message}")
             }
         }
 
         viewModel.uploadState.observe(viewLifecycleOwner) { result ->
             result.onSuccess {
-                showToast(requireContext().getString(R.string.file_upload_success))
+                showToast(getString(R.string.file_upload_success))
             }.onFailure {
-                showToast("${requireContext().getString(R.string.file_upload_fail)}${it.message}")
+                showToast("${getString(R.string.file_upload_fail)} ${it.message}")
             }
         }
     }
+
     private fun setupToolbar() {
-        (requireActivity() as? MainActivity)?.setToolbarTitle(getString(R.string.log_toolbar_add))
+        val toolbarTitle = if (sharedViewModel.recordToEdit.value == null) {
+            getString(R.string.log_toolbar_add)
+        } else {
+            getString(R.string.log_toolbar_edit)
+        }
+        (requireActivity() as? MainActivity)?.setToolbarTitle(toolbarTitle)
         setupToolbarMenu()
     }
 
@@ -179,7 +194,7 @@ class AddLogFragment : Fragment() {
     private fun setupDatePicker() {
         binding.etNewLogDate.setOnClickListener {
             val picker = MaterialDatePicker.Builder.datePicker()
-                .setTitleText(requireContext().getString(R.string.msg_date_picker_select))
+                .setTitleText(getString(R.string.msg_date_picker_select))
                 .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
                 .build()
 
@@ -194,11 +209,15 @@ class AddLogFragment : Fragment() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun createRecord(equipmentId: Int,recordId : Int = 0): Records {
+    private fun createRecord(equipmentId: Int, recordId: Int = 0): Records {
         val description = binding.etNewLogDes.text.toString().trim()
         val date = binding.etNewLogDate.text.toString().trim()
         val creationTimeIso = convertToIso8601(date)
         val currentTime = getCurrentIsoDateTime()
+
+        if (creationTimeIso.isBlank()) {
+            showToast("تاریخ نامعتبر است")
+        }
 
         return Records(
             id = recordId,
@@ -210,7 +229,6 @@ class AddLogFragment : Fragment() {
         )
     }
 
-
     private fun getCurrentIsoDateTime(): String {
         val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US)
         sdf.timeZone = TimeZone.getTimeZone("UTC")
@@ -219,9 +237,13 @@ class AddLogFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun convertToIso8601(date: String): String {
-        val localDate = LocalDate.parse(date)
-        val startOfDay = localDate.atStartOfDay(ZoneOffset.UTC)
-        return startOfDay.toInstant().toString()
+        return try {
+            val localDate = LocalDate.parse(date)
+            val startOfDay = localDate.atStartOfDay(ZoneOffset.UTC)
+            startOfDay.toInstant().toString()
+        } catch (e: Exception) {
+            ""
+        }
     }
 
     private fun showToast(message: String) {

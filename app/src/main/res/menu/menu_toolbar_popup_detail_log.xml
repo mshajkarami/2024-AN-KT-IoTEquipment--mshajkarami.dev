@@ -10,7 +10,4 @@
     <item
         android:id="@+id/item_share"
         android:title="@string/toolbar_action_share"/>
-    <item
-        android:id="@+id/item_delete"
-        android:title="@string/toolbar_action_delete"/>
 </menu>

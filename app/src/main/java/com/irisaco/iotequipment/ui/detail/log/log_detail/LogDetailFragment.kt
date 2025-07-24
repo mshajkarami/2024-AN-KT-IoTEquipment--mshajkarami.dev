@@ -2,18 +2,19 @@ package com.irisaco.iotequipment.ui.detail.log.log_detail
 
 import android.os.Bundle
 import android.view.View
+
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.irisaco.iotequipment.MainActivity
 import com.irisaco.iotequipment.R
 import com.irisaco.iotequipment.ui.base.BaseFragment
 import com.irisaco.iotequipment.ui.detail.base_view_model.SharedViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import saman.zamani.persiandate.PersianDate
+import saman.zamani.persiandate.PersianDateFormat
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.TimeZone
@@ -50,8 +51,6 @@ class LogDetailFragment : BaseFragment() {
         val activity = requireActivity() as MainActivity
         activity.setToolbarTitle(getString(R.string.log_toolbar_detail))
 
-        observeDeleteResult()
-
         activity.setToolbarMenu(
             iconRes = R.drawable.ic_kebab,
             menuRes = R.menu.menu_toolbar_popup_detail_log
@@ -72,11 +71,6 @@ class LogDetailFragment : BaseFragment() {
                 }
 
                 R.id.item_share -> {
-
-                }
-
-                R.id.item_delete -> {
-                    showDeleteConfirmationDialog()
 
                 }
             }
@@ -102,49 +96,28 @@ class LogDetailFragment : BaseFragment() {
 
     override fun isSwipeRefreshEnabled(): Boolean = false
 
-    private fun observeDeleteResult() {
-        viewModel.deleteResult.observe(viewLifecycleOwner) { result ->
-            result.onSuccess {
-                Toast.makeText(requireContext(), "لاگ با موفقیت حذف شد", Toast.LENGTH_SHORT).show()
-                findNavController().navigateUp()
-            }.onFailure {
-                Toast.makeText(requireContext(), "خطا در حذف: ${it.message}", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
 
     fun formatIsoDateToReadable(isoDate: String): String {
         return try {
-            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
-            inputFormat.timeZone = TimeZone.getTimeZone("UTC")
-            val date = inputFormat.parse(isoDate)
+            val cleanedIso = isoDate.replace(Regex("\\.\\d{6}"), "")
 
-            val outputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-            outputFormat.format(date!!)
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.ENGLISH)
+            inputFormat.timeZone = TimeZone.getTimeZone("UTC")
+            val date = inputFormat.parse(cleanedIso) ?: return isoDate
+
+            return if (Locale.getDefault().language == "fa") {
+                val persianDate = PersianDate(date.time)
+                val persianFormat = PersianDateFormat("Y/m/d")
+                persianFormat.format(persianDate)
+            } else {
+                val outputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                outputFormat.format(date)
+            }
         } catch (e: Exception) {
             isoDate
         }
     }
 
-    private fun showDeleteConfirmationDialog() {
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle("حذف لاگ")
-            .setMessage("آیا از حذف این لاگ مطمئن هستید؟ این عملیات غیرقابل بازگشت است.")
-            .setPositiveButton("حذف") { _, _ ->
-                performDelete()
-            }
-            .setNegativeButton("انصراف", null)
-            .show()
-    }
-
-    private fun performDelete() {
-        val equipmentId = sharedViewModel.equipmentId.value
-        if (equipmentId != null && recordId != -1) {
-            viewModel.deleteRecord(equipmentId, recordId)
-        } else {
-            Toast.makeText(requireContext(), "شناسه‌ها نامعتبر هستند", Toast.LENGTH_SHORT).show()
-        }
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -153,7 +126,3 @@ class LogDetailFragment : BaseFragment() {
     }
 
 }
-
-
-
-

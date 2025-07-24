@@ -1,6 +1,8 @@
 package com.irisaco.iotequipment
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.ContextThemeWrapper
 import android.view.Gravity
@@ -35,6 +37,7 @@ import com.irisaco.iotequipment.utils.NetworkConnectionLiveData
 import com.irisaco.iotequipment.utils.NetworkStatusListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import androidx.core.net.toUri
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -80,7 +83,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnChangeThem.setOnClickListener {
-            Toast.makeText(this,getString(R.string.no_mvp), Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.no_mvp), Toast.LENGTH_SHORT).show()
         }
 
         authViewModel.networkStatus.observe(this) { isConnected ->
@@ -163,6 +166,28 @@ class MainActivity : AppCompatActivity() {
                         .show()
                     true
                 }
+
+                R.id.nav_web_view -> {
+                    val url = "https://www.irisaco.com/"
+                    val intent = Intent(Intent.ACTION_VIEW, url.toUri())
+                    startActivity(intent)
+                    true
+                }
+
+                R.id.nav_help -> {
+                    Toast.makeText(this,
+                        getString(R.string.no_mvp),
+                        Toast.LENGTH_SHORT).show()
+                    true
+                }
+
+                R.id.nav_about -> {
+                    Toast.makeText(this,
+                        getString(R.string.no_mvp),
+                        Toast.LENGTH_SHORT).show()
+                    true
+                }
+
 
                 else -> {
                     val handled = NavigationUI.onNavDestinationSelected(menuItem, navController)

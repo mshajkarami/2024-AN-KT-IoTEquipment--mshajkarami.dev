@@ -11,9 +11,13 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.irisaco.iotequipment.R
 import com.irisaco.iotequipment.data.model.Records
+import saman.zamani.persiandate.PersianDate
+import saman.zamani.persiandate.PersianDateFormat
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
+import java.util.Date
+import java.util.Locale
 
 class EquipmentLogListAdapter (
     private val onItemClick: (Records) -> Unit
@@ -61,12 +65,22 @@ class EquipmentLogListAdapter (
     @RequiresApi(Build.VERSION_CODES.O)
     fun formatIsoDate(isoDate: String): String {
         return try {
-            val instant = Instant.parse(isoDate)
-            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-                .withZone(ZoneId.systemDefault())
-            formatter.format(instant)
+            val cleanedIso = isoDate.replace(Regex("\\.\\d{6}"), "")
+
+            val instant = Instant.parse(cleanedIso)
+            val date = Date.from(instant)
+
+            return if (Locale.getDefault().language == "fa") {
+                val persianDate = PersianDate(date.time)
+                val formatter = PersianDateFormat("Y/m/d")
+                formatter.format(persianDate)
+            } else {
+                val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+                    .withZone(ZoneId.systemDefault())
+                formatter.format(instant)
+            }
         } catch (e: Exception) {
-            "تاریخ نامعتبر"
+            "Invalid date"
         }
     }
 

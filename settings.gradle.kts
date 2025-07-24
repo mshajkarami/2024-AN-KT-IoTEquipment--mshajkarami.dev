@@ -20,6 +20,10 @@ dependencyResolutionManagement {
         maven {
             url = uri("https://maven.myket.ir")
         }
+        maven {
+            url = uri("https://jitpack.io")
+        }
+
         google()
         mavenCentral()
     }
