@@ -6,7 +6,11 @@ import android.view.ContextThemeWrapper
 import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.PopupMenu
+import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -18,16 +22,19 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.irisaco.iotequipment.databinding.ActivityMainBinding
+import com.irisaco.iotequipment.ui.auth.AuthViewModel
 import com.irisaco.iotequipment.ui.components.NoInternetBottomSheet
 import com.irisaco.iotequipment.ui.detail.base_view_model.SharedViewModel
 import com.irisaco.iotequipment.utils.LocaleHelper
 import com.irisaco.iotequipment.utils.NetworkConnectionLiveData
 import com.irisaco.iotequipment.utils.NetworkStatusListener
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -38,6 +45,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private val shareViewModel: SharedViewModel by viewModels()
+
+    private val authViewModel: AuthViewModel by viewModels()
     internal var isConnectedToInternet: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,6 +63,34 @@ class MainActivity : AppCompatActivity() {
         observeNetwork()
 
         readIntentExtras()
+
+        setupNavigationHeader()
+
+    }
+
+    private fun setupNavigationHeader() {
+        val headerView = binding.navView.getHeaderView(0)
+        val imageView = headerView.findViewById<ImageView>(R.id.profileImageView)
+        val btnChangeThem = headerView.findViewById<ImageButton>(R.id.btnChangeThem)
+        val userName = headerView.findViewById<TextView>(R.id.nav_header_name)
+        val userState = headerView.findViewById<TextView>(R.id.nav_header_state)
+
+        lifecycleScope.launch {
+            userName.text = authViewModel.getUserName()
+        }
+
+        btnChangeThem.setOnClickListener {
+            Toast.makeText(this,getString(R.string.no_mvp), Toast.LENGTH_SHORT).show()
+        }
+
+        authViewModel.networkStatus.observe(this) { isConnected ->
+            userState.text = if (isConnected) {
+                getString(R.string.setting_profile_online)
+            } else {
+                getString(R.string.setting_profile_offline)
+            }
+        }
+
     }
 
     override fun attachBaseContext(newBase: Context) {
@@ -300,6 +337,8 @@ class MainActivity : AppCompatActivity() {
         networkConnection.observe(this) { isConnected ->
             isConnectedToInternet = isConnected
 
+            authViewModel.updateNetworkStatus(isConnected)
+
             val navHostFragment =
                 supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as? NavHostFragment
 
@@ -326,7 +365,4 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun Int.dpToPx(): Int = (this * resources.displayMetrics.density).toInt()
-
-
-
 }

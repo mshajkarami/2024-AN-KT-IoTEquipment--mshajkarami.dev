@@ -99,6 +99,8 @@
     <string name="setting_display_name">Display Name :%1$s</string>
     <string name="setting_profile_online">online</string>
     <string name="setting_profile_offline">offline</string>
+    <string name="check_your_connection">Check your connection then refresh the page</string>
+
     <!-- 📌 Tabs -->
     <string name="tab_description">Description</string>
     <string name="tab_logs">Logs</string>
@@ -138,11 +140,15 @@
     <string name="msg_email_anonymous">Email not available</string>
     <string name="msg_user_welcome">Welcome</string>
     <string name="msg_user_login_fail">Login failed: </string>
+    <string name="connection_fail">No internet connection</string>
 
 
 
     <!-- ✅ Yes / No -->
     <string name="yes">Yes</string>
     <string name="no">No</string>
+
+
+    <string name="no_mvp">This feature is not available in the MVP version.</string>
 
 </resources>

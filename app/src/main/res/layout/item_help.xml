@@ -23,6 +23,7 @@
             />
         <!-- Support -->
         <LinearLayout
+            android:id="@+id/supportLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
@@ -63,6 +64,7 @@
 
         <!-- Terms -->
         <LinearLayout
+            android:id="@+id/termsLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"

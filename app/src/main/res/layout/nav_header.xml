@@ -10,12 +10,12 @@
     android:padding="16dp">
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/profileImageView"
         android:layout_width="64dp"
         android:layout_height="65dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:contentDescription="User Image"
+        android:contentDescription="@string/user_trial"
         android:src="@drawable/ic_profile"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -29,22 +29,22 @@
         android:textColor="@color/md_theme_onPrimaryContainer"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3"
+        app:layout_constraintTop_toBottomOf="@+id/profileImageView"
         tools:layout_editor_absoluteX="16dp" />
 
     <TextView
-        android:id="@+id/nav_header_mail"
+        android:id="@+id/nav_header_state"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="diannerussell@mail.com"
+        android:text="@string/setting_profile_online"
         android:textColor="@color/md_theme_onPrimaryContainer"
         android:textSize="12sp"
         app:layout_constraintTop_toBottomOf="@+id/nav_header_name"
         tools:layout_editor_absoluteX="16dp" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/btnChangeThem"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_marginTop="24dp"

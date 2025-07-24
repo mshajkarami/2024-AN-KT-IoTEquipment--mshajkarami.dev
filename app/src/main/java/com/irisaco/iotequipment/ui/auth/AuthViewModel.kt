@@ -36,6 +36,12 @@ class AuthViewModel @Inject constructor(
 
     private val _isLoggedInLiveData = MutableLiveData<Boolean>()
     val isLoggedInLiveData: LiveData<Boolean> = _isLoggedInLiveData
+    private val _networkStatus = MutableLiveData<Boolean>()
+    val networkStatus: LiveData<Boolean> = _networkStatus
+
+    fun updateNetworkStatus(isConnected: Boolean) {
+        _networkStatus.value = isConnected
+    }
 
     private val authService = AuthorizationService(
         context,

@@ -13,10 +13,12 @@ import com.irisaco.iotequipment.utils.NetworkStatusListener
 
 abstract class BaseFragment : Fragment(), NetworkStatusListener {
 
-    lateinit var swipeRefreshLayout: SwipeRefreshLayout
-    lateinit var baseContent: FrameLayout
+    // Views
+    protected lateinit var swipeRefreshLayout: SwipeRefreshLayout
+    protected lateinit var baseContent: FrameLayout
     private lateinit var noInternetLayout: View
     private lateinit var actualContentLayout: View
+    private lateinit var emptyDataLayout: View
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,42 +27,49 @@ abstract class BaseFragment : Fragment(), NetworkStatusListener {
     ): View {
         val baseView = inflater.inflate(R.layout.fragment_base, container, false)
 
+        // Init views
         swipeRefreshLayout = baseView.findViewById(R.id.swipeRefreshLayout)
+        swipeRefreshLayout.isEnabled = isSwipeRefreshEnabled()
+
         baseContent = baseView.findViewById(R.id.baseContent)
-
-        val contentLayout = inflater.inflate(getLayoutId(), baseContent, false)
-        baseContent.addView(contentLayout)
-
         noInternetLayout = baseView.findViewById(R.id.noInternetLayout)
         actualContentLayout = baseView.findViewById(R.id.actualContentLayout)
+        emptyDataLayout = baseView.findViewById(R.id.emptyDataLayout)
+
+        // Inflate content layout
+        val contentLayout = inflater.inflate(getLayoutId(), baseContent, false)
+        baseContent.addView(contentLayout)
 
         return baseView
     }
 
     override fun onResume() {
         super.onResume()
-        val activity = activity as? MainActivity
-        activity?.let {
-            onNetworkChanged(it.isConnectedToInternet)
+        (activity as? MainActivity)?.let { mainActivity ->
+            onNetworkChanged(mainActivity.isConnectedToInternet)
         }
     }
 
     override fun onNetworkChanged(isConnected: Boolean) {
         if (isConnected) {
             noInternetLayout.visibility = View.GONE
-            actualContentLayout.visibility = View.VISIBLE
-
+            showEmptyState(false)
             onInternetRestored()
-
         } else {
             noInternetLayout.visibility = View.VISIBLE
             actualContentLayout.visibility = View.GONE
+            emptyDataLayout.visibility = View.GONE
         }
     }
 
-    abstract fun getLayoutId(): Int
-
-    protected open fun onInternetRestored() {
+    protected fun showEmptyState(isEmpty: Boolean) {
+        emptyDataLayout.visibility = if (isEmpty) View.VISIBLE else View.GONE
+        actualContentLayout.visibility = if (isEmpty) View.GONE else View.VISIBLE
     }
-}
 
+    protected abstract fun getLayoutId(): Int
+
+    protected open fun onInternetRestored() {}
+    protected open fun isSwipeRefreshEnabled(): Boolean = true
+
+}

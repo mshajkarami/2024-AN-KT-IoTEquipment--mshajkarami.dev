@@ -43,6 +43,8 @@ class HomeFragment : BaseFragment() {
 
     }
 
+    override fun isSwipeRefreshEnabled(): Boolean = false
+
     override fun onResume() {
         super.onResume()
         val activity = requireActivity() as MainActivity

@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/md_theme_background">
 
     <LinearLayout
+        android:id="@+id/settingsRoot"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:orientation="vertical">
 
         <include
@@ -24,13 +27,15 @@
         <include
             android:id="@+id/include_preferences"
             layout="@layout/item_preferences"
-
             />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="10dp" />
 
-        <include layout="@layout/item_help" />
+        <include
+            android:id="@+id/include_help"
+            layout="@layout/item_help"
+            />
     </LinearLayout>
 </ScrollView>

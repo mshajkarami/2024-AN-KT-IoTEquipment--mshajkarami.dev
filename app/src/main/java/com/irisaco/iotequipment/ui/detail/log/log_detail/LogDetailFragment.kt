@@ -100,6 +100,8 @@ class LogDetailFragment : BaseFragment() {
         }
     }
 
+    override fun isSwipeRefreshEnabled(): Boolean = false
+
     private fun observeDeleteResult() {
         viewModel.deleteResult.observe(viewLifecycleOwner) { result ->
             result.onSuccess {
