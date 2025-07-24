@@ -100,7 +100,8 @@
     <string name="setting_select_language">انتخاب زبان</string>
     <string name="setting_email">ایمیل: %1$s</string>
     <string name="setting_display_name">نام نمایشی: %1$s</string>
-
+    <string name="setting_profile_online">آنلاین</string>
+    <string name="setting_profile_offline">آفلاین</string>
 
     <!-- 📌 Tabs -->
     <string name="tab_description">توضیحات</string>

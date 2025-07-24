@@ -76,8 +76,9 @@
         android:textDirection="ltr"
         android:layout_gravity="left"
         android:fitsSystemWindows="true"
-        android:background="@color/md_theme_background"
+        android:background="@color/md_theme_surfaceContainerHigh"
         app:menu="@menu/drawer_menu"
+        app:itemTextColor="@color/md_theme_onSurface"
         app:headerLayout="@layout/nav_header" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

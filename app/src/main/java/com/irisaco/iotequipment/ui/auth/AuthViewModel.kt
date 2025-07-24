@@ -57,6 +57,7 @@ class AuthViewModel @Inject constructor(
             "com.irisaco.iotequipment://oauth2redirect".toUri()
         )
             .setScope("email profile")
+            .setPrompt("login")
             .build()
 
         return authService.getAuthorizationRequestIntent(authRequest)
@@ -81,6 +82,7 @@ class AuthViewModel @Inject constructor(
                             AuthState(response, tokenResponse, ex)
                         )
                         repository.saveBasicAccountInfoFromAppAuth()
+                        checkLoginState()
                         onDone(true, null)
                     } else {
                         onDone(false, ex?.errorDescription)
@@ -134,6 +136,4 @@ class AuthViewModel @Inject constructor(
             onLogoutComplete()
         }
     }
-
-
 }

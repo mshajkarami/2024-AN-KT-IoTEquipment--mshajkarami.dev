@@ -1,38 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="180dp"
+    android:background="@color/md_theme_primaryContainer"
     android:gravity="bottom"
-    android:background="@color/md_theme_secondary_mediumContrast"
+    android:orientation="vertical"
     android:padding="16dp">
 
     <ImageView
-        android:src="@drawable/ic_profile"
+        android:id="@+id/imageView3"
         android:layout_width="64dp"
         android:layout_height="65dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
         android:contentDescription="User Image"
-        />
+        android:src="@drawable/ic_profile"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/nav_header_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textDirection="ltr"
+        android:layout_marginTop="8dp"
         android:text="@string/user_trial"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
+        android:textColor="@color/md_theme_onPrimaryContainer"
         android:textSize="16sp"
-        android:layout_marginTop="8dp"/>
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3"
+        tools:layout_editor_absoluteX="16dp" />
 
     <TextView
         android:id="@+id/nav_header_mail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textDirection="ltr"
+        android:layout_marginTop="4dp"
         android:text="diannerussell@mail.com"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/md_theme_onPrimaryContainer"
         android:textSize="12sp"
-        android:layout_marginTop="8dp"/>
-</LinearLayout>
+        app:layout_constraintTop_toBottomOf="@+id/nav_header_name"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="4dp"
+        android:background="@null"
+        android:scaleX="-1"
+        android:rotation="20"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_night_mode" />
+</androidx.constraintlayout.widget.ConstraintLayout>

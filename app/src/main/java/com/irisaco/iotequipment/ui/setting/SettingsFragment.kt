@@ -7,7 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AlertDialog
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.irisaco.iotequipment.R
@@ -39,9 +39,45 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupClickListeners()
-        observeLanguage()
-        loadUserInfo()
+        val languageLayout = binding.includePreferences.languageLayout
+        val languageText = binding.includePreferences.currentLanguageText
+        val accountUserNameLayout = binding.includeProfile.txtUserName
+        val accountNameLayout = binding.itemAccount.txtDisplayName
+        val accountEmailLayout = binding.itemAccount.txtEmailName
+        val btnLogout = binding.includePreferences.logoutLayout
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            val userName = authViewModel.getUserName()
+            val displayName = authViewModel.getDisplayName()
+            val emailName = authViewModel.getEmailName()
+
+            setTextOrAnonymous(accountUserNameLayout, userName, R.string.msg_user_anonymous)
+            setTextOrFormatted(accountNameLayout, displayName, R.string.setting_display_name, R.string.msg_user_anonymous)
+            setTextOrFormatted(accountEmailLayout, emailName, R.string.setting_email, R.string.msg_email_anonymous)
+        }
+
+        languageLayout.setOnClickListener {
+            val bottomSheet = LanguageBottomSheet()
+            bottomSheet.onLanguageSelected = { selectedLang ->
+                applyLanguage(selectedLang)
+                activity?.recreate()
+            }
+            bottomSheet.show(parentFragmentManager, "LanguageBottomSheet")
+        }
+
+        lifecycleScope.launch {
+            LanguageDataStore.getLanguageFlow(requireContext()).collect { lang ->
+                languageText.text = when (lang) {
+                    "en" -> getString(R.string.settings_language_en)
+                    "fa" -> getString(R.string.settings_language_fa)
+                    else -> getString(R.string.settings_language_fa)
+                }
+            }
+        }
+
+        btnLogout.setOnClickListener {
+            showLogoutConfirmationDialog()
+        }
     }
 
     override fun onDestroyView() {
@@ -49,71 +85,27 @@ class SettingsFragment : Fragment() {
         _binding = null
     }
 
-    private fun setupClickListeners() = with(binding) {
-        includePreferences.languageLayout.setOnClickListener {
-            showLanguageBottomSheet()
-        }
-
-        includePreferences.logoutLayout.setOnClickListener {
-            showLogoutConfirmationDialog()
-        }
+    private fun setTextOrAnonymous(textView: TextView, value: String?, anonymousResId: Int) {
+        textView.text = if (!value.isNullOrEmpty()) value else getString(anonymousResId)
     }
 
-    private fun observeLanguage() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            LanguageDataStore.getLanguageFlow(requireContext()).collect { lang ->
-                val languageText = when (lang) {
-                    "en" -> getString(R.string.settings_language_en)
-                    "fa" -> getString(R.string.settings_language_fa)
-                    else -> getString(R.string.settings_language_fa)
-                }
-                binding.includePreferences.currentLanguageText.text = languageText
-            }
-        }
-    }
-
-    private fun loadUserInfo() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            val userName = authViewModel.getUserName().orAnonymous(R.string.msg_user_anonymous)
-            val displayName = authViewModel.getDisplayName()?.let {
-                getString(R.string.setting_display_name, it)
-            }.orAnonymous(R.string.msg_user_anonymous)
-            val email = authViewModel.getEmailName()?.let {
-                getString(R.string.setting_email, it)
-            }.orAnonymous(R.string.msg_email_anonymous)
-
-            binding.includeProfile.txtUserName.text = userName
-            binding.itemAccount.txtDisplayName.text = displayName
-            binding.itemAccount.txtEmailName.text = email
-        }
-    }
-
-    private fun showLanguageBottomSheet() {
-        val bottomSheet = LanguageBottomSheet().apply {
-            onLanguageSelected = { selectedLang ->
-                applyLanguage(selectedLang)
-            }
-        }
-        bottomSheet.show(parentFragmentManager, "LanguageBottomSheet")
+    private fun setTextOrFormatted(textView: TextView, value: String?, formattedResId: Int, anonymousResId: Int) {
+        textView.text = if (!value.isNullOrEmpty()) getString(formattedResId, value) else getString(anonymousResId)
     }
 
     private fun applyLanguage(lang: String) {
         val locale = Locale(lang)
         Locale.setDefault(locale)
 
-        val config = Configuration().apply {
-            setLocale(locale)
-        }
+        val config = Configuration()
+        config.setLocale(locale)
 
-        requireContext()
-            .getSharedPreferences("app_settings", Context.MODE_PRIVATE)
-            .edit { putString("language", lang) }
-
-        requireActivity().recreate()
+        val prefs = requireContext().getSharedPreferences("app_settings", Context.MODE_PRIVATE)
+        prefs.edit { putString("language", lang) }
     }
 
     private fun showLogoutConfirmationDialog() {
-        AlertDialog.Builder(requireContext())
+        androidx.appcompat.app.AlertDialog.Builder(requireContext())
             .setTitle(R.string.logout_dialog_title)
             .setMessage(R.string.logout_dialog_message)
             .setPositiveButton(R.string.logout_dialog_confirm) { _, _ ->
@@ -126,13 +118,5 @@ class SettingsFragment : Fragment() {
             }
             .setNegativeButton(R.string.logout_dialog_cancel, null)
             .show()
-    }
-
-    private fun String?.orAnonymous(resId: Int): String {
-        return if (!isNullOrEmpty()) this else getString(resId)
-    }
-
-    private fun CharSequence?.orAnonymous(resId: Int): String {
-        return if (!isNullOrEmpty()) this.toString() else getString(resId)
     }
 }

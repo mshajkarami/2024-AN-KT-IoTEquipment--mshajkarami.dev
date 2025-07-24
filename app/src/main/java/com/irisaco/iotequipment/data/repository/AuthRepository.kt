@@ -73,7 +73,7 @@ class AuthRepository @Inject constructor(
         appAuthManager.clearAuthState()
         cachedAccount = null
     }
-    fun getCachedAccount(): AccountEntity? = cachedAccount
+
     suspend fun loadActiveAccountFromDb() {
         cachedAccount = accountDao.getActiveAccount()
     }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:elevation="4dp"
+    android:elevation="2dp"
     android:radius="12dp">
 
 
@@ -18,6 +18,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/settings_preferences"
+            android:textColor="@color/md_theme_onSurface"
+            android:textAppearance="?attr/textAppearanceTitleMedium"
+            android:textDirection="locale"
             android:layout_gravity="start" />
 
         <!-- Notification -->
@@ -51,8 +54,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#CCC" />
-
+            android:background="@color/md_theme_outlineVariant"/>
         <!-- Language -->
         <LinearLayout
             android:id="@+id/languageLayout"
@@ -90,7 +92,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#CCC" />
+            android:background="@color/md_theme_outlineVariant"/>
 
         <!-- Theme -->
         <LinearLayout
@@ -128,7 +130,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#CCC" />
+            android:background="@color/md_theme_outlineVariant"/>
 
         <!-- Logout -->
         <LinearLayout

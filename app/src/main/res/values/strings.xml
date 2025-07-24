@@ -97,9 +97,8 @@
     <string name="setting_select_language">Language selection</string>
     <string name="setting_email">email :%1$s</string>
     <string name="setting_display_name">Display Name :%1$s</string>
-
-
-
+    <string name="setting_profile_online">online</string>
+    <string name="setting_profile_offline">offline</string>
     <!-- 📌 Tabs -->
     <string name="tab_description">Description</string>
     <string name="tab_logs">Logs</string>
@@ -145,4 +144,5 @@
     <!-- ✅ Yes / No -->
     <string name="yes">Yes</string>
     <string name="no">No</string>
+
 </resources>

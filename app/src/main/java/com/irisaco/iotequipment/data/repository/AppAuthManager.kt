@@ -23,21 +23,32 @@ class AppAuthManager @Inject constructor(
         )
     }
 
+    private var cachedAuthState: AuthState? = null
+
     fun saveAuthState(authState: AuthState) {
-        prefs.edit { putString("auth_state", authState.jsonSerializeString()) }
+        cachedAuthState = authState
+        prefs.edit {
+            putString("auth_state", authState.jsonSerializeString())
+        }
     }
 
     fun readAuthState(): AuthState? {
-        return prefs.getString("auth_state", null)?.let {
-            try {
-                AuthState.jsonDeserialize(it)
-            } catch (e: Exception) {
-                null
+        if (cachedAuthState != null) return cachedAuthState
+
+        val serialized = prefs.getString("auth_state", null) ?: return null
+        return try {
+            AuthState.jsonDeserialize(serialized).also {
+                cachedAuthState = it
             }
+        } catch (e: Exception) {
+            null
         }
     }
 
     fun clearAuthState() {
-        prefs.edit { remove("auth_state") }
+        cachedAuthState = null
+        prefs.edit {
+            remove("auth_state")
+        }
     }
 }

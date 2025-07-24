@@ -1,37 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/md_theme_background"
-    android:paddingRight="8dp"
-    android:paddingLeft="8dp"
-    >
+    android:background="@color/md_theme_background">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <include layout="@layout/item_profile"
+        <include
             android:id="@+id/include_profile"
-            />
+            layout="@layout/item_profile" />
 
-        <include layout="@layout/item_account"
+        <include
             android:id="@+id/item_account"
-            />
+            layout="@layout/item_account" />
 
-        <View android:layout_width="match_parent"
+        <View
+            android:layout_width="match_parent"
             android:layout_height="10dp" />
 
         <include
-            layout="@layout/item_preferences"
             android:id="@+id/include_preferences"
+            layout="@layout/item_preferences"
 
             />
 
-        <View android:layout_width="match_parent"
+        <View
+            android:layout_width="match_parent"
             android:layout_height="10dp" />
+
         <include layout="@layout/item_help" />
     </LinearLayout>
 </ScrollView>
