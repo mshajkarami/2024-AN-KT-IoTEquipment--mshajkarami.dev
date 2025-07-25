@@ -1,9 +1,10 @@
 package com.irisaco.iotequipment.ui.detail.log.log_detail
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
-
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -27,7 +28,6 @@ class LogDetailFragment : BaseFragment() {
     lateinit var assistedFactory: LogDetailViewModelAssistedFactory
     private val sharedViewModel: SharedViewModel by activityViewModels()
 
-
     private lateinit var viewModel: LogDetailViewModel
 
     private var recordId: Int = -1
@@ -36,6 +36,7 @@ class LogDetailFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
 
         val equipmentId = sharedViewModel.equipmentId.value ?: -1
         viewModel = ViewModelProvider(
@@ -67,11 +68,19 @@ class LogDetailFragment : BaseFragment() {
                 }
 
                 R.id.item_print -> {
-
+                    Toast.makeText(requireContext(), getString(R.string.no_mvp), Toast.LENGTH_SHORT)
+                        .show()
                 }
 
                 R.id.item_share -> {
-
+                    viewModel.getRecordById(recordId).observe(viewLifecycleOwner) { record ->
+                        record?.let {
+                            val formattedDate = formatIsoDateToReadable(it.creationTime.toString())
+                            val content =
+                                "${getString(R.string.log_hint_date)} $formattedDate\n${getString(R.string.log_hint_description)} ${it.description}"
+                            shareLog(content)
+                        }
+                    }
                 }
             }
             true
@@ -84,7 +93,8 @@ class LogDetailFragment : BaseFragment() {
                     val formattedDate = formatIsoDateToReadable(it.creationTime.toString())
                     tvDate.text = getString(R.string.equipment_label_date, formattedDate)
                     val description = it.description
-                    tvDetail.text = this.getString(R.string.equipment_label_description, description)
+                    tvDetail.text =
+                        this.getString(R.string.equipment_label_description, description)
                 }
             }
         }
@@ -95,7 +105,6 @@ class LogDetailFragment : BaseFragment() {
     }
 
     override fun isSwipeRefreshEnabled(): Boolean = false
-
 
     fun formatIsoDateToReadable(isoDate: String): String {
         return try {
@@ -118,6 +127,14 @@ class LogDetailFragment : BaseFragment() {
         }
     }
 
+    private fun shareLog(text: String) {
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_SUBJECT, getString(R.string.log_toolbar_detail))
+            putExtra(Intent.EXTRA_TEXT, text)
+        }
+        startActivity(Intent.createChooser(intent, getString(R.string.msg_share_with)))
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

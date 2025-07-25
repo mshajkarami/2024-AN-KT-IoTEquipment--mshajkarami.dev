@@ -25,11 +25,12 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class LogListFragment : Fragment() {
 
+
     @Inject
     lateinit var viewModelFactory: DetailViewModelFactory
 
     private val roleViewModel: RoleViewModel by viewModels ()
-    private val sharedVm: SharedViewModel by activityViewModels()
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     private lateinit var adapter: EquipmentLogListAdapter
     private lateinit var btnAddLog: ImageButton
@@ -76,15 +77,17 @@ class LogListFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        roleViewModel.canAddOrEditLog.observe(viewLifecycleOwner) { allowed ->
+//        roleViewModel.canAddOrEditLog.observe(viewLifecycleOwner) { allowed ->
 //            btnAddLog.isVisible = allowed
-        }
+//        }
 
         viewModel.equipmentRecords.observe(viewLifecycleOwner) { records ->
             adapter.submitList(records)
         }
 
         viewModel.loadEquipmentRecords()
+
+        sharedViewModel.equipmentId.value = equipmentId
     }
 
     private fun setupListeners() {
@@ -94,7 +97,7 @@ class LogListFragment : Fragment() {
     }
 
     private fun openLogDetailDialog(records: Records) {
-        sharedVm.recordEquipmentId.value = records.id
+        sharedViewModel.recordEquipmentId.value = records.id
         findNavController().navigate(R.id.action_equipmentDetailFragment_to_logDetailFragment)
     }
 

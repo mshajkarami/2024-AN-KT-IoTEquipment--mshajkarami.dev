@@ -43,7 +43,7 @@ interface EquipmentApiService {
 
 
     @Multipart
-    @POST("equipment/{equipmentId}/records/{recordId}/upload")
+    @POST("/api/Document/UploadFile")
     suspend fun uploadRecordDocument(
         @Path("equipmentId") equipmentId: Int,
         @Path("recordId") recordId: Int?,

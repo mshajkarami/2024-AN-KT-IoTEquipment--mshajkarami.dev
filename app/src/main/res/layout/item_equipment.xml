@@ -63,6 +63,8 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="@string/equipment_label_name" />
 
+
+
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_img"
             android:layout_width="60dp"
@@ -72,14 +74,17 @@
             app:cardElevation="1dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-
             <ImageView
                 android:id="@+id/img"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:contentDescription="@string/equipment_image_label"
                 android:scaleType="centerCrop" />
+
         </com.google.android.material.card.MaterialCardView>
+
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,7 +1,6 @@
 package com.irisaco.iotequipment.di.module
 
 import com.irisaco.iotequipment.data.remote.EquipmentApiService
-import com.irisaco.iotequipment.data.remote.KeycloakAuthService
 import com.irisaco.iotequipment.data.repository.AuthRepository
 import com.irisaco.iotequipment.ui.auth.AuthInterceptor
 import com.irisaco.iotequipment.utils.FileDownloadApi

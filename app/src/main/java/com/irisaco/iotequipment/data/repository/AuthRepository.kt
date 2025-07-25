@@ -6,7 +6,6 @@ import android.util.Log
 import androidx.annotation.RequiresApi
 import com.irisaco.iotequipment.data.local.AccountDao
 import com.irisaco.iotequipment.data.local.AccountEntity
-import com.irisaco.iotequipment.data.remote.KeycloakAuthService
 import com.irisaco.iotequipment.domain.UserRole
 import dagger.hilt.android.qualifiers.ApplicationContext
 import net.openid.appauth.AuthState

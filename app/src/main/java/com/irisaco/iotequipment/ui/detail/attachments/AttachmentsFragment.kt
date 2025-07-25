@@ -34,6 +34,9 @@ class AttachmentsFragment : BaseFragment() {
 
     override fun getLayoutId(): Int = R.layout.fragment_attachments
 
+    override fun isSwipeRefreshEnabled(): Boolean = false
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -59,9 +62,9 @@ class AttachmentsFragment : BaseFragment() {
         observeDownloadAllTrigger()
         observeRefreshAllTrigger()
         observeShareAllTrigger()
-        swipeRefreshLayout.setOnRefreshListener {
-            refreshDocuments()
-        }
+//        swipeRefreshLayout.setOnRefreshListener {
+//            refreshDocuments()
+//        }
     }
     private fun observeViewModelTriggers() {
         val combinedLiveData = MediatorLiveData<Pair<Int, Int?>>()
