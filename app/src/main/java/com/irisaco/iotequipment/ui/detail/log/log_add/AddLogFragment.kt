@@ -106,7 +106,7 @@ class AddLogFragment : Fragment() {
                 recordToEdit.id?.let { id ->
                     val updatedRecord = createRecord(equipmentId, id)
                     viewModel.updateRecord(updatedRecord)
-                } ?: showToast("خطا: شناسه‌ی رکورد یافت نشد")
+                } ?: showToast(getString(R.string.msg_error_id_invalid))
             }
         } else {
             binding.btnAddRecorde.setOnClickListener {
@@ -216,7 +216,7 @@ class AddLogFragment : Fragment() {
         val currentTime = getCurrentIsoDateTime()
 
         if (creationTimeIso.isBlank()) {
-            showToast("تاریخ نامعتبر است")
+            showToast(getString(R.string.msg_error_date_invalid))
         }
 
         return Records(

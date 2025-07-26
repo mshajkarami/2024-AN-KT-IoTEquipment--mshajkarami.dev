@@ -31,6 +31,7 @@ class SearchFragment : BaseFragment() {
     private lateinit var searchBar: TextInputEditText
     private val args: SearchFragmentArgs by navArgs()
     private val skeletonAdapter by lazy { SkeletonAdapter(6) }
+    private lateinit var progressBar : LottieAnimationView
     private lateinit var recyclerView: RecyclerView
 
     override fun getLayoutId(): Int = R.layout.fragment_search
@@ -46,16 +47,13 @@ class SearchFragment : BaseFragment() {
             viewModel.manualRefresh()
         }
 
-
-
-
         viewModel.isRefreshing.observe(viewLifecycleOwner) {
             swipeRefreshLayout.isRefreshing = it
         }
 
         recyclerView = view.findViewById(R.id.search_recyclerView)
         searchBar = view.findViewById(R.id.search_bar)
-        val progressBar = view.findViewById<LottieAnimationView>(R.id.progressBar)
+        progressBar = view.findViewById(R.id.progressBarSearch)
 
         adapter = EquipmentPagerAdapter(emptyList()) { equipmentId ->
             bindDetailFragment(equipmentId)

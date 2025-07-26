@@ -131,6 +131,7 @@
     <string name="msg_error_no_file_selected">No file selected!</string>
     <string name="msg_error_id_not_found">Device ID not found</string>
     <string name="msg_error_id_invalid">Invalid Device ID</string>
+    <string name="msg_error_date_invalid">The date is invalid</string>
     <string name="msg_download_success">All files downloaded successfully ✅</string>
     <string name="msg_download_fail">Download failed ❌</string>
     <string name="msg_download_summary">%1$d files downloaded successfully, %2$d failed ⚠️</string>

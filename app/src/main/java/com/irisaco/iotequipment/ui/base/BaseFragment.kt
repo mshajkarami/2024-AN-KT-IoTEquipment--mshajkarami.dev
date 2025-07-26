@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.airbnb.lottie.LottieAnimationView
 import com.irisaco.iotequipment.MainActivity
 import com.irisaco.iotequipment.R
 import com.irisaco.iotequipment.utils.NetworkStatusListener
@@ -19,6 +21,8 @@ abstract class BaseFragment : Fragment(), NetworkStatusListener {
     private lateinit var noInternetLayout: View
     private lateinit var actualContentLayout: View
     private lateinit var emptyDataLayout: View
+    private lateinit var baseProgressBar: LottieAnimationView
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,6 +39,7 @@ abstract class BaseFragment : Fragment(), NetworkStatusListener {
         noInternetLayout = baseView.findViewById(R.id.noInternetLayout)
         actualContentLayout = baseView.findViewById(R.id.actualContentLayout)
         emptyDataLayout = baseView.findViewById(R.id.emptyDataLayout)
+        baseProgressBar = baseView.findViewById(R.id.baseProgressBar)
 
         // Inflate content layout
         val contentLayout = inflater.inflate(getLayoutId(), baseContent, false)
@@ -65,6 +70,12 @@ abstract class BaseFragment : Fragment(), NetworkStatusListener {
     protected fun showEmptyState(isEmpty: Boolean) {
         emptyDataLayout.visibility = if (isEmpty) View.VISIBLE else View.GONE
         actualContentLayout.visibility = if (isEmpty) View.GONE else View.VISIBLE
+    }
+
+    protected fun showInitialLoading(isLoading: Boolean) {
+        baseProgressBar.isVisible = isLoading
+        actualContentLayout.isVisible = !isLoading
+        emptyDataLayout.isVisible = false
     }
 
     protected abstract fun getLayoutId(): Int

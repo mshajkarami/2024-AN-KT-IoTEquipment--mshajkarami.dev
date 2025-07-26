@@ -46,8 +46,6 @@ class LogDetailFragment : BaseFragment() {
         )[LogDetailViewModel::class.java]
 
 
-
-
         val tvDate = view.findViewById<TextView>(R.id.logDate)
         val tvDetail = view.findViewById<TextView>(R.id.logDetail)
         val btnAttachment = view.findViewById<MaterialButton>(R.id.btn_logAttachment)
@@ -140,9 +138,4 @@ class LogDetailFragment : BaseFragment() {
         startActivity(Intent.createChooser(intent, getString(R.string.msg_share_with)))
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        val activity = requireActivity() as MainActivity
-        activity.setDefaultToolbarIcon()
-    }
 }

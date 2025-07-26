@@ -66,6 +66,7 @@ class LogListFragment : Fragment() {
 
 
     private fun setupViews(view: View) {
+        sharedViewModel.recordId.value = null
         btnAddLog = view.findViewById(R.id.btn_add_log)
     }
 
@@ -77,10 +78,6 @@ class LogListFragment : Fragment() {
     }
 
     private fun setupObservers() {
-//        roleViewModel.canAddOrEditLog.observe(viewLifecycleOwner) { allowed ->
-//            btnAddLog.isVisible = allowed
-//        }
-
         viewModel.equipmentRecords.observe(viewLifecycleOwner) { records ->
             adapter.submitList(records)
         }
