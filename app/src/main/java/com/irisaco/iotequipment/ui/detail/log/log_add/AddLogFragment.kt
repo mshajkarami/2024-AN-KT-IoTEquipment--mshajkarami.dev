@@ -76,7 +76,7 @@ class AddLogFragment : Fragment() {
             }
 
             val equipmentId = sharedViewModel.equipmentId.value
-            val recordId = sharedViewModel.recordEquipmentId.value
+            val recordId = sharedViewModel.recordId.value
 
             if (equipmentId != null) {
                 uploadedFile = file

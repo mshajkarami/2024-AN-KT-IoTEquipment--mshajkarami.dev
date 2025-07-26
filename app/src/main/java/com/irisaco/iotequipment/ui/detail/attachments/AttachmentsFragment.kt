@@ -70,11 +70,11 @@ class AttachmentsFragment : BaseFragment() {
         val combinedLiveData = MediatorLiveData<Pair<Int, Int?>>()
 
         combinedLiveData.addSource(sharedViewModel.equipmentId) { equipId ->
-            val recordId = sharedViewModel.recordEquipmentId.value
+            val recordId = sharedViewModel.recordId.value
             if (equipId != null) combinedLiveData.value = equipId to recordId
         }
 
-        combinedLiveData.addSource(sharedViewModel.recordEquipmentId) { recId ->
+        combinedLiveData.addSource(sharedViewModel.recordId) { recId ->
             val equipId = sharedViewModel.equipmentId.value
             if (equipId != null) combinedLiveData.value = equipId to recId
         }
@@ -187,9 +187,4 @@ class AttachmentsFragment : BaseFragment() {
         swipeRefreshLayout.isRefreshing = false
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        sharedViewModel.equipmentId.value = null
-        sharedViewModel.recordEquipmentId.value = null
-    }
 }

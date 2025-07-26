@@ -18,7 +18,7 @@ class DetailFragment : Fragment() {
     private lateinit var tabLayout: TabLayout
     private var equipmentId: Int = -1
 
-    val vm by activityViewModels<SharedViewModel>()
+    val sharedViewModel by activityViewModels<SharedViewModel>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,7 +26,7 @@ class DetailFragment : Fragment() {
         arguments?.let {
             val args = DetailFragmentArgs.fromBundle(it)
             equipmentId = args.equipmentId
-            vm.equipmentId.value = equipmentId
+            sharedViewModel.equipmentId.value = equipmentId
         }
     }
 

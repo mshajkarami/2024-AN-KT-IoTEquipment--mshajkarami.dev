@@ -39,15 +39,31 @@ class LogDetailFragment : BaseFragment() {
 
 
         val equipmentId = sharedViewModel.equipmentId.value ?: -1
+
         viewModel = ViewModelProvider(
             this,
             LogDetailViewModelFactory(assistedFactory, equipmentId)
         )[LogDetailViewModel::class.java]
 
 
+
+
         val tvDate = view.findViewById<TextView>(R.id.logDate)
         val tvDetail = view.findViewById<TextView>(R.id.logDetail)
         val btnAttachment = view.findViewById<MaterialButton>(R.id.btn_logAttachment)
+
+        sharedViewModel.recordId.value?.let { id ->
+            recordId = id
+            viewModel.getRecordById(recordId).observe(viewLifecycleOwner) { record ->
+                record?.let {
+                    val formattedDate = formatIsoDateToReadable(it.creationTime.toString())
+                    tvDate.text = getString(R.string.equipment_label_date, formattedDate)
+                    val description = it.description
+                    tvDetail.text =
+                        this.getString(R.string.equipment_label_description, description)
+                }
+            }
+        }
 
         val activity = requireActivity() as MainActivity
         activity.setToolbarTitle(getString(R.string.log_toolbar_detail))
@@ -86,18 +102,6 @@ class LogDetailFragment : BaseFragment() {
             true
         }
 
-        sharedViewModel.recordEquipmentId.value?.let { id ->
-            recordId = id
-            viewModel.getRecordById(recordId).observe(viewLifecycleOwner) { record ->
-                record?.let {
-                    val formattedDate = formatIsoDateToReadable(it.creationTime.toString())
-                    tvDate.text = getString(R.string.equipment_label_date, formattedDate)
-                    val description = it.description
-                    tvDetail.text =
-                        this.getString(R.string.equipment_label_description, description)
-                }
-            }
-        }
 
         btnAttachment.setOnClickListener {
             findNavController().navigate(LogDetailFragmentDirections.actionLogDetailFragmentToAttachmentsFragment())
@@ -141,5 +145,4 @@ class LogDetailFragment : BaseFragment() {
         val activity = requireActivity() as MainActivity
         activity.setDefaultToolbarIcon()
     }
-
 }

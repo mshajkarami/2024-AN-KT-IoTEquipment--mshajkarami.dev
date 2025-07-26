@@ -34,6 +34,7 @@ class DetailEquipmentFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         equipmentId = arguments?.getInt("equipmentId") ?: -1
+        sharedViewModel.recordId.value = null
     }
 
     private val viewModel: DetailViewModel by viewModels {

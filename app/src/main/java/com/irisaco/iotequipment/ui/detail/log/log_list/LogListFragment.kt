@@ -86,8 +86,6 @@ class LogListFragment : Fragment() {
         }
 
         viewModel.loadEquipmentRecords()
-
-        sharedViewModel.equipmentId.value = equipmentId
     }
 
     private fun setupListeners() {
@@ -97,7 +95,7 @@ class LogListFragment : Fragment() {
     }
 
     private fun openLogDetailDialog(records: Records) {
-        sharedViewModel.recordEquipmentId.value = records.id
+        sharedViewModel.recordId.value = records.id
         findNavController().navigate(R.id.action_equipmentDetailFragment_to_logDetailFragment)
     }
 

@@ -8,7 +8,7 @@ import com.irisaco.iotequipment.data.model.Records
 class SharedViewModel : ViewModel() {
 
     val equipmentId = MutableLiveData<Int>()
-    val recordEquipmentId = MutableLiveData<Int?>()
+    val recordId = MutableLiveData<Int?>()
     val recordToEdit = MutableLiveData<Records>()
     private val _downloadAllTrigger = MutableLiveData<Unit>()
     val downloadAllTrigger: LiveData<Unit> get() = _downloadAllTrigger
@@ -24,7 +24,7 @@ class SharedViewModel : ViewModel() {
     }
 
     fun setRecordEquipmentId(id: Int?) {
-        recordEquipmentId.value = id
+        recordId.value = id
     }
     fun triggerDownloadAll() {
         _downloadAllTrigger.value = Unit
