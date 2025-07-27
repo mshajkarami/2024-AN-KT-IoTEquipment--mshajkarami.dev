@@ -238,9 +238,14 @@ class AddLogFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun convertToIso8601(date: String): String {
         return try {
-            val localDate = LocalDate.parse(date)
-            val startOfDay = localDate.atStartOfDay(ZoneOffset.UTC)
-            startOfDay.toInstant().toString()
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            inputFormat.timeZone = TimeZone.getDefault()
+
+            val parsedDate = inputFormat.parse(date) ?: return ""
+            val outputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US)
+            outputFormat.timeZone = TimeZone.getTimeZone("UTC")
+
+            outputFormat.format(parsedDate)
         } catch (e: Exception) {
             ""
         }

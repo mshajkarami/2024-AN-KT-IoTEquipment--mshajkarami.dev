@@ -110,11 +110,10 @@ class LogDetailFragment : BaseFragment() {
 
     fun formatIsoDateToReadable(isoDate: String): String {
         return try {
-            val cleanedIso = isoDate.replace(Regex("\\.\\d{6}"), "")
-
-            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.ENGLISH)
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH)
             inputFormat.timeZone = TimeZone.getTimeZone("UTC")
-            val date = inputFormat.parse(cleanedIso) ?: return isoDate
+
+            val date = inputFormat.parse(isoDate) ?: return isoDate
 
             return if (Locale.getDefault().language == "fa") {
                 val persianDate = PersianDate(date.time)
@@ -128,6 +127,7 @@ class LogDetailFragment : BaseFragment() {
             isoDate
         }
     }
+
 
     private fun shareLog(text: String) {
         val intent = Intent(Intent.ACTION_SEND).apply {
