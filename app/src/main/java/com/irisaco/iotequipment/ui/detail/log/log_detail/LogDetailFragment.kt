@@ -102,7 +102,7 @@ class LogDetailFragment : BaseFragment() {
 
 
         btnAttachment.setOnClickListener {
-            findNavController().navigate(LogDetailFragmentDirections.actionLogDetailFragmentToAttachmentsFragment())
+            findNavController().navigate(LogDetailFragmentDirections.actionLogDetailFragmentToAttachmentsFragment(-1))
         }
     }
 

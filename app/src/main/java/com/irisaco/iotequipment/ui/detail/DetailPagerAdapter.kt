@@ -8,22 +8,18 @@ import com.irisaco.iotequipment.ui.detail.log.log_list.LogListFragment
 
 
 class DetailPagerAdapter(
-    fragment: Fragment,
-    private val equipmentId: Int
+    fragment: Fragment
 ) : FragmentStateAdapter(fragment) {
 
     override fun getItemCount(): Int = 2
 
 
     override fun createFragment(position: Int): Fragment {
-        val fragment = when (position) {
+        return when (position) {
             0 -> DetailEquipmentFragment()
             1 -> LogListFragment()
             else -> throw IllegalArgumentException("Invalid tab index")
         }
-        fragment.arguments = Bundle().apply {
-            putInt("equipmentId", equipmentId)
-        }
-        return fragment
     }
+
 }

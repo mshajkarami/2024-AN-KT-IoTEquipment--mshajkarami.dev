@@ -9,6 +9,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
@@ -31,6 +32,8 @@ class AttachmentsFragment : BaseFragment() {
     private lateinit var recyclerView: RecyclerView
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private lateinit var viewModel: AttachmentsViewModel
+    val args: AttachmentsFragmentArgs by navArgs()
+
 
     override fun getLayoutId(): Int = R.layout.fragment_attachments
 
@@ -39,6 +42,10 @@ class AttachmentsFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if (sharedViewModel.equipmentId.value == null && args.equipmentId != -1) {
+            sharedViewModel.setEquipmentId(args.equipmentId)
+        }
 
         recyclerView = view.findViewById(R.id.attachmentRecyclerView)
         adapter = AttachmentsAdapter { document, callback ->

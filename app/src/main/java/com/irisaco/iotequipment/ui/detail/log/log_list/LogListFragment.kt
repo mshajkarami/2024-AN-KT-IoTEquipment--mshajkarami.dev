@@ -19,6 +19,7 @@ import com.irisaco.iotequipment.domain.RoleViewModel
 import com.irisaco.iotequipment.ui.detail.base_view_model.DetailViewModel
 import com.irisaco.iotequipment.ui.detail.base_view_model.DetailViewModelFactory
 import com.irisaco.iotequipment.ui.detail.base_view_model.SharedViewModel
+import com.irisaco.iotequipment.ui.search.SearchFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -29,7 +30,7 @@ class LogListFragment : Fragment() {
     @Inject
     lateinit var viewModelFactory: DetailViewModelFactory
 
-    private val roleViewModel: RoleViewModel by viewModels ()
+    private val roleViewModel: RoleViewModel by viewModels()
     private val sharedViewModel: SharedViewModel by activityViewModels()
 
     private lateinit var adapter: EquipmentLogListAdapter
@@ -40,10 +41,15 @@ class LogListFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        equipmentId = arguments?.getInt("equipmentId") ?: -1
+        equipmentId = sharedViewModel.equipmentId.value ?: -1
+        sharedViewModel.recordId.value = null
 
         if (equipmentId == -1) {
-            Toast.makeText(context, requireContext().getString(R.string.msg_error_id_invalid), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                context,
+                requireContext().getString(R.string.msg_error_id_invalid),
+                Toast.LENGTH_SHORT
+            ).show()
             findNavController().popBackStack()
         }
     }
@@ -51,6 +57,7 @@ class LogListFragment : Fragment() {
     private val viewModel: DetailViewModel by viewModels {
         viewModelFactory.create(equipmentId)
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -72,7 +79,12 @@ class LogListFragment : Fragment() {
 
     private fun setupRecyclerView(view: View) {
         val recyclerView: RecyclerView = view.findViewById(R.id.logRecyclerView)
-        adapter = EquipmentLogListAdapter { record -> openLogDetailDialog(record) }
+        adapter = EquipmentLogListAdapter(
+            onItemClick = { record -> openLogDetailDialog(record) },
+            onAttachmentClick = { recordId ->
+                sharedViewModel.recordId.value = recordId
+                findNavController().navigate(R.id.action_global_attachmentsFragment)
+            })
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
     }
@@ -105,4 +117,3 @@ class LogListFragment : Fragment() {
         viewModel.loadEquipmentRecords()
     }
 }
-

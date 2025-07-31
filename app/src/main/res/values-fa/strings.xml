@@ -52,7 +52,7 @@
     <string name="log_edit_fail">خطا در ویرایش لاگ ❌</string>
 
     <!-- 📁 Attachments -->
-    <string name="attachment_btn_open">فایل‌های پیوست</string>
+    <string name="attachment_btn_open">فایل ‌های پیوست</string>
     <string name="attachment_btn_add">افزودن فایل پیوست</string>
     <string name="toolbar_title_attachments">فایل‌های پیوست</string>
     <string name="file_upload_success">فایل با موفقیت آپلود شد ✅</string>

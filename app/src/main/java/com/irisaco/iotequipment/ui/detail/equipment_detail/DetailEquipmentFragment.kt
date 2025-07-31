@@ -21,7 +21,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.getValue
-@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 @AndroidEntryPoint
 class DetailEquipmentFragment : Fragment() {
     private lateinit var binding: FragmentEquipmentDetailBinding
@@ -33,7 +32,7 @@ class DetailEquipmentFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        equipmentId = arguments?.getInt("equipmentId") ?: -1
+        equipmentId = sharedViewModel.equipmentId.value ?: -1
         sharedViewModel.recordId.value = null
     }
 

@@ -16,17 +16,15 @@ class DetailFragment : Fragment() {
 
     private lateinit var viewPager : ViewPager2
     private lateinit var tabLayout: TabLayout
-    private var equipmentId: Int = -1
 
-    val sharedViewModel by activityViewModels<SharedViewModel>()
+    val sharedViewModel : SharedViewModel by activityViewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             val args = DetailFragmentArgs.fromBundle(it)
-            equipmentId = args.equipmentId
-            sharedViewModel.equipmentId.value = equipmentId
+            sharedViewModel.equipmentId.value = args.equipmentId
         }
     }
 
@@ -40,8 +38,7 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewPager = view.findViewById(R.id.viewPager)
         tabLayout = view.findViewById(R.id.tab_state_description)
-        val args = DetailFragmentArgs.fromBundle(requireArguments())
-        val adapter = DetailPagerAdapter (this,args.equipmentId)
+        val adapter = DetailPagerAdapter (this)
         viewPager.adapter = adapter
         viewPager.offscreenPageLimit = 2
 

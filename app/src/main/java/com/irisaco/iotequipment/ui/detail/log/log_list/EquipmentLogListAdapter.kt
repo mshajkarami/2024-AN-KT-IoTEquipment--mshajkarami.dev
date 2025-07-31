@@ -1,6 +1,7 @@
 package com.irisaco.iotequipment.ui.detail.log.log_list
 
 import android.os.Build
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.button.MaterialButton
 import com.irisaco.iotequipment.R
 import com.irisaco.iotequipment.data.model.Records
 import saman.zamani.persiandate.PersianDate
@@ -20,7 +22,8 @@ import java.util.Date
 import java.util.Locale
 
 class EquipmentLogListAdapter (
-    private val onItemClick: (Records) -> Unit
+    private val onItemClick: (Records) -> Unit,
+    private val onAttachmentClick: (recordId: Int) -> Unit
     ) :
     ListAdapter<Records, EquipmentLogListAdapter.LogViewHolder>(DiffCallback()) {
 
@@ -38,17 +41,26 @@ class EquipmentLogListAdapter (
     inner class LogViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val tvDate: TextView = itemView.findViewById(R.id.tv_log_name)
         private val tvDescription: TextView = itemView.findViewById(R.id.tv_log_description)
+        private val btnAttachment: MaterialButton = itemView.findViewById(R.id.btn_open_attachment)
 
         @RequiresApi(Build.VERSION_CODES.O)
         fun bind(records: Records) {
             val context = itemView.context
             val recordDate = records.creationTime
             val formattedDate = formatIsoDate(recordDate.toString())
-            tvDate.text = context.getString(R.string.equipment_label_date, formattedDate)
             val recordDis = records.description
+
+            val isRTL = TextUtils.getLayoutDirectionFromLocale(Locale.getDefault()) == View.LAYOUT_DIRECTION_RTL
+            val iconRes = if (isRTL) R.drawable.ic_left else R.drawable.ic_right
+            btnAttachment.setIconResource(iconRes)
+
+            tvDate.text = context.getString(R.string.equipment_label_date, formattedDate)
             tvDescription.text = context.getString(R.string.equipment_label_description,recordDis)
             itemView.setOnClickListener {
                 onItemClick(records)
+            }
+            btnAttachment.setOnClickListener {
+                onAttachmentClick(records.id ?: -1)
             }
         }
     }

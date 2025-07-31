@@ -31,7 +31,7 @@ class SearchFragment : BaseFragment() {
     private lateinit var searchBar: TextInputEditText
     private val args: SearchFragmentArgs by navArgs()
     private val skeletonAdapter by lazy { SkeletonAdapter(6) }
-    private lateinit var progressBar : LottieAnimationView
+    private lateinit var progressBar: LottieAnimationView
     private lateinit var recyclerView: RecyclerView
 
     override fun getLayoutId(): Int = R.layout.fragment_search
@@ -55,9 +55,14 @@ class SearchFragment : BaseFragment() {
         searchBar = view.findViewById(R.id.search_bar)
         progressBar = view.findViewById(R.id.progressBarSearch)
 
-        adapter = EquipmentPagerAdapter(emptyList()) { equipmentId ->
+        adapter = EquipmentPagerAdapter(emptyList(), onItemClick = {
+            equipmentId ->
             bindDetailFragment(equipmentId)
+        }, onAttachmentClick = {
+            equipmentId ->
+            bindAttachmentFragment(equipmentId)
         }
+        )
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
@@ -75,10 +80,12 @@ class SearchFragment : BaseFragment() {
 
         searchBar.requestFocus()
         searchBar.postDelayed({
-            val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            val imm =
+                requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.showSoftInput(searchBar, InputMethodManager.SHOW_IMPLICIT)
         }, 100)
     }
+
     private fun observeViewModel(adapter: EquipmentPagerAdapter, progressBar: LottieAnimationView) {
         viewModel.equipmentList.observe(viewLifecycleOwner) { equipmentList ->
             adapter.updateData(equipmentList)
@@ -100,6 +107,7 @@ class SearchFragment : BaseFragment() {
             }
         }
     }
+
     private fun setupSearchBarListener() {
         var searchJob: Job? = null
         searchBar.addTextChangedListener(object : TextWatcher {
@@ -116,6 +124,7 @@ class SearchFragment : BaseFragment() {
                     }
                 }
             }
+
             override fun afterTextChanged(s: Editable?) {}
         })
 
@@ -127,14 +136,22 @@ class SearchFragment : BaseFragment() {
                 } else {
                     viewModel.onSearch(query, true)
                 }
-                val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                val imm =
+                    requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(searchBar.windowToken, 0)
                 true
             } else false
         }
     }
+
     private fun bindDetailFragment(equipmentId: Int) {
-        val action = SearchFragmentDirections.actionSearchFragmentToEquipmentDetailFragment(equipmentId)
+        val action =
+            SearchFragmentDirections.actionSearchFragmentToEquipmentDetailFragment(equipmentId)
+        findNavController().navigate(action)
+    }
+
+    private fun bindAttachmentFragment(equipmentId: Int) {
+        val action = SearchFragmentDirections.actionSearchFragmentToAttachmentsFragment(equipmentId)
         findNavController().navigate(action)
     }
 
