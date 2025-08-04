@@ -52,8 +52,9 @@
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/ic_back"
-                android:scaleX="-1"
+                android:src="@drawable/ic_arrow_right"
+                android:layoutDirection="locale"
+                android:rotationY="0"
                 />
 
         </LinearLayout>
@@ -92,8 +93,9 @@
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/ic_back"
-                android:scaleX="-1"
+                android:src="@drawable/ic_arrow_right"
+                android:layoutDirection="locale"
+                android:rotationY="0"
                 />
 
         </LinearLayout>

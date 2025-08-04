@@ -33,7 +33,7 @@
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/ic_notifications" />
+                android:src="@drawable/ic_bell" />
 
             <TextView
                 android:layout_width="0dp"
@@ -147,7 +147,7 @@
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/ic_logout" />
+                android:src="@drawable/ic_log_out" />
 
             <TextView
                 android:layout_width="0dp"

@@ -230,25 +230,25 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun configureSearchToolbar() {
-        setupToolbarNavigation(R.drawable.ic_back) { navController.navigateUp() }
+        setupToolbarNavigation(R.drawable.ic_arrow_left) { navController.navigateUp() }
         setDefaultToolbarIcon()
         setToolbarTitle(getString(R.string.toolbar_default_text))
     }
 
     private fun configureSettingsToolbar() {
         setToolbarTitle(getString(R.string.toolbar_setting_text))
-        setupToolbarNavigation(R.drawable.ic_back) { navController.navigateUp() }
+        setupToolbarNavigation(R.drawable.ic_arrow_left) { navController.navigateUp() }
         setToolbarMenu(R.drawable.ic_help_question)
     }
 
     private fun configureAttachmentsToolbar() {
-        setupToolbarNavigation(R.drawable.ic_back) { navController.navigateUp() }
+        setupToolbarNavigation(R.drawable.ic_arrow_left) { navController.navigateUp() }
         setDefaultToolbarIcon()
         setupAttachmentMenu()
     }
 
     private fun configureAddLogToolbar() {
-        setupToolbarNavigation(R.drawable.ic_back) { navController.navigateUp() }
+        setupToolbarNavigation(R.drawable.ic_arrow_left) { navController.navigateUp() }
         setDefaultToolbarIcon()
         setToolbarTitle(getString(R.string.log_toolbar_add))
         setToolbarMenu(
@@ -263,18 +263,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun configureEquipmentDetailToolbar() {
-        setupToolbarNavigation(R.drawable.ic_back) { navController.navigateUp() }
+        setupToolbarNavigation(R.drawable.ic_arrow_left) { navController.navigateUp() }
         setDefaultToolbarIcon()
         setToolbarTitle(getString(R.string.toolbar_default_text))
     }
 
     private fun configureLogDetailToolbar() {
-        setupToolbarNavigation(R.drawable.ic_back) { navController.navigateUp() }
+        setupToolbarNavigation(R.drawable.ic_arrow_left) { navController.navigateUp() }
         setDefaultToolbarIcon()
     }
 
     private fun configureDefaultToolbar() {
-        setupToolbarNavigation(R.drawable.ic_back) { navController.navigateUp() }
+        setupToolbarNavigation(R.drawable.ic_arrow_left) { navController.navigateUp() }
         setDefaultToolbarIcon()
     }
 

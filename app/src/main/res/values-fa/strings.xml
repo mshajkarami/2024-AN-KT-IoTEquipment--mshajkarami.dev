@@ -152,5 +152,10 @@
     <string name="no">خیر</string>
 
     <string name="no_mvp">این ویژگی در نسخه MVP در دسترس نیست </string>
+    <string name="setting_log_setting">تنظیمات لاگ</string>
+    <string name="setting_log_date_format">فرمت تاریخ لاگ</string>
+    <string name="gregorian">میلادی</string>
+    <string name="setting_offline_mode">حالت آفلاین</string>
+    <string name="inactive">غیرفعال</string>
 
 </resources>

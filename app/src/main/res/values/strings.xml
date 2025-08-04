@@ -150,5 +150,10 @@
     <string name="no">No</string>
 
     <string name="no_mvp">This feature is not available in the MVP version.</string>
+    <string name="setting_log_setting">Log setting</string>
+    <string name="setting_log_date_format">Log date format</string>
+    <string name="gregorian">Gregorian</string>
+    <string name="setting_offline_mode">Offline mode</string>
+    <string name="inactive">Inactive</string>
 
 </resources>

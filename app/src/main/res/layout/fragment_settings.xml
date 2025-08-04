@@ -37,5 +37,14 @@
             android:id="@+id/include_help"
             layout="@layout/item_help"
             />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <include
+            android:id="@+id/include_log_settings"
+            layout="@layout/item_log_settings"
+            />
     </LinearLayout>
 </ScrollView>
