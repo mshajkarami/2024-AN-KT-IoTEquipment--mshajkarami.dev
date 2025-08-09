@@ -3,14 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav_graph"
-    app:startDestination="@id/homeFragment"
-    >
+    app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.irisaco.iotequipment.ui.home.HomeFragment"
-        tools:layout="@layout/fragment_home"
-        android:label="" >
+        android:label=""
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_searchFragment"
             app:destination="@id/searchFragment"
@@ -27,12 +26,12 @@
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.irisaco.iotequipment.ui.search.SearchFragment"
-        tools:layout="@layout/fragment_search"
-        android:label="" >
+        android:label=""
+        tools:layout="@layout/fragment_search">
         <argument
             android:name="equipmentIdUnique"
-            app:argType="string"
-            android:defaultValue="" />
+            android:defaultValue=""
+            app:argType="string" />
 
         <action
             android:id="@+id/action_searchFragment_to_equipmentDetailFragment"
@@ -57,8 +56,8 @@
 
         <action
             android:id="@+id/action_global_attachmentsFragment"
-            app:launchSingleTop="true"
-            app:destination="@id/attachmentsFragment" />
+            app:destination="@id/attachmentsFragment"
+            app:launchSingleTop="true" />
 
         <action
             android:id="@+id/action_equipmentDetailFragment_to_searchFragment"
@@ -76,12 +75,11 @@
         android:id="@+id/attachmentsFragment"
         android:name="com.irisaco.iotequipment.ui.detail.attachments.AttachmentsFragment"
         android:label=""
-        tools:layout="@layout/fragment_attachments" >
+        tools:layout="@layout/fragment_attachments">
 
         <argument
             android:name="equipmentId"
-            app:argType="integer"
-            />
+            app:argType="integer" />
 
         <action
             android:id="@+id/action_attachmentsFragment_to_equipmentDetailFragment"
@@ -90,9 +88,9 @@
 
     <fragment
         android:id="@+id/logDetailFragment"
-        tools:layout="@layout/fragment_detail_log"
         android:name="com.irisaco.iotequipment.ui.detail.log.log_detail.LogDetailFragment"
-        android:label="" >
+        android:label=""
+        tools:layout="@layout/fragment_detail_log">
 
         <action
             android:id="@+id/action_logDetailFragment_to_addLogFragment"
@@ -105,8 +103,8 @@
     <fragment
         android:id="@+id/addLogFragment"
         android:name="com.irisaco.iotequipment.ui.detail.log.log_add.AddLogFragment"
-        tools:layout="@layout/fragment_add_log"
-        android:label="" >
+        android:label=""
+        tools:layout="@layout/fragment_add_log">
 
     </fragment>
 
@@ -114,11 +112,20 @@
         android:id="@+id/action_global_settingsFragment"
         app:destination="@id/settingsFragment"
         app:launchSingleTop="true" />
-
     <fragment
         android:id="@+id/settingsFragment"
-        tools:layout="@layout/fragment_settings"
         android:name="com.irisaco.iotequipment.ui.setting.SettingsFragment"
-        android:label="" />
+        android:label=""
+        tools:layout="@layout/fragment_settings" />
+
+    <action
+        android:id="@+id/action_global_aboutFragment"
+        app:destination="@id/aboutFragment"
+        app:launchSingleTop="true" />
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.irisaco.iotequipment.ui.about.AboutFragment"
+        android:label="fragment_about"
+        tools:layout="@layout/fragment_about" />
 
 </navigation>

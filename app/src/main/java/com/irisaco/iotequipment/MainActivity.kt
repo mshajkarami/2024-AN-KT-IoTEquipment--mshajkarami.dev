@@ -9,6 +9,7 @@ import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
@@ -38,6 +39,7 @@ import com.irisaco.iotequipment.utils.NetworkStatusListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import androidx.core.net.toUri
+import androidx.navigation.findNavController
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -74,7 +76,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupNavigationHeader() {
         val headerView = binding.navView.getHeaderView(0)
-//        val imageView = headerView.findViewById<ImageView>(R.id.profileImageView)
+        val imageView = headerView.findViewById<ImageView>(R.id.profileImageView)
         val btnChangeThem = headerView.findViewById<ImageButton>(R.id.btnChangeThem)
         val userName = headerView.findViewById<TextView>(R.id.nav_header_name)
         val userState = headerView.findViewById<TextView>(R.id.nav_header_state)
@@ -144,6 +146,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.addLogFragment -> configureAddLogToolbar()
                 R.id.equipmentDetailFragment -> configureEquipmentDetailToolbar()
                 R.id.logDetailFragment -> configureLogDetailToolbar()
+                R.id.aboutFragment -> configureAboutToolbar()
                 else -> configureDefaultToolbar()
             }
             val navHostFragment =
@@ -182,14 +185,6 @@ class MainActivity : AppCompatActivity() {
                         Toast.LENGTH_SHORT).show()
                     true
                 }
-
-                R.id.nav_about -> {
-                    Toast.makeText(this,
-                        getString(R.string.no_mvp),
-                        Toast.LENGTH_SHORT).show()
-                    true
-                }
-
 
                 else -> {
                     val handled = NavigationUI.onNavDestinationSelected(menuItem, navController)
@@ -269,6 +264,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun configureLogDetailToolbar() {
+        setToolbarTitle(getString(R.string.log_toolbar_detail))
+        setupToolbarNavigation(R.drawable.ic_arrow_left) { navController.navigateUp() }
+        setDefaultToolbarIcon()
+    }
+
+    private fun configureAboutToolbar() {
+        setToolbarTitle(getString(R.string.menu_about))
         setupToolbarNavigation(R.drawable.ic_arrow_left) { navController.navigateUp() }
         setDefaultToolbarIcon()
     }
@@ -394,3 +396,5 @@ class MainActivity : AppCompatActivity() {
 
     private fun Int.dpToPx(): Int = (this * resources.displayMetrics.density).toInt()
 }
+
+

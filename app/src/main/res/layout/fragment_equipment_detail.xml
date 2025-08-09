@@ -56,36 +56,79 @@
                 app:layout_constraintStart_toEndOf="@+id/card_img"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/txt_equipment_version"
+            <LinearLayout
+                android:id="@+id/versionLayout"
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="12dp"
-                android:maxLines="1"
-                android:text="@{String.format(@string/equipment_label_version, viewModel.version)}"
-                android:textColor="@color/md_theme_scrim"
-                android:textSize="16sp"
-                android:textStyle="bold"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="15dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center_vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/card_img"
-                app:layout_constraintTop_toBottomOf="@+id/txt_equipment_name" />
+                app:layout_constraintTop_toBottomOf="@+id/txt_equipment_name">
 
-            <TextView
-                android:id="@+id/txt_equipment_type"
+                <TextView
+                    android:id="@+id/txt_equipment_version"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:maxLines="1"
+                    android:text="@{String.format(@string/equipment_label_version, viewModel.version)}"
+                    android:textColor="@color/md_theme_scrim"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/btn_open_version_detail"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layoutDirection="locale"
+                    android:rotationY="0"
+                    android:src="@drawable/ic_arrow_right"
+                    app:tint="@color/md_theme_onSurfaceVariant" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/TypeLayout"
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="12dp"
-                android:text="@{String.format(@string/equipment_label_type, viewModel.type)}"
-                android:textColor="@color/md_theme_scrim"
-                android:textSize="16sp"
-                android:textStyle="bold"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="15dp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center_vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/card_img"
-                app:layout_constraintTop_toBottomOf="@+id/txt_equipment_version" />
+                app:layout_constraintTop_toBottomOf="@+id/versionLayout">
+
+                <TextView
+                    android:id="@+id/txt_equipment_type"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:maxLines="1"
+                    android:text="@{String.format(@string/equipment_label_type, viewModel.type)}"
+                    android:textColor="@color/md_theme_scrim"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/btn_open_type_detail"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layoutDirection="locale"
+                    android:rotationY="0"
+                    android:src="@drawable/ic_arrow_right"
+                    app:tint="@color/md_theme_onSurfaceVariant" />
+
+            </LinearLayout>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_img"
@@ -112,7 +155,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="4dp"
                 android:layout_marginEnd="12dp"
                 android:lineSpacingExtra="4dp"
                 android:text="@{String.format(@string/equipment_label_description, viewModel.description)}"
@@ -121,7 +164,35 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txt_equipment_type" />
+                app:layout_constraintTop_toBottomOf="@+id/TypeLayout" />
+
+            <TextView
+                android:id="@+id/txt_equipment_lom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="12dp"
+                android:text="@string/list_of_materials"
+                android:textColor="@color/md_theme_scrim"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_equipment_detail" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/equipment_lom_recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_equipment_lom">
+
+            </androidx.recyclerview.widget.RecyclerView>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
@@ -131,24 +202,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        android:layout_marginBottom="16dp"
         android:gravity="center"
         android:orientation="horizontal"
-        android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_attachment"
             android:layout_width="match_parent"
-            android:gravity="start"
-            android:checkable="false"
             android:layout_height="50dp"
             android:backgroundTint="@color/md_theme_inversePrimary"
-            android:textAlignment="viewStart"
-            android:textDirection="locale"
+            android:checkable="false"
             android:contentDescription="@string/attachment_btn_open"
+            android:gravity="start"
             android:text="@string/attachment_btn_open"
+            android:textAlignment="viewStart"
             android:textColor="@color/black"
+            android:textDirection="locale"
             app:cornerRadius="0dp"
             app:icon="@drawable/ic_attachment"
             app:layout_constraintBottom_toTopOf="@+id/top_button_nav"

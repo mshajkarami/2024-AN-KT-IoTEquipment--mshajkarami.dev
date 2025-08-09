@@ -10,6 +10,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import com.airbnb.lottie.LottieAnimationView
 import com.irisaco.iotequipment.R
@@ -24,6 +26,8 @@ import kotlin.getValue
 @AndroidEntryPoint
 class DetailEquipmentFragment : Fragment() {
     private lateinit var binding: FragmentEquipmentDetailBinding
+
+    private lateinit var lomAdapter: EquipmentLomAdapter
 
     @Inject
     lateinit var viewModelFactory: DetailViewModelFactory
@@ -67,6 +71,26 @@ class DetailEquipmentFragment : Fragment() {
                 viewModel.version.value = equipment.version?.version
                 viewModel.type.value = equipment.equipmentType?.name ?: ""
                 viewModel.description.value = equipment.description
+
+                if (!equipment.equipmentLOM.isNullOrEmpty()) {
+                    lomAdapter = EquipmentLomAdapter(equipment.equipmentLOM)
+
+                    binding.equipmentLomRecyclerView.apply {
+                        layoutManager = GridLayoutManager(
+                            requireContext(),
+                            2,
+                            GridLayoutManager.HORIZONTAL,
+                            false
+                        )
+                        adapter = lomAdapter
+                        visibility = View.VISIBLE
+                    }
+
+                } else {
+                    binding.equipmentLomRecyclerView.visibility = View.GONE
+                }
+
+
 
                 viewModel.img.observe(viewLifecycleOwner) { imageUrl ->
                     if (imageUrl.isNullOrEmpty()) {

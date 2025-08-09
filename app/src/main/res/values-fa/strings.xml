@@ -31,6 +31,9 @@
     <string name="equipment_label_date">تاریخ ایجاد: %1$s</string>
     <string name="equipment_label_attachment">نام فایل: %1$s</string>
     <string name="equipment_label_unique_id"> شناسه تجهیز: %1$s</string>
+    <string name="equipment_label_lom_part_name">نام قطعه: %1$s</string>
+    <string name="equipment_label_lom_part_quantity">کمیت: %1$s</string>
+    <string name="equipment_label_lom_part_supplier">تامین کننده: %1$s</string>
     <string name="equipment_not_found">موردی یافت نشد!</string>
     <string name="equipment_image_label">تصویر تجهیز</string>
 
@@ -71,7 +74,6 @@
     <string name="qr_permission_required_title">دسترسی %1$s مورد نیاز است</string>
     <string name="qr_btn_go_to_settings">رفتن به تنظیمات</string>
     <string name="qr_btn_cancel">لغو</string>
-
 
 
     <!-- 🧭 Navigation -->
@@ -157,5 +159,8 @@
     <string name="gregorian">میلادی</string>
     <string name="setting_offline_mode">حالت آفلاین</string>
     <string name="inactive">غیرفعال</string>
+    <string name="list_of_materials">فهرست مواد</string>
+
+    <string name="lorem_txt_des"> لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.</string>
 
 </resources>

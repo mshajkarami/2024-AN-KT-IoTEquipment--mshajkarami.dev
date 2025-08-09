@@ -30,6 +30,9 @@
     <string name="equipment_label_date">Created on: %1$s</string>
     <string name="equipment_label_attachment">File Name: %1$s</string>
     <string name="equipment_label_unique_id">Device ID: %1$s</string>
+    <string name="equipment_label_lom_part_name">Part Name: %1$s</string>
+    <string name="equipment_label_lom_part_quantity">quantity: %1$s</string>
+    <string name="equipment_label_lom_part_supplier">Supplier: %1$s</string>
     <string name="equipment_not_found">No items found!</string>
     <string name="equipment_image_label">Device Image</string>
 
@@ -144,7 +147,6 @@
     <string name="connection_fail">No internet connection</string>
 
 
-
     <!-- ✅ Yes / No -->
     <string name="yes">Yes</string>
     <string name="no">No</string>
@@ -155,5 +157,10 @@
     <string name="gregorian">Gregorian</string>
     <string name="setting_offline_mode">Offline mode</string>
     <string name="inactive">Inactive</string>
+    <string name="list_of_materials">List of Materials</string>
+
+
+    <string name="lorem_txt_des">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+</string>
 
 </resources>

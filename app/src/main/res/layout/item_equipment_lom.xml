@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:cardElevation="3dp"
+    android:layout_marginStart="5dp"
+    android:layout_marginEnd="5dp"
+    android:layout_marginBottom="15dp"
+    app:cardCornerRadius="10dp"
+    android:padding="16dp"
+    app:cardPreventCornerOverlap="false"
+    app:cardBackgroundColor="@color/md_theme_onErrorContainer_highContrast"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="160dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:orientation="vertical"
+        android:padding="5dp"
+        android:layoutDirection="locale">
+
+        <TextView
+            android:id="@+id/txt_lom_number"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:ellipsize="middle"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="start"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:text="@string/equipment_label_lom_part_quantity"
+            android:textAlignment="viewStart"
+            android:textDirection="locale"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_lom_name" />
+
+
+        <TextView
+            android:id="@+id/txt_lom_supplier"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:ellipsize="middle"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="start"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:text="@string/equipment_label_lom_part_supplier"
+            android:textAlignment="viewStart"
+            android:textDirection="locale"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_lom_number" />
+
+        <TextView
+            android:id="@+id/txt_lom_name"
+            android:layout_width="0dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="4dp"
+            android:gravity="start"
+            android:textAlignment="viewStart"
+            android:textDirection="locale"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/equipment_label_lom_part_name" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
