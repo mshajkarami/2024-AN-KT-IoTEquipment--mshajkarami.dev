@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".ui.support.SupportFragment"
+        >
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            app:cardBackgroundColor="@android:color/white"
+            app:cardElevation="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp">
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:src="@drawable/support"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:text="@string/support_txt_des"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+                <LinearLayout
+                    android:id="@+id/linearLayout5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView8">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/typeSupportInputLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="8dp"
+                        app:cardBackgroundColor="@android:color/white"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="2dp">
+
+                        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                            android:id="@+id/spinner_question_type"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/bg_input_box"
+                            android:drawableEnd="@drawable/ic_arrow_down"
+                            android:gravity="center_vertical"
+                            android:hint="@string/select_question_type"
+                            android:paddingHorizontal="16dp"
+                            android:textColorHint="@color/black"
+                            android:textSize="14sp" />
+
+                    </androidx.cardview.widget.CardView>
+
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/titleSupportInputLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="8dp"
+                        app:cardBackgroundColor="@android:color/white"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="2dp">
+
+                        <EditText
+                            android:id="@+id/txt_support_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:autofillHints=""
+                            android:background="@drawable/bg_input_box"
+                            android:gravity="center_vertical"
+                            android:hint="@string/log_hint_title"
+                            android:inputType="text"
+                            android:maxLines="1"
+                            android:paddingHorizontal="16dp"
+                            android:textColorHint="#888"
+                            android:textSize="14sp" />
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/descriptionSupportInputLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        app:cardBackgroundColor="@android:color/white"
+                        app:cardCornerRadius="16dp"
+                        app:cardElevation="2dp">
+
+                        <EditText
+                            android:id="@+id/txt_support_des"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:autofillHints=""
+                            android:background="@drawable/bg_input_box"
+                            android:gravity="center_vertical"
+                            android:hint="@string/log_hint_description"
+                            android:inputType="textMultiLine"
+                            android:minLines="2"
+                            android:paddingHorizontal="16dp"
+                            android:textColorHint="#888"
+                            android:textSize="14sp" />
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_add_recorde"
+                    android:layout_width="160dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_weight="0"
+                    android:backgroundTint="@color/md_theme_primary"
+                    android:text="@string/action_send"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    app:cornerRadius="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout5"
+                    app:strokeColor="@color/ic_launcher_background" />
+
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/new_question"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

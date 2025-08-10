@@ -49,7 +49,7 @@
                 android:layout_marginEnd="15dp"
                 android:maxLines="2"
                 android:text="@{String.format(@string/equipment_label_name, viewModel.title)}"
-                android:textColor="@color/md_theme_scrim"
+                android:textColor="@color/md_theme_secondary"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -78,7 +78,7 @@
                     android:layout_weight="1"
                     android:maxLines="1"
                     android:text="@{String.format(@string/equipment_label_version, viewModel.version)}"
-                    android:textColor="@color/md_theme_scrim"
+                    android:textColor="@color/md_theme_secondary"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -115,7 +115,7 @@
                     android:layout_weight="1"
                     android:maxLines="1"
                     android:text="@{String.format(@string/equipment_label_type, viewModel.type)}"
-                    android:textColor="@color/md_theme_scrim"
+                    android:textColor="@color/md_theme_secondary"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -159,7 +159,7 @@
                 android:layout_marginEnd="12dp"
                 android:lineSpacingExtra="4dp"
                 android:text="@{String.format(@string/equipment_label_description, viewModel.description)}"
-                android:textColor="@color/md_theme_scrim"
+                android:textColor="@color/md_theme_secondary"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
@@ -174,7 +174,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="12dp"
                 android:text="@string/list_of_materials"
-                android:textColor="@color/md_theme_scrim"
+                android:textColor="@color/md_theme_secondary"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -186,7 +186,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="12dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

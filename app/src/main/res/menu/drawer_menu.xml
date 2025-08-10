@@ -1,37 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/homeFragment"
-        android:icon="@drawable/ic_home"
-        android:title="@string/menu_home" />
-    <item
-        android:id="@+id/searchFragment"
-        android:icon="@drawable/ic_search"
-        android:title="@string/menu_search" />
 
-    <item
-        android:id="@+id/settingsFragment"
-        android:icon="@drawable/ic_settings"
-        android:title="@string/menu_settings" />
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/homeFragment"
+            android:icon="@drawable/ic_home"
+            android:title="@string/menu_home" />
 
-    <item
-        android:id="@+id/nav_web_view"
-        android:icon="@drawable/ic_globe"
-        android:title="@string/menu_web" />
+        <item
+            android:id="@+id/searchFragment"
+            android:icon="@drawable/ic_search"
+            android:title="@string/menu_search" />
+    </group>
 
-    <item
-        android:id="@+id/nav_help"
-        android:icon="@drawable/ic_help"
-        android:title="@string/menu_support" />
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/settingsFragment"
+            android:icon="@drawable/ic_settings"
+            android:title="@string/menu_settings" />
 
+        <item
+            android:id="@+id/messageFragment"
+            android:icon="@drawable/ic_message"
+            android:title="@string/menu_message" />
+    </group>
 
-    <item
-        android:id="@+id/aboutFragment"
-        android:icon="@drawable/ic_info"
-        android:title="@string/menu_about" />
-    <item
-        android:id="@+id/nav_exit"
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_web_view"
+            android:icon="@drawable/ic_globe"
+            android:title="@string/menu_web" />
+    </group>
 
-        android:icon="@drawable/ic_exit"
-        android:title="@string/menu_exit" />
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/supportFragment"
+            android:icon="@drawable/ic_help"
+            android:title="@string/menu_support" />
+    </group>
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/aboutFragment"
+            android:icon="@drawable/ic_info"
+            android:title="@string/menu_about" />
+    </group>
+
+    <group android:checkableBehavior="none">
+        <item
+            android:id="@+id/divider_exit"
+            android:title=""
+            android:enabled="false"
+            android:icon="@null" />
+        <item
+            android:id="@+id/divider_exit2"
+            android:title=""
+            android:enabled="false"
+            android:icon="@null" />
+        <item
+            android:id="@+id/divider_exit3"
+            android:title=""
+            android:enabled="false"
+            android:icon="@null" />
+        <item
+            android:id="@+id/divider_exit4"
+            android:title=""
+            android:enabled="false"
+            android:icon="@null" />
+        <item
+            android:id="@+id/nav_exit"
+            android:icon="@drawable/ic_exit"
+            android:title="@string/menu_exit" />
+    </group>
+
 </menu>

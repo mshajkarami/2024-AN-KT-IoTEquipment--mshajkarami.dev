@@ -6,21 +6,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <ImageButton
         android:id="@+id/btn_scan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/rec_btn_fab"
         android:contentDescription="@string/qr_btn_scan"
-        app:srcCompat="@drawable/ic_fab"
-        app:tint="@android:color/white"
-        android:backgroundTint="@color/md_theme_primary"
+        android:scaleType="centerInside"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:shapeAppearanceOverlay="@style/FabShape_Circle"
-         />
+        app:srcCompat="@drawable/ic_scanner"
+        app:tint="@color/white" />
+
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -43,8 +43,9 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-        tools:layout_editor_absoluteX="1dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -147,6 +147,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.equipmentDetailFragment -> configureEquipmentDetailToolbar()
                 R.id.logDetailFragment -> configureLogDetailToolbar()
                 R.id.aboutFragment -> configureAboutToolbar()
+                R.id.supportFragment -> configureSupportToolbar()
                 else -> configureDefaultToolbar()
             }
             val navHostFragment =
@@ -176,13 +177,6 @@ class MainActivity : AppCompatActivity() {
                     val url = "https://www.irisaco.com/"
                     val intent = Intent(Intent.ACTION_VIEW, url.toUri())
                     startActivity(intent)
-                    true
-                }
-
-                R.id.nav_help -> {
-                    Toast.makeText(this,
-                        getString(R.string.no_mvp),
-                        Toast.LENGTH_SHORT).show()
                     true
                 }
 
@@ -275,6 +269,12 @@ class MainActivity : AppCompatActivity() {
         setDefaultToolbarIcon()
     }
 
+    private fun configureSupportToolbar() {
+        setToolbarTitle(getString(R.string.menu_support))
+        setupToolbarNavigation(R.drawable.ic_arrow_left) { navController.navigateUp() }
+        setDefaultToolbarIcon()
+    }
+
     private fun configureDefaultToolbar() {
         setupToolbarNavigation(R.drawable.ic_arrow_left) { navController.navigateUp() }
         setDefaultToolbarIcon()
@@ -338,7 +338,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     internal fun setDefaultToolbarIcon() {
-        setToolbarMenu(R.drawable.ic_profile) {
+        setToolbarMenu(R.drawable.ic_launcher_foreground) {
             navController.navigate(R.id.action_global_settingsFragment)
             true
         }
@@ -396,5 +396,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun Int.dpToPx(): Int = (this * resources.displayMetrics.density).toInt()
 }
+
+
 
 

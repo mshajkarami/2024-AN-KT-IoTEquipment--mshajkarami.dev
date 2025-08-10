@@ -78,7 +78,9 @@
         android:fitsSystemWindows="true"
         android:background="@color/md_theme_surfaceContainerHigh"
         app:menu="@menu/drawer_menu"
-        app:itemTextColor="@color/md_theme_onSurface"
+        app:itemIconTint="@color/nav_item_color"
+        app:itemTextColor="@color/nav_item_color"
+        app:itemBackground="@drawable/nav_item_background"
         app:headerLayout="@layout/nav_header" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -61,9 +61,10 @@
         android:layout_marginBottom="80dp"
         android:background="@drawable/rec_btn_fab"
         android:contentDescription="@string/qr_btn_scan"
-        android:src="@drawable/ic_fab"
+        android:src="@drawable/ic_scanner"
         app:layout_constraintBottom_toBottomOf="@+id/previewView"
         app:layout_constraintEnd_toEndOf="@+id/image"
+        app:tint="@color/white"
         app:layout_constraintStart_toStartOf="@+id/image" />
 
     <ImageButton

@@ -16,6 +16,7 @@ import kotlinx.coroutines.launch
 import java.util.Locale
 import androidx.core.content.edit
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.irisaco.iotequipment.ui.auth.AuthActivity
 import com.irisaco.iotequipment.ui.auth.AuthViewModel
 import com.irisaco.iotequipment.ui.base.BaseFragment
@@ -112,7 +113,9 @@ class SettingsFragment : BaseFragment() {
         }
 
         view.findViewById<View>(R.id.themeLayout).setOnClickListener(noMvpClickListener)
-        view.findViewById<View>(R.id.termsLayout).setOnClickListener(noMvpClickListener)
+        view.findViewById<View>(R.id.termsLayout).setOnClickListener{
+            findNavController().navigate(R.id.action_settingsFragment_to_privacyPolicyFragment)
+        }
         view.findViewById<View>(R.id.supportLayout).setOnClickListener(noMvpClickListener)
         view.findViewById<View>(R.id.passwordLayout).setOnClickListener(noMvpClickListener)
     }

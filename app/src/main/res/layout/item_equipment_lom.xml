@@ -11,7 +11,7 @@
     app:cardCornerRadius="10dp"
     android:padding="16dp"
     app:cardPreventCornerOverlap="false"
-    app:cardBackgroundColor="@color/md_theme_onErrorContainer_highContrast"
+    app:cardBackgroundColor="@color/md_theme_onPrimary"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout

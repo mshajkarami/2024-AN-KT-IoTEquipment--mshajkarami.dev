@@ -155,7 +155,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_weight="1"
                 android:text="@string/auth_logout"
-                android:textColor="@color/md_theme_errorContainer_mediumContrast"
+                android:textColor="@color/md_theme_onErrorContainer"
                 android:gravity="start"
                 android:textDirection="locale" />
         </LinearLayout>

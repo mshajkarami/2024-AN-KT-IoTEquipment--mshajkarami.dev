@@ -78,7 +78,7 @@ class AttachmentsAdapter(
             val file = File(context.getExternalFilesDir(null), document.fileName)
 
             val iconColor = if (file.exists())
-                R.color.icon_downloaded
+                R.color.md_theme_primary
             else
                 R.color.md_theme_background
 
@@ -101,7 +101,7 @@ class AttachmentsAdapter(
                     updateItem(document)
 
                     if (downloadedFile != null) {
-                        downloadIcon.setColorFilter(ContextCompat.getColor(context, R.color.icon_downloaded))
+                        downloadIcon.setColorFilter(ContextCompat.getColor(context, R.color.md_theme_primary))
                     } else {
                         Toast.makeText(context, context.getString(R.string.msg_download_fail), Toast.LENGTH_SHORT).show()
                     }

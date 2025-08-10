@@ -35,7 +35,7 @@
                     android:layout_gravity="center"
                     android:hint="@string/log_hint_date"
                     app:startIconDrawable="@drawable/ic_date"
-                    app:startIconTint="@color/md_theme_primaryContainer_mediumContrast">
+                    app:startIconTint="@color/md_theme_onPrimaryContainer">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_new_log_date"
@@ -125,9 +125,10 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:layout_marginEnd="15dp"
                 android:text="@string/countdown_label_remaining"
                 android:textAlignment="textStart"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -141,6 +142,8 @@
                     android:id="@+id/countdownLogView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
                     android:layout_gravity="center"
                     app:isHideTimeBackground="false"
                     app:isShowDay="true"
@@ -172,7 +175,7 @@
             android:layout_marginBottom="16dp"
             app:tint="@color/white"
             app:shapeAppearanceOverlay="@style/FabShape_Circle"
-            android:backgroundTint="@color/md_theme_primaryContainer_mediumContrast"
+            android:backgroundTint="@color/md_theme_primary"
             android:contentDescription="@string/attachment_btn_add"
             android:src="@drawable/ic_attachment"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout4"

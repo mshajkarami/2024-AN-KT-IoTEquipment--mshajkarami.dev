@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
@@ -24,7 +25,7 @@ class HomeFragment : BaseFragment() {
 
         val searchBox = view.findViewById<TextInputLayout>(R.id.searchBox)
         val searchBar = view.findViewById<TextInputEditText>(R.id.search_bar)
-        val btnScan: FloatingActionButton = view.findViewById(R.id.btn_scan)
+        val btnScan: ImageButton = view.findViewById(R.id.btn_scan)
 
         searchBar.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {

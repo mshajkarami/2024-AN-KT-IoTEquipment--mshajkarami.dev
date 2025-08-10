@@ -16,6 +16,7 @@
         android:text="@string/equipment_label_date"
         android:textSize="22sp"
         android:textStyle="bold"
+        android:textColor="@color/md_theme_secondary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -46,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:lineSpacingExtra="4dp"
-                android:textColor="@color/md_theme_scrim"
+                android:textColor="@color/md_theme_secondary"
                 android:textSize="16sp"
                 tools:text="@string/equipment_label_description" />
         </LinearLayout>

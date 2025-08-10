@@ -42,6 +42,7 @@
     <!-- 📝 Logs -->
     <string name="log_hint_name">Log Name</string>
     <string name="log_hint_date">Date</string>
+    <string name="log_hint_title">Title</string>
     <string name="log_hint_description">Description</string>
     <string name="log_toolbar_edit">Edit Log</string>
     <string name="log_toolbar_add">Add Log</string>
@@ -80,6 +81,7 @@
     <string name="menu_support">Support</string>
     <string name="menu_web">View Web Version</string>
     <string name="menu_settings">Settings</string>
+    <string name="menu_message">Message</string>
     <string name="menu_about">About Us</string>
     <string name="menu_exit">Exit</string>
     <string name="menu_equipment_info">Basic Equipment Info</string>
@@ -123,6 +125,7 @@
 
     <!-- 📦 Actions -->
     <string name="action_create">Create</string>
+    <string name="action_send">Send</string>
     <string name="action_save">Save</string>
     <string name="action_cancel">Cancel</string>
     <string name="action_support">Support</string>
@@ -162,5 +165,53 @@
 
     <string name="lorem_txt_des">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 </string>
+    <string name="send_a_message_to_support">Send a message to support</string>
+    <string name="support_txt_des">Through this section you can send your message directly to the support team. Please enter the subject of the message and a full description and click the send button. We will respond to you as soon as possible.</string>
+    <string name="privacy_policy_txt">
+    Privacy Policy
+    \n
+    This policy explains how we collect, use, and protect your information. By using this application, you agree to the terms of this policy.
+    \n
+    1. Information Collection
+    We may collect the following information:
+    \n
+    Information you provide directly (such as name, email, and other optional data).
+    \n
+    Technical information about your device (such as device model, operating system, and app version) to improve performance.
+    \n
+    Data about your usage of the app (such as pages visited or buttons clicked) collected anonymously.
+    \n
+    2. Use of Information
+    We use the collected information for the following purposes:
+    \n
+    To provide and improve the app’s services. To respond to requests and user support. To analyze and optimize the user experience.
+    \n
+    3. Information Sharing
+    We do not sell or rent your personal information to any third party, except in the following cases:
+    \n
+    With your explicit consent. When required by law or legal authorities. To provide services through trusted partners (such as advertising or analytics services) who will have access to the data only as necessary.
+    \n
+    4. Information Security
+    \n
+    We take necessary security measures to protect your information against unauthorized access, alteration, or disclosure. However, no method of data transmission or storage is 100% secure.
+    \n
+    5. Changes to Privacy Policy
+    \n
+    We may update this policy from time to time. The updated version will be available through the app or website, and the date of the last update will be noted at the bottom of this page.
+    \n
+    6. Contact Us
+    \n
+    If you have any questions or concerns about this policy, you can contact us via the email below:
+    \n
+    [mshajkarami@gmail.com]
+    \n
+    Last Updated: 2025/07/31
+</string>
+    <string name="new_question">New question</string>
+    <string name="select_question_type">Select question type</string>
+    <string name="dialog_no_internet_msg">You do not have access to the Internet.</string>
+    <string name="dialog_no_internet_msg_select_method">Please select a connection method.</string>
+    <string name="connecting_with_wi_fi">Connecting Wi-Fi</string>
+    <string name="mobile_data">Mobile data</string>
 
 </resources>
