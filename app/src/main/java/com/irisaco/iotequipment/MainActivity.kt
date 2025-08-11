@@ -227,7 +227,7 @@ class MainActivity : AppCompatActivity() {
     private fun configureSettingsToolbar() {
         setToolbarTitle(getString(R.string.toolbar_setting_text))
         setupToolbarNavigation(R.drawable.ic_arrow_left) { navController.navigateUp() }
-        setToolbarMenu(R.drawable.ic_help_question)
+        setToolbarMenu(R.drawable.ic_help)
     }
 
     private fun configureAttachmentsToolbar() {
