@@ -13,6 +13,7 @@
         android:layout_marginEnd="16dp"
         android:gravity="start"
         android:text="@string/qr_msg_success"
+        android:textColor="@color/md_theme_onSurface"
         android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,6 +27,7 @@
         android:layout_marginTop="32dp"
         android:layout_marginBottom="32dp"
         android:textSize="20sp"
+        android:textColor="@color/md_theme_onSurface"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
         app:layout_constraintEnd_toEndOf="parent"
@@ -52,10 +54,10 @@
             android:layout_weight="0"
             android:backgroundTint="@color/md_theme_primary"
             android:text="@string/hint_searchbar_small"
-            android:textColor="@color/white"
+            android:textColor="@color/md_theme_onPrimary"
             android:textSize="12sp"
             app:cornerRadius="10dp"
-            app:strokeColor="@color/ic_launcher_background" />
+            app:strokeColor="@color/md_theme_background" />
 
         <Space android:layout_width="16dp"
             android:layout_height="wrap_content"
@@ -67,12 +69,12 @@
             android:layout_width="150dp"
             android:layout_height="50dp"
             android:layout_weight="0"
-            android:backgroundTint="@color/ic_launcher_background"
+            android:backgroundTint="@color/md_theme_error"
             android:text="@string/action_cancel"
-            android:textColor="@color/black"
+            android:textColor="@color/md_theme_onError"
             android:textSize="12sp"
             app:cornerRadius="10dp"
-            app:strokeColor="@color/cardview_dark_background"
+            app:strokeColor="@color/md_theme_background"
             app:strokeWidth="1dp" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

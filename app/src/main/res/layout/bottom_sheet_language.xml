@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:text="@string/setting_select_language"
         android:textSize="18sp"
+        android:textColor="@color/md_theme_onSurface"
         android:textStyle="bold"
         android:paddingBottom="12dp" />
 
@@ -23,12 +24,14 @@
             android:id="@+id/radio_fa"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/md_theme_onSurface"
             android:text="@string/settings_language_fa" />
 
         <RadioButton
             android:id="@+id/radio_en"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/md_theme_onSurface"
             android:text="@string/settings_language_en" />
     </RadioGroup>
 </LinearLayout>

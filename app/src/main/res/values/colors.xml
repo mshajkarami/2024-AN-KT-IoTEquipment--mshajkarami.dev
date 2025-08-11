@@ -3,26 +3,30 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <!-- Primary -->
     <color name="md_theme_primary">#0055EF</color>
     <color name="md_theme_onPrimary">#FFFFFF</color>
     <color name="md_theme_primaryContainer">#DCE1FF</color>
     <color name="md_theme_onPrimaryContainer">#00205B</color>
 
+    <!-- Secondary -->
     <color name="md_theme_secondary">#4A5568</color>
     <color name="md_theme_onSecondary">#FFFFFF</color>
     <color name="md_theme_secondaryContainer">#E2E8F0</color>
     <color name="md_theme_onSecondaryContainer">#1A202C</color>
 
+    <!-- Tertiary -->
     <color name="md_theme_tertiary">#3366CC</color>
     <color name="md_theme_onTertiary">#FFFFFF</color>
     <color name="md_theme_tertiaryContainer">#D0E2FF</color>
     <color name="md_theme_onTertiaryContainer">#00205B</color>
 
+    <!-- Error -->
     <color name="md_theme_error">#BA1A1A</color>
     <color name="md_theme_onError">#FFFFFF</color>
     <color name="md_theme_errorContainer">#FFDAD6</color>
     <color name="md_theme_onErrorContainer">#93000A</color>
-
+    <!-- Background & Surface -->
     <color name="md_theme_background">#FAFAFA</color>
     <color name="md_theme_onBackground">#1A1B21</color>
     <color name="md_theme_surface">#FFFFFF</color>
@@ -30,13 +34,16 @@
     <color name="md_theme_surfaceVariant">#E2E1EC</color>
     <color name="md_theme_onSurfaceVariant">#45464F</color>
 
+    <!-- Outline -->
     <color name="md_theme_outline">#767680</color>
     <color name="md_theme_outlineVariant">#C6C6D0</color>
 
+    <!-- Inverse -->
     <color name="md_theme_inverseSurface">#2F3036</color>
     <color name="md_theme_inverseOnSurface">#F1F0F7</color>
     <color name="md_theme_inversePrimary">#B5C4FF</color>
 
+    <!-- Fixed Colors -->
     <color name="md_theme_primaryFixed">#DCE1FF</color>
     <color name="md_theme_onPrimaryFixed">#00205B</color>
     <color name="md_theme_primaryFixedDim">#B5C4FF</color>
@@ -52,6 +59,7 @@
     <color name="md_theme_tertiaryFixedDim">#A4C2FF</color>
     <color name="md_theme_onTertiaryFixedVariant">#00205B</color>
 
+    <!-- Surface Containers -->
     <color name="md_theme_surfaceDim">#E5E7EB</color>
     <color name="md_theme_surfaceBright">#FFFFFF</color>
     <color name="md_theme_surfaceContainerLowest">#FFFFFF</color>
@@ -59,7 +67,7 @@
     <color name="md_theme_surfaceContainer">#F3F4F6</color>
     <color name="md_theme_surfaceContainerHigh">#E5E7EB</color>
     <color name="md_theme_surfaceContainerHighest">#D1D5DB</color>
-
+    <!-- Gradients -->
     <color name="header_gradient_start">#CC0055EF</color> <!-- 80% opacity -->
     <color name="header_gradient_end">#00FFFFFF</color>   <!-- fully transparent -->
 

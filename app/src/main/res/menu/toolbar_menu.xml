@@ -6,5 +6,6 @@
         android:id="@+id/toolbar_icon_right"
         android:icon="@drawable/ic_launcher_foreground"
         android:title="@string/toolbar_icon_profile"
+        app:iconTint="@color/md_theme_primary"
         app:showAsAction="always" />
 </menu>

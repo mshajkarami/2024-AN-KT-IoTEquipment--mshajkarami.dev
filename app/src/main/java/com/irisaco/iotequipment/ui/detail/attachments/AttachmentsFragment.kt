@@ -153,7 +153,7 @@ class AttachmentsFragment : BaseFragment() {
 
                 if (file != null) {
                     val uri = FileProvider.getUriForFile(
-                        context,
+                        requireContext(),
                         "${context?.packageName}.provider",
                         file
                     )

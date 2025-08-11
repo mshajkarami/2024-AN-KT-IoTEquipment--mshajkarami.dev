@@ -8,12 +8,12 @@ plugins {
 
 android {
     namespace = "com.irisaco.iotequipment"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.irisaco.iotequipment"
         minSdk = 24
-        targetSdk = 35
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -54,7 +54,6 @@ dependencies {
     implementation(libs.androidx.swiperefreshlayout)
 
     implementation(libs.material)
-    implementation("com.google.android.material:material:1.11.0")
     implementation("com.facebook.shimmer:shimmer:0.5.0")
     implementation("com.airbnb.android:lottie:6.4.0")
     implementation("com.github.iwgang:countdownview:2.1.6")
@@ -87,8 +86,8 @@ dependencies {
 
     implementation("net.openid:appauth:0.11.1")
 
-    implementation("com.google.dagger:hilt-android:2.56.2")
-    ksp("com.google.dagger:hilt-android-compiler:2.56.2")
+    implementation("com.google.dagger:hilt-android:2.57")
+    ksp("com.google.dagger:hilt-android-compiler:2.57")
 
     implementation("androidx.datastore:datastore-preferences:1.0.0")
     implementation("androidx.security:security-crypto:1.1.0-alpha06")

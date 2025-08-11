@@ -16,7 +16,7 @@
         android:text="@string/equipment_label_date"
         android:textSize="22sp"
         android:textStyle="bold"
-        android:textColor="@color/md_theme_secondary"
+        android:textColor="@color/md_theme_onSurface"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:lineSpacingExtra="4dp"
-                android:textColor="@color/md_theme_secondary"
+                android:textColor="@color/md_theme_onSurfaceVariant"
                 android:textSize="16sp"
                 tools:text="@string/equipment_label_description" />
         </LinearLayout>
@@ -59,11 +59,11 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginBottom="16dp"
-        android:backgroundTint="@color/md_theme_inversePrimary"
+        android:backgroundTint="@color/md_theme_secondary"
         android:contentDescription="@string/attachment_btn_open"
         android:text="@string/attachment_btn_open"
         android:textAlignment="textStart"
-        android:textColor="@color/black"
+        android:textColor="@color/md_theme_onSecondary"
         app:cornerRadius="0dp"
         app:icon="@drawable/ic_attachment"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -34,7 +34,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="@string/user_trial"
-            android:textColor="@color/md_theme_onSurface"
+            android:textColor="@color/md_theme_onBackground"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"

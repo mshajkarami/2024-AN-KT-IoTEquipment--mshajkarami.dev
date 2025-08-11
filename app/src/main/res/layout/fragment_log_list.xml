@@ -20,7 +20,7 @@
         android:contentDescription="@string/qr_btn_scan"
         android:backgroundTint="@color/md_theme_primary"
         app:srcCompat="@drawable/ic_add"
-        app:tint="@android:color/white"
+        app:tint="@color/md_theme_onPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
