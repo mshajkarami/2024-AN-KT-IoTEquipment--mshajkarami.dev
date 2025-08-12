@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/setting_select_language"
+        android:text="@string/settings_language_selection"
         android:textSize="18sp"
         android:textColor="@color/md_theme_onSurface"
         android:textStyle="bold"

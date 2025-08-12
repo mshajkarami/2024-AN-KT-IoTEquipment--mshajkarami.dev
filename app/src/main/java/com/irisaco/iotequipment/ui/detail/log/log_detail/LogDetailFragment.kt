@@ -82,7 +82,7 @@ class LogDetailFragment : BaseFragment() {
                 }
 
                 R.id.item_print -> {
-                    Toast.makeText(requireContext(), getString(R.string.no_mvp), Toast.LENGTH_SHORT)
+                    Toast.makeText(requireContext(), getString(R.string.msg_feature_not_available), Toast.LENGTH_SHORT)
                         .show()
                 }
 

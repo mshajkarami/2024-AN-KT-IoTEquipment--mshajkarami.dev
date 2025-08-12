@@ -48,9 +48,9 @@ class SettingsFragment : BaseFragment() {
 
         authViewModel.networkStatus.observe(viewLifecycleOwner) { isConnected ->
             accountStateText.text = if (isConnected) {
-                getString(R.string.setting_profile_online)
+                getString(R.string.settings_profile_online)
             } else {
-                getString(R.string.setting_profile_offline)
+                getString(R.string.settings_profile_offline)
             }
         }
     }
@@ -84,9 +84,9 @@ class SettingsFragment : BaseFragment() {
             val displayName = authViewModel.getDisplayName()
             val emailName = authViewModel.getEmailName()
 
-            setTextOrAnonymous(userNameText, userName, R.string.msg_user_anonymous)
-            setTextOrFormatted(displayNameText, displayName, R.string.setting_display_name, R.string.msg_user_anonymous)
-            setTextOrFormatted(emailText, emailName, R.string.setting_email, R.string.msg_email_anonymous)
+            setTextOrAnonymous(userNameText, userName, R.string.auth_user_anonymous)
+            setTextOrFormatted(displayNameText, displayName, R.string.settings_profile_display_name, R.string.auth_user_anonymous)
+            setTextOrFormatted(emailText, emailName, R.string.settings_profile_email, R.string.auth_email_anonymous)
 
             settingsRoot.visibility = View.VISIBLE
             showEmptyState(false)
@@ -109,7 +109,7 @@ class SettingsFragment : BaseFragment() {
         }
 
         val noMvpClickListener = View.OnClickListener {
-            Toast.makeText(requireActivity(), getString(R.string.no_mvp), Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireActivity(), getString(R.string.msg_feature_not_available), Toast.LENGTH_SHORT).show()
         }
 
         view.findViewById<View>(R.id.themeLayout).setOnClickListener(noMvpClickListener)
@@ -141,9 +141,9 @@ class SettingsFragment : BaseFragment() {
 
     private fun showLogoutConfirmationDialog() {
         AlertDialog.Builder(requireContext())
-            .setTitle(R.string.logout_dialog_title)
-            .setMessage(R.string.logout_dialog_message)
-            .setPositiveButton(R.string.logout_dialog_confirm) { _, _ ->
+            .setTitle(R.string.auth_logout_dialog_title)
+            .setMessage(R.string.auth_logout_dialog_message)
+            .setPositiveButton(R.string.auth_logout_dialog_confirm) { _, _ ->
                 authViewModel.logout {
                     val intent = Intent(requireContext(), AuthActivity::class.java).apply {
                         flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -151,7 +151,7 @@ class SettingsFragment : BaseFragment() {
                     startActivity(intent)
                 }
             }
-            .setNegativeButton(R.string.logout_dialog_cancel, null)
+            .setNegativeButton(R.string.auth_logout_dialog_cancel, null)
             .show()
     }
 }

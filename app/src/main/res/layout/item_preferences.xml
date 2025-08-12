@@ -17,7 +17,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/settings_preferences"
+            android:text="@string/settings_section_preferences"
             android:textColor="@color/md_theme_onSurface"
             android:textAppearance="?attr/textAppearanceTitleMedium"
             android:textDirection="locale"
@@ -78,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_weight="1"
-                android:text="@string/settings_language_btn"
+                android:text="@string/settings_language_title"
                 android:gravity="start"
                 android:textDirection="locale" />
 
@@ -116,7 +116,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_weight="1"
-                android:text="@string/settings_theme_btn"
+                android:text="@string/settings_theme_title"
                 android:gravity="start"
                 android:textDirection="locale" />
 

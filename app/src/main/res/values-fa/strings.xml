@@ -1,213 +1,244 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- 🌐 App -->
-    <string name="app_name">Iotequipment</string>
-    <string name="toolbar_default_text">سامانه مدیریت تجهیزات اینترنت اشیا</string>
+
+    <!-- 🌐 App Info -->
+    <string name="app_name">تجهیزات IoT</string>
+    <string name="app_title_main">سامانه مدیریت تجهیزات IoT</string>
 
     <!-- 🔐 Authentication -->
-    <string name="auth_dec">
-        این اپلیکیشن به شما کمک می‌کند دستگاه‌های IoT
-        را به‌صورت متمرکز کنترل، مانیتور و پشتیبانی کنید.
-        با ورود امن از طریق مرورگر، بدون نگرانی از امنیت، عملیات صنعتی خود را مدیریت نمایید.
-    </string>
+    <string name="auth_description">
+    این برنامه به شما کمک می‌کند تجهیزات IoT را به‌صورت متمرکز کنترل، پایش و پشتیبانی کنید.
+    با استفاده از مرورگر به‌صورت امن وارد شوید و بدون نگرانی امنیتی، عملیات صنعتی خود را مدیریت کنید.
+</string>
     <string name="auth_login_browser">ورود امن از طریق مرورگر</string>
-    <string name="auth_password">رمز عبور</string>
-    <string name="auth_logout">خروج از حساب کاربری</string>
-    <string name="logout_dialog_title">خروج از حساب</string>
-    <string name="logout_dialog_message">آیا مطمئن هستید که می‌خواهید خارج شوید؟</string>
-    <string name="logout_dialog_confirm">خروج</string>
-    <string name="logout_dialog_cancel">لغو</string>
-
+    <string name="auth_password_hint">رمز عبور</string>
+    <string name="auth_logout">خروج</string>
+    <string name="auth_logout_dialog_title">خروج از حساب کاربری</string>
+    <string name="auth_logout_dialog_message">آیا مطمئن هستید که می‌خواهید خارج شوید؟</string>
+    <string name="auth_logout_dialog_confirm">خروج</string>
+    <string name="auth_logout_dialog_cancel">انصراف</string>
+    <string name="auth_login_fail">ورود ناموفق: </string>
+    <string name="auth_user_welcome">خوش آمدید</string>
+    <string name="auth_user_anonymous">کاربر ناشناس</string>
+    <string name="auth_email_anonymous">ایمیل موجود نیست</string>
 
     <!-- 🔍 Search -->
-    <string name="hint_searchbar">جستجو میان تجهیزات</string>
-    <string name="hint_searchbar_small">جستجو</string>
+    <string name="search_hint">جستجو در میان تجهیزات</string>
+    <string name="search_hint_small">جستجو</string>
+    <string name="search_not_found">هیچ موردی پیدا نشد!</string>
 
     <!-- 📋 Equipment Details -->
-    <string name="equipment_label_name">نام تجهیز: %1$s</string>
+    <string name="equipment_label_name">نام دستگاه: %1$s</string>
     <string name="equipment_label_version">نسخه: %1$s</string>
     <string name="equipment_label_description">توضیحات: %1$s</string>
     <string name="equipment_label_type">نوع: %1$s</string>
     <string name="equipment_label_date">تاریخ ایجاد: %1$s</string>
-    <string name="equipment_label_attachment">نام فایل: %1$s</string>
-    <string name="equipment_label_unique_id"> شناسه تجهیز: %1$s</string>
-    <string name="equipment_label_lom_part_name">نام قطعه: %1$s</string>
-    <string name="equipment_label_lom_part_quantity">کمیت: %1$s</string>
-    <string name="equipment_label_lom_part_supplier">تامین کننده: %1$s</string>
-    <string name="equipment_not_found">موردی یافت نشد!</string>
-    <string name="equipment_image_label">تصویر تجهیز</string>
+    <string name="equipment_label_attachment_name">نام فایل: %1$s</string>
+    <string name="equipment_label_unique_id">شناسه دستگاه: %1$s</string>
 
-    <!-- ⏳ Countdown -->
-    <string name="countdown_label_remaining">زمان باقیمانده تا پایان فرصت تغیرات :</string>
+    <!-- List of Materials (LOM) -->
+    <string name="equipment_label_lom_part_name">نام قطعه: %1$s</string>
+    <string name="equipment_label_lom_part_quantity">تعداد: %1$s</string>
+    <string name="equipment_label_lom_part_supplier">تأمین‌کننده: %1$s</string>
+
+    <string name="equipment_label_image_description">تصویر دستگاه</string>
+    <string name="equipment_label_countdown">زمان باقی‌مانده تا مهلت تغییر:</string>
+    <string name="equipment_list_of_materials">فهرست مواد</string>
 
     <!-- 📝 Logs -->
     <string name="log_hint_name">نام لاگ</string>
     <string name="log_hint_date">تاریخ</string>
     <string name="log_hint_title">عنوان</string>
     <string name="log_hint_description">توضیحات</string>
+
     <string name="log_toolbar_edit">ویرایش لاگ</string>
     <string name="log_toolbar_add">افزودن لاگ</string>
     <string name="log_toolbar_detail">جزئیات لاگ</string>
-    <string name="toolbar_icon_profile">پروفایل</string>
-    <string name="toolbar_setting_text">تنظیمات</string>
-    <string name="log_add_success">لاگ با موفقیت افزوده شد ✅</string>
-    <string name="log_edit_success">ویرایش با موفقیت انجام شد ✅</string>
-    <string name="log_add_fail">خطا در افزودن لاگ ❌</string>
-    <string name="log_edit_fail">خطا در ویرایش لاگ ❌</string>
+
+    <string name="log_add_success">لاگ با موفقیت اضافه شد ✅</string>
+    <string name="log_edit_success">لاگ با موفقیت به‌روزرسانی شد ✅</string>
+    <string name="log_add_fail">افزودن لاگ ناموفق بود ❌</string>
+    <string name="log_edit_fail">به‌روزرسانی لاگ ناموفق بود ❌</string>
 
     <!-- 📁 Attachments -->
-    <string name="attachment_btn_open">فایل ‌های پیوست</string>
-    <string name="attachment_btn_add">افزودن فایل پیوست</string>
-    <string name="toolbar_title_attachments">فایل‌های پیوست</string>
-    <string name="file_upload_success">فایل با موفقیت آپلود شد ✅</string>
-    <string name="file_upload_fail">آپلود فایل ناموفق بود ❌</string>
+    <string name="attachment_btn_open">پیوست‌ها</string>
+    <string name="attachment_btn_add">افزودن پیوست</string>
+    <string name="attachment_toolbar_title">پیوست‌ها</string>
+    <string name="attachment_file_upload_success">فایل با موفقیت آپلود شد ✅</string>
+    <string name="attachment_file_upload_fail">آپلود فایل ناموفق بود ❌</string>
 
     <!-- 📷 QR / Scan -->
     <string name="qr_btn_scan">اسکن</string>
     <string name="qr_btn_gallery">انتخاب از گالری</string>
-    <string name="qr_msg_help">لطفا بارکد را در این محل قرار دهید</string>
+    <string name="qr_msg_help">لطفاً بارکد را اینجا قرار دهید</string>
     <string name="qr_msg_success">بارکد با موفقیت شناسایی شد ✅</string>
-    <string name="qr_msg_img_reading_fail">خطا در خواندن تصویر</string>
-    <string name="qr_msg_img_permission_denied">مجوز دسترسی به گالری رد شد</string>
-    <string name="qr_msg_camera_permission_denied">مجوز دوربین رد شد</string>
-    <string name="qr_title_camera">دوربین</string>
-    <string name="qr_title_gallery">گالری</string>
-    <string name="qr_permission_required_title">دسترسی %1$s مورد نیاز است</string>
-    <string name="qr_btn_go_to_settings">رفتن به تنظیمات</string>
-    <string name="qr_btn_cancel">لغو</string>
-
+    <string name="qr_msg_camera_fail">خطا در خواندن تصویر</string>
+    <string name="qr_msg_permission_denied">دسترسی دوربین رد شد</string>
+    <string name="qr_msg_camera_permission_denied">خطا در خواندن تصویر</string>
+    <string name="qr_permission_required_title">دسترسی به %1$s موردنیاز است</string>
+    <string name="qr_action_go_to_settings">رفتن به تنظیمات</string>
+    <string name="qr_action_cancel">انصراف</string>
+    <string name="qr_btn_camera">دوربین</string>
 
     <!-- 🧭 Navigation -->
+    <string name="nav_open">باز کردن منو</string>
+    <string name="nav_close">بستن منو</string>
     <string name="menu_home">خانه</string>
     <string name="menu_search">جستجو</string>
     <string name="menu_support">پشتیبانی</string>
     <string name="menu_web">مشاهده نسخه وب</string>
     <string name="menu_settings">تنظیمات</string>
-    <string name="menu_message">پیام ها</string>
+    <string name="menu_message">پیام</string>
     <string name="menu_about">درباره ما</string>
     <string name="menu_exit">خروج</string>
-    <string name="menu_equipment_info">اطلاعات اولیه تجهیزات</string>
-    <string name="menu_software_info">سخت‌افزار و نرم‌افزار</string>
 
-    <!-- ⚙️ Settings -->
-    <string name="settings_language_btn">زبان</string>
-    <string name="settings_language_fa">فارسی</string>
-    <string name="settings_language_en">انگلیسی</string>
-    <string name="settings_theme_btn">تم</string>
-    <string name="settings_theme_light">روشن</string>
-    <string name="settings_theme_dark">تاریک</string>
-    <string name="settings_preferences">ترجیحات</string>
-    <string name="settings_help">کمک</string>
-    <string name="settings_account">حساب کاربری</string>
-    <string name="settings_notifications">اعلان‌ها و صداها</string>
-    <string name="user_trial">کاربر آزمایشی</string>
-    <string name="setting_select_language">انتخاب زبان</string>
-    <string name="setting_email">ایمیل: %1$s</string>
-    <string name="setting_display_name">نام نمایشی: %1$s</string>
-    <string name="setting_profile_online">آنلاین</string>
-    <string name="setting_profile_offline">آفلاین</string>
-    <string name="check_your_connection">اتصال خود را چک کنید سپس صفحه را تازه سازی کنید</string>
-
-    <!-- 📌 Tabs -->
-    <string name="tab_description">توضیحات</string>
-    <string name="tab_logs">لاگ ها</string>
-
-    <!-- ☰ Drawer & Toolbar Actions -->
-    <string name="nav_open">باز کردن منو</string>
-    <string name="nav_close">بستن منو</string>
-    <string name="toolbar_profile">پروفایل</string>
-    <string name="toolbar_settings">تنظیمات</string>
+    <string name="toolbar_action_profile">پروفایل</string>
+    <string name="toolbar_action_settings">تنظیمات</string>
     <string name="toolbar_action_print">چاپ</string>
     <string name="toolbar_action_edit">ویرایش</string>
-    <string name="toolbar_action_share">اشتراک گذاری</string>
+    <string name="toolbar_action_share">اشتراک‌گذاری</string>
     <string name="toolbar_action_delete">حذف</string>
     <string name="toolbar_action_share_all">اشتراک‌گذاری همه فایل‌ها</string>
-    <string name="toolbar_action_refresh">بارگذاری مجدد</string>
-    <string name="toolbar_action_download_all">دانلود همه فایل ها</string>
+    <string name="toolbar_action_refresh">به‌روزرسانی</string>
+    <string name="toolbar_action_download_all">دانلود همه فایل‌ها</string>
+
+    <string name="tab_description">توضیحات</string>
+    <string name="tab_logs">لاگ‌ها</string>
+    <!-- ⚙️ Settings -->
+    <string name="settings_toolbar_title">تنظیمات</string>
+    <string name="settings_section_preferences">ترجیحات</string>
+    <string name="settings_language_title">زبان</string>
+    <string name="settings_section_account">حساب کاربری</string>
+    <string name="settings_section_help">راهنما</string>
+
+    <string name="settings_language_fa">فارسی</string>
+    <string name="settings_language_en">انگلیسی</string>
+
+    <string name="settings_theme_title">تم</string>
+    <string name="settings_theme_light">روشن</string>
+    <string name="settings_theme_dark">تاریک</string>
+
+    <string name="settings_notifications">اعلان‌ها و صداها</string>
+    <string name="settings_user_trial">کاربر آزمایشی</string>
+    <string name="settings_language_selection">انتخاب زبان</string>
+
+    <string name="settings_profile_email">ایمیل: %1$s</string>
+    <string name="settings_profile_display_name">نام نمایشی: %1$s</string>
+    <string name="settings_profile_online">آنلاین</string>
+    <string name="settings_profile_offline">آفلاین</string>
+
+    <string name="settings_log_title">تنظیمات لاگ</string>
+    <string name="settings_log_date_format">فرمت تاریخ لاگ</string>
+    <string name="settings_date_format_gregorian">میلادی</string>
+    <string name="settings_offline_mode">حالت آفلاین</string>
+    <string name="settings_inactive">غیرفعال</string>
 
     <!-- 📦 Actions -->
     <string name="action_create">ایجاد</string>
     <string name="action_send">ارسال</string>
     <string name="action_save">ذخیره</string>
-    <string name="action_cancel">لغو</string>
+    <string name="action_cancel">انصراف</string>
     <string name="action_support">پشتیبانی</string>
-    <string name="action_privacy">سیاست‌های حفظ حریم خصوصی</string>
+    <string name="action_privacy">سیاست حفظ حریم خصوصی</string>
+    <string name="action_yes">بله</string>
+    <string name="action_no">خیر</string>
+    <string name="action_skip">رد کردن</string>
+    <string name="action_next">بعدی</string>
+    <string name="action_new_question">سؤال جدید</string>
 
     <!-- 🧾 Messages -->
-    <string name="msg_confirm_exit">آیا از خروج از برنامه مطمئن هستید؟</string>
-    <string name="msg_date_picker_select">تاریخ را انتخاب کنید"</string>
+    <string name="msg_confirm_exit">آیا مطمئن هستید که می‌خواهید از برنامه خارج شوید؟</string>
+    <string name="msg_date_picker_select">یک تاریخ انتخاب کنید</string>
     <string name="msg_error_no_file_selected">هیچ فایلی انتخاب نشده است!</string>
-    <string name="msg_error_id_not_found">شناسه تجهیز یافت نشد</string>
+    <string name="msg_error_id_not_found">شناسه دستگاه یافت نشد</string>
+    <string name="msg_error_id_invalid">شناسه دستگاه نامعتبر است</string>
     <string name="msg_error_date_invalid">تاریخ نامعتبر است</string>
-    <string name="msg_error_id_invalid">شناسه تجهیز نامعتبر است</string>
     <string name="msg_download_success">همه فایل‌ها با موفقیت دانلود شدند ✅</string>
     <string name="msg_download_fail">دانلود ناموفق بود ❌</string>
-    <string name="msg_download_summary">%1$d فایل با موفقیت دانلود شد، %2$d ناموفق بودند ⚠️</string>
-    <string name="msg_share_fail">اشتراک گذاری ناموفق بود</string>
-    <string name="msg_share_with">اشتراک گذاری با</string>
-    <string name="msg_user_anonymous">کاربر ناشناس</string>
-    <string name="msg_user_welcome">خوش آمدید</string>
-    <string name="msg_user_login_fail">ورود ناموفق بود: </string>
-    <string name="msg_email_anonymous">ایمیل در دسترس نیست </string>
-    <string name="connection_fail">اتصال به اینترنت برقرار نیست</string>
+    <string name="msg_download_summary">%1$d فایل با موفقیت دانلود شد، %2$d مورد ناموفق ⚠️</string>
+    <string name="msg_share_fail">اشتراک‌گذاری ناموفق بود</string>
+    <string name="msg_share_with">اشتراک‌گذاری با</string>
+    <string name="msg_no_internet_dialog_title">اتصال اینترنت وجود ندارد</string>
+    <string name="msg_connection_check_and_refresh">اتصال خود را بررسی کرده و صفحه را به‌روزرسانی کنید</string>
+    <string name="msg_feature_not_available">این قابلیت در نسخه MVP موجود نیست.</string>
+    <string name="dialog_no_internet_msg">شما به اینترنت دسترسی ندارید.</string>
+    <string name="msg_no_internet_dialog_select_method">لطفاً یک روش اتصال انتخاب کنید.</string>
+    <string name="msg_connecting_wifi">در حال اتصال به وای‌فای</string>
+    <string name="msg_mobile_data">داده موبایل</string>
 
+    <!-- 🌍 Language Names -->
+    <string name="english">انگلیسی</string>
+    <string name="Persian">فارسی</string>
 
-    <!-- ✅ Yes / No -->
-    <string name="yes">بله</string>
-    <string name="no">خیر</string>
+    <!-- 🎉 Onboarding -->
+    <string name="onboarding_welcome_title">خوش آمدید</string>
+    <string name="onboarding_welcome_subtitle">برای شروع، زبان و تم را به‌سرعت تنظیم کنید</string>
+    <string name="onboarding_language_title">انتخاب زبان</string>
+    <string name="onboarding_theme_title">انتخاب تم مورد علاقه</string>
+    <string name="onboarding_ready_title">همه چیز آماده است!</string>
+    <string name="onboarding_get_started">شروع کنید</string>
+    <string name="onboarding_description_text">
+    کاربر گرامی [Username]\n
+    به سامانه تخصصی مدیریت تجهیزات IoT خوش آمدید.
+    هویت شما تأیید شده و دسترسی‌ها بر اساس نقش تخصیص‌یافته اعطا شده است.
+    امیدواریم این سامانه به شما کمک کند تا به‌راحتی تجهیزات خود را پیگیری، کنترل و مدیریت کنید.
+    از انتخاب شما سپاسگزاریم؛ ما در کنار شما هستیم.
+</string>
 
-    <string name="no_mvp">این ویژگی در نسخه MVP در دسترس نیست </string>
-    <string name="setting_log_setting">تنظیمات لاگ</string>
-    <string name="setting_log_date_format">فرمت تاریخ لاگ</string>
-    <string name="gregorian">میلادی</string>
-    <string name="setting_offline_mode">حالت آفلاین</string>
-    <string name="inactive">غیرفعال</string>
-    <string name="list_of_materials">مواد مصرفی تجهیز</string>
+    <!-- 💬 Support -->
+    <string name="support_description">
+    از طریق این بخش می‌توانید پیام خود را مستقیماً به تیم پشتیبانی ارسال کنید.
+    لطفاً موضوع پیام و توضیحات کامل را وارد کرده و دکمه ارسال را بزنید.
+    در سریع‌ترین زمان ممکن به شما پاسخ خواهیم داد.
+</string>
+    <string name="support_send_message">ارسال پیام به پشتیبانی</string>
+    <string name="support_question_type">انتخاب نوع سؤال</string>
+    <!-- 📜 Privacy Policy -->
+    <string name="privacy_policy_full_text">
+    سیاست حفظ حریم خصوصی
+    \n
+    این سیاست توضیح می‌دهد که چگونه اطلاعات شما را جمع‌آوری، استفاده و محافظت می‌کنیم. با استفاده از این برنامه، شما با شرایط این سیاست موافقت می‌کنید.
+    \n
+    1. جمع‌آوری اطلاعات
+    ممکن است اطلاعات زیر را جمع‌آوری کنیم:
+    \n
+    اطلاعاتی که مستقیماً ارائه می‌دهید (مانند نام، ایمیل و داده‌های اختیاری دیگر).
+    \n
+    اطلاعات فنی درباره دستگاه شما (مانند مدل دستگاه، سیستم‌عامل و نسخه برنامه) برای بهبود عملکرد.
+    \n
+    داده‌هایی درباره استفاده شما از برنامه (مانند صفحات بازدید شده یا دکمه‌های کلیک شده) که به‌صورت ناشناس جمع‌آوری می‌شود.
+    \n
+    2. استفاده از اطلاعات
+    ما اطلاعات جمع‌آوری شده را برای اهداف زیر استفاده می‌کنیم:
+    \n
+    ارائه و بهبود خدمات برنامه. پاسخ به درخواست‌ها و پشتیبانی کاربران. تحلیل و بهینه‌سازی تجربه کاربری.
+    \n
+    3. اشتراک‌گذاری اطلاعات
+    ما اطلاعات شخصی شما را به هیچ شخص ثالث نمی‌فروشیم یا اجاره نمی‌دهیم، مگر در موارد زیر:
+    \n
+    با رضایت صریح شما. وقتی که قانون یا مراجع قانونی الزام کنند. برای ارائه خدمات از طریق شرکای مورد اعتماد (مانند خدمات تبلیغات یا تحلیل) که تنها به میزان لازم به داده‌ها دسترسی خواهند داشت.
+    \n
+    4. امنیت اطلاعات
+    \n
+    ما اقدامات امنیتی لازم برای محافظت از اطلاعات شما در برابر دسترسی، تغییر یا افشای غیرمجاز را انجام می‌دهیم. با این حال، هیچ روش انتقال یا ذخیره داده ۱۰۰٪ امن نیست.
+    \n
+    5. تغییرات در سیاست حفظ حریم خصوصی
+    \n
+    ممکن است این سیاست را گاه‌به‌گاه به‌روزرسانی کنیم. نسخه به‌روزشده از طریق برنامه یا وب‌سایت در دسترس خواهد بود و تاریخ آخرین به‌روزرسانی در پایین این صفحه ذکر می‌شود.
+    \n
+    6. تماس با ما
+    \n
+    اگر سوال یا نگرانی‌ای درباره این سیاست دارید، می‌توانید از طریق ایمیل زیر با ما تماس بگیرید:
+    \n
+    [mshajkarami@gmail.com]
+    \n
+    آخرین به‌روزرسانی: ۲۰۲۵/۰۷/۳۱
+</string>
 
-    <string name="lorem_txt_des"> لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.</string>
-    <string name="send_a_message_to_support">ارسال پیام به پشتیبانی</string>
-    <string name="support_txt_des">از طریق این بخش می‌توانید پیام خود را مستقیماً برای تیم پشتیبانی ارسال کنید. لطفاً موضوع پیام و توضیحات کامل را وارد کرده و روی دکمه ارسال بزنید. ما در کوتاه‌ترین زمان ممکن پاسخ شما را خواهیم داد.</string>
-    <string name="privacy_policy_txt">
-        سیاست حفظ حریم خصوصی
-        \n
-        این سیاست توضیح می‌دهد که ما چگونه اطلاعات شما را جمع‌آوری، استفاده و محافظت می‌کنیم. با استفاده از این برنامه، شما با شرایط این سیاست موافقت می‌کنید.
-        \n
-        ۱. جمع‌آوری اطلاعات ما ممکن است اطلاعات زیر را جمع‌آوری کنیم:
-        \n
-        اطلاعاتی که شما به‌صورت مستقیم وارد می‌کنید (مانند نام، ایمیل و سایر داده‌های اختیاری).
-        \n
-        اطلاعات فنی دستگاه (مانند مدل دستگاه، سیستم‌عامل و نسخه برنامه) برای بهبود عملکرد.
-        \n
-        داده‌های مربوط به استفاده شما از برنامه (مانند صفحات بازدید شده یا دکمه‌های کلیک شده) به‌صورت ناشناس.
-        \n
-        ۲. استفاده از اطلاعات ما از اطلاعات جمع‌آوری شده برای موارد زیر استفاده می‌کنیم:
-        \n
-        ارائه و بهبود خدمات برنامه. پاسخ به درخواست‌ها و پشتیبانی کاربران. تحلیل و بهینه‌سازی تجربه کاربری.
-        \n
-        ۳. اشتراک‌گذاری اطلاعات ما اطلاعات شخصی شما را به هیچ شخص یا شرکت ثالثی نمی‌فروشیم یا اجاره نمی‌دهیم، مگر در موارد زیر:
-        \n
-        با رضایت صریح شما. در صورت الزام قانونی یا درخواست مراجع قضایی. برای ارائه خدمات از طریق شرکای معتبر (مانند سرویس‌های تبلیغات یا آنالیز)، که تنها در حد نیاز به داده‌ها دسترسی خواهند داشت.
-        \n
-        ۴. امنیت اطلاعات
-        \n
-        ما اقدامات امنیتی لازم را برای محافظت از اطلاعات شما در برابر دسترسی، تغییر یا افشای غیرمجاز به‌کار می‌بریم. با این حال، هیچ روش انتقال داده یا ذخیره‌سازی ۱۰۰٪ ایمن نیست.
-        \n
-        ۵. تغییرات در سیاست حفظ حریم خصوصی
-        \n
-        ما ممکن است این سیاست را هر از گاهی به‌روزرسانی کنیم. نسخه به‌روزشده از طریق برنامه یا وب‌سایت در دسترس خواهد بود و تاریخ آخرین به‌روزرسانی در پایین این صفحه درج می‌شود.
-        \n
-        ۶. تماس با ما
-        \n
-        اگر سوال یا نگرانی در مورد این سیاست دارید، می‌توانید از طریق ایمیل زیر با ما تماس بگیرید:
-        \n
-        [mshajkarami@gmail.com]
-        \n
-        تاریخ آخرین به‌روزرسانی: ۱۴۰۴/۰۵/۰۹</string>
-    <string name="new_question">پرسش جدید</string>
-    <string name="select_question_type">نوع پرسش را انتخاب کنید</string>
-    <string name="dialog_no_internet_msg">دسترسی به اینترنت ندارید. </string>
-    <string name="dialog_no_internet_msg_select_method">لطفا یک روش برای اتصال انتخاب کنید.</string>
-    <string name="connecting_with_wi_fi">اتصال با وای فای</string>
-    <string name="mobile_data"> داده تلفن همراه</string>
+    <!-- 📄 Placeholder Text -->
+    <string name="lorem_txt_des">
+    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.
+    این متن برای تست و نمونه‌سازی استفاده می‌شود و معنای خاصی ندارد.
+</string>
 
 </resources>

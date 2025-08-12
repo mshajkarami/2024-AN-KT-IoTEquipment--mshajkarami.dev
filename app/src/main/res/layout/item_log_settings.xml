@@ -15,7 +15,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/setting_log_setting"
+            android:text="@string/settings_log_title"
             android:textColor="@color/md_theme_onSurface"
             android:textAppearance="?attr/textAppearanceTitleMedium"
             android:textDirection="locale"
@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_weight="1"
-                android:text="@string/setting_log_date_format"
+                android:text="@string/settings_log_date_format"
                 android:gravity="start"
                 android:textDirection="locale" />
 
@@ -53,7 +53,7 @@
                 android:id="@+id/currentLanguageText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/gregorian" />
+                android:text="@string/settings_date_format_gregorian" />
         </LinearLayout>
 
         <View
@@ -84,7 +84,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_weight="1"
-                android:text="@string/setting_offline_mode"
+                android:text="@string/settings_offline_mode"
                 android:gravity="start"
                 android:textDirection="locale" />
 
@@ -92,7 +92,7 @@
                 android:id="@+id/offlineLogModeText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/inactive" />
+                android:text="@string/settings_inactive" />
         </LinearLayout>
 
     </LinearLayout>

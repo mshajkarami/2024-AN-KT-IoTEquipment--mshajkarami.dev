@@ -26,8 +26,6 @@ import com.irisaco.iotequipment.databinding.FragmentAddLogBinding
 import com.irisaco.iotequipment.ui.detail.base_view_model.SharedViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
-import java.time.LocalDate
-import java.time.ZoneOffset
 import java.util.Date
 import java.util.Locale
 import kotlin.getValue
@@ -158,9 +156,9 @@ class AddLogFragment : Fragment() {
 
         viewModel.uploadState.observe(viewLifecycleOwner) { result ->
             result.onSuccess {
-                showToast(getString(R.string.file_upload_success))
+                showToast(getString(R.string.attachment_file_upload_success))
             }.onFailure {
-                showToast("${getString(R.string.file_upload_fail)} ${it.message}")
+                showToast("${getString(R.string.attachment_file_upload_fail)} ${it.message}")
             }
         }
     }

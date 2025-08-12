@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -23,7 +22,6 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -113,7 +111,7 @@ class QrScannerActivity : AppCompatActivity() {
                         val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, imageUri)
                         imageAnalyzer.scanBitmap(bitmap)
                     } catch (e: IOException) {
-                        showToast(getString(R.string.qr_msg_img_reading_fail))
+                        showToast(getString(R.string.qr_msg_camera_fail))
                         e.printStackTrace()
                     }
                 }
@@ -127,7 +125,7 @@ class QrScannerActivity : AppCompatActivity() {
                 startCamera()
             } else {
                 showPermissionDialog(
-                    getString(R.string.qr_title_camera),
+                    getString(R.string.qr_btn_camera),
                     getString(R.string.qr_msg_camera_permission_denied)
                 )
             }
@@ -138,8 +136,8 @@ class QrScannerActivity : AppCompatActivity() {
                 openGallery()
             } else {
                 showPermissionDialog(
-                    getString(R.string.qr_title_gallery),
-                    getString(R.string.qr_msg_img_permission_denied)
+                    getString(R.string.qr_btn_gallery),
+                    getString(R.string.qr_msg_permission_denied)
                 )
             }
         }
@@ -206,13 +204,13 @@ class QrScannerActivity : AppCompatActivity() {
         AlertDialog.Builder(this)
             .setTitle(getString(R.string.qr_permission_required_title, title))
             .setMessage(message)
-            .setPositiveButton(getString(R.string.qr_btn_go_to_settings)) { _, _ ->
+            .setPositiveButton(getString(R.string.qr_action_go_to_settings)) { _, _ ->
                 val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
                     data = Uri.fromParts("package", packageName, null)
                 }
                 startActivity(intent)
             }
-            .setNegativeButton(getString(R.string.qr_btn_cancel), null)
+            .setNegativeButton(getString(R.string.qr_action_cancel), null)
             .show()
     }
 

@@ -21,45 +21,19 @@ import com.irisaco.iotequipment.R
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import kotlin.getValue
+
 @AndroidEntryPoint
 class AuthFragment : Fragment() {
 
     private val authViewModel: AuthViewModel by activityViewModels()
-
     private lateinit var btnAuth: MaterialButton
     private lateinit var loginLauncher: ActivityResultLauncher<Intent>
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        requireActivity().window.setFlags(
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-        )
-
-        loginLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            val data = result.data ?: return@registerForActivityResult
-
-            authViewModel.handleTokenExchange(data) { success, error ->
-                if (success) {
-                    Toast.makeText(requireContext(), getString(R.string.msg_user_welcome), Toast.LENGTH_SHORT).show()
-
-                    viewLifecycleOwner.lifecycleScope.launch {
-                        val account = authViewModel.getActiveAccount()
-                        Log.d("AuthFragment", "login with user name : ${account?.username}")
-                    }
-
-                    val intent = Intent(requireContext(), MainActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    startActivity(intent)
-
-                } else {
-                    Toast.makeText(requireContext(), "${getString(R.string.msg_user_login_fail)} $error", Toast.LENGTH_SHORT).show()
-                    Log.e("AuthError", error ?: "Unknown error")
-                }
-            }
-        }
+        enableFullScreenMode()
+        initLoginLauncher()
     }
 
     override fun onCreateView(
@@ -73,20 +47,73 @@ class AuthFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewLifecycleOwner.lifecycleScope.launch {
-            authViewModel.loadActiveAccountFromDb()
-            val isLoggedIn = authViewModel.isLoggedIn()
-            if (isLoggedIn) {
-                val intent = Intent(requireContext(), MainActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(intent)
-                requireActivity().finish()
-            }
-        }
+        checkIfUserAlreadyLoggedIn()
+        setupAuthButton()
+    }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        disableFullScreenMode()
+    }
+
+    private fun enableFullScreenMode() {
+        requireActivity().window.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        )
+    }
+    private fun disableFullScreenMode() {
+        requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+    }
+    private fun setupAuthButton() {
         btnAuth.setOnClickListener {
             val loginIntent = authViewModel.startLoginIntent()
             loginLauncher.launch(loginIntent)
+        }
+    }
+    private fun navigateToMain() {
+        val intent = Intent(requireContext(), MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        startActivity(intent)
+        requireActivity().finish()
+    }
+    private fun checkIfUserAlreadyLoggedIn() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            authViewModel.loadActiveAccountFromDb()
+            if (authViewModel.isLoggedIn()) {
+                navigateToMain()
+            }
+        }
+    }
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun initLoginLauncher() {
+        loginLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            val data = result.data ?: return@registerForActivityResult
+
+            viewLifecycleOwner.lifecycleScope.launch {
+                authViewModel.handleTokenExchange(data) { success, error ->
+                    if (success) {
+                        showToast(getString(R.string.auth_user_welcome))
+                        viewLifecycleOwner.lifecycleScope.launch {
+                            logActiveAccount()
+                            navigateToMain()
+                        }
+                    } else {
+                        showToast("${getString(R.string.auth_login_fail)} $error")
+                        Log.e("AuthError", error ?: "Unknown error")
+                    }
+                }
+            }
+        }
+    }
+    private suspend fun logActiveAccount() {
+        val account = authViewModel.getActiveAccount()
+        Log.d("AuthFragment", "login with user name : ${account?.username}")
+    }
+    private fun showToast(message: String) {
+        context?.let {
+            Toast.makeText(it, message, Toast.LENGTH_SHORT).show()
         }
     }
 }

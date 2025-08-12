@@ -9,7 +9,6 @@ import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
@@ -39,7 +38,6 @@ import com.irisaco.iotequipment.utils.NetworkStatusListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import androidx.core.net.toUri
-import androidx.navigation.findNavController
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -48,9 +46,7 @@ class MainActivity : AppCompatActivity() {
     private var noInternetDialog: NoInternetBottomSheet? = null
     internal var equipmentIdUnique: String? = null
     private lateinit var binding: ActivityMainBinding
-
     private val shareViewModel: SharedViewModel by viewModels()
-
     private val authViewModel: AuthViewModel by viewModels()
     internal var isConnectedToInternet: Boolean = true
 
@@ -76,7 +72,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupNavigationHeader() {
         val headerView = binding.navView.getHeaderView(0)
-        val imageView = headerView.findViewById<ImageView>(R.id.profileImageView)
         val btnChangeThem = headerView.findViewById<ImageButton>(R.id.btnChangeThem)
         val userName = headerView.findViewById<TextView>(R.id.nav_header_name)
         val userState = headerView.findViewById<TextView>(R.id.nav_header_state)
@@ -86,21 +81,21 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnChangeThem.setOnClickListener {
-            Toast.makeText(this, getString(R.string.no_mvp), Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.msg_feature_not_available), Toast.LENGTH_SHORT).show()
         }
 
         authViewModel.networkStatus.observe(this) { isConnected ->
             userState.text = if (isConnected) {
-                getString(R.string.setting_profile_online)
+                getString(R.string.settings_profile_online)
             } else {
-                getString(R.string.setting_profile_offline)
+                getString(R.string.settings_profile_offline)
             }
         }
 
     }
 
     override fun attachBaseContext(newBase: Context) {
-        val lang = newBase.getSharedPreferences("app_settings", Context.MODE_PRIVATE)
+        val lang = newBase.getSharedPreferences("app_settings", MODE_PRIVATE)
             .getString("language", "fa") ?: "fa"
         val contextWithLocale = LocaleHelper.setLocale(newBase, lang)
         super.attachBaseContext(contextWithLocale)
@@ -167,8 +162,8 @@ class MainActivity : AppCompatActivity() {
                     AlertDialog.Builder(this)
                         .setTitle(getString(R.string.menu_exit))
                         .setMessage(getString(R.string.msg_confirm_exit))
-                        .setPositiveButton(getString(R.string.yes)) { _, _ -> finishAffinity() }
-                        .setNegativeButton(getString(R.string.no), null)
+                        .setPositiveButton(getString(R.string.action_yes)) { _, _ -> finishAffinity() }
+                        .setNegativeButton(getString(R.string.action_no), null)
                         .show()
                     true
                 }
@@ -215,17 +210,17 @@ class MainActivity : AppCompatActivity() {
             binding.drawerLayout.openDrawer(Gravity.LEFT)
         }
         setDefaultToolbarIcon()
-        setToolbarTitle(getString(R.string.toolbar_default_text))
+        setToolbarTitle(getString(R.string.app_title_main))
     }
 
     private fun configureSearchToolbar() {
         setupToolbarNavigation(R.drawable.ic_arrow_left) { navController.navigateUp() }
         setDefaultToolbarIcon()
-        setToolbarTitle(getString(R.string.toolbar_default_text))
+        setToolbarTitle(getString(R.string.app_title_main))
     }
 
     private fun configureSettingsToolbar() {
-        setToolbarTitle(getString(R.string.toolbar_setting_text))
+        setToolbarTitle(getString(R.string.settings_toolbar_title))
         setupToolbarNavigation(R.drawable.ic_arrow_left) { navController.navigateUp() }
         setToolbarMenu(R.drawable.ic_help)
     }
@@ -254,7 +249,7 @@ class MainActivity : AppCompatActivity() {
     private fun configureEquipmentDetailToolbar() {
         setupToolbarNavigation(R.drawable.ic_arrow_left) { navController.navigateUp() }
         setDefaultToolbarIcon()
-        setToolbarTitle(getString(R.string.toolbar_default_text))
+        setToolbarTitle(getString(R.string.app_title_main))
     }
 
     private fun configureLogDetailToolbar() {
@@ -286,7 +281,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupAttachmentMenu() {
-        setToolbarTitle(getString(R.string.toolbar_title_attachments))
+        setToolbarTitle(getString(R.string.attachment_toolbar_title))
         setToolbarMenu(
             R.drawable.ic_kebab,
             menuRes = R.menu.menu_toolbar_popup_attachment
@@ -396,7 +391,3 @@ class MainActivity : AppCompatActivity() {
 
     private fun Int.dpToPx(): Int = (this * resources.displayMetrics.density).toInt()
 }
-
-
-
-

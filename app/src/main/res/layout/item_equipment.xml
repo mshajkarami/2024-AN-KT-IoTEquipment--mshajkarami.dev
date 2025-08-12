@@ -81,7 +81,7 @@
                 android:id="@+id/img"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:contentDescription="@string/equipment_image_label"
+                android:contentDescription="@string/equipment_label_image_description"
                 android:scaleType="centerCrop" />
 
         </com.google.android.material.card.MaterialCardView>

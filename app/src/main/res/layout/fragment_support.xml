@@ -49,7 +49,7 @@
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="4dp"
                     android:textColor="@color/md_theme_onSurface"
-                    android:text="@string/support_txt_des"
+                    android:text="@string/support_description"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView10" />
@@ -83,7 +83,7 @@
                             android:background="@drawable/bg_input_box"
                             android:drawableEnd="@drawable/ic_arrow_down"
                             android:gravity="center_vertical"
-                            android:hint="@string/select_question_type"
+                            android:hint="@string/support_question_type"
                             android:paddingHorizontal="16dp"
                             android:textColorHint="@color/black"
                             android:textSize="14sp" />
@@ -169,7 +169,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="@string/new_question"
+                    android:text="@string/action_new_question"
                     android:textSize="18sp"
                     android:textColor="@color/md_theme_onBackground"
                     android:textStyle="bold"

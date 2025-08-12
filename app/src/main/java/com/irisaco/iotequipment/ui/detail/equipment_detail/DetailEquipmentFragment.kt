@@ -11,7 +11,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import com.airbnb.lottie.LottieAnimationView
 import com.irisaco.iotequipment.R
@@ -111,7 +110,7 @@ class DetailEquipmentFragment : Fragment() {
                 progressbar.visibility = View.GONE
                 contentLayout.visibility = View.VISIBLE
             } else {
-                viewModel.title.value = requireContext().getString(R.string.equipment_not_found)
+                viewModel.title.value = requireContext().getString(R.string.search_not_found)
                 binding.btnAttachment.visibility = View.GONE
                 progressbar.visibility = View.GONE
                 contentLayout.visibility = View.VISIBLE

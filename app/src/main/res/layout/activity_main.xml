@@ -42,7 +42,7 @@
                     android:layout_height="30dp"
                     android:layout_gravity="end"
                     android:maxLines="1"
-                    android:text="@string/toolbar_default_text"
+                    android:text="@string/app_title_main"
                     android:textColor="@color/md_theme_onSurface"
                     android:textSize="16sp"
                     android:textStyle="bold" />

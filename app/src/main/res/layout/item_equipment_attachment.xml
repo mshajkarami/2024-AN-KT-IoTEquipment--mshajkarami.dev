@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="4dp"
-            android:text="@string/equipment_label_attachment"
+            android:text="@string/equipment_label_attachment_name"
             android:textColor="@color/md_theme_background"
             android:textSize="14sp"
             android:ellipsize="end"

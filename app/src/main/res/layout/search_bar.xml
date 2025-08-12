@@ -20,7 +20,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="4dp"
-                android:hint="@string/hint_searchbar"
+                android:hint="@string/search_hint"
                 android:textColorHint="@color/black"
                 app:boxBackgroundColor="@color/md_theme_surfaceVariant"
                 app:boxBackgroundMode="filled"

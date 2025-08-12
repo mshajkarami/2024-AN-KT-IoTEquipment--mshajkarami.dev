@@ -66,7 +66,7 @@ class AttachmentsAdapter(
 
         fun bind(document: Document) {
             val context = itemView.context
-            txtName.text = context.getString(R.string.equipment_label_attachment, document.fileName)
+            txtName.text = context.getString(R.string.equipment_label_attachment_name, document.fileName)
 
             when (document.type?.lowercase()) {
                 ".pdf" -> icAttachment.setImageResource(R.drawable.ic_pdf)

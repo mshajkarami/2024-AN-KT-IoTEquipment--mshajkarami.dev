@@ -19,7 +19,6 @@ import com.irisaco.iotequipment.domain.RoleViewModel
 import com.irisaco.iotequipment.ui.detail.base_view_model.DetailViewModel
 import com.irisaco.iotequipment.ui.detail.base_view_model.DetailViewModelFactory
 import com.irisaco.iotequipment.ui.detail.base_view_model.SharedViewModel
-import com.irisaco.iotequipment.ui.search.SearchFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -111,7 +110,7 @@ class LogListFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         val activity = requireActivity() as MainActivity
-        activity.setToolbarTitle(getString(R.string.toolbar_default_text))
+        activity.setToolbarTitle(getString(R.string.app_title_main))
         activity.setDefaultToolbarIcon()
 
         viewModel.loadEquipmentRecords()
