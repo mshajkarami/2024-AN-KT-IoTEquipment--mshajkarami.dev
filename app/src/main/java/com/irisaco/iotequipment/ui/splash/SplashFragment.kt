@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.irisaco.iotequipment.MainActivity
 import com.irisaco.iotequipment.R
 import com.irisaco.iotequipment.ui.auth.AuthViewModel
+import com.irisaco.iotequipment.ui.onboarding.OnboardingActivity
 import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class SplashFragment : Fragment() {
@@ -41,7 +42,7 @@ class SplashFragment : Fragment() {
     }
 
     private fun navigateToMain() {
-        val intent = Intent(requireContext(), MainActivity::class.java)
+        val intent = Intent(requireContext(), OnboardingActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
         requireActivity().finish()

@@ -30,7 +30,7 @@ class AuthActivity : AppCompatActivity() {
     }
 
     override fun attachBaseContext(newBase: Context) {
-        val lang = newBase.getSharedPreferences("app_settings", Context.MODE_PRIVATE)
+        val lang = newBase.getSharedPreferences("app_settings", MODE_PRIVATE)
             .getString("language", "fa") ?: "fa"
         val contextWithLocale = LocaleHelper.setLocale(newBase, lang)
         super.attachBaseContext(contextWithLocale)

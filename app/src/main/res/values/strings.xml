@@ -101,6 +101,7 @@
     <string name="toolbar_action_share_all">Share All Files</string>
     <string name="toolbar_action_refresh">Refresh</string>
     <string name="toolbar_action_download_all">Download All Files</string>
+    <string name="toolbar_icon_profile">Profile User</string>
 
     <string name="tab_description">Description</string>
     <string name="tab_logs">Logs</string>
@@ -177,6 +178,8 @@
     <string name="onboarding_language_title">Select language</string>
     <string name="onboarding_theme_title">Choose your favorite theme</string>
     <string name="onboarding_ready_title">Everything is ready!</string>
+    <string name="onboarding_theme_subtitle">Choose light or dark to match your style</string>
+    <string name="onboarding_theme_select_theme">Select Theme</string>
     <string name="onboarding_get_started">Get started</string>
     <string name="onboarding_description_text">
         Dear [Username]\nWelcome to the specialized IoT equipment management system.

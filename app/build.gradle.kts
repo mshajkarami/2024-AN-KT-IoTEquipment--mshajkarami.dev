@@ -67,6 +67,7 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-scalars:2.9.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
     implementation("com.squareup.okhttp3:mockwebserver:4.9.3")
+    implementation(libs.androidx.fragment)
 
     val camerax_version = "1.2.2"
     implementation("androidx.camera:camera-core:$camerax_version")

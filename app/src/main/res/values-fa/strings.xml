@@ -2,12 +2,12 @@
 <resources>
 
     <!-- 🌐 App Info -->
-    <string name="app_name">تجهیزات IoT</string>
-    <string name="app_title_main">سامانه مدیریت تجهیزات IoT</string>
+    <string name="app_name">تجهیزات اینترنت اشیا</string>
+    <string name="app_title_main">سامانه مدیریت تجهیزات اینترنت اشیا</string>
 
     <!-- 🔐 Authentication -->
     <string name="auth_description">
-    این برنامه به شما کمک می‌کند تجهیزات IoT را به‌صورت متمرکز کنترل، پایش و پشتیبانی کنید.
+    این برنامه به شما کمک می‌کند تجهیزات اینترنت اشیا را به‌صورت متمرکز کنترل، پایش و پشتیبانی کنید.
     با استفاده از مرورگر به‌صورت امن وارد شوید و بدون نگرانی امنیتی، عملیات صنعتی خود را مدیریت کنید.
 </string>
     <string name="auth_login_browser">ورود امن از طریق مرورگر</string>
@@ -101,6 +101,7 @@
     <string name="toolbar_action_share_all">اشتراک‌گذاری همه فایل‌ها</string>
     <string name="toolbar_action_refresh">به‌روزرسانی</string>
     <string name="toolbar_action_download_all">دانلود همه فایل‌ها</string>
+    <string name="toolbar_icon_profile">پروفایل کاربر</string>
 
     <string name="tab_description">توضیحات</string>
     <string name="tab_logs">لاگ‌ها</string>
@@ -175,14 +176,16 @@
     <string name="onboarding_welcome_subtitle">برای شروع، زبان و تم را به‌سرعت تنظیم کنید</string>
     <string name="onboarding_language_title">انتخاب زبان</string>
     <string name="onboarding_theme_title">انتخاب تم مورد علاقه</string>
+    <string name="onboarding_theme_subtitle">روشن یا تیره را متناسب با سبک خود انتخاب کنید</string>
+    <string name="onboarding_theme_select_theme">انتخاب قالب</string>
     <string name="onboarding_ready_title">همه چیز آماده است!</string>
     <string name="onboarding_get_started">شروع کنید</string>
     <string name="onboarding_description_text">
     کاربر گرامی [Username]\n
     به سامانه تخصصی مدیریت تجهیزات IoT خوش آمدید.
-    هویت شما تأیید شده و دسترسی‌ها بر اساس نقش تخصیص‌یافته اعطا شده است.
+    هویت شما تأیید شده و دسترسی‌ها بر اساس نقش تخصیص ‌یافته اعطا شده است.
     امیدواریم این سامانه به شما کمک کند تا به‌راحتی تجهیزات خود را پیگیری، کنترل و مدیریت کنید.
-    از انتخاب شما سپاسگزاریم؛ ما در کنار شما هستیم.
+    از انتخاب شما سپاسگزاریم و کنار شما هستیم.
 </string>
 
     <!-- 💬 Support -->

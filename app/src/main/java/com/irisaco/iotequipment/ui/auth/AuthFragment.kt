@@ -1,5 +1,6 @@
 package com.irisaco.iotequipment.ui.auth
 
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -18,6 +19,7 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.button.MaterialButton
 import com.irisaco.iotequipment.MainActivity
 import com.irisaco.iotequipment.R
+import com.irisaco.iotequipment.ui.onboarding.OnboardingActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import kotlin.getValue
@@ -71,8 +73,28 @@ class AuthFragment : Fragment() {
             loginLauncher.launch(loginIntent)
         }
     }
+
+
+    private fun handelOnboarding() {
+        val prefs = requireActivity().getSharedPreferences("app_settings", Context.MODE_PRIVATE)
+        val onboardingDone = prefs.getBoolean("onboarding_done", false)
+        if (onboardingDone) {
+            navigateToMain()
+        } else {
+            navigateToOnboarding()
+        }
+    }
+
     private fun navigateToMain() {
         val intent = Intent(requireContext(), MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        startActivity(intent)
+        requireActivity().finish()
+    }
+
+    private fun navigateToOnboarding() {
+        val intent = Intent(requireContext(), OnboardingActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         startActivity(intent)
@@ -82,7 +104,8 @@ class AuthFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             authViewModel.loadActiveAccountFromDb()
             if (authViewModel.isLoggedIn()) {
-                navigateToMain()
+
+                handelOnboarding()
             }
         }
     }
@@ -97,7 +120,7 @@ class AuthFragment : Fragment() {
                         showToast(getString(R.string.auth_user_welcome))
                         viewLifecycleOwner.lifecycleScope.launch {
                             logActiveAccount()
-                            navigateToMain()
+                            handelOnboarding()
                         }
                     } else {
                         showToast("${getString(R.string.auth_login_fail)} $error")

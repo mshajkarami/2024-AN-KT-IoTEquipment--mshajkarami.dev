@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_onboarding"
+    android:background="@color/md_theme_background"
     tools:context=".ui.onboarding.WelcomeFragment">
 
 
@@ -61,12 +61,11 @@
                 android:layout_marginTop="4dp"
                 android:alpha="0.8"/>
 
-            <!-- Bottom row: Skip | indicators | Next -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_start"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Get started"
+                android:text="@string/onboarding_get_started"
                 android:textAllCaps="false"
                 android:textColor="@color/md_theme_onPrimary"
                 android:backgroundTint="@color/md_theme_primary"

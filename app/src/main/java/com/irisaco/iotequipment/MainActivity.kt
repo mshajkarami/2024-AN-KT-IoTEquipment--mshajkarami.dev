@@ -101,6 +101,8 @@ class MainActivity : AppCompatActivity() {
         super.attachBaseContext(contextWithLocale)
     }
 
+
+
     private fun setupInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { view, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())

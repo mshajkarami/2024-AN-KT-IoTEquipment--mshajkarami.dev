@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_onboarding"
+    android:background="@color/md_theme_background"
     tools:context=".ui.onboarding.WelcomeFragment">
 
 
@@ -77,6 +77,7 @@
                     android:layout_height="45dp"
                     android:layout_marginTop="8dp"
                     app:singleSelection="true"
+                    app:selectionRequired="true"
                     app:chipSpacing="8dp">
 
                     <com.google.android.material.chip.Chip
@@ -85,8 +86,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:chipCornerRadius="15dp"
-                        app:chipBackgroundColor="@color/md_theme_primary"
-                        android:textColor="@color/md_theme_onPrimary"
+                        app:chipBackgroundColor="@color/chip_choice_color"
+                        android:textColor="@color/chip_choice_text_color"
                         android:text="@string/english"/>
 
                     <com.google.android.material.chip.Chip
@@ -95,7 +96,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:chipCornerRadius="15dp"
-                        app:chipBackgroundColor="@color/md_theme_surfaceVariant"
+                        app:chipBackgroundColor="@color/chip_choice_color"
+                        android:textColor="@color/chip_choice_text_color"
                         android:text="@string/Persian"/>
                 </com.google.android.material.chip.ChipGroup>
 
@@ -118,10 +120,11 @@
                         android:text="@string/action_skip"
                         android:layout_weight="1"
                         android:gravity="start"
-                        android:paddingStart="4dp"
                         android:textColor="@color/md_theme_outline"
+                        android:foreground="?attr/selectableItemBackground"
                         android:clickable="true"
-                        android:focusable="true"/>
+                        android:focusable="true"
+                        />
 
                     <!-- simple indicators (3 dots) -->
                     <LinearLayout
@@ -134,7 +137,7 @@
                         <View
                             android:layout_width="8dp"
                             android:layout_height="8dp"
-                            android:background="@drawable/dot_inactive"
+                            android:background="@drawable/dot_active"
                             android:layout_margin="6dp"/>
                         <View
                             android:layout_width="8dp"
@@ -156,6 +159,9 @@
                         android:layout_weight="1"
                         android:textColor="@color/md_theme_primary"
                         android:textStyle="bold"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true"
                         android:gravity="end"/>
 
                 </LinearLayout>

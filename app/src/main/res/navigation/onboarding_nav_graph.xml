@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/onboarding_nav_graph"
+    app:startDestination="@id/welcomeThemeFragment">
+
+    <fragment
+        android:id="@+id/getStartedFragment"
+        android:name="com.irisaco.iotequipment.ui.onboarding.GetStartedFragment"
+        android:label="GetStartedFragment" />
+    <fragment
+        android:id="@+id/featuresThemeFragment"
+        android:name="com.irisaco.iotequipment.ui.onboarding.FeaturesThemeFragment"
+        android:label="FeaturesThemeFragment" >
+        <action
+            android:id="@+id/action_featuresThemeFragment_to_getStartedFragment"
+            app:destination="@id/getStartedFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/welcomeThemeFragment"
+        android:name="com.irisaco.iotequipment.ui.onboarding.WelcomeFragment"
+        android:label="FeaturesThemeFragment" >
+        <action
+            android:id="@+id/action_welcomeThemeFragment_to_featuresThemeFragment"
+            app:destination="@id/featuresThemeFragment" />
+        <action
+            android:id="@+id/action_welcomeThemeFragment_to_getStartedFragment"
+            app:destination="@id/getStartedFragment" />
+    </fragment>
+</navigation>
