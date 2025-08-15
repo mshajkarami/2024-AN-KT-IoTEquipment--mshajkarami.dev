@@ -8,17 +8,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.irisaco.iotequipment.ui.base.BaseActivity
 import com.irisaco.iotequipment.R
 import com.irisaco.iotequipment.utils.LocaleHelper
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AuthActivity : AppCompatActivity() {
+class AuthActivity : BaseActivity() {
 
     private val authViewModel: AuthViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_auth)
@@ -28,13 +28,5 @@ class AuthActivity : AppCompatActivity() {
             insets
         }
     }
-
-    override fun attachBaseContext(newBase: Context) {
-        val lang = newBase.getSharedPreferences("app_settings", MODE_PRIVATE)
-            .getString("language", "fa") ?: "fa"
-        val contextWithLocale = LocaleHelper.setLocale(newBase, lang)
-        super.attachBaseContext(contextWithLocale)
-    }
-
 
 }

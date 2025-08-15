@@ -1,47 +1,62 @@
 package com.irisaco.iotequipment.ui.setting
 
+import androidx.fragment.app.Fragment
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
+import android.media.MediaFormat.KEY_LANGUAGE
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.lifecycleScope
 import com.irisaco.iotequipment.R
-import com.irisaco.iotequipment.data.dataStore.LanguageDataStore
+import com.irisaco.iotequipment.data.dataStore.AppSettingsDataStore
 import com.irisaco.iotequipment.ui.components.LanguageBottomSheet
 import kotlinx.coroutines.launch
 import java.util.Locale
 import androidx.core.content.edit
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.irisaco.iotequipment.databinding.FragmentFeaturesThemeBinding
+import com.irisaco.iotequipment.databinding.FragmentSettingsBinding
 import com.irisaco.iotequipment.ui.auth.AuthActivity
 import com.irisaco.iotequipment.ui.auth.AuthViewModel
-import com.irisaco.iotequipment.ui.base.BaseFragment
+import com.irisaco.iotequipment.utils.TemporarySettings.KEY_THEME
+import com.irisaco.iotequipment.utils.TemporarySettings.PREFS_NAME
 
-class SettingsFragment : BaseFragment() {
+class SettingsFragment : Fragment() {
 
     private val authViewModel: AuthViewModel by activityViewModels()
 
-    override fun getLayoutId(): Int = R.layout.fragment_settings
+    private var _binding: FragmentSettingsBinding? = null
+    private val binding get() = _binding!!
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentSettingsBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupViews()
         observeNetworkStatus(view)
         loadUserData(view)
         observeLanguage(view)
-        setupListeners(view)
+        setupListeners()
     }
 
-    override fun isSwipeRefreshEnabled(): Boolean = false
 
-    private fun setupViews() {
-        // Optional UI styling logic here
-    }
 
     private fun observeNetworkStatus(view: View) {
         val accountStateText = view.findViewById<TextView>(R.id.txtUserState)
@@ -59,7 +74,7 @@ class SettingsFragment : BaseFragment() {
         val languageText = view.findViewById<TextView>(R.id.currentLanguageText)
 
         lifecycleScope.launch {
-            LanguageDataStore.getLanguageFlow(requireContext()).collect { lang ->
+            AppSettingsDataStore.getLanguageFlow(requireContext()).collect { lang ->
                 languageText.text = when (lang) {
                     "en" -> getString(R.string.settings_language_en)
                     "fa" -> getString(R.string.settings_language_fa)
@@ -69,8 +84,21 @@ class SettingsFragment : BaseFragment() {
         }
     }
 
+    private fun observeTheme(view: View) {
+        val themeText = view.findViewById<TextView>(R.id.currentThemeText)
+
+        lifecycleScope.launch {
+            AppSettingsDataStore.getThemeFlow(requireContext()).collect { theme ->
+                themeText.text = when (theme) {
+                    "light" -> getString(R.string.settings_theme_light)
+                    "dark" -> getString(R.string.settings_theme_dark)
+                    else -> getString(R.string.settings_theme_light)
+                }
+            }
+        }
+    }
+
     private fun loadUserData(view: View) {
-        showEmptyState(true)
 
         val settingsRoot = view.findViewById<View>(R.id.settingsRoot)
         settingsRoot.visibility = View.GONE
@@ -89,13 +117,11 @@ class SettingsFragment : BaseFragment() {
             setTextOrFormatted(emailText, emailName, R.string.settings_profile_email, R.string.auth_email_anonymous)
 
             settingsRoot.visibility = View.VISIBLE
-            showEmptyState(false)
         }
     }
 
-
-    private fun setupListeners(view: View) {
-        view.findViewById<View>(R.id.languageLayout).setOnClickListener {
+    private fun setupListeners() {
+        binding.includePreferences.languageLayout.setOnClickListener {
             val bottomSheet = LanguageBottomSheet()
             bottomSheet.onLanguageSelected = { selectedLang ->
                 applyLanguage(selectedLang)
@@ -104,7 +130,7 @@ class SettingsFragment : BaseFragment() {
             bottomSheet.show(parentFragmentManager, "LanguageBottomSheet")
         }
 
-        view.findViewById<View>(R.id.logoutLayout).setOnClickListener {
+        binding.includePreferences.logoutLayout.setOnClickListener {
             showLogoutConfirmationDialog()
         }
 
@@ -112,12 +138,15 @@ class SettingsFragment : BaseFragment() {
             Toast.makeText(requireActivity(), getString(R.string.msg_feature_not_available), Toast.LENGTH_SHORT).show()
         }
 
-        view.findViewById<View>(R.id.themeLayout).setOnClickListener(noMvpClickListener)
-        view.findViewById<View>(R.id.termsLayout).setOnClickListener{
+        binding.includePreferences.themeLayout.setOnClickListener(noMvpClickListener)
+
+        binding.includeHelp.termsLayout.setOnClickListener{
             findNavController().navigate(R.id.action_settingsFragment_to_privacyPolicyFragment)
         }
-        view.findViewById<View>(R.id.supportLayout).setOnClickListener(noMvpClickListener)
-        view.findViewById<View>(R.id.passwordLayout).setOnClickListener(noMvpClickListener)
+
+        binding.includeHelp.supportLayout.setOnClickListener(noMvpClickListener)
+
+        binding.includeAccount.passwordLayout.setOnClickListener(noMvpClickListener)
     }
 
     private fun setTextOrAnonymous(textView: TextView, value: String?, anonymousResId: Int) {
@@ -135,8 +164,22 @@ class SettingsFragment : BaseFragment() {
         val config = Configuration()
         config.setLocale(locale)
 
-        val prefs = requireContext().getSharedPreferences("app_settings", Context.MODE_PRIVATE)
-        prefs.edit { putString("language", lang) }
+        val prefs = requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        prefs.edit { putString(KEY_LANGUAGE, lang) }
+    }
+
+
+
+    private fun applyTheme(themeName : String){
+
+        val prefs = requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        prefs.edit { putString(KEY_THEME, themeName) }
+
+        when (themeName) {
+            "light" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            "dark" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            else -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
     }
 
     private fun showLogoutConfirmationDialog() {

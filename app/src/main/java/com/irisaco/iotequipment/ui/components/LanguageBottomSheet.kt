@@ -8,7 +8,7 @@ import android.widget.RadioGroup
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.irisaco.iotequipment.R
-import com.irisaco.iotequipment.data.dataStore.LanguageDataStore
+import com.irisaco.iotequipment.data.dataStore.AppSettingsDataStore
 import kotlinx.coroutines.launch
 
 class LanguageBottomSheet : BottomSheetDialogFragment() {
@@ -24,7 +24,7 @@ class LanguageBottomSheet : BottomSheetDialogFragment() {
         val radioGroup = view.findViewById<RadioGroup>(R.id.languageRadioGroup)
 
         viewLifecycleOwner.lifecycleScope.launch {
-            val currentLang = LanguageDataStore.getLanguage(requireContext())
+            val currentLang = AppSettingsDataStore.getLanguage(requireContext())
             when (currentLang) {
                 "fa" -> radioGroup.check(R.id.radio_fa)
                 "en" -> radioGroup.check(R.id.radio_en)
@@ -39,7 +39,7 @@ class LanguageBottomSheet : BottomSheetDialogFragment() {
             }
 
             viewLifecycleOwner.lifecycleScope.launch {
-                LanguageDataStore.saveLanguage(requireContext(), selectedLang)
+                AppSettingsDataStore.saveLanguage(requireContext(), selectedLang)
                 onLanguageSelected?.invoke(selectedLang)
                 dismiss()
             }

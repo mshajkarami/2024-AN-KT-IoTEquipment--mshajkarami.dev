@@ -1,24 +1,21 @@
 package com.irisaco.iotequipment.ui.onboarding
 
-import android.app.Activity
 import android.app.Application
 import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.AndroidViewModel
-import java.util.Locale
 import androidx.core.content.edit
+import com.irisaco.iotequipment.utils.TemporarySettings.KEY_LANGUAGE
+import com.irisaco.iotequipment.utils.TemporarySettings.KEY_THEME
+import com.irisaco.iotequipment.utils.TemporarySettings.PREFS_NAME
 
 class OnboardingViewModel(
     private val app: Application
 ) : AndroidViewModel(app) {
 
-    companion object {
-        private const val PREFS_NAME = "app_settings"
-        private const val KEY_LANGUAGE = "language"
-        private const val KEY_THEME = "theme"
-    }
+
 
     private val prefs by lazy {
         app.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
@@ -55,7 +52,7 @@ class OnboardingViewModel(
         when (themeName) {
             "light" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             "dark" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            "system" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+            else -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
     }
 }

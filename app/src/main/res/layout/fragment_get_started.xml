@@ -14,6 +14,7 @@
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_marginTop="96dp"
+        android:background="@color/image_bg"
         android:src="@drawable/vector_get_started"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"

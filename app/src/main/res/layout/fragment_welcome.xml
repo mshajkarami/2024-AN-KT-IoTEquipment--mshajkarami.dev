@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -14,160 +13,163 @@
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_marginTop="96dp"
+        android:background="@color/image_bg"
+        android:elevation="4dp"
+        android:outlineProvider="bounds"
         android:src="@drawable/vector_welcome"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        android:elevation="4dp"
-        android:outlineProvider="bounds"
         app:layout_constraintTop_toTopOf="parent" />
 
-     <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_content"
-            android:layout_width="0dp"
-            android:layout_height="260dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="28dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="4dp"
-         android:backgroundTint="@color/md_theme_onSecondary"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_content"
+        android:layout_width="0dp"
+        android:layout_height="260dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="28dp"
+        android:backgroundTint="@color/md_theme_onSecondary"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/onboarding_welcome_title"
+                android:textAlignment="center"
+                android:textAppearance="?attr/textAppearanceHeadlineSmall"
+                android:textColor="@color/md_theme_onBackground" />
+
+            <TextView
+                android:id="@+id/tv_subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:alpha="0.8"
+                android:text="@string/onboarding_welcome_subtitle"
+                android:textAlignment="center"
+                android:textAppearance="?attr/textAppearanceBodySmall"
+                android:textColor="@color/md_theme_onSurface" />
+
+            <!-- Language selection -->
+            <TextView
+                android:id="@+id/tv_lang_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/onboarding_language_title"
+                android:textStyle="bold" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chip_group_lang"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginTop="8dp"
+                app:chipSpacing="8dp"
+                app:selectionRequired="true"
+                app:singleSelection="true">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_en"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/english"
+                    android:textColor="@color/chip_choice_text_color"
+                    app:chipBackgroundColor="@color/chip_choice_color"
+                    app:chipCornerRadius="15dp" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_fa"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Persian"
+                    android:textColor="@color/chip_choice_text_color"
+                    app:chipBackgroundColor="@color/chip_choice_color"
+                    app:chipCornerRadius="15dp" />
+            </com.google.android.material.chip.ChipGroup>
+
+            <!-- Spacer -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="8dp" />
+
+            <!-- Bottom row: Skip | indicators | Next -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="20dp">
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/tv_title"
-                    android:layout_width="match_parent"
+                    android:id="@+id/tv_skip"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/onboarding_welcome_title"
-                    android:textColor="@color/md_theme_onBackground"
-                    android:textAppearance="?attr/textAppearanceHeadlineSmall"
-                    android:textAlignment="center"/>
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:gravity="start"
+                    android:text="@string/action_skip"
+                    android:textColor="@color/md_theme_outline" />
 
-                <TextView
-                    android:id="@+id/tv_subtitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/onboarding_welcome_subtitle"
-                    android:textAppearance="?attr/textAppearanceBodySmall"
-                    android:textColor="@color/md_theme_onSurface"
-                    android:textAlignment="center"
-                    android:layout_marginTop="8dp"
-                    android:alpha="0.8"/>
-
-                <!-- Language selection -->
-                <TextView
-                    android:id="@+id/tv_lang_label"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/onboarding_language_title"
-                    android:layout_marginTop="16dp"
-                    android:textStyle="bold"/>
-
-                <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/chip_group_lang"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:layout_marginTop="8dp"
-                    app:singleSelection="true"
-                    app:selectionRequired="true"
-                    app:chipSpacing="8dp">
-
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_en"
-                        style="@style/Widget.MaterialComponents.Chip.Choice"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:chipCornerRadius="15dp"
-                        app:chipBackgroundColor="@color/chip_choice_color"
-                        android:textColor="@color/chip_choice_text_color"
-                        android:text="@string/english"/>
-
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_fa"
-                        style="@style/Widget.MaterialComponents.Chip.Choice"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:chipCornerRadius="15dp"
-                        app:chipBackgroundColor="@color/chip_choice_color"
-                        android:textColor="@color/chip_choice_text_color"
-                        android:text="@string/Persian"/>
-                </com.google.android.material.chip.ChipGroup>
-
-                <!-- Spacer -->
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="8dp"/>
-
-                <!-- Bottom row: Skip | indicators | Next -->
+                <!-- simple indicators (3 dots) -->
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:id="@+id/indicator_group"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/tv_skip"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/action_skip"
-                        android:layout_weight="1"
-                        android:gravity="start"
-                        android:textColor="@color/md_theme_outline"
-                        android:foreground="?attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:focusable="true"
-                        />
+                    <View
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
+                        android:layout_margin="6dp"
+                        android:background="@drawable/dot_active" />
 
-                    <!-- simple indicators (3 dots) -->
-                    <LinearLayout
-                        android:id="@+id/indicator_group"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_weight="1"
-                        android:gravity="center">
-                        <View
-                            android:layout_width="8dp"
-                            android:layout_height="8dp"
-                            android:background="@drawable/dot_active"
-                            android:layout_margin="6dp"/>
-                        <View
-                            android:layout_width="8dp"
-                            android:layout_height="8dp"
-                            android:background="@drawable/dot_inactive"
-                            android:layout_margin="6dp"/>
-                        <View
-                            android:layout_width="8dp"
-                            android:layout_height="8dp"
-                            android:background="@drawable/dot_inactive"
-                            android:layout_margin="6dp"/>
-                    </LinearLayout>
+                    <View
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
+                        android:layout_margin="6dp"
+                        android:background="@drawable/dot_inactive" />
 
-                    <TextView
-                        android:id="@+id/btn_next"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/action_next"
-                        android:layout_weight="1"
-                        android:textColor="@color/md_theme_primary"
-                        android:textStyle="bold"
-                        android:foreground="?attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:gravity="end"/>
-
+                    <View
+                        android:layout_width="8dp"
+                        android:layout_height="8dp"
+                        android:layout_margin="6dp"
+                        android:background="@drawable/dot_inactive" />
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/btn_next"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:gravity="end"
+                    android:text="@string/action_next"
+                    android:textColor="@color/md_theme_primary"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
-        </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:background="@color/md_theme_background"
         android:padding="16dp">
 
         <TextView
@@ -44,10 +45,10 @@
                 android:text="@string/settings_notifications"
                 android:textDirection="locale" />
 
-            <Switch
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switchNotifications"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="24dp"
                 tools:ignore="UseSwitchCompatOrMaterialXml" />
         </LinearLayout>
 
@@ -71,7 +72,7 @@
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/ic_language" />
+                android:src="@drawable/ic_globe" />
 
             <TextView
                 android:layout_width="0dp"
@@ -120,11 +121,11 @@
                 android:gravity="start"
                 android:textDirection="locale" />
 
-            <TextView
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/currentThemeText"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/settings_theme_light" />
+                android:layout_height="24dp"
+                />
         </LinearLayout>
 
         <View

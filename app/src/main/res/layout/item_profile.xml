@@ -10,6 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
+        android:background="@color/md_theme_background"
         android:layout_height="90dp"
         android:gravity="center_vertical">
 

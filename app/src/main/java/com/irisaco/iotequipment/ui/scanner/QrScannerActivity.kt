@@ -1,7 +1,7 @@
 package com.irisaco.iotequipment.ui.scanner
 
 import android.Manifest
-import android.content.Context
+import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -16,15 +16,13 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.irisaco.iotequipment.ui.base.BaseActivity
 import com.irisaco.iotequipment.R
 import com.irisaco.iotequipment.utils.LocaleHelper
 import com.irisaco.iotequipment.utils.QRImageAnalyzer
@@ -36,7 +34,7 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 @AndroidEntryPoint
-class QrScannerActivity : AppCompatActivity() {
+class QrScannerActivity : BaseActivity() {
 
     private lateinit var previewView: PreviewView
     private lateinit var btnScan: ImageButton
@@ -51,7 +49,6 @@ class QrScannerActivity : AppCompatActivity() {
     private val mainScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_qr_scanner)
@@ -66,13 +63,6 @@ class QrScannerActivity : AppCompatActivity() {
         imageAnalyzer = QRImageAnalyzer(supportFragmentManager)
 
         checkCameraPermissionAndStart()
-    }
-
-    override fun attachBaseContext(newBase: Context) {
-        val lang = newBase.getSharedPreferences("app_settings", MODE_PRIVATE)
-            .getString("language", "fa") ?: "fa"
-        val contextWithLocale = LocaleHelper.setLocale(newBase, lang)
-        super.attachBaseContext(contextWithLocale)
     }
 
     private fun applyWindowInsets() {

@@ -38,9 +38,10 @@ import com.irisaco.iotequipment.utils.NetworkStatusListener
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import androidx.core.net.toUri
+import com.irisaco.iotequipment.ui.base.BaseActivity
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
     private lateinit var networkConnection: NetworkConnectionLiveData
     private lateinit var navController: NavController
     private var noInternetDialog: NoInternetBottomSheet? = null
@@ -51,7 +52,6 @@ class MainActivity : AppCompatActivity() {
     internal var isConnectedToInternet: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
@@ -93,16 +93,6 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-
-    override fun attachBaseContext(newBase: Context) {
-        val lang = newBase.getSharedPreferences("app_settings", MODE_PRIVATE)
-            .getString("language", "fa") ?: "fa"
-        val contextWithLocale = LocaleHelper.setLocale(newBase, lang)
-        super.attachBaseContext(contextWithLocale)
-    }
-
-
-
     private fun setupInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { view, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())

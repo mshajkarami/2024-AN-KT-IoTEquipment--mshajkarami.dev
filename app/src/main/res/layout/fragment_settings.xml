@@ -17,7 +17,7 @@
             layout="@layout/item_profile" />
 
         <include
-            android:id="@+id/item_account"
+            android:id="@+id/includeAccount"
             layout="@layout/item_account" />
 
         <View

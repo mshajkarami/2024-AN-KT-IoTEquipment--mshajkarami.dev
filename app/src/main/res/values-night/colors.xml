@@ -73,4 +73,7 @@
     <color name="header_gradient_start">#CCB5C4FF</color>
     <color name="header_gradient_end">#00000000</color>
 
+    <color name="image_bg">#FFFFFF</color>
+
+
 </resources>

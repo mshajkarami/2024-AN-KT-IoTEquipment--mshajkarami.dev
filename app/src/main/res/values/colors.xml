@@ -71,4 +71,7 @@
     <color name="header_gradient_start">#CC0055EF</color> <!-- 80% opacity -->
     <color name="header_gradient_end">#00FFFFFF</color>   <!-- fully transparent -->
 
+    <color name="image_bg">#FFFFFF</color>
+
+
 </resources>

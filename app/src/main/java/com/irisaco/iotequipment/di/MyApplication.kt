@@ -2,6 +2,7 @@ package com.irisaco.iotequipment.di
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import com.irisaco.iotequipment.utils.LocaleHelper
 import dagger.hilt.android.HiltAndroidApp
@@ -10,8 +11,8 @@ import dagger.hilt.android.HiltAndroidApp
 class MyApplication : Application() {
 
     override fun onCreate() {
-        super.onCreate()
         applySavedTheme()
+        super.onCreate()
     }
 
     override fun attachBaseContext(base: Context?) {
@@ -30,12 +31,6 @@ class MyApplication : Application() {
         when (prefs.getString("theme", "light")) {
             "light" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             "dark" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            "system" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         }
     }
-
-
-
-
 }
-
