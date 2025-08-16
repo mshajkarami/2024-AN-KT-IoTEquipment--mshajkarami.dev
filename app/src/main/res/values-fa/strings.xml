@@ -88,7 +88,7 @@
     <string name="menu_support">پشتیبانی</string>
     <string name="menu_web">مشاهده نسخه وب</string>
     <string name="menu_settings">تنظیمات</string>
-    <string name="menu_message">پیام</string>
+    <string name="menu_messages">پیام ها</string>
     <string name="menu_about">درباره ما</string>
     <string name="menu_exit">خروج</string>
 
@@ -181,7 +181,7 @@
     <string name="onboarding_ready_title">همه چیز آماده است!</string>
     <string name="onboarding_get_started">شروع کنید</string>
     <string name="onboarding_description_text">
-    کاربر گرامی [Username]\n
+    کاربر گرامی [%1$s] \n
     به سامانه تخصصی مدیریت تجهیزات IoT خوش آمدید.
     هویت شما تأیید شده و دسترسی‌ها بر اساس نقش تخصیص ‌یافته اعطا شده است.
     امیدواریم این سامانه به شما کمک کند تا به‌راحتی تجهیزات خود را پیگیری، کنترل و مدیریت کنید.
@@ -243,5 +243,12 @@
     لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.
     این متن برای تست و نمونه‌سازی استفاده می‌شود و معنای خاصی ندارد.
 </string>
+    <string name="message_title">شما هیچ پیامی ندارید.</string>
+
+    <string-array name="array_question_type">
+        <item>تیم فنی</item>
+        <item>اپراتور</item>
+        <item>مدیریت</item>
+    </string-array>
 
 </resources>

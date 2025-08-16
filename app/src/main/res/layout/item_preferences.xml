@@ -48,8 +48,7 @@
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switchNotifications"
                 android:layout_width="wrap_content"
-                android:layout_height="24dp"
-                tools:ignore="UseSwitchCompatOrMaterialXml" />
+                android:layout_height="24dp" />
         </LinearLayout>
 
         <View
@@ -122,9 +121,10 @@
                 android:textDirection="locale" />
 
             <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/currentThemeText"
+                android:id="@+id/switchTheme"
                 android:layout_width="wrap_content"
-                android:layout_height="24dp"
+                android:layout_height="19dp"
+
                 />
         </LinearLayout>
 

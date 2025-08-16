@@ -1,12 +1,14 @@
 package com.irisaco.iotequipment.ui.search
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageButton
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -19,6 +21,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.irisaco.iotequipment.ui.base.BaseFragment
 import com.irisaco.iotequipment.R
 import com.irisaco.iotequipment.ui.components.SkeletonAdapter
+import com.irisaco.iotequipment.ui.scanner.QrScannerActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -33,6 +36,7 @@ class SearchFragment : BaseFragment() {
     private val skeletonAdapter by lazy { SkeletonAdapter(6) }
     private lateinit var progressBar: LottieAnimationView
     private lateinit var recyclerView: RecyclerView
+    private lateinit var btn_scanBarcode: ImageButton
 
     override fun getLayoutId(): Int = R.layout.fragment_search
 
@@ -54,6 +58,7 @@ class SearchFragment : BaseFragment() {
         recyclerView = view.findViewById(R.id.search_recyclerView)
         searchBar = view.findViewById(R.id.search_bar)
         progressBar = view.findViewById(R.id.progressBarSearch)
+        btn_scanBarcode = view.findViewById(R.id.searchbar_scanBarcode)
 
         adapter = EquipmentPagerAdapter(emptyList(), onItemClick = {
             equipmentId ->
@@ -63,6 +68,10 @@ class SearchFragment : BaseFragment() {
             bindAttachmentFragment(equipmentId)
         }
         )
+
+        btn_scanBarcode.setOnClickListener {
+            startActivity(Intent(requireContext(), QrScannerActivity::class.java))
+        }
 
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter

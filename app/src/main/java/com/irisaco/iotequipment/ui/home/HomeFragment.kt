@@ -18,6 +18,7 @@ import com.irisaco.iotequipment.R
 import com.irisaco.iotequipment.ui.base.BaseFragment
 
 class HomeFragment : BaseFragment() {
+
     override fun getLayoutId(): Int = R.layout.fragment_home
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -26,6 +27,7 @@ class HomeFragment : BaseFragment() {
         val searchBox = view.findViewById<TextInputLayout>(R.id.searchBox)
         val searchBar = view.findViewById<TextInputEditText>(R.id.search_bar)
         val btnScan: ImageButton = view.findViewById(R.id.btn_scan)
+        val btnScanSearchbar: ImageButton = view.findViewById(R.id.searchbar_scanBarcode)
 
         searchBar.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
@@ -41,6 +43,12 @@ class HomeFragment : BaseFragment() {
         btnScan.setOnClickListener {
             startActivity(Intent(requireContext(), QrScannerActivity::class.java))
         }
+
+        btnScanSearchbar.setOnClickListener {
+            startActivity(Intent(requireContext(), QrScannerActivity::class.java))
+        }
+
+
 
     }
 

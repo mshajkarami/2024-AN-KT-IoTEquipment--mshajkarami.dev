@@ -54,6 +54,7 @@ class SettingsFragment : Fragment() {
         loadUserData(view)
         observeLanguage(view)
         setupListeners()
+        initThemeSwitch()
     }
 
 
@@ -85,7 +86,7 @@ class SettingsFragment : Fragment() {
     }
 
     private fun observeTheme(view: View) {
-        val themeText = view.findViewById<TextView>(R.id.currentThemeText)
+        val themeText = view.findViewById<TextView>(R.id.switchTheme)
 
         lifecycleScope.launch {
             AppSettingsDataStore.getThemeFlow(requireContext()).collect { theme ->
@@ -138,16 +139,36 @@ class SettingsFragment : Fragment() {
             Toast.makeText(requireActivity(), getString(R.string.msg_feature_not_available), Toast.LENGTH_SHORT).show()
         }
 
-        binding.includePreferences.themeLayout.setOnClickListener(noMvpClickListener)
-
         binding.includeHelp.termsLayout.setOnClickListener{
             findNavController().navigate(R.id.action_settingsFragment_to_privacyPolicyFragment)
         }
 
-        binding.includeHelp.supportLayout.setOnClickListener(noMvpClickListener)
+        binding.includeHelp.supportLayout.setOnClickListener{
+            findNavController().navigate(R.id.supportFragment)
+        }
 
         binding.includeAccount.passwordLayout.setOnClickListener(noMvpClickListener)
     }
+
+    private fun initThemeSwitch() {
+        val themeSwitch = binding.includePreferences.switchTheme
+        val prefs = requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+
+        val savedTheme = prefs.getString(KEY_THEME, "light") ?: "light"
+        val isDark = savedTheme == "dark"
+
+        themeSwitch.isChecked = isDark
+
+        themeSwitch.setOnCheckedChangeListener { _, checked ->
+            val newTheme = if (checked) "dark" else "light"
+            applyTheme(newTheme)
+        }
+
+        binding.includePreferences.themeLayout.setOnClickListener {
+            themeSwitch.toggle()
+        }
+    }
+
 
     private fun setTextOrAnonymous(textView: TextView, value: String?, anonymousResId: Int) {
         textView.text = if (!value.isNullOrEmpty()) value else getString(anonymousResId)
@@ -167,8 +188,6 @@ class SettingsFragment : Fragment() {
         val prefs = requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         prefs.edit { putString(KEY_LANGUAGE, lang) }
     }
-
-
 
     private fun applyTheme(themeName : String){
 
