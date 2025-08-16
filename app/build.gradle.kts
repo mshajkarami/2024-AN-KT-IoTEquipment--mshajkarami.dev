@@ -21,6 +21,9 @@ android {
 
         manifestPlaceholders["appAuthRedirectScheme"] = "com.irisaco.iotequipment"
 
+        buildConfigField("String", "CLIENT_SECRET", "\"GN2HvCkONDIQOtgOm4pfTepqFv34fJL3\"")
+
+
     }
 
     buildTypes {
@@ -42,6 +45,7 @@ android {
     buildFeatures {
         dataBinding = true
         viewBinding = true
+        buildConfig = true
     }
 }
 

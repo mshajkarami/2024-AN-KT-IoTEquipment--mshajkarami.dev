@@ -17,6 +17,7 @@ import androidx.core.net.toUri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.irisaco.iotequipment.BuildConfig
 import com.irisaco.iotequipment.data.local.AccountEntity
 import com.irisaco.iotequipment.utils.UnsafeConnectionBuilder
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,8 +25,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import net.openid.appauth.AppAuthConfiguration
 import net.openid.appauth.AuthState
 import net.openid.appauth.ClientSecretBasic
-import net.openid.appauth.GrantTypeValues
-import net.openid.appauth.TokenRequest
 import javax.inject.Inject
 
 @HiltViewModel
@@ -34,8 +33,14 @@ class AuthViewModel @Inject constructor(
     private val repository: AuthRepository
 ) : ViewModel() {
 
-    private val _isLoggedInLiveData = MutableLiveData<Boolean>()
-    val isLoggedInLiveData: LiveData<Boolean> = _isLoggedInLiveData
+    private val _isLoggedIn = MutableLiveData<Boolean>()
+    val isLoggedIn: LiveData<Boolean> = _isLoggedIn
+
+
+    private val _authResult = MutableLiveData<Result<Unit>>()
+    val authResult: LiveData<Result<Unit>> = _authResult
+
+
     private val _networkStatus = MutableLiveData<Boolean>()
     val networkStatus: LiveData<Boolean> = _networkStatus
 
@@ -43,12 +48,14 @@ class AuthViewModel @Inject constructor(
         _networkStatus.value = isConnected
     }
 
-    private val authService = AuthorizationService(
-        context,
-        AppAuthConfiguration.Builder()
-            .setConnectionBuilder(UnsafeConnectionBuilder)
-            .build()
-    )
+    private val authService: AuthorizationService by lazy {
+        AuthorizationService(
+            context,
+            AppAuthConfiguration.Builder()
+                .setConnectionBuilder(UnsafeConnectionBuilder)
+                .build()
+        )
+    }
 
     private val serviceConfig = AuthorizationServiceConfiguration(
         "https://account.irisaprime.ir/realms/dev/protocol/openid-connect/auth".toUri(),
@@ -70,36 +77,36 @@ class AuthViewModel @Inject constructor(
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun handleTokenExchange(intent: Intent, onDone: (Boolean, String?) -> Unit) {
+    fun handleTokenExchange(intent: Intent) {
+
         val response = AuthorizationResponse.fromIntent(intent)
         val exception = AuthorizationException.fromIntent(intent)
 
-        if (response != null) {
-            val clientAuthentication = ClientSecretBasic("GN2HvCkONDIQOtgOm4pfTepqFv34fJL3")
+        if (response == null) {
+            _authResult.postValue(Result.failure(Exception(exception?.errorDescription)))
+            return
+        }
 
-            authService.performTokenRequest(
-                response.createTokenExchangeRequest(),
-                clientAuthentication
-            ) { tokenResponse, ex ->
+        val clientAuthentication = ClientSecretBasic(BuildConfig.CLIENT_SECRET)
+        authService.performTokenRequest(
+            response.createTokenExchangeRequest(),
+            clientAuthentication
+        ) { tokenResponse, ex ->
 
-                viewModelScope.launch {
-                    if (tokenResponse != null) {
-                        repository.appAuthManager.saveAuthState(
-                            AuthState(response, tokenResponse, ex)
-                        )
-                        repository.saveBasicAccountInfoFromAppAuth()
-                        checkLoginState()
-                        onDone(true, null)
-                    } else {
-                        onDone(false, ex?.errorDescription)
-                    }
+            viewModelScope.launch {
+                if (tokenResponse != null) {
+                    repository.appAuthManager.saveAuthState(
+                        AuthState(response, tokenResponse, ex)
+                    )
+                    repository.saveBasicAccountInfoFromAppAuth()
+                    checkLoginState()
+                    _authResult.postValue(Result.success(Unit))
+                } else {
+                    _authResult.postValue(Result.failure(Exception(ex?.errorDescription)))
                 }
             }
-        } else {
-            onDone(false, exception?.errorDescription)
         }
     }
-
 
     suspend fun isLoggedIn(): Boolean {
         return repository.getValidAccessTokenOrNull() != null
@@ -113,11 +120,12 @@ class AuthViewModel @Inject constructor(
         repository.loadActiveAccountFromDb()
     }
 
+
     fun checkLoginState() {
         viewModelScope.launch {
-            loadActiveAccountFromDb()
-            val isLoggedIn = isLoggedIn()
-            _isLoggedInLiveData.postValue(isLoggedIn)
+            repository.loadActiveAccountFromDb()
+            val isLoggedIn = repository.getValidAccessTokenOrNull() != null
+            _isLoggedIn.postValue(isLoggedIn)
         }
     }
 
@@ -139,7 +147,13 @@ class AuthViewModel @Inject constructor(
     fun logout(onLogoutComplete: () -> Unit) {
         viewModelScope.launch {
             repository.clear()
+            _isLoggedIn.postValue(false)
             onLogoutComplete()
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        authService.dispose()
     }
 }

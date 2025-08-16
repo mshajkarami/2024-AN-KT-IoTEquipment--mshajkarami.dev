@@ -244,6 +244,7 @@
     این متن برای تست و نمونه‌سازی استفاده می‌شود و معنای خاصی ندارد.
 </string>
     <string name="message_title">شما هیچ پیامی ندارید.</string>
+    <string name="app_version">نسخه : 1.0.0</string>
 
     <string-array name="array_question_type">
         <item>تیم فنی</item>

@@ -20,6 +20,8 @@ import com.google.android.material.button.MaterialButton
 import com.irisaco.iotequipment.MainActivity
 import com.irisaco.iotequipment.R
 import com.irisaco.iotequipment.ui.onboarding.OnboardingActivity
+import com.irisaco.iotequipment.utils.TemporarySettings.KEY_ONBOARDING
+import com.irisaco.iotequipment.utils.TemporarySettings.PREFS_NAME
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import kotlin.getValue
@@ -34,8 +36,12 @@ class AuthFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableFullScreenMode()
         initLoginLauncher()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        enableFullScreenMode()
     }
 
     override fun onCreateView(
@@ -49,15 +55,60 @@ class AuthFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        checkIfUserAlreadyLoggedIn()
+        setupObservers()
         setupAuthButton()
+
+        authViewModel.checkLoginState()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onPause() {
+        super.onPause()
         disableFullScreenMode()
     }
 
+    private fun setupObservers(){
+        authViewModel.isLoggedIn.observe(viewLifecycleOwner) {
+            loggedIn ->
+            if (loggedIn)
+                handleOnboarding()
+        }
+
+        authViewModel.authResult.observe(viewLifecycleOwner){
+            result ->
+            result.onSuccess {
+                showToast(getString(R.string.auth_user_welcome))
+                authViewModel.checkLoginState()
+            }
+
+            result.onFailure { e ->
+                showToast("${getString(R.string.auth_login_fail)} ${e.message}")
+                Log.e("AuthError", e.message ?: "Unknown error")
+            }
+        }
+    }
+    private fun setupAuthButton() {
+        btnAuth.setOnClickListener {
+            val loginIntent = authViewModel.startLoginIntent()
+            loginLauncher.launch(loginIntent)
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun initLoginLauncher() {
+        loginLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            val data = result.data ?: return@registerForActivityResult
+            authViewModel.handleTokenExchange(data)
+        }
+    }
+    private fun handleOnboarding() {
+        val prefs = requireActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val onboardingDone = prefs.getBoolean(KEY_ONBOARDING, false)
+        if (onboardingDone) {
+            navigateToMain()
+        } else {
+            navigateToOnboarding()
+        }
+    }
     private fun enableFullScreenMode() {
         requireActivity().window.setFlags(
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
@@ -67,24 +118,6 @@ class AuthFragment : Fragment() {
     private fun disableFullScreenMode() {
         requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
     }
-    private fun setupAuthButton() {
-        btnAuth.setOnClickListener {
-            val loginIntent = authViewModel.startLoginIntent()
-            loginLauncher.launch(loginIntent)
-        }
-    }
-
-
-    private fun handelOnboarding() {
-        val prefs = requireActivity().getSharedPreferences("app_settings", Context.MODE_PRIVATE)
-        val onboardingDone = prefs.getBoolean("onboarding_done", false)
-        if (onboardingDone) {
-            navigateToMain()
-        } else {
-            navigateToOnboarding()
-        }
-    }
-
     private fun navigateToMain() {
         val intent = Intent(requireContext(), MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -92,47 +125,12 @@ class AuthFragment : Fragment() {
         startActivity(intent)
         requireActivity().finish()
     }
-
     private fun navigateToOnboarding() {
         val intent = Intent(requireContext(), OnboardingActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         startActivity(intent)
         requireActivity().finish()
-    }
-    private fun checkIfUserAlreadyLoggedIn() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            authViewModel.loadActiveAccountFromDb()
-            if (authViewModel.isLoggedIn()) {
-
-                handelOnboarding()
-            }
-        }
-    }
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun initLoginLauncher() {
-        loginLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            val data = result.data ?: return@registerForActivityResult
-
-            viewLifecycleOwner.lifecycleScope.launch {
-                authViewModel.handleTokenExchange(data) { success, error ->
-                    if (success) {
-                        showToast(getString(R.string.auth_user_welcome))
-                        viewLifecycleOwner.lifecycleScope.launch {
-                            logActiveAccount()
-                            handelOnboarding()
-                        }
-                    } else {
-                        showToast("${getString(R.string.auth_login_fail)} $error")
-                        Log.e("AuthError", error ?: "Unknown error")
-                    }
-                }
-            }
-        }
-    }
-    private suspend fun logActiveAccount() {
-        val account = authViewModel.getActiveAccount()
-        Log.d("AuthFragment", "login with user name : ${account?.username}")
     }
     private fun showToast(message: String) {
         context?.let {

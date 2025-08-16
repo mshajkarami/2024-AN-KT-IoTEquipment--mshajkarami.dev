@@ -247,6 +247,7 @@
         Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
     </string>
     <string name="message_title">You have no messages.</string>
+    <string name="app_version">version : 1.0.0</string>
 
 
     <string-array name="array_question_type">

@@ -1,16 +1,12 @@
 package com.irisaco.iotequipment.ui.auth
 
-import android.content.Context
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.irisaco.iotequipment.ui.base.BaseActivity
 import com.irisaco.iotequipment.R
-import com.irisaco.iotequipment.utils.LocaleHelper
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -28,5 +24,4 @@ class AuthActivity : BaseActivity() {
             insets
         }
     }
-
 }

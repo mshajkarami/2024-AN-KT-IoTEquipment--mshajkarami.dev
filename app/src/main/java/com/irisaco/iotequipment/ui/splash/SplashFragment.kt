@@ -14,7 +14,6 @@ import com.irisaco.iotequipment.R
 import com.irisaco.iotequipment.ui.auth.AuthViewModel
 import com.irisaco.iotequipment.ui.onboarding.OnboardingActivity
 import dagger.hilt.android.AndroidEntryPoint
-import androidx.core.content.edit
 import com.irisaco.iotequipment.utils.TemporarySettings.KEY_ONBOARDING
 import com.irisaco.iotequipment.utils.TemporarySettings.PREFS_NAME
 
@@ -37,14 +36,13 @@ class SplashFragment : Fragment() {
             authViewModel.checkLoginState()
         }, 2000)
 
-        authViewModel.isLoggedInLiveData.observe(viewLifecycleOwner) { isLoggedIn ->
+        authViewModel.isLoggedIn.observe(viewLifecycleOwner) { isLoggedIn ->
             if (isLoggedIn == true) {
                 if (shouldShowOnboarding()) {
                     navigateToOnboarding()
                 } else {
                     navigateToMain()
                 }
-                navigateToMain()
             } else {
                 navigateToAuth()
             }
