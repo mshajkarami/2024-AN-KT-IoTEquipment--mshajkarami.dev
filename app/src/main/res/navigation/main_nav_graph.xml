@@ -129,16 +129,24 @@
     <fragment
         android:id="@+id/aboutFragment"
         android:name="com.irisaco.iotequipment.ui.about.AboutFragment"
-        android:label="fragment_about"
+        android:label=""
         tools:layout="@layout/fragment_about" />
     <fragment
         android:id="@+id/supportFragment"
         tools:layout="@layout/fragment_support"
         android:name="com.irisaco.iotequipment.ui.support.SupportFragment"
-        android:label="SupportFragment" />
+        android:label=""
+        />
     <fragment
         android:id="@+id/privacyPolicyFragment"
         android:name="com.irisaco.iotequipment.ui.privacy_policy.PrivacyPolicyFragment"
-        android:label="PrivacyPolicyFragment" />
+        android:label=""
+        />
+    <fragment
+        android:id="@+id/messagesFragment"
+        android:name="com.irisaco.iotequipment.ui.messages.MessagesFragment"
+        android:label=""
+        tools:layout="@layout/fragment_messages"
+        />
 
 </navigation>

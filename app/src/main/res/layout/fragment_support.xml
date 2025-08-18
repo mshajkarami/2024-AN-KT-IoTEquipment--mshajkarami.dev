@@ -91,7 +91,6 @@
                             app:boxCornerRadiusTopEnd="16dp"
                             app:boxCornerRadiusTopStart="16dp"
                             app:hintEnabled="false"
-
                             >
 
 
@@ -104,7 +103,7 @@
                                 android:textSize="14sp"
                                 android:inputType="none"
                                 android:textColor="@color/md_theme_onBackground"
-                                android:text="@string/support_question_type"
+                                android:hint="@string/support_question_type"
                                 android:paddingVertical="0dp"
                                 />
 

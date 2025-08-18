@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:elevation="2dp"
     android:radius="12dp">
 
@@ -49,6 +49,7 @@
                 android:id="@+id/switchNotifications"
                 android:layout_width="wrap_content"
                 android:layout_height="24dp" />
+
         </LinearLayout>
 
         <View
@@ -123,9 +124,14 @@
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/switchTheme"
                 android:layout_width="wrap_content"
-                android:layout_height="19dp"
+                android:layout_height="24dp"
+                android:thumb="@drawable/thumb_theme_base"
+                app:showText="false"
+                app:thumbTint="@null"
+                app:trackTint="@null"
+                app:track="@drawable/track"/>
 
-                />
+
         </LinearLayout>
 
         <View

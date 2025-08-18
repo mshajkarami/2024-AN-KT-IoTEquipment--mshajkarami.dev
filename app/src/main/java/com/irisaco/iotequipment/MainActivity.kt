@@ -93,6 +93,7 @@ class MainActivity : BaseActivity() {
         }
 
     }
+
     private fun setupInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(binding.main) { view, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -135,6 +136,7 @@ class MainActivity : BaseActivity() {
                 R.id.logDetailFragment -> configureLogDetailToolbar()
                 R.id.aboutFragment -> configureAboutToolbar()
                 R.id.supportFragment -> configureSupportToolbar()
+                R.id.messagesFragment -> configureMessageToolbar()
                 else -> configureDefaultToolbar()
             }
             val navHostFragment =
@@ -262,6 +264,12 @@ class MainActivity : BaseActivity() {
         setDefaultToolbarIcon()
     }
 
+    private fun configureMessageToolbar() {
+        setToolbarTitle(getString(R.string.menu_messages))
+        setupToolbarNavigation(R.drawable.ic_arrow_left) { navController.navigateUp() }
+        setDefaultToolbarIcon()
+    }
+
     private fun configureDefaultToolbar() {
         setupToolbarNavigation(R.drawable.ic_arrow_left) { navController.navigateUp() }
         setDefaultToolbarIcon()
@@ -382,4 +390,5 @@ class MainActivity : BaseActivity() {
     }
 
     private fun Int.dpToPx(): Int = (this * resources.displayMetrics.density).toInt()
+
 }

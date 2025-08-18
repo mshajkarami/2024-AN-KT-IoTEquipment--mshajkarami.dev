@@ -15,7 +15,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.lifecycleScope
 import com.irisaco.iotequipment.R
-import com.irisaco.iotequipment.data.dataStore.AppSettingsDataStore
 import com.irisaco.iotequipment.ui.components.LanguageBottomSheet
 import kotlinx.coroutines.launch
 import java.util.Locale
@@ -52,7 +51,6 @@ class SettingsFragment : Fragment() {
 
         observeNetworkStatus(view)
         loadUserData(view)
-        observeLanguage(view)
         setupListeners()
         initThemeSwitch()
     }
@@ -67,34 +65,6 @@ class SettingsFragment : Fragment() {
                 getString(R.string.settings_profile_online)
             } else {
                 getString(R.string.settings_profile_offline)
-            }
-        }
-    }
-
-    private fun observeLanguage(view: View) {
-        val languageText = view.findViewById<TextView>(R.id.currentLanguageText)
-
-        lifecycleScope.launch {
-            AppSettingsDataStore.getLanguageFlow(requireContext()).collect { lang ->
-                languageText.text = when (lang) {
-                    "en" -> getString(R.string.settings_language_en)
-                    "fa" -> getString(R.string.settings_language_fa)
-                    else -> getString(R.string.settings_language_fa)
-                }
-            }
-        }
-    }
-
-    private fun observeTheme(view: View) {
-        val themeText = view.findViewById<TextView>(R.id.switchTheme)
-
-        lifecycleScope.launch {
-            AppSettingsDataStore.getThemeFlow(requireContext()).collect { theme ->
-                themeText.text = when (theme) {
-                    "light" -> getString(R.string.settings_theme_light)
-                    "dark" -> getString(R.string.settings_theme_dark)
-                    else -> getString(R.string.settings_theme_light)
-                }
             }
         }
     }
@@ -168,7 +138,6 @@ class SettingsFragment : Fragment() {
             themeSwitch.toggle()
         }
     }
-
 
     private fun setTextOrAnonymous(textView: TextView, value: String?, anonymousResId: Int) {
         textView.text = if (!value.isNullOrEmpty()) value else getString(anonymousResId)

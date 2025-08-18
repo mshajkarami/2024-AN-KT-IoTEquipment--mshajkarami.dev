@@ -30,10 +30,10 @@
                 android:layoutDirection="ltr"
                 android:minHeight="?attr/actionBarSize"
                 android:textDirection="ltr"
-                app:subtitle=""
+                app:title="@null"
+                app:subtitle="@null"
                 app:menu="@menu/toolbar_menu"
                 app:navigationIcon="@drawable/ic_menu"
-                app:title="@null"
                 app:titleTextColor="@color/md_theme_background">
 
                 <TextView

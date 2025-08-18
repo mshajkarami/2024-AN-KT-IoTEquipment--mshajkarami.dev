@@ -24,6 +24,29 @@ class HomeFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupViews(view)
+    }
+
+
+    override fun isSwipeRefreshEnabled(): Boolean = false
+
+    override fun onResume() {
+        super.onResume()
+        val activity = requireActivity() as MainActivity
+        val scannedId = activity.equipmentIdUnique
+        if (!scannedId.isNullOrEmpty()) {
+            activity.equipmentIdUnique = null
+            val navOptions = NavOptions.Builder()
+                .setPopUpTo(R.id.homeFragment, true)
+                .build()
+
+            val action = HomeFragmentDirections
+                .actionHomeFragmentToSearchFragment(scannedId)
+            findNavController().navigate(action, navOptions)
+        }
+    }
+
+    private fun setupViews(view: View) {
         val searchBox = view.findViewById<TextInputLayout>(R.id.searchBox)
         val searchBar = view.findViewById<TextInputEditText>(R.id.search_bar)
         val btnScan: ImageButton = view.findViewById(R.id.btn_scan)
@@ -47,26 +70,6 @@ class HomeFragment : BaseFragment() {
         btnScanSearchbar.setOnClickListener {
             startActivity(Intent(requireContext(), QrScannerActivity::class.java))
         }
-
-
-
     }
 
-    override fun isSwipeRefreshEnabled(): Boolean = false
-
-    override fun onResume() {
-        super.onResume()
-        val activity = requireActivity() as MainActivity
-        val scannedId = activity.equipmentIdUnique
-        if (!scannedId.isNullOrEmpty()) {
-            activity.equipmentIdUnique = null
-            val navOptions = NavOptions.Builder()
-                .setPopUpTo(R.id.homeFragment, true)
-                .build()
-
-            val action = HomeFragmentDirections
-                .actionHomeFragmentToSearchFragment(scannedId)
-            findNavController().navigate(action, navOptions)
-        }
-    }
 }

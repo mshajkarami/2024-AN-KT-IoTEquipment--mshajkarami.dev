@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.irisaco.iotequipment.R
 
-class messagesFragment : Fragment() {
+class MessagesFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

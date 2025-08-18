@@ -1,15 +1,16 @@
 package com.irisaco.iotequipment.ui.components
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioGroup
-import androidx.lifecycle.lifecycleScope
+import androidx.core.content.edit
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.irisaco.iotequipment.R
-import com.irisaco.iotequipment.data.dataStore.AppSettingsDataStore
-import kotlinx.coroutines.launch
+import com.irisaco.iotequipment.utils.TemporarySettings.KEY_LANGUAGE
+import com.irisaco.iotequipment.utils.TemporarySettings.PREFS_NAME
 
 class LanguageBottomSheet : BottomSheetDialogFragment() {
 
@@ -22,13 +23,12 @@ class LanguageBottomSheet : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val radioGroup = view.findViewById<RadioGroup>(R.id.languageRadioGroup)
+        val prefs = requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            val currentLang = AppSettingsDataStore.getLanguage(requireContext())
-            when (currentLang) {
-                "fa" -> radioGroup.check(R.id.radio_fa)
-                "en" -> radioGroup.check(R.id.radio_en)
-            }
+        val currentLang = prefs.getString(KEY_LANGUAGE, "fa") ?: "fa"
+        when (currentLang) {
+            "fa" -> radioGroup.check(R.id.radio_fa)
+            "en" -> radioGroup.check(R.id.radio_en)
         }
 
         radioGroup.setOnCheckedChangeListener { _, checkedId ->
@@ -38,11 +38,9 @@ class LanguageBottomSheet : BottomSheetDialogFragment() {
                 else -> return@setOnCheckedChangeListener
             }
 
-            viewLifecycleOwner.lifecycleScope.launch {
-                AppSettingsDataStore.saveLanguage(requireContext(), selectedLang)
-                onLanguageSelected?.invoke(selectedLang)
-                dismiss()
-            }
+            prefs.edit { putString(KEY_LANGUAGE, selectedLang) }
+            onLanguageSelected?.invoke(selectedLang)
+            dismiss()
         }
     }
 }
