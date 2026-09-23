@@ -258,4 +258,5 @@ data class Items(
 
 - **Developer**: Saleh Hajkarami
 - **Focus**: Native Android Development (Kotlin, Jetpack, Clean Architecture)
+- **Organization & Context**: Developed for **Irisa Company (ایریسا)** as an enterprise IoT project during my internship period.
 - **Use Case**: Portfolio Demonstration & Enterprise IoT Asset Management
