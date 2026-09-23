@@ -88,8 +88,7 @@ class AuthFragment : Fragment() {
     }
     private fun setupAuthButton() {
         btnAuth.setOnClickListener {
-            val loginIntent = authViewModel.startLoginIntent()
-            loginLauncher.launch(loginIntent)
+            authViewModel.loginWithMockUser()
         }
     }
 

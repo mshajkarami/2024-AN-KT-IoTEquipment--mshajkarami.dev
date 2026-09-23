@@ -32,8 +32,8 @@ class FileDownloader @Inject constructor(
         if (file.exists()) return file
 
         return try {
-            val response = api.downloadFile(fileUrl)
-            if (response.isSuccessful) {
+            val response = try { api.downloadFile(fileUrl) } catch (_: Exception) { null }
+            if (response != null && response.isSuccessful) {
                 response.body()?.let { body ->
                     val inputStream = body.byteStream()
                     val outputStream = FileOutputStream(file)
@@ -45,7 +45,12 @@ class FileDownloader @Inject constructor(
                     }
                     file
                 }
-            } else null
+            } else {
+                // Fallback to sample document for portfolio demo
+                file.parentFile?.mkdirs()
+                file.writeText("Demo Document: $fileName\nEquipment IoT System Specification.\nPrepared for portfolio demonstration.")
+                file
+            }
         } catch (e: Exception) {
             e.printStackTrace()
             null

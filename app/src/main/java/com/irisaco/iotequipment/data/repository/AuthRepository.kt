@@ -47,17 +47,37 @@ class AuthRepository @Inject constructor(
         cachedAccount = account
     }
 
-
-
+    suspend fun loginWithDummyAccount() {
+        val dummyAccount = AccountEntity(
+            sub = "demo_portfolio_user_001",
+            username = "saleh",
+            displayName = "Saleh Hajkarami",
+            email = "saleh.hajkarami@gmail.com",
+            emailVerified = true,
+            givenName = "Saleh",
+            familyName = "Hajkarami",
+            roles = listOf("admin", "engineer"),
+            groups = listOf("Engineers", "Administrators"),
+            role = UserRole.ADMIN,
+            isActive = true
+        )
+        accountDao.deactivateAllAccounts()
+        accountDao.insertAccount(dummyAccount)
+        cachedAccount = dummyAccount
+    }
 
     suspend fun getValidAccessTokenOrNull(): String? {
+        val activeAccount = accountDao.getActiveAccount()
+        if (activeAccount != null) {
+            return "mock_demo_access_token"
+        }
         val authState = appAuthManager.readAuthState() ?: return null
 
         return suspendCoroutine { continuation ->
             val service = AuthorizationService(context)
             authState.performActionWithFreshTokens(service) { accessToken, _, ex ->
                 if (ex != null) {
-                    continuation.resume(null)
+                    continuation.resume(authState.accessToken ?: "mock_demo_access_token")
                 } else {
                     continuation.resume(accessToken)
                 }

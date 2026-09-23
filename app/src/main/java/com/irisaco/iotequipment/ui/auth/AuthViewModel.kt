@@ -62,6 +62,14 @@ class AuthViewModel @Inject constructor(
         "https://account.irisaprime.ir/realms/dev/protocol/openid-connect/token".toUri()
     )
 
+    fun loginWithMockUser() {
+        viewModelScope.launch {
+            repository.loginWithDummyAccount()
+            checkLoginState()
+            _authResult.postValue(Result.success(Unit))
+        }
+    }
+
     fun startLoginIntent(): Intent {
         val authRequest = AuthorizationRequest.Builder(
             serviceConfig,
